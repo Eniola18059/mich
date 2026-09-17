@@ -3,773 +3,298 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Science Explorer Passport — Grade 6 Prep Expedition</title>
+<title>Fraction Addition Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --paper: #EFF6EF;
-    --paper-alt: #FFFFFF;
-    --ink: #16302B;
-    --ink-soft: #4A6B62;
-    --line: #CFE0D6;
-    --line-strong: #9FC2B0;
-
-    --c-body1: #3F8F5D;
-    --c-body2: #CF5164;
-    --c-structures: #C0503C;
-    --c-machines: #3D6C9E;
-    --c-matter: #D98A22;
-    --c-energy: #2A8F82;
-    --c-electricity: #B98A1A;
-    --c-biodiversity: #5C7280;
-    --c-flight: #6957D6;
-    --c-space: #2E4D8F;
-
-    --success: #2F8F4E;
-    --error: #C0503C;
-
-    --radius: 16px;
-    --shadow: 0 6px 20px rgba(22, 48, 43, 0.10);
+  :root{
+    --bg: #EAF6FB;
+    --card: #FFFFFF;
+    --navy: #1F2A44;
+    --coral: #FF6F59;
+    --coral-dark: #E85A45;
+    --sun: #FFC857;
+    --leaf: #3FAE7A;
+    --leaf-bg: #E4F6EC;
+    --oops-bg: #FDE9E7;
   }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #0F221E;
-      --paper-alt: #16302B;
-      --ink: #E9F3EE;
-      --ink-soft: #A9C7BC;
-      --line: #29473F;
-      --line-strong: #3B6357;
-      --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #10151F;
+      --card: #1B2333;
+      --navy: #EDEFF5;
+      --leaf-bg: #16321F;
+      --oops-bg: #3A1E1A;
     }
   }
-  :root[data-theme="dark"] {
-    --paper: #0F221E;
-    --paper-alt: #16302B;
-    --ink: #E9F3EE;
-    --ink-soft: #A9C7BC;
-    --line: #29473F;
-    --line-strong: #3B6357;
-    --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  :root[data-theme="dark"]{
+    --bg: #10151F;
+    --card: #1B2333;
+    --navy: #EDEFF5;
+    --leaf-bg: #16321F;
+    --oops-bg: #3A1E1A;
   }
-
-  * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Nunito', 'Segoe UI', sans-serif;
-    -webkit-font-smoothing: antialiased;
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--bg);
+    font-family:'Nunito',sans-serif;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
   }
-
-  h1, h2, h3, .display {
-    font-family: 'Baloo 2', 'Trebuchet MS', sans-serif;
-    font-weight: 700;
-    line-height: 1.15;
-    margin: 0;
+  .wrap{ width:100%; max-width:520px; }
+  h1{
+    font-family:'Baloo 2',sans-serif;
+    font-size:clamp(1.5rem,5vw,2rem);
+    text-align:center;
+    margin:0 0 4px;
   }
-
-  button { font-family: inherit; cursor: pointer; }
-
-  #app {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 28px 20px 64px;
-    min-height: 100vh;
+  .sub{ text-align:center; margin:0 0 20px; opacity:.75; font-weight:600; font-size:.95rem;}
+  .track{
+    height:10px; background:rgba(0,0,0,.08); border-radius:999px; overflow:hidden; margin-bottom:24px;
   }
-
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 22px;
+  .fill{ height:100%; background:var(--sun); width:0%; transition:width .35s ease; }
+  .card{
+    background:var(--card);
+    border-radius:20px;
+    padding:32px 28px;
+    box-shadow:0 10px 30px rgba(15,30,60,.08);
   }
-
-  .brand { display: flex; align-items: center; gap: 10px; }
-  .brand-mark { font-size: 28px; display: inline-block; }
-  .brand-text { font-family: 'Baloo 2', 'Trebuchet MS', sans-serif; font-weight: 700; font-size: 17px; color: var(--ink); }
-
-  .pill {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--ink-soft);
-    background: var(--paper-alt);
-    border: 1px solid var(--line);
-    padding: 6px 12px;
-    border-radius: 999px;
+  .qnum{ font-weight:800; color:var(--coral); font-size:.9rem; margin-bottom:10px;}
+  .question{
+    display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+    font-family:'Baloo 2',sans-serif; font-size:1.9rem; margin:14px 0 28px;
   }
-
-  .hero { text-align: left; padding: 8px 4px 26px; }
-  .hero h1 { font-size: 34px; color: var(--ink); max-width: 16ch; }
-  .hero .compass { font-size: 46px; display: inline-block; margin-bottom: 10px; animation: spin-in 0.7s ease-out; }
-
-  @keyframes spin-in {
-    from { transform: rotate(-40deg) scale(0.6); opacity: 0; }
-    to { transform: rotate(0deg) scale(1); opacity: 1; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; line-height:1.05; font-size:1.4rem;}
+  .frac .num, .frac .den{ padding:0 6px; }
+  .frac .num{ border-bottom:3px solid var(--navy); padding-bottom:2px; }
+  .mixed{ display:inline-flex; align-items:center; gap:4px; }
+  .whole{ font-size:1.9rem; }
+  .options{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
   }
-  @media (prefers-reduced-motion: reduce) { .compass { animation: none; } }
-
-  .hero p { color: var(--ink-soft); font-size: 16.5px; line-height: 1.55; max-width: 48ch; margin-top: 12px; }
-
-  .name-card {
-    background: var(--paper-alt);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 18px;
-    margin: 22px 0 30px;
+  .opt{
+    background:var(--bg);
+    border:2px solid transparent;
+    border-radius:14px;
+    padding:14px 8px;
+    font-family:'Nunito',sans-serif;
+    font-weight:800;
+    font-size:1.1rem;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    color:var(--navy);
+    transition:transform .12s ease, border-color .12s ease;
   }
-  .name-card label { display: block; font-weight: 700; font-size: 14.5px; color: var(--ink); margin-bottom: 8px; }
-  .name-card input {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1.5px solid var(--line-strong);
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 16px;
-    font-family: inherit;
+  .opt:hover{ transform:translateY(-2px); }
+  .opt:focus-visible{ outline:3px solid var(--coral); outline-offset:2px; }
+  .opt.correct{ background:var(--leaf-bg); border-color:var(--leaf); }
+  .opt.wrong{ background:var(--oops-bg); border-color:var(--coral-dark); }
+  .opt[disabled]{ cursor:default; }
+  .opt .of{ display:inline-flex; flex-direction:column; font-size:.95rem; line-height:1; }
+  .opt .of .n{ border-bottom:2px solid currentColor; padding:0 3px; }
+  .opt .of .d{ padding:0 3px; }
+  .feedback{
+    min-height:26px; text-align:center; font-weight:700; margin-top:16px; font-size:.95rem;
   }
-  .name-card input:focus-visible { outline: 3px solid var(--c-energy); outline-offset: 1px; }
-
-  .trail-heading { font-size: 15px; font-weight: 700; color: var(--ink-soft); margin: 6px 0 14px; }
-
-  .trail { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 26px; }
-  @media (min-width: 520px) { .trail { grid-template-columns: repeat(3, 1fr); } }
-
-  .stop {
-    background: var(--paper-alt);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 14px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    border-left: 5px solid var(--stop-color, var(--c-body1));
+  .feedback.good{ color:var(--leaf); }
+  .feedback.bad{ color:var(--coral-dark); }
+  .next-btn{
+    display:block; margin:18px auto 0; background:var(--coral); color:#fff; border:none;
+    padding:12px 28px; border-radius:999px; font-family:'Baloo 2',sans-serif; font-size:1rem;
+    cursor:pointer; opacity:0; pointer-events:none; transition:opacity .2s ease;
   }
-  .stop .stop-icon { font-size: 22px; }
-  .stop .stop-num { font-size: 12px; font-weight: 800; color: var(--ink-soft); }
-  .stop .stop-title { font-family: 'Baloo 2', sans-serif; font-weight: 600; font-size: 14.5px; color: var(--ink); line-height: 1.25; }
-  .stop .stop-grade { font-size: 11.5px; color: var(--ink-soft); }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: var(--c-energy);
-    color: #ffffff;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 22px;
-    font-weight: 800;
-    font-size: 16.5px;
-    font-family: 'Baloo 2', sans-serif;
-    width: 100%;
-    box-shadow: 0 4px 14px rgba(42, 143, 130, 0.35);
-    transition: transform 0.12s ease;
+  .next-btn.show{ opacity:1; pointer-events:auto; }
+  .result{ text-align:center; }
+  .result .big{ font-family:'Baloo 2',sans-serif; font-size:3rem; color:var(--coral); margin:8px 0; }
+  .result p{ font-weight:600; }
+  .restart{
+    margin-top:18px; background:var(--navy); color:var(--card); border:none;
+    padding:12px 30px; border-radius:999px; font-family:'Baloo 2',sans-serif; font-size:1rem; cursor:pointer;
   }
-  .btn-primary:hover { transform: translateY(-1px); }
-  .btn-primary:active { transform: translateY(0px); }
-  .btn-primary:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    color: var(--ink);
-    border: 1.5px solid var(--line-strong);
-    border-radius: 12px;
-    padding: 13px 20px;
-    font-weight: 700;
-    font-size: 15px;
-    font-family: 'Nunito', sans-serif;
-    width: 100%;
-  }
-  .btn-secondary:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-
-  .stage-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-  .stage-badge {
-    width: 46px; height: 46px; min-width: 46px;
-    border-radius: 12px;
-    background: var(--stage-color);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-  }
-  .stage-title { font-family: 'Baloo 2', sans-serif; font-size: 18px; font-weight: 700; color: var(--ink); }
-  .stage-sub { font-size: 13px; color: var(--ink-soft); font-weight: 600; }
-
-  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
-  .progress-track { flex: 1; height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--stage-color); border-radius: 999px; transition: width 0.25s ease; }
-  .progress-label { font-size: 12.5px; font-weight: 800; color: var(--ink-soft); white-space: nowrap; }
-
-  .question-card {
-    background: var(--paper-alt);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 22px 20px;
-  }
-  .question-text { font-size: 19px; font-weight: 700; font-family: 'Baloo 2', sans-serif; line-height: 1.4; color: var(--ink); margin-bottom: 18px; }
-
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .option {
-    text-align: left;
-    background: var(--paper);
-    border: 1.5px solid var(--line-strong);
-    border-radius: 12px;
-    padding: 13px 14px;
-    font-size: 15.5px;
-    font-weight: 600;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .option .opt-letter {
-    width: 26px; height: 26px; min-width: 26px;
-    border-radius: 8px;
-    background: var(--paper-alt);
-    border: 1.5px solid var(--line-strong);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 800;
-  }
-  .option:hover { border-color: var(--stage-color); }
-  .option:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-  .option.correct { background: rgba(47, 143, 78, 0.13); border-color: var(--success); }
-  .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
-  .option.incorrect { background: rgba(192, 80, 60, 0.12); border-color: var(--error); animation: shake 0.35s ease; }
-  .option.incorrect .opt-letter { background: var(--error); border-color: var(--error); color: #fff; }
-
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    75% { transform: translateX(4px); }
-  }
-  @media (prefers-reduced-motion: reduce) { .option.incorrect { animation: none; } }
-  .option[disabled] { cursor: default; }
-
-  .explain-box {
-    margin-top: 16px;
-    padding: 14px 15px;
-    border-radius: 12px;
-    background: var(--paper);
-    border: 1px dashed var(--line-strong);
-    font-size: 14.5px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-  .explain-box strong { color: var(--ink); }
-  .next-row { margin-top: 18px; }
-
-  .stamp-wrap { text-align: center; padding: 30px 10px 10px; }
-  .stamp {
-    width: 108px; height: 108px;
-    border-radius: 50%;
-    background: var(--stage-color);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 46px;
-    margin: 0 auto 18px;
-    box-shadow: var(--shadow);
-    animation: pop-in 0.4s cubic-bezier(.34,1.56,.64,1);
-  }
-  @keyframes pop-in {
-    from { transform: scale(0.4); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  @media (prefers-reduced-motion: reduce) { .stamp { animation: none; } }
-
-  .stage-result-title { font-size: 21px; font-family: 'Baloo 2', sans-serif; font-weight: 700; margin-bottom: 6px; }
-  .stage-result-score { font-size: 15px; color: var(--ink-soft); font-weight: 700; margin-bottom: 24px; }
-
-  .final-score-card {
-    background: var(--paper-alt);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 26px 22px;
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .final-score-num { font-family: 'Baloo 2', sans-serif; font-size: 52px; font-weight: 800; color: var(--ink); }
-  .final-score-den { font-size: 18px; color: var(--ink-soft); font-weight: 700; }
-  .final-score-pct {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-weight: 800;
-    font-size: 14px;
-    background: var(--c-energy);
-    color: #fff;
-  }
-
-  .badges-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 22px 0 26px; }
-  @media (max-width: 420px) { .badges-grid { grid-template-columns: repeat(5, 1fr); gap: 8px; } }
-  .mini-badge {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    background: var(--badge-color);
-  }
-  .mini-badge.faded {
-    background: var(--paper);
-    border: 1.5px dashed var(--line-strong);
-    opacity: 0.55;
-    filter: grayscale(1);
-  }
-
-  .review-toggle { text-align: center; margin: 6px 0 18px; }
-  .review-toggle button { background: none; border: none; color: var(--c-energy); font-weight: 800; font-size: 14.5px; text-decoration: underline; text-underline-offset: 3px; }
-
-  .review-item { background: var(--paper-alt); border: 1px solid var(--line); border-radius: 12px; padding: 14px 15px; margin-bottom: 10px; }
-  .review-item .rq { font-weight: 700; font-size: 14.5px; margin-bottom: 6px; color: var(--ink); }
-  .review-item .ra { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
-  .review-item .ra b { color: var(--success); }
-
-  .stage-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-  .stage-row { display: flex; align-items: center; gap: 12px; background: var(--paper-alt); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
-  .stage-row .sr-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 9px; background: var(--row-color); display: flex; align-items: center; justify-content: center; font-size: 16px; }
-  .stage-row .sr-title { font-weight: 700; font-size: 14px; flex: 1; }
-  .stage-row .sr-score { font-weight: 800; font-size: 13.5px; color: var(--ink-soft); }
-
-  .footnote { text-align: center; font-size: 12.5px; color: var(--ink-soft); margin-top: 30px; }
 </style>
 </head>
 <body>
-<div id="app"></div>
+<div class="wrap">
+  <h1>Adding Fractions</h1>
+  <p class="sub">40 questions &middot; give every answer in simplest form</p>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <div class="card" id="card"></div>
+</div>
 
 <script>
-(function () {
+// Each question: aW/bW = whole part of addend (0 if none), aF/bF = fraction part [num,den]
+// correct/opts: {w, f} where f is [num,den] or null (whole number only)
+const questions = [
+  {aF:[1,4], bF:[1,4], correct:{w:0,f:[1,2]}, opts:[{w:0,f:[1,2]},{w:0,f:[2,8]},{w:0,f:[2,4]},{w:0,f:[1,8]}]},
+  {aF:[2,6], bF:[1,6], correct:{w:0,f:[1,2]}, opts:[{w:0,f:[3,12]},{w:0,f:[1,2]},{w:0,f:[3,6]},{w:0,f:[1,6]}]},
+  {aF:[1,3], bF:[1,3], correct:{w:0,f:[2,3]}, opts:[{w:0,f:[2,6]},{w:0,f:[2,3]},{w:0,f:[2,9]},{w:0,f:[1,3]}]},
+  {aF:[1,5], bF:[2,5], correct:{w:0,f:[3,5]}, opts:[{w:0,f:[3,5]},{w:0,f:[3,10]},{w:0,f:[3,25]},{w:0,f:[1,5]}]},
+  {aF:[3,8], bF:[2,8], correct:{w:0,f:[5,8]}, opts:[{w:0,f:[5,16]},{w:0,f:[5,8]},{w:0,f:[5,64]},{w:0,f:[1,8]}]},
+  {aF:[1,2], bF:[1,4], correct:{w:0,f:[3,4]}, opts:[{w:0,f:[2,6]},{w:0,f:[3,4]},{w:0,f:[1,8]},{w:0,f:[2,4]}]},
+  {aF:[1,3], bF:[1,6], correct:{w:0,f:[1,2]}, opts:[{w:0,f:[2,9]},{w:0,f:[1,9]},{w:0,f:[1,2]},{w:0,f:[2,18]}]},
+  {aF:[2,5], bF:[1,10], correct:{w:0,f:[1,2]}, opts:[{w:0,f:[3,15]},{w:0,f:[1,2]},{w:0,f:[3,10]},{w:0,f:[3,50]}]},
+  {aF:[1,4], bF:[1,8], correct:{w:0,f:[3,8]}, opts:[{w:0,f:[2,12]},{w:0,f:[3,8]},{w:0,f:[2,32]},{w:0,f:[1,8]}]},
+  {aF:[2,3], bF:[1,9], correct:{w:0,f:[7,9]}, opts:[{w:0,f:[3,12]},{w:0,f:[7,9]},{w:0,f:[3,27]},{w:0,f:[3,9]}]},
+  {aF:[1,2], bF:[1,3], correct:{w:0,f:[5,6]}, opts:[{w:0,f:[2,5]},{w:0,f:[5,6]},{w:0,f:[2,6]},{w:0,f:[3,6]}]},
+  {aF:[3,4], bF:[1,8], correct:{w:0,f:[7,8]}, opts:[{w:0,f:[4,12]},{w:0,f:[4,32]},{w:0,f:[7,8]},{w:0,f:[3,8]}]},
+  {aF:[1,6], bF:[1,3], correct:{w:0,f:[1,2]}, opts:[{w:0,f:[2,9]},{w:0,f:[1,2]},{w:0,f:[2,18]},{w:0,f:[1,9]}]},
+  {aF:[2,7], bF:[3,7], correct:{w:0,f:[5,7]}, opts:[{w:0,f:[5,14]},{w:0,f:[5,7]},{w:0,f:[5,49]},{w:0,f:[1,7]}]},
+  {aF:[1,10], bF:[3,10], correct:{w:0,f:[2,5]}, opts:[{w:0,f:[4,20]},{w:0,f:[2,5]},{w:0,f:[4,100]},{w:0,f:[1,5]}]},
+  {aF:[5,12], bF:[1,4], correct:{w:0,f:[2,3]}, opts:[{w:0,f:[6,16]},{w:0,f:[2,3]},{w:0,f:[8,48]},{w:0,f:[1,3]}]},
+  {aW:1, aF:[1,4], bF:[1,4], correct:{w:1,f:[1,2]}, opts:[{w:1,f:[2,8]},{w:1,f:[1,2]},{w:2,f:[1,4]},{w:0,f:[1,2]}]},
+  {aF:[2,9], bF:[1,3], correct:{w:0,f:[5,9]}, opts:[{w:0,f:[3,12]},{w:0,f:[3,27]},{w:0,f:[5,9]},{w:0,f:[1,9]}]},
+  {aF:[3,5], bF:[1,10], correct:{w:0,f:[7,10]}, opts:[{w:0,f:[4,15]},{w:0,f:[7,10]},{w:0,f:[4,50]},{w:0,f:[2,5]}]},
+  {aW:1, aF:[1,2], bF:[1,2], correct:{w:2,f:null}, opts:[{w:1,f:[2,2]},{w:2,f:null},{w:2,f:[1,2]},{w:1,f:null}]},
+  {aF:[1,4], bF:[3,4], correct:{w:1,f:null}, opts:[{w:0,f:[4,8]},{w:0,f:[4,4]},{w:2,f:null},{w:1,f:null}]},
+  {aF:[3,10], bF:[7,10], correct:{w:1,f:null}, opts:[{w:0,f:[10,20]},{w:0,f:[10,10]},{w:2,f:null},{w:1,f:null}]},
+  {aF:[5,8], bF:[3,8], correct:{w:1,f:null}, opts:[{w:0,f:[8,16]},{w:0,f:[8,8]},{w:2,f:null},{w:1,f:null}]},
+  {aF:[2,9], bF:[7,9], correct:{w:1,f:null}, opts:[{w:0,f:[9,18]},{w:0,f:[9,9]},{w:0,f:[5,9]},{w:1,f:null}]},
+  {aF:[1,6], bF:[5,6], correct:{w:1,f:null}, opts:[{w:0,f:[6,12]},{w:0,f:[6,6]},{w:0,f:[4,6]},{w:1,f:null}]},
+  {aF:[3,7], bF:[4,7], correct:{w:1,f:null}, opts:[{w:0,f:[7,14]},{w:0,f:[7,7]},{w:0,f:[1,7]},{w:1,f:null}]},
+  {aF:[1,5], bF:[4,5], correct:{w:1,f:null}, opts:[{w:0,f:[5,10]},{w:0,f:[5,5]},{w:0,f:[3,5]},{w:1,f:null}]},
+  {aF:[5,12], bF:[7,12], correct:{w:1,f:null}, opts:[{w:0,f:[12,24]},{w:0,f:[12,12]},{w:0,f:[2,12]},{w:1,f:null}]},
+  {aF:[2,5], bF:[3,10], correct:{w:0,f:[7,10]}, opts:[{w:0,f:[5,15]},{w:0,f:[7,10]},{w:0,f:[5,10]},{w:0,f:[1,2]}]},
+  {aF:[1,6], bF:[1,4], correct:{w:0,f:[5,12]}, opts:[{w:0,f:[2,10]},{w:0,f:[5,12]},{w:0,f:[2,12]},{w:0,f:[1,3]}]},
+  {aF:[3,8], bF:[1,4], correct:{w:0,f:[5,8]}, opts:[{w:0,f:[4,12]},{w:0,f:[5,8]},{w:0,f:[4,8]},{w:0,f:[1,2]}]},
+  {aF:[1,9], bF:[2,3], correct:{w:0,f:[7,9]}, opts:[{w:0,f:[3,12]},{w:0,f:[7,9]},{w:0,f:[3,9]},{w:0,f:[1,3]}]},
+  {aF:[5,6], bF:[1,12], correct:{w:0,f:[11,12]}, opts:[{w:0,f:[6,18]},{w:0,f:[11,12]},{w:0,f:[6,12]},{w:0,f:[1,2]}]},
+  {aF:[1,2], bF:[2,5], correct:{w:0,f:[9,10]}, opts:[{w:0,f:[3,7]},{w:0,f:[9,10]},{w:0,f:[3,10]},{w:0,f:[2,5]}]},
+  {aF:[3,4], bF:[1,12], correct:{w:0,f:[5,6]}, opts:[{w:0,f:[4,16]},{w:0,f:[5,6]},{w:0,f:[4,12]},{w:0,f:[1,3]}]},
+  {aF:[1,3], bF:[5,12], correct:{w:0,f:[3,4]}, opts:[{w:0,f:[6,15]},{w:0,f:[3,4]},{w:0,f:[6,12]},{w:0,f:[1,2]}]},
+  {aW:2, aF:[1,3], bF:[1,3], correct:{w:2,f:[2,3]}, opts:[{w:2,f:[2,6]},{w:3,f:[2,3]},{w:2,f:[1,3]},{w:2,f:[2,3]}]},
+  {aW:1, aF:[3,4], bF:[1,4], correct:{w:2,f:null}, opts:[{w:1,f:[4,4]},{w:1,f:[4,8]},{w:2,f:[1,4]},{w:2,f:null}]},
+  {aF:[3,10], bF:[1,5], correct:{w:0,f:[1,2]}, opts:[{w:0,f:[4,10]},{w:0,f:[4,15]},{w:0,f:[1,2]},{w:0,f:[1,5]}]},
+  {aF:[4,11], bF:[3,11], correct:{w:0,f:[7,11]}, opts:[{w:0,f:[7,22]},{w:0,f:[1,11]},{w:0,f:[7,11]},{w:0,f:[3,11]}]}
+];
 
-  var STAGES = [
-    {
-      key: "digest-resp", title: "Human Body: Digestive & Respiratory", grade: "Grade 5 review", icon: "🫁", color: "var(--c-body1)",
-      questions: [
-        { q: "What is the main job of the digestive system?", opts: ["Pump blood", "Break down food for energy and nutrients", "Filter air", "Control movement"], correct: 1, explain: "The digestive system breaks down food so the body can use it for energy and nutrients." },
-        { q: "Which organ breaks down food using acid in your body?", opts: ["Liver", "Stomach", "Kidney", "Lung"], correct: 1, explain: "The stomach uses acid to help break food down." },
-        { q: "What is the long tube where most nutrient absorption happens?", opts: ["Esophagus", "Small intestine", "Large intestine", "Trachea"], correct: 1, explain: "Most nutrients are absorbed into the blood through the walls of the small intestine." },
-        { q: "What is the main job of the large intestine?", opts: ["Absorb nutrients", "Absorb water and form waste", "Pump blood", "Filter air"], correct: 1, explain: "The large intestine absorbs water and forms solid waste for removal." },
-        { q: "What gas do we breathe in that our body needs?", opts: ["Carbon dioxide", "Oxygen", "Nitrogen", "Helium"], correct: 1, explain: "Our bodies need oxygen to release energy from food." },
-        { q: "What gas do we breathe out as waste?", opts: ["Oxygen", "Carbon dioxide", "Hydrogen", "Nitrogen"], correct: 1, explain: "Carbon dioxide is a waste gas the body removes by breathing out." },
-        { q: "Which organs are the main part of the respiratory system?", opts: ["Heart", "Lungs", "Stomach", "Kidneys"], correct: 1, explain: "The lungs are the main organs used to breathe." },
-        { q: "What tube carries air from your throat down to your lungs?", opts: ["Esophagus", "Trachea", "Intestine", "Artery"], correct: 1, explain: "The trachea, or windpipe, carries air to the lungs." },
-        { q: "What is the diaphragm's main job?", opts: ["Digest food", "Help you breathe by moving up and down", "Pump blood", "Filter waste"], correct: 1, explain: "The diaphragm is a muscle that moves to help pull air into and push air out of the lungs." },
-        { q: "Digestion of food begins in the ___.", opts: ["Stomach", "Mouth", "Small intestine", "Lungs"], correct: 1, explain: "Chewing and saliva start breaking food down as soon as it enters the mouth." }
-      ]
-    },
-    {
-      key: "circ-skel", title: "Human Body: Circulatory & Skeletal-Muscular", grade: "Grade 5 review", icon: "❤️", color: "var(--c-body2)",
-      questions: [
-        { q: "What is the main job of the circulatory system?", opts: ["Digest food", "Carry blood, oxygen, and nutrients around the body", "Filter air", "Support the body"], correct: 1, explain: "The circulatory system moves blood, oxygen, and nutrients to every part of the body." },
-        { q: "Which blood vessels carry blood away from the heart?", opts: ["Veins", "Arteries", "Capillaries", "Nerves"], correct: 1, explain: "Arteries carry blood away from the heart to the rest of the body." },
-        { q: "Which blood vessels carry blood back to the heart?", opts: ["Arteries", "Veins", "Capillaries", "Nerves"], correct: 1, explain: "Veins carry blood back toward the heart." },
-        { q: "What is the main job of the skeletal system?", opts: ["Pump blood", "Support and protect the body", "Digest food", "Control breathing"], correct: 1, explain: "Bones give the body structure and protect organs like the heart and lungs." },
-        { q: "What connects muscles to bones?", opts: ["Ligaments", "Tendons", "Cartilage", "Nerves"], correct: 1, explain: "Tendons attach muscles to bones so muscles can move the skeleton." },
-        { q: "What connects bone to bone at a joint?", opts: ["Tendons", "Ligaments", "Muscles", "Skin"], correct: 1, explain: "Ligaments hold bones together at joints." },
-        { q: "What is the main job of muscles?", opts: ["Filter blood", "Allow the body to move", "Store water", "Absorb nutrients"], correct: 1, explain: "Muscles contract and relax to allow the body to move." },
-        { q: "Which type of muscle works without you thinking about it, like your heart?", opts: ["Skeletal muscle", "Involuntary muscle", "Voluntary muscle", "None of these"], correct: 1, explain: "Involuntary muscles, like the heart, work automatically without conscious control." },
-        { q: "What is the smallest blood vessel, where oxygen and nutrients pass into cells?", opts: ["Artery", "Vein", "Capillary", "Trachea"], correct: 2, explain: "Capillaries are tiny vessels where the exchange of oxygen and nutrients with cells happens." },
-        { q: "Which organ system works closely with the circulatory system to deliver oxygen throughout the body?", opts: ["Digestive", "Respiratory", "Skeletal", "Nervous"], correct: 1, explain: "The respiratory system supplies the oxygen that the circulatory system delivers around the body." }
-      ]
-    },
-    {
-      key: "structures", title: "Forces & Structures: Load and Stability", grade: "Grade 5 review", icon: "🏗️", color: "var(--c-structures)",
-      questions: [
-        { q: "In a structure, what is the term for the total weight it must support, including itself?", opts: ["Tension", "Load", "Compression", "Torque"], correct: 1, explain: "The load is the total weight a structure needs to support." },
-        { q: "What is the force that squeezes or pushes material together called?", opts: ["Tension", "Compression", "Shear", "Torque"], correct: 1, explain: "Compression is a squeezing force pushing material together." },
-        { q: "What is the force that stretches or pulls material apart called?", opts: ["Compression", "Tension", "Shear", "Friction"], correct: 1, explain: "Tension is a stretching force pulling material apart." },
-        { q: "Which shape is often used in structures because it distributes force evenly and resists bending?", opts: ["Square", "Triangle", "Circle only", "Rectangle only"], correct: 1, explain: "Triangles hold their shape well under force, making structures more stable." },
-        { q: "What is a structure's center of gravity?", opts: ["Its tallest point", "The point where its weight is balanced", "Its widest point", "Its base only"], correct: 1, explain: "The center of gravity is the point where a structure's weight is evenly balanced." },
-        { q: "A wider base generally makes a structure ___.", opts: ["Less stable", "More stable", "Heavier only", "Weaker"], correct: 1, explain: "A wider base helps lower and spread out the center of gravity, adding stability." },
-        { q: "What is an outside force acting on a structure, like wind, often called?", opts: ["An internal force", "A load from outside the structure", "Tension only", "Gravity only"], correct: 1, explain: "Forces like wind acting on a structure from outside are external loads." },
-        { q: "Which of these materials is generally best at resisting compression?", opts: ["Rope", "Concrete", "Thread", "Paper"], correct: 1, explain: "Concrete is strong under compression, which is why it's used in foundations and pillars." },
-        { q: "What can happen if a structure's load is greater than what it can support?", opts: ["It becomes stronger", "It may bend, crack, or collapse", "It floats", "It shrinks"], correct: 1, explain: "Overloading a structure beyond its strength can cause it to fail." },
-        { q: "Engineers test models of structures mainly to ___.", opts: ["Make them look nicer", "Check they can safely support the loads expected", "Add more decoration", "Make them heavier"], correct: 1, explain: "Testing models helps engineers confirm a structure can safely carry its expected load." }
-      ]
-    },
-    {
-      key: "machines", title: "Simple Machines & Mechanical Advantage", grade: "Grade 5 review", icon: "⚙️", color: "var(--c-machines)",
-      questions: [
-        { q: "What is mechanical advantage?", opts: ["How heavy a machine is", "How much a machine multiplies the force you apply", "How fast a machine moves", "How much a machine costs"], correct: 1, explain: "Mechanical advantage describes how much a machine increases the force you put in." },
-        { q: "Which simple machine is a flat, tilted surface that helps move loads up or down?", opts: ["Lever", "Inclined plane", "Wheel and axle", "Pulley"], correct: 1, explain: "An inclined plane is a ramp that makes moving loads easier." },
-        { q: "Which simple machine has a fixed point called a fulcrum?", opts: ["Pulley", "Lever", "Screw", "Wedge"], correct: 1, explain: "A lever pivots around a fixed point called a fulcrum." },
-        { q: "A doorknob is an example of which simple machine?", opts: ["Lever", "Wheel and axle", "Wedge", "Pulley"], correct: 1, explain: "A doorknob works as a wheel and axle, turning a small motion into a bigger one." },
-        { q: "A screw can be thought of as an inclined plane wrapped around a ___.", opts: ["Rope", "Cylinder", "Lever", "Gear"], correct: 1, explain: "A screw's threads act like a ramp wound around a cylinder." },
-        { q: "Which simple machine is used to split or cut things apart, like an axe head?", opts: ["Wedge", "Pulley", "Wheel and axle", "Lever"], correct: 0, explain: "A wedge is a simple machine used to split or cut materials apart." },
-        { q: "Using a lever with the fulcrum closer to the load generally makes lifting ___.", opts: ["Harder", "Easier", "Impossible", "The same"], correct: 1, explain: "Moving the fulcrum closer to the load usually makes it easier to lift." },
-        { q: "Which of these is an example of a compound machine, made of two or more simple machines?", opts: ["A single nail", "A pair of scissors", "A single rope", "A flat ramp"], correct: 1, explain: "Scissors combine two levers with two wedges (the blades)." },
-        { q: "A ramp used to load boxes into a truck reduces the force needed by ___.", opts: ["Increasing the distance the box travels", "Making the box lighter", "Removing gravity", "Removing friction completely"], correct: 0, explain: "A ramp spreads the lifting work over a longer distance, reducing the force needed at any moment." },
-        { q: "What is friction's usual effect on a simple machine's efficiency?", opts: ["It increases efficiency", "It reduces some efficiency by creating resistance", "It has no effect", "It stops the machine from working entirely"], correct: 1, explain: "Friction resists motion, which usually reduces a machine's efficiency somewhat." }
-      ]
-    },
-    {
-      key: "matter", title: "Matter: Physical & Chemical Changes", grade: "Grade 5 review", icon: "🧪", color: "var(--c-matter)",
-      questions: [
-        { q: "What is a physical change?", opts: ["A change that creates a new substance", "A change in size, shape, or state without forming a new substance", "A change that always releases gas", "A change that cannot be reversed"], correct: 1, explain: "A physical change alters form but not the substance itself." },
-        { q: "What is a chemical change?", opts: ["A change in shape only", "A change that forms one or more new substances", "A change of temperature only", "A change in position"], correct: 1, explain: "A chemical change produces a brand-new substance with different properties." },
-        { q: "Which of these is a physical change?", opts: ["Rusting iron", "Burning wood", "Melting ice", "Baking a cake"], correct: 2, explain: "Melting ice just changes water's state — it's still water, so it's a physical change." },
-        { q: "Which of these is a chemical change?", opts: ["Cutting paper", "Freezing water", "Rusting a nail", "Bending a wire"], correct: 2, explain: "Rusting forms a new substance (iron oxide), so it's a chemical change." },
-        { q: "Which is a common sign that a chemical change has happened?", opts: ["A change in shape only", "Bubbles, a new smell, or a color change", "Getting colder only", "Nothing changes"], correct: 1, explain: "Bubbling, a new smell, or a color change often signal a chemical reaction has occurred." },
-        { q: "What is a mixture?", opts: ["A pure substance", "Two or more substances combined but not chemically joined", "A brand-new element", "Always a solid"], correct: 1, explain: "In a mixture, substances are combined physically and keep their own properties." },
-        { q: "What is a solution?", opts: ["A mixture where one substance dissolves evenly into another", "A solid mixture only", "A chemical reaction", "A type of rock"], correct: 0, explain: "A solution forms when one substance dissolves evenly throughout another." },
-        { q: "Which of these is an example of a solution?", opts: ["Salt dissolved in water", "Sand mixed with water", "Oil mixed with water", "Gravel and sand"], correct: 0, explain: "Salt dissolves completely and evenly in water, forming a solution." },
-        { q: "Can most physical changes be reversed?", opts: ["Never", "Usually yes", "Only chemical changes can be reversed", "Only in space"], correct: 1, explain: "Most physical changes, like melting or freezing, can be reversed." },
-        { q: "Which method could separate sand from water in a mixture?", opts: ["Burning", "Filtering", "Adding more water", "Freezing only"], correct: 1, explain: "Filtering lets water pass through while trapping the sand." }
-      ]
-    },
-    {
-      key: "energy", title: "Energy: Forms, Conservation & Resources", grade: "Grade 5 review", icon: "🔋", color: "var(--c-energy)",
-      questions: [
-        { q: "Which of these is a renewable energy resource?", opts: ["Coal", "Solar energy", "Natural gas", "Oil"], correct: 1, explain: "Solar energy comes from the sun and won't run out on a human timescale." },
-        { q: "Which of these is a non-renewable energy resource?", opts: ["Wind", "Solar", "Coal", "Hydro (water)"], correct: 2, explain: "Coal takes millions of years to form and is limited, making it non-renewable." },
-        { q: "What does it mean for an energy resource to be 'non-renewable'?", opts: ["It never runs out", "It takes a very long time to form and is limited", "It comes from the sun", "It's always clean"], correct: 1, explain: "Non-renewable resources form so slowly that, practically speaking, they're limited." },
-        { q: "What form of energy is stored and ready to be used, like in a battery?", opts: ["Kinetic energy", "Potential energy", "Sound energy", "Light energy"], correct: 1, explain: "Potential energy is stored energy waiting to be released." },
-        { q: "What form of energy is the energy of motion?", opts: ["Potential energy", "Kinetic energy", "Chemical energy", "Thermal energy"], correct: 1, explain: "Kinetic energy is the energy an object has because it's moving." },
-        { q: "Which of these converts light energy into electrical energy?", opts: ["Wind turbine", "Solar panel", "Battery", "Light bulb"], correct: 1, explain: "Solar panels convert sunlight directly into electricity." },
-        { q: "What is one way people can conserve energy at home?", opts: ["Leave lights on all day", "Turn off lights when not needed", "Run all appliances at once", "Waste hot water"], correct: 1, explain: "Turning off lights and devices when they aren't needed saves energy." },
-        { q: "Which energy source uses moving water to generate electricity?", opts: ["Solar", "Hydroelectric", "Wind", "Geothermal"], correct: 1, explain: "Hydroelectric power uses the motion of flowing or falling water to generate electricity." },
-        { q: "Why is it important to conserve non-renewable resources?", opts: ["They are unlimited", "They take a very long time to replace once used up", "They are harmful to save", "They have no other uses"], correct: 1, explain: "Because non-renewable resources take so long to form, conserving them matters for the future." },
-        { q: "What happens to energy during most transformations, according to the law of conservation of energy?", opts: ["It disappears completely", "It changes form but the total amount stays the same", "It is destroyed", "It multiplies endlessly"], correct: 1, explain: "Energy changes from one form to another, but the total amount is conserved." }
-      ]
-    },
-    {
-      key: "electricity", title: "Electricity & Circuits", grade: "New in Grade 6", icon: "💡", color: "var(--c-electricity)",
-      questions: [
-        { q: "What is an electric circuit?", opts: ["A path electricity can flow through", "A type of battery", "A type of switch only", "A magnet"], correct: 0, explain: "A circuit is a complete path that lets electricity flow." },
-        { q: "What is needed to complete a simple circuit and light a bulb?", opts: ["A closed, unbroken path", "An open path", "No wires at all", "Only a battery"], correct: 0, explain: "Electricity needs an unbroken, closed path to flow and light a bulb." },
-        { q: "What happens in an open circuit?", opts: ["Electricity flows normally", "Electricity cannot flow because the path is broken", "The bulb glows brighter", "Nothing changes"], correct: 1, explain: "A break in the path stops electricity from flowing in an open circuit." },
-        { q: "In a series circuit, if one bulb goes out, what usually happens to the others?", opts: ["They stay lit", "They also go out", "They get brighter", "Nothing happens"], correct: 1, explain: "In a series circuit, all parts share one path, so a break affects everything on it." },
-        { q: "In a parallel circuit, if one bulb goes out, what usually happens to the others?", opts: ["They also go out", "They can stay lit", "They explode", "They flicker forever"], correct: 1, explain: "Parallel circuits give each part its own path, so others can keep working." },
-        { q: "What is a conductor?", opts: ["A material that stops electricity", "A material that allows electricity to flow through it easily", "A type of battery", "A type of switch"], correct: 1, explain: "Conductors, like metals, let electricity flow through them easily." },
-        { q: "What is an insulator?", opts: ["A material that allows electricity to flow easily", "A material that blocks or resists electricity flow", "A type of wire", "A type of magnet"], correct: 1, explain: "Insulators, like rubber or plastic, resist the flow of electricity." },
-        { q: "Which of these is a good conductor of electricity?", opts: ["Rubber", "Copper", "Plastic", "Wood"], correct: 1, explain: "Copper is a metal that conducts electricity very well, so it's used in wires." },
-        { q: "What does a switch do in a circuit?", opts: ["Stores energy", "Opens or closes the path to control the flow of electricity", "Creates light", "Measures electricity"], correct: 1, explain: "A switch lets you open or close the circuit's path to turn the flow on or off." },
-        { q: "What provides the energy that powers a simple circuit?", opts: ["A switch", "A battery or power source", "A wire", "A bulb"], correct: 1, explain: "A battery or other power source provides the energy that drives the circuit." }
-      ]
-    },
-    {
-      key: "biodiversity", title: "Biodiversity & Classification", grade: "New in Grade 6", icon: "🦎", color: "var(--c-biodiversity)",
-      questions: [
-        { q: "What does biodiversity mean?", opts: ["The number of rocks in an area", "The variety of living things in an area", "The weather of a region", "The size of a habitat"], correct: 1, explain: "Biodiversity refers to the variety of living things found in an area." },
-        { q: "Why is biodiversity important for an ecosystem?", opts: ["It makes the ecosystem weaker", "It helps an ecosystem stay balanced and resilient", "It has no real effect", "It only matters for plants"], correct: 1, explain: "A wide variety of species helps an ecosystem stay balanced and recover from changes." },
-        { q: "What is classification, in science?", opts: ["Naming one type of animal only", "Sorting living things into groups based on shared traits", "Measuring how big an organism is", "A type of habitat"], correct: 1, explain: "Classification groups living things by shared characteristics." },
-        { q: "Which of these is an example of a vertebrate?", opts: ["Insect", "Fish", "Worm", "Jellyfish"], correct: 1, explain: "Fish have a backbone, making them vertebrates." },
-        { q: "What do we call animals without a backbone?", opts: ["Vertebrates", "Invertebrates", "Mammals", "Reptiles"], correct: 1, explain: "Animals without a backbone are called invertebrates." },
-        { q: "Which group includes animals that are warm-blooded, have fur, and feed milk to their young?", opts: ["Reptiles", "Mammals", "Amphibians", "Fish"], correct: 1, explain: "Mammals are warm-blooded, usually have fur, and feed milk to their young." },
-        { q: "What can cause a loss of biodiversity in an area?", opts: ["Protecting habitats", "Habitat destruction and pollution", "Planting more trees", "Reducing pollution"], correct: 1, explain: "Destroying habitats and polluting environments can reduce biodiversity." },
-        { q: "Which of these best helps protect biodiversity?", opts: ["Cutting down forests", "Creating protected natural areas", "Overfishing", "Introducing many invasive species"], correct: 1, explain: "Protected natural areas give a wide variety of species a safe place to live." },
-        { q: "What is an endangered species?", opts: ["A species with a very large, growing population", "A species at risk of disappearing completely", "A newly discovered rock", "A type of habitat"], correct: 1, explain: "An endangered species is at serious risk of dying out completely." },
-        { q: "Scientists classify living things partly to ___.", opts: ["Make them harder to study", "Understand relationships and similarities between organisms", "Confuse other scientists", "Change their habitats"], correct: 1, explain: "Classification helps scientists understand how organisms relate to one another." }
-      ]
-    },
-    {
-      key: "flight", title: "Flight & Aerodynamics", grade: "New in Grade 6", icon: "🛩️", color: "var(--c-flight)",
-      questions: [
-        { q: "Which force pulls an aircraft down toward the ground?", opts: ["Lift", "Gravity", "Thrust", "Drag"], correct: 1, explain: "Gravity constantly pulls an aircraft downward." },
-        { q: "Which force pushes an aircraft forward?", opts: ["Lift", "Gravity", "Thrust", "Drag"], correct: 2, explain: "Thrust, usually from engines or propellers, pushes an aircraft forward." },
-        { q: "Which force acts opposite to thrust, slowing an aircraft down?", opts: ["Lift", "Drag", "Gravity", "Weight"], correct: 1, explain: "Drag is air resistance that works against an aircraft's forward motion." },
-        { q: "Which force lifts an aircraft up into the air?", opts: ["Thrust", "Lift", "Drag", "Gravity"], correct: 1, explain: "Lift is the upward force that keeps an aircraft airborne." },
-        { q: "For a plane to fly steadily, lift must ___ gravity.", opts: ["Be much less than", "Roughly balance", "Have no relation to", "Always be zero compared to"], correct: 1, explain: "Level, steady flight happens when lift and gravity are roughly balanced." },
-        { q: "What shape do airplane wings usually have to help create lift?", opts: ["A perfectly flat rectangle", "An airfoil, curved on top", "A perfect circle", "A straight triangle only"], correct: 1, explain: "The curved airfoil shape of a wing helps generate lift as air flows over it." },
-        { q: "What is drag mainly caused by?", opts: ["Gravity pulling down", "Air resistance against a moving object", "The engine alone", "Magnetism"], correct: 1, explain: "Drag comes from air resisting an object as it moves through it." },
-        { q: "Which of these animals is adapted for flight with lightweight, hollow bones?", opts: ["Elephant", "Bird", "Whale", "Turtle"], correct: 1, explain: "Birds have lightweight, often hollow bones, which help them fly." },
-        { q: "A parachute increases ___, which slows down a falling object.", opts: ["Thrust", "Drag", "Gravity", "Lift only"], correct: 1, explain: "A parachute's large surface increases drag, slowing a fall." },
-        { q: "Which part of an airplane helps control its direction, such as turning left or right?", opts: ["Wings only", "Rudder", "Wheels", "Windows"], correct: 1, explain: "The rudder, on the tail, helps steer an aircraft left or right." }
-      ]
-    },
-    {
-      key: "space", title: "Space: Solar System & Beyond", grade: "New in Grade 6", icon: "🪐", color: "var(--c-space)",
-      questions: [
-        { q: "What is at the center of our solar system?", opts: ["Earth", "The Moon", "The Sun", "Mars"], correct: 2, explain: "The Sun sits at the center of our solar system, and everything else orbits it." },
-        { q: "What is a planet's path around the Sun called?", opts: ["Rotation", "Orbit", "Axis", "Eclipse"], correct: 1, explain: "The path a planet follows around the Sun is called its orbit." },
-        { q: "What causes day and night on Earth?", opts: ["Earth's orbit around the Sun", "Earth rotating on its axis", "The Moon's phases", "The seasons"], correct: 1, explain: "As Earth spins on its axis, different sides face the Sun, creating day and night." },
-        { q: "What causes the seasons on Earth?", opts: ["Earth's distance changing daily", "Earth's tilted axis as it orbits the Sun", "The Moon blocking the Sun", "Random weather changes"], correct: 1, explain: "Earth's tilted axis means different parts get more or less direct sunlight through the year." },
-        { q: "Which planet is known as the 'Red Planet'?", opts: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1, explain: "Mars looks reddish because of iron oxide (rust) in its soil." },
-        { q: "What is the closest planet to the Sun?", opts: ["Venus", "Earth", "Mercury", "Mars"], correct: 2, explain: "Mercury is the closest planet to the Sun." },
-        { q: "Which is the largest planet in our solar system?", opts: ["Earth", "Jupiter", "Saturn", "Neptune"], correct: 1, explain: "Jupiter is by far the largest planet in our solar system." },
-        { q: "What natural object orbits the Earth?", opts: ["The Sun", "The Moon", "Mars", "A comet only"], correct: 1, explain: "The Moon is Earth's natural satellite, orbiting it." },
-        { q: "What is a galaxy?", opts: ["A single star", "A massive collection of stars, gas, and dust held together by gravity", "A type of planet", "A moon's orbit"], correct: 1, explain: "A galaxy is a huge collection of stars, gas, and dust bound together by gravity." },
-        { q: "What is our galaxy called?", opts: ["Andromeda", "Milky Way", "Orion", "Solar System"], correct: 1, explain: "Our solar system is part of the Milky Way galaxy." }
-      ]
-    }
-  ];
-
-  var TOTAL_QUESTIONS = STAGES.reduce(function (sum, s) { return sum + s.questions.length; }, 0);
-
-  var state = {
-    name: "",
-    stageIndex: 0,
-    questionIndex: 0,
-    answered: false,
-    selected: -1,
-    results: []
-  };
-
-  function esc(str) {
-    var d = document.createElement("div");
-    d.textContent = str;
-    return d.innerHTML;
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
   }
+  return a;
+}
 
-  function letter(i) { return ["A", "B", "C", "D"][i]; }
+let order = [];
+let current = 0;
+let score = 0;
 
-  function overallCorrect() {
-    return state.results.filter(function (r) { return r.correct; }).length;
+function fracHTML(f){
+  return `<span class="frac"><span class="num">${f[0]}</span><span class="den">${f[1]}</span></span>`;
+}
+function addendHTML(w, f){
+  if(w){
+    return `<span class="mixed"><span class="whole">${w}</span>${fracHTML(f)}</span>`;
   }
-
-  function stageResults(stageIndex) {
-    return state.results.filter(function (r) { return r.stageIndex === stageIndex; });
+  return fracHTML(f);
+}
+function optFracHTML(f){
+  return `<span class="of"><span class="n">${f[0]}</span><span class="d">${f[1]}</span></span>`;
+}
+function optHTML(o){
+  if(o.f){
+    return o.w ? `<span class="whole">${o.w}</span>${optFracHTML(o.f)}` : optFracHTML(o.f);
   }
+  return `<span class="whole">${o.w}</span>`;
+}
+function sameAnswer(x,y){
+  const xw = x.w||0, yw = y.w||0;
+  if(xw !== yw) return false;
+  if(!x.f && !y.f) return true;
+  if(!x.f || !y.f) return false;
+  return x.f[0]===y.f[0] && x.f[1]===y.f[1];
+}
 
-  function renderStart() {
-    var stops = STAGES.map(function (s, i) {
-      return '<div class="stop" style="--stop-color:' + s.color + '">' +
-        '<span class="stop-icon">' + s.icon + '</span>' +
-        '<span class="stop-num">Stop ' + (i + 1) + '</span>' +
-        '<span class="stop-title">' + esc(s.title) + '</span>' +
-        '<span class="stop-grade">' + esc(s.grade) + '</span>' +
-        '</div>';
-    }).join("");
+function renderQuestion(){
+  const card = document.getElementById('card');
+  const q = questions[order[current]];
+  document.getElementById('fill').style.width = ((current)/questions.length*100)+'%';
 
-    document.getElementById("app").innerHTML =
-      '<div class="topbar">' +
-        '<div class="brand"><span class="brand-mark">🧭</span><span class="brand-text">Science Explorer Passport</span></div>' +
-        '<span class="pill">' + TOTAL_QUESTIONS + ' questions</span>' +
-      '</div>' +
-      '<div class="hero">' +
-        '<span class="compass">🧭</span>' +
-        '<h1>A Grade 6 prep expedition, starting with Grade 5 ground</h1>' +
-        '<p>This trail checks what a student already knows from Grade 5 science, then previews a few Grade 6 topics. There are 10 stops with 10 questions each — every answer gets instant, friendly feedback.</p>' +
-      '</div>' +
-      '<div class="name-card">' +
-        '<label for="explorer-name">Explorer\'s name (optional)</label>' +
-        '<input id="explorer-name" type="text" maxlength="30" placeholder="Type a name to personalize the passport" value="' + esc(state.name) + '">' +
-      '</div>' +
-      '<div class="trail-heading">The trail ahead</div>' +
-      '<div class="trail">' + stops + '</div>' +
-      '<button class="btn-primary" id="start-btn">Begin the expedition</button>' +
-      '<div class="footnote">Takes about 20–30 minutes for all 10 stops. Progress isn\'t saved if the page is closed.</div>';
+  const qHTML = `${addendHTML(q.aW, q.aF)} <span>+</span> ${addendHTML(q.bW, q.bF)}`;
 
-    document.getElementById("start-btn").addEventListener("click", function () {
-      var input = document.getElementById("explorer-name");
-      state.name = input.value.trim();
-      state.stageIndex = 0;
-      state.questionIndex = 0;
-      state.results = [];
+  const opts = shuffle(q.opts);
+
+  const optsHTML = opts.map((o,i)=>{
+    return `<button class="opt" data-i="${i}">${optHTML(o)}</button>`;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="qnum">Question ${current+1} of ${questions.length}</div>
+    <div class="question">${qHTML} <span>=</span> <span>?</span></div>
+    <div class="options">${optsHTML}</div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="nextBtn">${current === questions.length-1 ? 'See results' : 'Next question'}</button>
+  `;
+
+  const buttons = card.querySelectorAll('.opt');
+  buttons.forEach((btn,i)=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.disabled = true);
+      const chosen = opts[i];
+      const isCorrect = sameAnswer(chosen, q.correct);
+      const fb = document.getElementById('feedback');
+      if(isCorrect){
+        btn.classList.add('correct');
+        fb.textContent = "That's right! Nicely done.";
+        fb.className = 'feedback good';
+        score++;
+      } else {
+        btn.classList.add('wrong');
+        fb.textContent = "Not quite — check the simplest form.";
+        fb.className = 'feedback bad';
+        buttons.forEach((b,j)=>{
+          if(sameAnswer(opts[j], q.correct)) b.classList.add('correct');
+        });
+      }
+      document.getElementById('nextBtn').classList.add('show');
+    });
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', ()=>{
+    current++;
+    if(current < questions.length){
       renderQuestion();
-    });
-  }
-
-  function renderQuestion() {
-    var stage = STAGES[state.stageIndex];
-    var q = stage.questions[state.questionIndex];
-    state.answered = false;
-    state.selected = -1;
-
-    var questionsDoneBefore = 0;
-    for (var i = 0; i < state.stageIndex; i++) questionsDoneBefore += STAGES[i].questions.length;
-    var overallDone = questionsDoneBefore + state.questionIndex;
-
-    var optionsHtml = q.opts.map(function (opt, idx) {
-      return '<button class="option" data-idx="' + idx + '">' +
-        '<span class="opt-letter">' + letter(idx) + '</span>' +
-        '<span>' + esc(opt) + '</span>' +
-        '</button>';
-    }).join("");
-
-    document.getElementById("app").innerHTML =
-      '<div class="topbar">' +
-        '<div class="brand"><span class="brand-mark">🧭</span><span class="brand-text">Science Explorer Passport</span></div>' +
-        '<span class="pill">' + (overallDone + 1) + ' of ' + TOTAL_QUESTIONS + '</span>' +
-      '</div>' +
-      '<div class="stage-header">' +
-        '<div class="stage-badge" style="--stage-color:' + stage.color + '">' + stage.icon + '</div>' +
-        '<div><div class="stage-title">' + esc(stage.title) + '</div><div class="stage-sub">' + esc(stage.grade) + '</div></div>' +
-      '</div>' +
-      '<div class="progress-row" style="--stage-color:' + stage.color + '">' +
-        '<div class="progress-track"><div class="progress-fill" style="width:' + ((state.questionIndex) / stage.questions.length * 100) + '%"></div></div>' +
-        '<span class="progress-label">Q' + (state.questionIndex + 1) + ' / ' + stage.questions.length + '</span>' +
-      '</div>' +
-      '<div class="question-card" style="--stage-color:' + stage.color + '">' +
-        '<div class="question-text">' + esc(q.q) + '</div>' +
-        '<div class="options" id="options-wrap">' + optionsHtml + '</div>' +
-        '<div id="explain-slot"></div>' +
-        '<div class="next-row" id="next-slot"></div>' +
-      '</div>';
-
-    var buttons = document.querySelectorAll("#options-wrap .option");
-    buttons.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        if (state.answered) return;
-        var idx = parseInt(btn.getAttribute("data-idx"), 10);
-        handleAnswer(idx);
-      });
-    });
-  }
-
-  function handleAnswer(idx) {
-    var stage = STAGES[state.stageIndex];
-    var q = stage.questions[state.questionIndex];
-    state.answered = true;
-    state.selected = idx;
-    var isCorrect = idx === q.correct;
-
-    state.results.push({ stageIndex: state.stageIndex, questionIndex: state.questionIndex, correct: isCorrect });
-
-    var buttons = document.querySelectorAll("#options-wrap .option");
-    buttons.forEach(function (btn, i) {
-      btn.setAttribute("disabled", "true");
-      if (i === q.correct) btn.classList.add("correct");
-      if (i === idx && !isCorrect) btn.classList.add("incorrect");
-    });
-
-    document.getElementById("explain-slot").innerHTML =
-      '<div class="explain-box"><strong>' + (isCorrect ? "That's right. " : "Not quite. ") + '</strong>' + esc(q.explain) + '</div>';
-
-    var isLastInStage = state.questionIndex === stage.questions.length - 1;
-    var isLastOverall = isLastInStage && state.stageIndex === STAGES.length - 1;
-
-    document.getElementById("next-slot").innerHTML =
-      '<button class="btn-primary" id="next-btn">' +
-      (isLastOverall ? "See the final passport" : (isLastInStage ? "Finish this stop" : "Next question")) +
-      '</button>';
-
-    document.getElementById("next-btn").addEventListener("click", function () {
-      if (isLastInStage) {
-        renderStageComplete();
-      } else {
-        state.questionIndex += 1;
-        renderQuestion();
-      }
-    });
-  }
-
-  function renderStageComplete() {
-    var stage = STAGES[state.stageIndex];
-    var results = stageResults(state.stageIndex);
-    var correctCount = results.filter(function (r) { return r.correct; }).length;
-    var isLastStage = state.stageIndex === STAGES.length - 1;
-
-    var message;
-    if (correctCount >= 9) message = "Outstanding! That stop is fully mastered.";
-    else if (correctCount >= 7) message = "Great work! A strong grasp of this topic.";
-    else if (correctCount >= 5) message = "Good effort — a bit more review here will help.";
-    else message = "This topic needs another look before Grade 6 moves on.";
-
-    document.getElementById("app").innerHTML =
-      '<div class="topbar">' +
-        '<div class="brand"><span class="brand-mark">🧭</span><span class="brand-text">Science Explorer Passport</span></div>' +
-      '</div>' +
-      '<div class="stamp-wrap">' +
-        '<div class="stamp" style="--stage-color:' + stage.color + '">' + stage.icon + '</div>' +
-        '<div class="stage-result-title">' + esc(stage.title) + ' — stamped!</div>' +
-        '<div class="stage-result-score">' + correctCount + ' out of ' + stage.questions.length + ' correct</div>' +
-        '<p style="color:var(--ink-soft); max-width:38ch; margin: 0 auto 26px; line-height:1.5;">' + message + '</p>' +
-        '<button class="btn-primary" id="continue-btn">' + (isLastStage ? "Open the final passport" : "Continue to the next stop") + '</button>' +
-      '</div>';
-
-    document.getElementById("continue-btn").addEventListener("click", function () {
-      if (isLastStage) {
-        renderFinal();
-      } else {
-        state.stageIndex += 1;
-        state.questionIndex = 0;
-        renderQuestion();
-      }
-    });
-  }
-
-  var reviewOpen = false;
-
-  function renderFinal() {
-    var total = overallCorrect();
-    var pct = Math.round((total / TOTAL_QUESTIONS) * 100);
-
-    var badgesHtml = STAGES.map(function (s, i) {
-      var res = stageResults(i);
-      var correctCount = res.filter(function (r) { return r.correct; }).length;
-      var earned = correctCount >= 7;
-      return '<div class="mini-badge' + (earned ? '' : ' faded') + '" style="--badge-color:' + s.color + '" title="' + esc(s.title) + '">' + s.icon + '</div>';
-    }).join("");
-
-    var stageListHtml = STAGES.map(function (s, i) {
-      var res = stageResults(i);
-      var correctCount = res.filter(function (r) { return r.correct; }).length;
-      return '<div class="stage-row" style="--row-color:' + s.color + '">' +
-        '<div class="sr-icon">' + s.icon + '</div>' +
-        '<div class="sr-title">' + esc(s.title) + '</div>' +
-        '<div class="sr-score">' + correctCount + '/' + s.questions.length + '</div>' +
-        '</div>';
-    }).join("");
-
-    var missed = [];
-    state.results.forEach(function (r) {
-      if (!r.correct) {
-        var stage = STAGES[r.stageIndex];
-        var q = stage.questions[r.questionIndex];
-        missed.push({ stage: stage, q: q });
-      }
-    });
-
-    var reviewHtml = "";
-    if (missed.length === 0) {
-      reviewHtml = '<p style="text-align:center; color:var(--ink-soft);">No missed questions to review — every answer was correct.</p>';
     } else {
-      reviewHtml = missed.map(function (m) {
-        return '<div class="review-item">' +
-          '<div class="rq">' + m.stage.icon + ' ' + esc(m.q.q) + '</div>' +
-          '<div class="ra">Correct answer: <b>' + esc(m.q.opts[m.q.correct]) + '</b> — ' + esc(m.q.explain) + '</div>' +
-          '</div>';
-      }).join("");
+      showResults();
     }
+  });
+}
 
-    var greeting = state.name ? esc(state.name) + "'s" : "The explorer's";
+function showResults(){
+  document.getElementById('fill').style.width = '100%';
+  const card = document.getElementById('card');
+  const pct = Math.round((score/questions.length)*100);
+  let msg;
+  if(pct === 100) msg = "Perfect score! Fractions have nothing on you.";
+  else if(pct >= 80) msg = "Great work — you've really got this.";
+  else if(pct >= 50) msg = "Good effort — a bit more practice and you'll have it down.";
+  else msg = "Keep practicing — try again to build your confidence.";
 
-    document.getElementById("app").innerHTML =
-      '<div class="topbar">' +
-        '<div class="brand"><span class="brand-mark">🧭</span><span class="brand-text">Science Explorer Passport</span></div>' +
-      '</div>' +
-      '<div class="hero" style="padding-bottom:10px;">' +
-        '<h1 style="font-size:26px;">' + greeting + ' expedition is complete</h1>' +
-      '</div>' +
-      '<div class="final-score-card">' +
-        '<span class="final-score-num">' + total + '</span><span class="final-score-den"> / ' + TOTAL_QUESTIONS + '</span>' +
-        '<div><span class="final-score-pct">' + pct + '% correct</span></div>' +
-      '</div>' +
-      '<div class="trail-heading">Stamps collected</div>' +
-      '<div class="badges-grid">' + badgesHtml + '</div>' +
-      '<div class="trail-heading">Results by stop</div>' +
-      '<div class="stage-list">' + stageListHtml + '</div>' +
-      '<div class="review-toggle"><button id="review-btn">' + (reviewOpen ? "Hide the questions to review" : "Show the questions to review (" + missed.length + ")") + '</button></div>' +
-      '<div id="review-slot">' + (reviewOpen ? reviewHtml : "") + '</div>' +
-      '<button class="btn-secondary" id="restart-btn" style="margin-top:10px;">Start a new expedition</button>';
+  card.innerHTML = `
+    <div class="result">
+      <div class="qnum">Quiz complete</div>
+      <div class="big">${score} / ${questions.length}</div>
+      <p>${msg}</p>
+      <button class="restart" id="restartBtn">Try again</button>
+    </div>
+  `;
+  document.getElementById('restartBtn').addEventListener('click', startQuiz);
+}
 
-    document.getElementById("review-btn").addEventListener("click", function () {
-      reviewOpen = !reviewOpen;
-      renderFinal();
-    });
+function startQuiz(){
+  order = shuffle(questions.map((_,i)=>i));
+  current = 0;
+  score = 0;
+  renderQuestion();
+}
 
-    document.getElementById("restart-btn").addEventListener("click", function () {
-      reviewOpen = false;
-      state.stageIndex = 0;
-      state.questionIndex = 0;
-      state.results = [];
-      renderStart();
-    });
-  }
-
-  renderStart();
-})();
+startQuiz();
 </script>
 </body>
 </html>
