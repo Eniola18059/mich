@@ -3,363 +3,257 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grade 2 Maths Quiz</title>
+<title>Gator Game: Greater, Less or Equal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#EAF3FF; --card:#FFFFFF; --ink:#1B2547; --muted:#55608A; --line:#C9D6F2;
-  --blue:#3563E9; --blue-ink:#FFFFFF; --sun:#FFC93C; --good:#1F9D6B; --good-bg:#DDF6EA;
-  --bad:#D6453A; --bad-bg:#FFE4E1; --shadow:#B9C9EE;
+  --bg:#EAF6EC; --surface:#FFFFFF; --soft:#F1FBF2; --ink:#1B2B22; --muted:#4E6357; --line:#1B2B22;
+  --green:#37B26C; --yellow:#FFC93C; --red:#FF6B5E; --blue:#5AA2FF;
+  --ok:#1E8E55; --bad:#C23B2E;
   box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#111A38; --card:#1B2652; --ink:#F1F4FF; --muted:#A9B4DD; --line:#33427F;
-    --blue:#6E92FF; --blue-ink:#0E1633; --sun:#FFD25E; --good:#4BD59D; --good-bg:#12432F;
-    --bad:#FF8479; --bad-bg:#4A2020; --shadow:#0A1130;
-  }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0F1A14;--surface:#17251D;--soft:#1E3327;--ink:#EFF7F1;--muted:#9FB6A8;--line:#05130B;--ok:#63E0A0;--bad:#FF8F84;}
 }
-:root[data-theme="dark"]{
-  --bg:#111A38; --card:#1B2652; --ink:#F1F4FF; --muted:#A9B4DD; --line:#33427F;
-  --blue:#6E92FF; --blue-ink:#0E1633; --sun:#FFD25E; --good:#4BD59D; --good-bg:#12432F;
-  --bad:#FF8479; --bad-bg:#4A2020; --shadow:#0A1130;
-}
-*,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{
-  margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Fredoka","Trebuchet MS","Segoe UI",system-ui,sans-serif;
-  font-size:18px; line-height:1.45; min-height:100vh;
-}
-.wrap{max-width:720px; margin:0 auto; padding:20px 16px 48px}
-button{font:inherit; color:inherit; cursor:pointer}
-:focus-visible{outline:4px solid var(--sun); outline-offset:3px}
+:root[data-theme="dark"]{--bg:#0F1A14;--surface:#17251D;--soft:#1E3327;--ink:#EFF7F1;--muted:#9FB6A8;--line:#05130B;--ok:#63E0A0;--bad:#FF8F84;}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:18px;line-height:1.5}
+h1,h2,h3{font-family:'Fredoka','Trebuchet MS',system-ui,sans-serif;margin:0;line-height:1.15}
+p{margin:0 0 .7em;max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 50px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:8px 20px;background:var(--c,var(--yellow));color:var(--ink);border:3px solid var(--line);border-radius:14px;box-shadow:0 5px 0 var(--line);font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--line)}
+.btn.ghost{background:var(--surface)}
+.btn.sm{min-height:42px;font-size:16px;padding:5px 14px}
+.card{background:var(--surface);border:3px solid var(--line);border-radius:24px;box-shadow:0 8px 0 var(--line);padding:24px}
 
-/* top bar */
-.top{display:flex; justify-content:space-between; align-items:center; gap:12px; font-weight:600}
-.top .score{background:var(--card); border:2px solid var(--line); border-radius:999px; padding:4px 16px}
-.track{position:relative; height:16px; background:var(--card); border:2px solid var(--line); border-radius:999px; margin:12px 0 22px}
-.fill{height:100%; background:var(--blue); border-radius:999px; transition:width .35s ease; min-width:12px}
-.star{position:absolute; top:50%; transform:translate(-50%,-50%); font-size:26px; transition:left .35s ease; line-height:1}
+/* intro */
+.intro .tag{display:inline-block;background:var(--yellow);color:var(--ink);border:3px solid var(--line);border-radius:12px;padding:2px 14px;font-family:'Fredoka',sans-serif;font-weight:600;margin-bottom:12px}
+.intro h1{font-size:clamp(32px,6vw,50px)}
+.intro p.lede{font-size:20px;margin-top:12px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+.legend div{background:var(--soft);border:3px solid var(--line);border-radius:14px;padding:10px 14px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;display:flex;align-items:center;gap:8px}
+.legend .sym{font-size:26px}
+.startrow{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:18px}
+.miniscore{font-family:'Fredoka',sans-serif;font-weight:600}
 
-/* card */
-.card{background:var(--card); border:2px solid var(--line); border-radius:24px; padding:24px 22px; box-shadow:0 6px 0 var(--shadow)}
-.chip{display:inline-block; background:var(--sun); color:#1B2547; font-weight:600; font-size:15px; padding:2px 14px; border-radius:999px}
-.q{font-size:clamp(26px,5.5vw,36px); line-height:1.2; margin:14px 0 18px; font-weight:600}
-.clock{display:block; width:190px; max-width:60%; margin:0 auto 18px}
-.opts{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-@media (max-width:480px){ .opts{grid-template-columns:1fr} }
-.opt{
-  display:flex; align-items:center; gap:12px; text-align:left;
-  background:var(--card); border:3px solid var(--line); border-radius:18px;
-  padding:14px 16px; font-size:24px; font-weight:600; min-height:64px;
-  box-shadow:0 4px 0 var(--shadow); transition:transform .08s ease;
+/* quiz */
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--muted)}
+.bar{height:14px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--soft);margin-bottom:20px}
+.bar span{display:block;height:100%;background:var(--green);transition:width .25s}
+.gator{text-align:center;margin-bottom:6px;font-size:15px;color:var(--muted);font-weight:800}
+.cmp{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:10px 0 22px}
+.cmp .n{min-width:110px;text-align:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:76px;line-height:1;background:var(--soft);border:3px solid var(--line);border-radius:20px;padding:10px 6px}
+.cmp .sym{min-width:96px;text-align:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:58px;background:var(--yellow);color:var(--ink);border:3px solid var(--line);border-radius:20px;padding:10px 6px;transition:background .15s}
+.cmp .sym.right{background:var(--green)}
+.cmp .sym.wrong{background:var(--red);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.choices{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.choices .btn{font-size:38px;min-width:84px;min-height:72px}
+.choices .btn.right{background:var(--green)}
+.choices .btn.wrong{background:var(--red)}
+.fb{min-height:30px;text-align:center;font-weight:800}
+.fb.good{color:var(--ok)}
+.fb.bad{color:var(--bad)}
+.qfoot{display:flex;justify-content:center;margin-top:10px}
+
+/* results */
+.result{text-align:center}
+.result .ic{font-size:64px}
+.result .score{font-family:'Fredoka',sans-serif;font-weight:700;font-size:56px;margin:8px 0}
+.result .msg{font-size:20px;margin-bottom:10px}
+.breakdown{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:16px 0 22px}
+.breakdown div{background:var(--soft);border:3px solid var(--line);border-radius:14px;padding:10px 16px;font-family:'Fredoka',sans-serif;font-weight:600;min-width:120px}
+.breakdown .num{font-size:30px}
+.review{text-align:left;margin-top:10px}
+.review summary{cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;margin-bottom:8px}
+.rlist{display:grid;gap:8px;max-height:340px;overflow:auto;padding-right:4px;margin-top:8px}
+.ritem{display:flex;align-items:center;gap:10px;background:var(--soft);border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-family:'Fredoka',sans-serif;font-weight:600}
+.ritem.bad{border-color:var(--bad)}
+.ritem .tag{margin-left:auto;font-size:14px;padding:2px 8px;border-radius:8px}
+.ritem.ok .tag{background:var(--green)}
+.ritem.bad .tag{background:var(--red);color:#fff}
+.hidden{display:none}
+footer{text-align:center;color:var(--muted);font-size:15px;margin-top:26px}
+@media (max-width:520px){
+  .cmp .n,.cmp .sym{min-width:82px;font-size:52px;padding:8px 4px}
+  .choices .btn{font-size:30px;min-width:66px}
 }
-.opt:hover:not(:disabled){border-color:var(--blue)}
-.opt:active:not(:disabled){transform:translateY(3px); box-shadow:0 1px 0 var(--shadow)}
-.key{flex:none; width:34px; height:34px; border-radius:50%; background:var(--bg); border:2px solid var(--line); display:grid; place-items:center; font-size:16px; color:var(--muted)}
-.opt:disabled{cursor:default}
-.opt.right{background:var(--good-bg); border-color:var(--good)}
-.opt.wrong{background:var(--bad-bg); border-color:var(--bad)}
-.opt.dim{opacity:.55}
-.mark{margin-left:auto; font-size:26px}
-
-.fb{margin-top:18px; border-radius:16px; padding:14px 16px; font-size:19px}
-.fb.good{background:var(--good-bg); border:2px solid var(--good)}
-.fb.bad{background:var(--bad-bg); border:2px solid var(--bad)}
-.fb strong{display:block; font-size:22px}
-.fb span{color:var(--muted)}
-
-.btn{
-  display:inline-block; background:var(--blue); color:var(--blue-ink); border:0; border-radius:18px;
-  padding:14px 28px; font-size:22px; font-weight:600; box-shadow:0 5px 0 rgba(0,0,0,.25);
-}
-.btn:active{transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.25)}
-.btn.ghost{background:var(--card); color:var(--ink); border:3px solid var(--line); box-shadow:0 4px 0 var(--shadow)}
-.actions{margin-top:20px; display:flex; gap:12px; flex-wrap:wrap}
-
-/* start + results */
-h1{font-size:clamp(38px,9vw,60px); line-height:1.05; margin:0 0 12px; font-weight:700}
-.lead{color:var(--muted); font-size:20px; margin:0 0 20px}
-.topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px; padding:0; list-style:none}
-.topics li{background:var(--bg); border:2px solid var(--line); border-radius:999px; padding:2px 14px; font-size:16px}
-.toggle{display:flex; align-items:center; gap:12px; margin:0 0 6px; font-size:19px}
-.toggle input{width:26px; height:26px; accent-color:var(--blue)}
-.big{font-size:clamp(64px,16vw,104px); font-weight:700; line-height:1; margin:6px 0}
-.big small{font-size:.35em; color:var(--muted); font-weight:500}
-.verdict{font-size:26px; font-weight:600; margin:0 0 6px}
-h3{font-size:22px; margin:26px 0 10px}
-.bars{display:grid; gap:10px}
-.bar{display:grid; grid-template-columns:150px 1fr 56px; gap:10px; align-items:center; font-size:16px}
-@media (max-width:480px){ .bar{grid-template-columns:110px 1fr 44px; font-size:14px} }
-.bar .bg{height:14px; background:var(--bg); border:2px solid var(--line); border-radius:999px; overflow:hidden}
-.bar .bg i{display:block; height:100%; background:var(--good)}
-.bar b{text-align:right}
-.missed{display:grid; gap:10px}
-.miss{background:var(--bg); border:2px solid var(--line); border-radius:16px; padding:10px 14px; font-size:17px}
-.miss b{color:var(--good)}
-.miss em{font-style:normal; color:var(--bad)}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<main class="wrap" id="app"></main>
+<div class="wrap">
+
+<section id="intro" class="card intro">
+  <span class="tag">Number Sense Practice</span>
+  <h1>Greater, less or equal?</h1>
+  <p class="lede">100 questions. Two single-digit numbers, one gator mouth. Pick the symbol that makes it true.</p>
+  <div class="legend">
+    <div><span class="sym">&gt;</span> greater than</div>
+    <div><span class="sym">&lt;</span> less than</div>
+    <div><span class="sym">=</span> equal to</div>
+  </div>
+  <p>The alligator's mouth always opens toward the bigger number. Compare all 100 questions in one go, or stop any time — your score is kept as you go.</p>
+  <div class="startrow">
+    <button class="btn" id="startBtn" style="--c:var(--green)">Start the quiz</button>
+    <span class="miniscore hidden" id="resumeNote"></span>
+  </div>
+</section>
+
+<section id="quizSec" class="card hidden">
+  <div class="top"><span id="qCount">Question 1 of 100</span><span id="qScore">Score: 0</span></div>
+  <div class="bar"><span id="qBar" style="width:0%"></span></div>
+  <div class="gator" id="gatorHint">The mouth opens toward the bigger number</div>
+  <div class="cmp"><div class="n" id="numA">0</div><div class="sym" id="qSym">?</div><div class="n" id="numB">0</div></div>
+  <div class="choices" id="choices">
+    <button class="btn" data-v="&lt;" aria-label="less than">&lt;</button>
+    <button class="btn" data-v="=" aria-label="equal to">=</button>
+    <button class="btn" data-v="&gt;" aria-label="greater than">&gt;</button>
+  </div>
+  <p class="fb" id="fb" aria-live="polite"></p>
+  <div class="qfoot"><button class="btn ghost sm" id="stopBtn">Stop and see my score</button></div>
+</section>
+
+<section id="resultSec" class="card result hidden">
+  <div class="ic" id="rIcon">⭐</div>
+  <h2 id="rTitle">All done!</h2>
+  <div class="score" id="rScore">0 / 100</div>
+  <p class="msg" id="rMsg"></p>
+  <div class="breakdown">
+    <div>Correct<div class="num" id="rRight" style="color:var(--ok)">0</div></div>
+    <div>Missed<div class="num" id="rWrong" style="color:var(--bad)">0</div></div>
+    <div>Answered<div class="num" id="rTotal">0</div></div>
+  </div>
+  <details class="review"><summary>Review my answers</summary><div class="rlist" id="rList"></div></details>
+  <div class="startrow" style="justify-content:center;margin-top:20px">
+    <button class="btn" id="againBtn" style="--c:var(--green)">Play again, new questions</button>
+    <button class="btn ghost" id="homeBtn">Back to start</button>
+  </div>
+</section>
+
+<footer>Numbers 0–9 only. Every restart shuffles a brand new set of 100 comparisons.</footer>
+</div>
 
 <script>
-/* ---------- Questions (50) ---------- */
-// Q(topic, question, correct answer, [3 wrong answers], explanation, optional clock [hour, minute])
-const Q = (t, q, a, w, e, c) => ({ t, q, a, w, e, c });
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const $$=s=>Array.from(document.querySelectorAll(s));
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
 
-const QUESTIONS = [
-  // Addition
-  Q("Addition", "23 + 15 = ?", "38", ["28","48","37"], "Add the tens: 20 + 10 = 30. Add the ones: 3 + 5 = 8. Then 30 + 8 = 38."),
-  Q("Addition", "46 + 20 = ?", "66", ["56","76","26"], "Adding 20 is adding 2 tens. 4 tens + 2 tens = 6 tens, so 66."),
-  Q("Addition", "38 + 9 = ?", "47", ["46","48","37"], "Add 10 to get 48, then take away 1. That makes 47."),
-  Q("Addition", "57 + 25 = ?", "82", ["72","92","81"], "57 + 20 = 77. Then 77 + 5 = 82."),
-  Q("Addition", "64 + 19 = ?", "83", ["73","82","93"], "Add 20 to get 84, then take away 1. That makes 83."),
-  Q("Addition", "45 + 45 = ?", "90", ["80","100","89"], "This is a double. 40 + 40 = 80 and 5 + 5 = 10. So 90."),
-  Q("Addition", "8 + 7 + 5 = ?", "20", ["19","21","18"], "8 + 7 = 15. Then 15 + 5 = 20."),
-  Q("Addition", "16 + 16 = ?", "32", ["22","42","30"], "10 + 10 = 20 and 6 + 6 = 12. So 20 + 12 = 32."),
-  Q("Addition", "Ada has 27 stickers. Tom gives her 14 more. How many stickers does Ada have now?", "41", ["31","43","40"], "27 + 10 = 37. Then 37 + 4 = 41."),
-  Q("Addition", "36 children are on a bus. 28 more get on. How many children are on the bus now?", "64", ["54","74","62"], "36 + 20 = 56. Then 56 + 8 = 64."),
+function say(t){
+  try{
+    if(!('speechSynthesis' in window))return;
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(t);u.rate=.9;u.pitch=1.05;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
 
-  // Subtraction
-  Q("Subtraction", "48 − 23 = ?", "25", ["35","15","71"], "48 − 20 = 28. Then 28 − 3 = 25."),
-  Q("Subtraction", "70 − 30 = ?", "40", ["50","100","30"], "7 tens − 3 tens = 4 tens, which is 40."),
-  Q("Subtraction", "63 − 8 = ?", "55", ["45","56","71"], "63 − 3 = 60. Then 60 − 5 = 55."),
-  Q("Subtraction", "82 − 47 = ?", "35", ["45","25","39"], "82 − 40 = 42. Then 42 − 7 = 35."),
-  Q("Subtraction", "100 − 40 = ?", "60", ["50","140","70"], "10 tens − 4 tens = 6 tens, which is 60."),
-  Q("Subtraction", "91 − 15 = ?", "76", ["86","74","66"], "91 − 10 = 81. Then 81 − 5 = 76."),
-  Q("Subtraction", "12 + ? = 20. What number is missing?", "8", ["6","10","32"], "Count on from 12 up to 20. That is 8 steps."),
-  Q("Subtraction", "? − 10 = 25. What number is missing?", "35", ["15","45","25"], "Work backwards. 25 + 10 = 35."),
-  Q("Subtraction", "Mum baked 45 cookies. The family ate 19. How many cookies are left?", "26", ["36","64","24"], "45 − 20 = 25. But we only took away 19, so add 1 back. 26."),
-  Q("Subtraction", "A shop had 60 pencils. It sold 35. How many pencils are left?", "25", ["35","95","15"], "60 − 30 = 30. Then 30 − 5 = 25."),
-
-  // Place value
-  Q("Place value", "In the number 47, what does the 4 stand for?", "4 tens", ["4 ones","4 hundreds","47 tens"], "The 4 is in the tens place, so it means 4 tens, or 40."),
-  Q("Place value", "What number is 6 tens and 3 ones?", "63", ["36","603","9"], "6 tens is 60. 3 ones is 3. Together that is 63."),
-  Q("Place value", "Which number is the same as 50 + 7?", "57", ["507","75","12"], "50 is 5 tens and 7 is 7 ones. That is 57."),
-  Q("Place value", "Which is the biggest number?", "98", ["89","79","97"], "Look at the tens first. 9 tens is the most. Then compare ones: 98 is more than 97."),
-  Q("Place value", "Which is the smallest number?", "16", ["61","66","60"], "16 has only 1 ten. The others have 6 tens."),
-  Q("Place value", "Which sign makes this true?  45 __ 54", "<", [">","=","+"], "45 has 4 tens and 54 has 5 tens. So 45 is less than 54."),
-  Q("Place value", "What is 10 more than 34?", "44", ["35","24","134"], "10 more means the tens digit goes up by 1. 34 becomes 44."),
-  Q("Place value", "What is 10 less than 72?", "62", ["82","71","52"], "10 less means the tens digit goes down by 1. 72 becomes 62."),
-
-  // Counting patterns
-  Q("Counting patterns", "Count by 5s: 5, 10, 15, 20, __", "25", ["30","21","24"], "Each number is 5 more than the one before. 20 + 5 = 25."),
-  Q("Counting patterns", "Count by 2s: 2, 4, 6, 8, __", "10", ["9","12","11"], "Each number is 2 more than the one before. 8 + 2 = 10."),
-  Q("Counting patterns", "Count by 10s: 30, 40, 50, __", "60", ["55","51","70"], "Each number is 10 more than the one before. 50 + 10 = 60."),
-  Q("Counting patterns", "Count back by 10s: 100, 90, 80, __", "70", ["60","85","75"], "Each number is 10 less than the one before. 80 − 10 = 70."),
-
-  // Odd and even
-  Q("Odd and even", "Which number is even?", "24", ["17","31","9"], "Even numbers end in 0, 2, 4, 6 or 8. 24 ends in 4."),
-  Q("Odd and even", "Which number is odd?", "27", ["12","20","48"], "Odd numbers end in 1, 3, 5, 7 or 9. 27 ends in 7."),
-
-  // Equal groups
-  Q("Equal groups", "There are 3 plates. Each plate has 2 cookies. How many cookies are there in all?", "6", ["5","8","9"], "3 groups of 2 is 2 + 2 + 2 = 6."),
-  Q("Equal groups", "4 + 4 + 4 = ?", "12", ["8","16","14"], "3 groups of 4 is 12."),
-  Q("Equal groups", "There are 2 rows of 5 stars. How many stars are there in all?", "10", ["7","12","15"], "Each row has 5 stars. 5 + 5 = 10."),
-
-  // Money
-  Q("Money", "A toy costs $12 and a ball costs $8. How much do they cost together?", "$20", ["$18","$22","$4"], "12 + 8 = 20. Make a 10 with 2 and 8, then 10 + 10 = 20."),
-  Q("Money", "You have $50. You buy a book for $30. How much money is left?", "$20", ["$80","$30","$25"], "5 tens − 3 tens = 2 tens, which is $20."),
-  Q("Money", "You have 5 coins. Each coin is worth $2. How much money do you have?", "$10", ["$7","$12","$25"], "2 + 2 + 2 + 2 + 2 = 10. Count by 2s five times."),
-  Q("Money", "One pencil costs $3. How much do 4 pencils cost?", "$12", ["$7","$10","$34"], "3 + 3 + 3 + 3 = 12."),
-
-  // Time
-  Q("Time", "What time does the clock show?", "3:00", ["12:00","6:00","3:30"], "The short hand points to 3. The long hand points to 12. That is 3 o'clock.", [3,0]),
-  Q("Time", "What time does the clock show?", "7:30", ["6:30","7:00","5:35"], "The short hand is between 7 and 8. The long hand points to 6. That is half past 7.", [7,30]),
-  Q("Time", "What time does the clock show?", "9:15", ["3:45","9:03","3:09"], "The short hand is just past 9. The long hand points to 3, which is 15 minutes. That is quarter past 9.", [9,15]),
-  Q("Time", "How many days are in one week?", "7", ["5","10","12"], "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. That is 7 days."),
-
-  // Shapes
-  Q("Shapes", "How many sides does a triangle have?", "3", ["4","5","6"], "Tri means three. A triangle has 3 sides and 3 corners."),
-  Q("Shapes", "Which shape has 4 sides that are all the same length?", "Square", ["Rectangle","Triangle","Circle"], "A square has 4 equal sides. A rectangle has 2 long sides and 2 short sides."),
-
-  // Measurement
-  Q("Measurement", "Which tool is best for measuring how long a pencil is?", "A ruler", ["A clock","A jug","A calendar"], "A ruler measures length. A clock tells time and a jug measures liquid."),
-
-  // Fractions
-  Q("Fractions", "A pizza is cut into 2 equal parts. Each part is called a …", "half", ["quarter","third","whole"], "Two equal parts means each part is one half."),
-  Q("Fractions", "A pizza is cut into 4 equal parts. Each part is called a …", "quarter", ["half","third","whole"], "Four equal parts means each part is one quarter.")
-];
-
-/* ---------- Helpers ---------- */
-const app = document.getElementById("app");
-const TOTAL = QUESTIONS.length;
-const LETTERS = ["A", "B", "C", "D"];
-let order = [], pos = 0, score = 0, log = [], locked = false;
-
-function shuffle(a){
-  const b = a.slice();
-  for (let i = b.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [b[i], b[j]] = [b[j], b[i]];
+/* Build 100 questions: single digits 0-9, mixed so all three relations appear,
+   with no immediate repeat of the same pair. */
+function buildQuestions(){
+  const qs=[];
+  const wantEqual=18; // roughly a sixth equal, rest split greater/less
+  let equalsLeft=wantEqual;
+  let prev=null;
+  for(let i=0;i<100;i++){
+    let a,b;
+    if(equalsLeft>0 && Math.random()<(equalsLeft/(100-i))){
+      a=rnd(0,9);b=a;equalsLeft--;
+    }else{
+      a=rnd(0,9);b=rnd(0,9);
+      if(a===b){a=rnd(0,9);b=(a+rnd(1,9))%10;}
+    }
+    if(prev && prev[0]===a && prev[1]===b){b=(b+1)%10;}
+    prev=[a,b];
+    const rel=a<b?'<':a>b?'>':'=';
+    qs.push({a,b,rel});
   }
-  return b;
-}
-function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-function clockSVG(h, m){
-  const hourAngle = ((h % 12) * 30 + m * 0.5) * Math.PI / 180;
-  const minAngle = (m * 6) * Math.PI / 180;
-  const pt = (angle, r) => [50 + r * Math.sin(angle), 50 - r * Math.cos(angle)];
-  let nums = "";
-  for (let n = 1; n <= 12; n++){
-    const [x, y] = pt(n * 30 * Math.PI / 180, 36);
-    nums += `<text x="${x.toFixed(1)}" y="${(y + 3.6).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="600" fill="currentColor">${n}</text>`;
-  }
-  const [hx, hy] = pt(hourAngle, 22);
-  const [mx, my] = pt(minAngle, 32);
-  return `<svg class="clock" viewBox="0 0 100 100" role="img" aria-label="Analogue clock">
-    <circle cx="50" cy="50" r="47" fill="var(--bg)" stroke="var(--line)" stroke-width="4"/>
-    ${nums}
-    <line x1="50" y1="50" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="var(--blue)" stroke-width="5" stroke-linecap="round"/>
-    <line x1="50" y1="50" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="50" cy="50" r="3.5" fill="var(--ink)"/>
-  </svg>`;
+  return qs;
 }
 
-/* ---------- Screens ---------- */
-function showStart(){
-  const topics = [...new Set(QUESTIONS.map(q => q.t))];
-  app.innerHTML = `
-    <section class="card">
-      <h1>Grade 2 Maths Quiz</h1>
-      <p class="lead">${TOTAL} questions. Pick the right answer, then read the hint to see how it works.</p>
-      <ul class="topics">${topics.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
-      <label class="toggle"><input type="checkbox" id="mix" checked> Mix up the question order</label>
-      <div class="actions"><button class="btn" id="go">Start quiz</button></div>
-    </section>`;
-  document.getElementById("go").onclick = () => {
-    const mix = document.getElementById("mix").checked;
-    begin(QUESTIONS.map((_, i) => i), mix);
-  };
-  document.getElementById("go").focus();
+let questions=[],idx=0,score=0,answers=[],locked=false;
+
+function showSection(id){
+  ['intro','quizSec','resultSec'].forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));
 }
 
-function begin(indexes, mix){
-  order = mix ? shuffle(indexes) : indexes.slice();
-  pos = 0; score = 0; log = [];
-  showQuestion();
+function startQuiz(){
+  questions=buildQuestions();idx=0;score=0;answers=[];
+  showSection('quizSec');renderQ();
 }
 
-function showQuestion(){
-  locked = false;
-  const q = QUESTIONS[order[pos]];
-  const opts = shuffle([q.a, ...q.w]);
-  const pct = (pos / order.length) * 100;
-  app.innerHTML = `
-    <div class="top"><div>Question ${pos + 1} of ${order.length}</div><div class="score">Score: ${score}</div></div>
-    <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="${order.length}" aria-valuenow="${pos}">
-      <div class="fill" style="width:${pct}%"></div>
-      <span class="star" style="left:${Math.min(Math.max(pct, 3), 97)}%" aria-hidden="true">⭐</span>
-    </div>
-    <section class="card">
-      <span class="chip">${esc(q.t)}</span>
-      <h2 class="q">${esc(q.q)}</h2>
-      ${q.c ? clockSVG(q.c[0], q.c[1]) : ""}
-      <div class="opts" id="opts">
-        ${opts.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="key">${LETTERS[i]}</span><span>${esc(o)}</span><span class="mark" aria-hidden="true"></span></button>`).join("")}
-      </div>
-      <div id="fb" aria-live="polite"></div>
-      <div class="actions" id="act"></div>
-    </section>`;
-  document.querySelectorAll(".opt").forEach(b => b.onclick = () => choose(b, q));
-  window.scrollTo({ top: 0 });
+function renderQ(){
+  locked=false;
+  const q=questions[idx];
+  $('#qCount').textContent='Question '+(idx+1)+' of 100';
+  $('#qScore').textContent='Score: '+score;
+  $('#qBar').style.width=(idx/100*100)+'%';
+  $('#numA').textContent=q.a;$('#numB').textContent=q.b;
+  const sym=$('#qSym');sym.textContent='?';sym.className='sym';
+  $('#fb').textContent='';$('#fb').className='fb';
+  $$('#choices .btn').forEach(b=>b.className='btn');
+  say(q.a+(q.rel==='<'?' or ':' and ')+q.b);
 }
 
-function choose(btn, q){
-  if (locked) return;
-  locked = true;
-  const picked = btn.dataset.v;
-  const ok = picked === q.a;
-  if (ok) score++;
-  log.push({ i: order[pos], ok, picked });
-
-  document.querySelectorAll(".opt").forEach(b => {
-    b.disabled = true;
-    const mark = b.querySelector(".mark");
-    if (b.dataset.v === q.a){ b.classList.add("right"); mark.textContent = "✓"; }
-    else if (b === btn){ b.classList.add("wrong"); mark.textContent = "✗"; }
-    else b.classList.add("dim");
+function answer(v){
+  if(locked)return;locked=true;
+  const q=questions[idx],right=q.rel;
+  const sym=$('#qSym'),fb=$('#fb');
+  const ok=v===right;
+  sym.textContent=v;sym.classList.add(ok?'right':'wrong');
+  $$('#choices .btn').forEach(b=>{
+    if(b.dataset.v===right)b.classList.add('right');
+    else if(b.dataset.v===v)b.classList.add('wrong');
   });
-
-  document.getElementById("fb").innerHTML = ok
-    ? `<div class="fb good"><strong>Correct!</strong><span>${esc(q.e)}</span></div>`
-    : `<div class="fb bad"><strong>Not quite. The answer is ${esc(q.a)}.</strong><span>${esc(q.e)}</span></div>`;
-
-  const last = pos === order.length - 1;
-  document.getElementById("act").innerHTML = `<button class="btn" id="next">${last ? "See my results" : "Next question"}</button>`;
-  const next = document.getElementById("next");
-  next.onclick = () => { if (last) showResults(); else { pos++; showQuestion(); } };
-  next.focus();
+  const rel=right==='<'?'less than':right==='>'?'greater than':'equal to';
+  if(ok){score++;fb.textContent='Correct! '+q.a+' is '+rel+' '+q.b+'.';fb.className='fb good';say('Correct!');}
+  else{fb.textContent='Not quite. '+q.a+' is '+rel+' '+q.b+'.';fb.className='fb bad';}
+  answers.push({a:q.a,b:q.b,right,picked:v,ok});
+  $('#qScore').textContent='Score: '+score;
+  setTimeout(()=>{ idx++; idx<100 ? renderQ() : finish(); },ok?750:1300);
 }
 
-function showResults(){
-  const n = order.length;
-  const pct = Math.round((score / n) * 100);
-  const verdict =
-    pct >= 90 ? "Maths star! Amazing work." :
-    pct >= 70 ? "Great job! You know your maths." :
-    pct >= 50 ? "Good effort. A little more practice and you'll get there." :
-                "Keep going. Every try makes you stronger.";
-
-  const byTopic = {};
-  log.forEach(l => {
-    const t = QUESTIONS[l.i].t;
-    byTopic[t] = byTopic[t] || { right: 0, total: 0 };
-    byTopic[t].total++;
-    if (l.ok) byTopic[t].right++;
-  });
-  const bars = Object.entries(byTopic).map(([t, v]) => {
-    const p = Math.round((v.right / v.total) * 100);
-    return `<div class="bar"><span>${esc(t)}</span><div class="bg"><i style="width:${p}%"></i></div><b>${v.right}/${v.total}</b></div>`;
-  }).join("");
-
-  const missed = log.filter(l => !l.ok);
-  const missedHTML = missed.length ? `
-    <h3>Questions to try again</h3>
-    <div class="missed">
-      ${missed.map(l => {
-        const q = QUESTIONS[l.i];
-        return `<div class="miss">${esc(q.q)}${q.c ? " (clock question)" : ""}<br>You said <em>${esc(l.picked)}</em>. Answer: <b>${esc(q.a)}</b></div>`;
-      }).join("")}
-    </div>` : "";
-
-  app.innerHTML = `
-    <section class="card">
-      <p class="verdict">${verdict}</p>
-      <div class="big">${score}<small> / ${n}</small></div>
-      <h3>How you did by topic</h3>
-      <div class="bars">${bars}</div>
-      ${missedHTML}
-      <div class="actions">
-        <button class="btn" id="again">Try again</button>
-        ${missed.length ? `<button class="btn ghost" id="redo">Practise missed questions</button>` : ""}
-      </div>
-    </section>`;
-  document.getElementById("again").onclick = () => begin(QUESTIONS.map((_, i) => i), true);
-  const redo = document.getElementById("redo");
-  if (redo) redo.onclick = () => begin(missed.map(l => l.i), true);
-  window.scrollTo({ top: 0 });
+function finish(){
+  showSection('resultSec');
+  const total=answers.length,wrong=total-score;
+  $('#rScore').textContent=score+' / '+total;
+  $('#rRight').textContent=score;$('#rWrong').textContent=wrong;$('#rTotal').textContent=total;
+  const pct=total?Math.round(score/total*100):0;
+  let icon='⭐',title='All done!',msg='';
+  if(total<100){title='Stopped early';msg='You answered '+total+' out of 100. '+pct+'% correct so far.';icon='⏸️';}
+  else if(pct>=90){msg='Fantastic work! You really know your greater than, less than and equal to.';icon='🏆';}
+  else if(pct>=70){msg='Great job! A little more practice and you will have it down cold.';icon='⭐';}
+  else{msg='Good try! Play again to practice the ones that tripped you up.';icon='💪';}
+  $('#rIcon').textContent=icon;$('#rTitle').textContent=title;$('#rMsg').textContent=msg;
+  say(title+'. '+msg);
+  const list=$('#rList');
+  list.innerHTML=answers.map((r,i)=>{
+    const rel=r.right==='<'?'less than':r.right==='>'?'greater than':'equal to';
+    return '<div class="ritem '+(r.ok?'ok':'bad')+'">'
+      +'<span>'+(i+1)+'. '+r.a+' '+r.right+' '+r.b+'</span>'
+      +'<span style="color:var(--muted);font-weight:400">('+r.a+' is '+rel+' '+r.b+')</span>'
+      +'<span class="tag">'+(r.ok?'Got it':'You picked '+r.picked)+'</span></div>';
+  }).join('');
 }
 
-/* Keyboard: press A–D or 1–4 to answer */
-document.addEventListener("keydown", e => {
-  if (locked || e.ctrlKey || e.metaKey || e.altKey) return;
-  const opts = document.querySelectorAll(".opt");
-  if (!opts.length) return;
-  const k = e.key.toLowerCase();
-  let idx = "abcd".indexOf(k);
-  if (idx < 0) idx = "1234".indexOf(k);
-  if (idx >= 0 && opts[idx]) opts[idx].click();
+$('#startBtn').onclick=startQuiz;
+$('#againBtn').onclick=startQuiz;
+$('#homeBtn').onclick=()=>showSection('intro');
+$('#stopBtn').onclick=()=>{ answers.length ? finish() : showSection('intro'); };
+$('#choices').addEventListener('click',e=>{
+  const b=e.target.closest('.btn');if(!b)return;answer(b.dataset.v);
 });
-
-showStart();
+})();
 </script>
 </body>
 </html>
