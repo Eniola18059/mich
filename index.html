@@ -1,169 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Greater Than / Less Than / Equal To Quiz</title>
+<title>Michelle's Grade 6 English Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f7fb; --card:#ffffff; --ink:#1f2430; --muted:#6b7280;
-  --brand:#0891b2; --brand-ink:#ffffff; --good:#16a34a; --bad:#dc2626; --line:#e5e7eb;
+  --bg:#FBF7F0; --card:#FFFFFF; --ink:#2B2420; --muted:#7A6F63; --line:#E3D9C9;
+  --plum:#6A3B5A; --plum-ink:#FFFFFF; --gold:#C79A3B; --good:#3E7A4F; --good-bg:#E4F1E4;
+  --bad:#B3453D; --bad-bg:#FBE7E3; --shadow:#D9CBB3;
+  box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){--bg:#14161f;--card:#1d2030;--ink:#e9eaf2;--muted:#9aa0b4;--line:#2b2f42;}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1E1A17; --card:#2A2420; --ink:#F3ECE1; --muted:#B7AA98; --line:#463C33;
+    --plum:#C084AC; --plum-ink:#241221; --gold:#E0B85B; --good:#78C68C; --good-bg:#26382B;
+    --bad:#E58C84; --bad-bg:#3E2422; --shadow:#141110;
+  }
 }
-:root[data-theme="dark"]{--bg:#14161f;--card:#1d2030;--ink:#e9eaf2;--muted:#9aa0b4;--line:#2b2f42;}
-*{box-sizing:border-box;}
-html{scroll-padding-top:env(safe-area-inset-top,0px);}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100%;}
-.wrap{max-width:560px;margin:0 auto;padding:20px 16px 60px;}
-h1{font-size:1.3rem;margin:8px 0 2px;}
-.sub{color:var(--muted);font-size:.9rem;margin-bottom:16px;}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
-.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:18px;}
-.bar{height:100%;background:var(--brand);width:0%;transition:width .2s;}
-.qnum{color:var(--brand);font-weight:700;font-size:.85rem;margin-bottom:4px;}
-.numrow{display:flex;align-items:center;justify-content:center;gap:18px;font-size:2.2rem;font-weight:800;margin:22px 0 26px;}
-.blank{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border:2px dashed var(--line);border-radius:12px;font-size:1.6rem;color:var(--muted);}
-.opts{display:flex;gap:10px;justify-content:center;}
-.opt{flex:1;text-align:center;padding:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:1.6rem;font-weight:700;cursor:pointer;}
-.opt:hover{border-color:var(--brand);}
-.opt.selected{border-color:var(--brand);background:rgba(8,145,178,.08);}
-.opt.correct{border-color:var(--good);background:rgba(22,163,74,.12);}
-.opt.wrong{border-color:var(--bad);background:rgba(220,38,38,.12);}
-.opt:disabled{cursor:default;}
-.row{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px;}
-button.nav{background:var(--brand);color:var(--brand-ink);border:none;padding:11px 18px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;}
-button.nav:disabled{opacity:.4;cursor:default;}
-button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);padding:11px 18px;border-radius:10px;font-size:.9rem;cursor:pointer;}
-.feedback{margin-top:10px;font-size:.9rem;min-height:1.2em;text-align:center;}
-.feedback.good{color:var(--good);}
-.feedback.bad{color:var(--bad);}
-.result{text-align:center;}
-.score{font-size:2.4rem;font-weight:800;color:var(--brand);margin:6px 0;}
-.tag{display:inline-block;background:var(--bg);border:1px solid var(--line);padding:3px 10px;border-radius:999px;font-size:.75rem;color:var(--muted);margin-bottom:10px;}
+:root[data-theme="dark"]{
+  --bg:#1E1A17; --card:#2A2420; --ink:#F3ECE1; --muted:#B7AA98; --line:#463C33;
+  --plum:#C084AC; --plum-ink:#241221; --gold:#E0B85B; --good:#78C68C; --good-bg:#26382B;
+  --bad:#E58C84; --bad-bg:#3E2422; --shadow:#141110;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Karla","Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.5; min-height:100vh;
+}
+.wrap{max-width:680px; margin:0 auto; padding:20px 16px 48px}
+button{font:inherit; color:inherit; cursor:pointer}
+:focus-visible{outline:4px solid var(--gold); outline-offset:3px}
+h1,h2,.serif{font-family:"Fraunces","Georgia",serif}
+
+/* top bar */
+.top{display:flex; justify-content:space-between; align-items:center; gap:12px; font-weight:600; font-size:15px}
+.top .score{background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 14px}
+.track{height:8px; background:var(--card); border:1px solid var(--line); border-radius:999px; margin:10px 0 20px; overflow:hidden}
+.fill{height:100%; background:var(--plum); border-radius:999px; transition:width .35s ease}
+
+/* card */
+.card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 24px; box-shadow:0 5px 0 var(--shadow)}
+.chip{display:inline-block; background:var(--gold); color:#2B2420; font-weight:700; font-size:13px; letter-spacing:.02em; padding:3px 13px; border-radius:999px}
+.q{font-family:"Fraunces",serif; font-weight:600; font-size:clamp(20px,4.2vw,26px); line-height:1.3; margin:14px 0 18px}
+
+.passage{background:var(--bg); border:1px solid var(--line); border-left:4px solid var(--plum); border-radius:10px; padding:16px 18px; margin-bottom:18px}
+.passage h3{margin:0 0 8px; font-size:18px}
+.passage p{margin:0 0 10px; font-size:16px; color:var(--ink)}
+.passage p:last-child{margin-bottom:0}
+
+.opts{display:grid; gap:10px}
+.opt{
+  display:flex; align-items:center; gap:12px; text-align:left;
+  background:var(--card); border:2px solid var(--line); border-radius:12px;
+  padding:12px 15px; font-size:17px; min-height:52px;
+}
+.opt:hover:not(:disabled){border-color:var(--plum)}
+.key{flex:none; width:28px; height:28px; border-radius:50%; background:var(--bg); border:1px solid var(--line); display:grid; place-items:center; font-size:14px; color:var(--muted); font-weight:700}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--good-bg); border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg); border-color:var(--bad)}
+.opt.dim{opacity:.5}
+.mark{margin-left:auto; font-size:20px}
+
+.fb{margin-top:16px; border-radius:12px; padding:13px 15px; font-size:16px}
+.fb.good{background:var(--good-bg); border:1px solid var(--good)}
+.fb.bad{background:var(--bad-bg); border:1px solid var(--bad)}
+.fb strong{display:block; font-size:17px; margin-bottom:3px}
+.fb span{color:var(--muted)}
+
+.btn{
+  display:inline-block; background:var(--plum); color:var(--plum-ink); border:0; border-radius:12px;
+  padding:12px 24px; font-size:17px; font-weight:600; box-shadow:0 4px 0 rgba(0,0,0,.18);
+}
+.btn:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.btn.ghost{background:var(--card); color:var(--ink); border:2px solid var(--line); box-shadow:0 3px 0 var(--shadow)}
+.actions{margin-top:20px; display:flex; gap:12px; flex-wrap:wrap}
+
+/* start + results */
+h1{font-size:clamp(32px,8vw,46px); line-height:1.1; margin:0 0 10px; font-weight:700}
+.lead{color:var(--muted); font-size:17px; margin:0 0 18px}
+.topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 20px; padding:0; list-style:none}
+.topics li{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:3px 13px; font-size:14px; color:var(--muted)}
+.toggle{display:flex; align-items:center; gap:10px; margin:0 0 4px; font-size:16px}
+.toggle input{width:22px; height:22px; accent-color:var(--plum)}
+.big{font-family:"Fraunces",serif; font-size:clamp(52px,14vw,84px); font-weight:700; line-height:1; margin:4px 0}
+.big small{font-size:.35em; color:var(--muted); font-weight:500; font-family:"Karla",sans-serif}
+.verdict{font-size:20px; font-weight:600; margin:0 0 4px}
+h3.section{font-size:19px; margin:26px 0 10px; font-family:"Fraunces",serif}
+.bars{display:grid; gap:9px}
+.bar{display:grid; grid-template-columns:150px 1fr 50px; gap:10px; align-items:center; font-size:14px}
+@media (max-width:480px){ .bar{grid-template-columns:100px 1fr 40px; font-size:13px} }
+.bar .bg{height:10px; background:var(--bg); border:1px solid var(--line); border-radius:999px; overflow:hidden}
+.bar .bg i{display:block; height:100%; background:var(--good)}
+.bar b{text-align:right}
+.missed{display:grid; gap:9px}
+.miss{background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:15px}
+.miss b{color:var(--good)}
+.miss em{font-style:normal; color:var(--bad)}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <span class="tag">Math • Double-Digit Numbers</span>
-  <h1>Greater Than, Less Than &amp; Equal To</h1>
-  <div class="sub" id="subtitle">100 questions — pick &gt;, &lt; or =</div>
-  <div class="progress"><div class="bar" id="bar"></div></div>
-  <div class="card" id="card"></div>
-</div>
+<main class="wrap" id="app"></main>
 
 <script>
-// Generate 100 double-digit comparison questions
-function genQuestions(n){
-  const list = [];
-  const seen = new Set();
-  let equalCount = 0;
-  while(list.length < n){
-    let a = Math.floor(Math.random()*90)+10; // 10-99
-    let b;
-    // about 1 in 6 pairs should be equal
-    if(Math.random() < 0.16){
-      b = a;
-    } else {
-      b = Math.floor(Math.random()*90)+10;
-    }
-    const key = a+'_'+b;
-    if(seen.has(key)) continue;
-    seen.add(key);
-    let answer = a>b ? 0 : (a<b ? 1 : 2);
-    if(answer===2) equalCount++;
-    list.push({a, b, answer});
+/* ---------- Reading passage ---------- */
+const PASSAGE_TITLE = "The Lighthouse Keeper's Apprentice";
+const PASSAGE = [
+  "Nadia had lived on the mainland for eleven years before her grandmother finally agreed to let her spend the summer at the lighthouse. The old stone tower stood on a jagged spit of rock, and its beam swept across the water every eight seconds, day and night, guiding ships away from the reef.",
+  "\u201cThe light is not decoration,\u201d her grandmother said on the first morning, handing Nadia a rag and a tin of polish. \u201cIt is a promise. Every sailor who sees it trusts that someone is awake, watching, keeping it burning.\u201d Nadia nodded, though she privately thought the job sounded lonely and dull.",
+  "By the second week, Nadia had learned to wind the great clockwork mechanism that turned the lens, to log the weather three times a day, and to recognise the difference between a fishing trawler's engine and a coast guard cutter's, just by the sound carried on the wind. She discovered that keeping the light burning was not one task but a hundred small ones, each depending on the last.",
+  "One foggy evening, a small sailboat lost its bearings near the reef. Nadia spotted its dim lantern bobbing dangerously close to the rocks and rang the warning bell without waiting for her grandmother's instruction. The sailors adjusted course and later thanked the keepers by radio. Her grandmother said nothing, but that night she let Nadia record the entry in the official logbook herself, in her own handwriting, for the first time."
+];
+
+/* ---------- Questions (60) ---------- */
+// t: topic, q: question, a: correct answer, w: [wrong x3], e: explanation, p: true if a comprehension question
+const Q = (t, q, a, w, e, p) => ({ t, q, a, w, e, p: !!p });
+
+const QUESTIONS = [
+  // Reading comprehension (10) — based on PASSAGE
+  Q("Comprehension", "How many years had Nadia lived on the mainland before the story begins?", "Eleven", ["Eight","Twelve","Three"], "The passage states she \u201chad lived on the mainland for eleven years.\u201d", true),
+  Q("Comprehension", "According to Nadia's grandmother, what does the lighthouse's beam represent?", "A promise that someone is watching", ["A warning to tourists","A signal for fishing season","A decoration for the coast"], "Her grandmother says, \u201cIt is a promise... that someone is awake, watching, keeping it burning.\u201d", true),
+  Q("Comprehension", "How often does the lighthouse beam sweep across the water?", "Every eight seconds", ["Every minute","Every hour","Every eight minutes"], "The second paragraph says the beam \u201cswept across the water every eight seconds.\u201d", true),
+  Q("Comprehension", "What was Nadia's first impression of the job, before she started?", "She thought it sounded lonely and dull", ["She thought it sounded exciting", "She thought it sounded dangerous", "She thought it sounded easy"], "The text says she \u201cprivately thought the job sounded lonely and dull.\u201d", true),
+  Q("Comprehension", "By the second week, what had Nadia learned to do, besides winding the clockwork mechanism?", "Log the weather and tell boats apart by sound", ["Sail a boat alone", "Repair the lens by herself", "Cook meals for sailors"], "She learned to log weather and \u201crecognise the difference between a fishing trawler's engine and a coast guard cutter's... by sound.\u201d", true),
+  Q("Comprehension", "What does the passage suggest about keeping the light burning?", "It is made up of many small connected tasks", ["It only requires one simple task", "It happens automatically without help", "It is mostly about polishing the lens"], "The passage says it \u201cwas not one task but a hundred small ones, each depending on the last.\u201d", true),
+  Q("Comprehension", "What happened one foggy evening?", "A small sailboat drifted close to the reef", ["The lighthouse lamp went out", "A coast guard cutter needed fuel", "Nadia's grandmother fell ill"], "\u201cA small sailboat lost its bearings near the reef.\u201d", true),
+  Q("Comprehension", "What did Nadia do when she saw the sailboat's lantern near the rocks?", "She rang the warning bell", ["She called her grandmother first", "She waited to see what would happen", "She wrote it in the logbook"], "\u201cNadia... rang the warning bell without waiting for her grandmother's instruction.\u201d", true),
+  Q("Comprehension", "How did the sailors respond after adjusting course?", "They thanked the keepers by radio", ["They sailed away without a word", "They sent a letter the next week", "They visited the lighthouse in person"], "\u201cThe sailors adjusted course and later thanked the keepers by radio.\u201d", true),
+  Q("Comprehension", "What did the grandmother allow Nadia to do for the first time at the end of the passage?", "Write the logbook entry herself", ["Operate the lens alone", "Sail the boat to shore", "Answer the radio call"], "\u201cShe let Nadia record the entry in the official logbook herself, in her own handwriting, for the first time.\u201d", true),
+
+  // Vocabulary — synonyms, antonyms, context clues (10)
+  Q("Vocabulary", "Which word is a synonym for \u201cenormous\u201d?", "Massive", ["Tiny","Narrow","Faint"], "\u201cMassive\u201d means very large, just like \u201cenormous.\u201d"),
+  Q("Vocabulary", "Which word is an antonym for \u201cgenerous\u201d?", "Stingy", ["Kind","Wealthy","Cheerful"], "\u201cStingy\u201d means unwilling to give, the opposite of \u201cgenerous.\u201d"),
+  Q("Vocabulary", "In the sentence \u201cThe hikers trudged wearily up the steep trail,\u201d what does \u201ctrudged\u201d most likely mean?", "Walked slowly with effort", ["Ran quickly", "Sat down to rest", "Sang a song"], "The context (\u201cwearily,\u201d \u201csteep trail\u201d) shows the hikers were walking with tired, heavy steps."),
+  Q("Vocabulary", "Which word means the same as \u201cfragile\u201d?", "Delicate", ["Sturdy","Heavy","Loud"], "\u201cDelicate\u201d and \u201cfragile\u201d both describe something easily broken."),
+  Q("Vocabulary", "Which word is the antonym of \u201cancient\u201d?", "Modern", ["Historic","Old","Aged"], "\u201cModern\u201d means recent or new, the opposite of \u201cancient.\u201d"),
+  Q("Vocabulary", "\u201cThe detective scrutinised every clue before making a decision.\u201d What does \u201cscrutinised\u201d mean?", "Examined closely", ["Ignored", "Threw away", "Copied"], "\u201cScrutinised\u201d means looked at very carefully."),
+  Q("Vocabulary", "Which word means \u201cto make something clear or easy to understand\u201d?", "Clarify", ["Confuse","Complicate","Conceal"], "\u201cClarify\u201d means to explain or make something clearer."),
+  Q("Vocabulary", "Which word is a synonym for \u201cbrave\u201d?", "Courageous", ["Timid","Cautious","Reluctant"], "\u201cCourageous\u201d means showing bravery."),
+  Q("Vocabulary", "\u201cThe old bridge was so rickety that few people dared cross it.\u201d What does \u201crickety\u201d mean?", "Unstable and likely to collapse", ["Brand new and strong", "Brightly painted", "Very wide"], "Context clues (\u201cfew people dared cross it\u201d) suggest the bridge was unsafe or shaky."),
+  Q("Vocabulary", "Which word means the opposite of \u201cvisible\u201d?", "Invisible", ["Bright","Clear","Distant"], "Adding the prefix \u201cin-\u201d to \u201cvisible\u201d creates its opposite, \u201cinvisible.\u201d"),
+
+  // Grammar — parts of speech (8)
+  Q("Grammar", "In the sentence \u201cThe curious cat chased the ribbon quickly,\u201d which word is the adverb?", "Quickly", ["Curious","Cat","Chased"], "\u201cQuickly\u201d describes how the cat chased, so it is an adverb."),
+  Q("Grammar", "Which word in this sentence is a proper noun? \u201cWe visited Paris last summer.\u201d", "Paris", ["We","visited","summer"], "\u201cParis\u201d names a specific place, so it is a proper noun and is capitalised."),
+  Q("Grammar", "In \u201cShe sings beautifully,\u201d what part of speech is \u201csings\u201d?", "Verb", ["Noun","Adjective","Preposition"], "\u201cSings\u201d shows the action being done, so it is a verb."),
+  Q("Grammar", "Which word is a pronoun in this sentence? \u201cThey gave the trophy to him.\u201d", "Him", ["Trophy","Gave","The"], "A pronoun takes the place of a noun. \u201cHim\u201d replaces a person's name."),
+  Q("Grammar", "In \u201cThe bright red kite soared above the trees,\u201d which word is an adjective?", "Bright", ["Soared","Above","Trees"], "\u201cBright\u201d describes the kite, so it is an adjective."),
+  Q("Grammar", "Which word is a preposition in this sentence? \u201cThe cat hid under the table.\u201d", "Under", ["Cat","Hid","Table"], "\u201cUnder\u201d shows the relationship between the cat and the table, so it is a preposition."),
+  Q("Grammar", "Which word is a conjunction in this sentence? \u201cI wanted to go, but it started raining.\u201d", "But", ["Wanted","Started","Raining"], "\u201cBut\u201d joins the two parts of the sentence together, so it is a conjunction."),
+  Q("Grammar", "In \u201cWow, that was an amazing goal!\u201d which word is an interjection?", "Wow", ["Amazing","Goal","That"], "\u201cWow\u201d expresses strong feeling on its own, so it is an interjection."),
+
+  // Grammar — verb tense & subject-verb agreement (8)
+  Q("Grammar", "Which sentence is written in the past tense?", "She walked to school yesterday.", ["She walks to school every day.","She will walk to school tomorrow.","She is walking to school now."], "\u201cWalked\u201d shows an action that already happened, which is past tense."),
+  Q("Grammar", "Choose the correct verb: \u201cThe dogs ___ in the park every morning.\u201d", "run", ["runs","running","ran"], "\u201cDogs\u201d is plural, so it needs the plural verb form \u201crun,\u201d not \u201cruns.\u201d"),
+  Q("Grammar", "Choose the correct verb: \u201cEach of the students ___ a pencil.\u201d", "has", ["have","having","had"], "\u201cEach\u201d is singular, so it takes the singular verb \u201chas.\u201d"),
+  Q("Grammar", "Which sentence uses the future tense correctly?", "We will visit the museum next week.", ["We visit the museum next week.","We visited the museum next week.","We visiting the museum next week."], "\u201cWill visit\u201d shows an action that has not happened yet, which is future tense."),
+  Q("Grammar", "What is the past tense of the verb \u201cbring\u201d?", "Brought", ["Bringed","Bringing","Brings"], "\u201cBring\u201d is an irregular verb; its past tense is \u201cbrought,\u201d not \u201cbringed.\u201d"),
+  Q("Grammar", "Choose the correct sentence.", "Neither of the boys was ready.", ["Neither of the boys were ready.","Neither of the boys is were ready.","Neither of the boys are ready."], "\u201cNeither\u201d is singular, so it takes the singular verb \u201cwas.\u201d"),
+  Q("Grammar", "What is the past tense of the verb \u201cswim\u201d?", "Swam", ["Swimmed","Swum","Swims"], "\u201cSwim\u201d is irregular; its simple past tense is \u201cswam.\u201d"),
+  Q("Grammar", "Choose the correct sentence.", "The team is practising for the final match.", ["The team are practising for the final match.","The team am practising for the final match.","The team be practising for the final match."], "\u201cTeam\u201d is treated as a single unit here, so it takes the singular verb \u201cis.\u201d"),
+
+  // Punctuation & capitalisation (8)
+  Q("Punctuation", "Which sentence is punctuated correctly?", "\u201cWatch out!\u201d shouted Malik.", ["Watch out! shouted Malik.", "\u201cWatch out\u201d shouted Malik!", "Watch out shouted, \u201cMalik!\u201d"], "The quotation marks surround the exact words spoken, and the exclamation mark stays inside the quotes."),
+  Q("Punctuation", "Which sentence uses commas correctly?", "For the trip, we packed sandwiches, water, and a map.", ["For the trip we packed, sandwiches water and a map.","For, the trip we packed sandwiches water and a map.","For the trip we packed sandwiches water, and, a map."], "Commas separate items in a list and follow the introductory phrase \u201cFor the trip.\u201d"),
+  Q("Punctuation", "Which sentence needs an apostrophe to show possession?", "The dogs bowl was empty.", ["The dogs barked loudly.","The dogs ran in the yard.","The dogs are hungry."], "\u201cThe dog's bowl\u201d needs an apostrophe to show the bowl belongs to the dog."),
+  Q("Punctuation", "Which word should be capitalised in this sentence? \u201cwe are travelling to lagos in july.\u201d", "Lagos", ["travelling","in","are"], "\u201cLagos\u201d is a proper noun (a specific place), so it must be capitalised."), 
+  Q("Punctuation", "Which sentence ends with the correct punctuation for a question?", "Have you finished your homework?", ["Have you finished your homework.","Have you finished your homework!","Have you finished your homework,"], "A sentence that asks something ends with a question mark."),
+  Q("Punctuation", "Which sentence correctly uses a colon?", "She needed three things: a pen, paper, and glue.", ["She needed three things, a pen: paper, and glue.","She needed: three things a pen, paper, and glue.","She needed three things a pen, paper: and glue."], "A colon introduces a list after a complete sentence."),
+  Q("Punctuation", "Which sentence uses an apostrophe correctly to show a contraction?", "I can't find my shoes.", ["I ca'nt find my shoes.","I cant' find my shoes.","I cann't find my shoes."], "The apostrophe replaces the missing letters in \u201ccannot,\u201d placed right before \u201ct.\u201d"),
+  Q("Punctuation", "Which title is capitalised correctly?", "The Secret Garden", ["the secret Garden","The secret garden","the Secret garden"], "In a title, the main words are capitalised, including the first and last words."),
+
+  // Figurative language (6)
+  Q("Figurative language", "\u201cThe classroom was a zoo during the fire drill.\u201d This sentence is an example of…", "Metaphor", ["Simile","Onomatopoeia","Alliteration"], "A metaphor compares two things directly, without using \u201clike\u201d or \u201cas.\u201d The classroom is being called a zoo."),
+  Q("Figurative language", "\u201cHer smile was as bright as the sun.\u201d This sentence is an example of…", "Simile", ["Metaphor","Personification","Hyperbole"], "A simile compares two things using \u201clike\u201d or \u201cas.\u201d"),
+  Q("Figurative language", "\u201cThe wind whispered through the trees.\u201d This sentence is an example of…", "Personification", ["Simile","Metaphor","Onomatopoeia"], "Personification gives human actions, like whispering, to something that is not human."),
+  Q("Figurative language", "\u201cI've told you a million times to clean your room.\u201d This sentence is an example of…", "Hyperbole", ["Simile","Metaphor","Alliteration"], "Hyperbole is an exaggeration used for effect. No one has really said something a million times."),
+  Q("Figurative language", "\u201cThe buzzing bees flew past the busy beach.\u201d Which figurative device is used here?", "Alliteration", ["Simile","Onomatopoeia","Hyperbole"], "Alliteration repeats the same beginning sound, here the \u201cb\u201d sound."),
+  Q("Figurative language", "\u201cThe balloon popped with a loud bang.\u201d This sentence uses…", "Onomatopoeia", ["Simile","Metaphor","Personification"], "Onomatopoeia is a word that imitates the sound it describes, like \u201cbang.\u201d"),
+
+  // Sentence structure (5)
+  Q("Sentence structure", "Which of these is a complete sentence?", "The rain stopped, and the sun came out.", ["Because the rain stopped.","Running through the wet grass.","The rain stopped, and."], "This choice has a subject and verb in both parts and expresses a complete thought."),
+  Q("Sentence structure", "Which of these is a sentence fragment?", "Although she studied all night.", ["She studied all night.","She studied, and she passed.","She studied all night for the test."], "This fragment starts with \u201cAlthough\u201d but never finishes the thought."),
+  Q("Sentence structure", "Which of these is a run-on sentence that needs to be fixed?", "I finished my homework I went outside to play.", ["I finished my homework, so I went outside to play.","I finished my homework. Then I went outside to play.","After I finished my homework, I went outside to play."], "This sentence joins two complete ideas with no punctuation or connecting word between them."),
+  Q("Sentence structure", "Which sentence is a compound sentence?", "I wanted to stay home, but my mom said no.", ["I wanted to stay home.", "Staying home sounded nice.", "My mom said no."], "A compound sentence joins two complete sentences with a comma and a conjunction like \u201cbut.\u201d"),
+  Q("Sentence structure", "Which sentence is written correctly?", "After the movie ended, we walked home together.", ["After the movie ended we, walked home together.","After the movie, ended we walked home together.","After the movie ended, we, walked home together."], "A comma follows the introductory phrase \u201cAfter the movie ended,\u201d and no other commas are needed."),
+
+  // Spelling (5)
+  Q("Spelling", "Which word is spelled correctly?", "Definitely", ["Definately","Definitly","Deffinitely"], "The correct spelling is \u201cdefinitely,\u201d with \u201cite\u201d in the middle."),
+  Q("Spelling", "Which word is spelled correctly?", "Separate", ["Seperate","Separrate","Seporate"], "Remember: there is \u201ca rat\u201d in \u201csep-a-rate.\u201d"),
+  Q("Spelling", "Which word is spelled correctly?", "Necessary", ["Neccessary","Necesary","Neccesary"], "\u201cNecessary\u201d has one c and two s's."),
+  Q("Spelling", "Which word is spelled correctly?", "Believe", ["Beleive","Belive","Beleve"], "Remember the rule: i before e, except after c."),
+  Q("Spelling", "Which word is spelled correctly?", "Government", ["Goverment","Governement","Govermint"], "\u201cGovernment\u201d includes the small word \u201cgovern\u201d plus \u201cment.\u201d")
+];
+
+/* ---------- Helpers ---------- */
+const app = document.getElementById("app");
+const TOTAL = QUESTIONS.length;
+const LETTERS = ["A", "B", "C", "D"];
+let order = [], pos = 0, score = 0, log = [], locked = false;
+
+function shuffle(a){
+  const b = a.slice();
+  for (let i = b.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [b[i], b[j]] = [b[j], b[i]];
   }
-  return list;
+  return b;
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------- Screens ---------- */
+function showStart(){
+  const topics = [...new Set(QUESTIONS.map(q => q.t))];
+  app.innerHTML = `
+    <section class="card">
+      <h1>Michelle's Grade 6<br>English Quiz</h1>
+      <p class="lead">${TOTAL} questions, including a short story and ten comprehension questions about it. Read carefully, then answer.</p>
+      <ul class="topics">${topics.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+      <label class="toggle"><input type="checkbox" id="mix" checked> Mix up the question order</label>
+      <div class="actions"><button class="btn" id="go">Start quiz</button></div>
+    </section>`;
+  document.getElementById("go").onclick = () => {
+    const mix = document.getElementById("mix").checked;
+    begin(QUESTIONS.map((_, i) => i), mix);
+  };
+  document.getElementById("go").focus();
 }
 
-const RAW = genQuestions(100);
-const Q = RAW.map(item => ({
-  q: `${item.a}     ${item.b}`,
-  a: item.a, b: item.b,
-  o: [">", "<", "="],
-  ans: item.answer
-}));
+function begin(indexes, mix){
+  order = mix ? shuffle(indexes) : indexes.slice();
+  pos = 0; score = 0; log = [];
+  showQuestion();
+}
 
-let idx = 0;
-let answers = new Array(Q.length).fill(null);
-const card = document.getElementById('card');
-const bar = document.getElementById('bar');
-const subtitle = document.getElementById('subtitle');
+function showQuestion(){
+  locked = false;
+  const q = QUESTIONS[order[pos]];
+  const opts = shuffle([q.a, ...q.w]);
+  const pct = (pos / order.length) * 100;
+  const passageHTML = q.p ? `
+    <div class="passage">
+      <h3 class="serif">${esc(PASSAGE_TITLE)}</h3>
+      ${PASSAGE.map(p => `<p>${p}</p>`).join("")}
+    </div>` : "";
+  app.innerHTML = `
+    <div class="top"><div>Question ${pos + 1} of ${order.length}</div><div class="score">Score: ${score}</div></div>
+    <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="${order.length}" aria-valuenow="${pos}">
+      <div class="fill" style="width:${pct}%"></div>
+    </div>
+    <section class="card">
+      <span class="chip">${esc(q.t)}</span>
+      ${passageHTML}
+      <h2 class="q">${esc(q.q)}</h2>
+      <div class="opts" id="opts">
+        ${opts.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="key">${LETTERS[i]}</span><span>${esc(o)}</span><span class="mark" aria-hidden="true"></span></button>`).join("")}
+      </div>
+      <div id="fb" aria-live="polite"></div>
+      <div class="actions" id="act"></div>
+    </section>`;
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => choose(b, q));
+  window.scrollTo({ top: 0 });
+}
 
-function render(){
-  if(idx >= Q.length){ renderResult(); return; }
-  const item = Q[idx];
-  bar.style.width = ((idx)/Q.length*100)+'%';
-  subtitle.textContent = `Question ${idx+1} of ${Q.length}`;
-  let html = '';
-  html += `<div class="qnum">COMPARE THE NUMBERS</div>`;
-  html += `<div class="numrow">${item.a}<span class="blank">?</span>${item.b}</div>`;
-  html += `<div class="opts">`;
-  item.o.forEach((opt,i)=>{
-    const sel = answers[idx]===i ? 'selected':'';
-    html += `<button class="opt ${sel}" data-i="${i}" onclick="choose(${i})">${opt}</button>`;
+function choose(btn, q){
+  if (locked) return;
+  locked = true;
+  const picked = btn.dataset.v;
+  const ok = picked === q.a;
+  if (ok) score++;
+  log.push({ i: order[pos], ok, picked });
+
+  document.querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    const mark = b.querySelector(".mark");
+    if (b.dataset.v === q.a){ b.classList.add("right"); mark.textContent = "✓"; }
+    else if (b === btn){ b.classList.add("wrong"); mark.textContent = "✗"; }
+    else b.classList.add("dim");
   });
-  html += `</div>`;
-  html += `<div class="feedback" id="fb"></div>`;
-  html += `<div class="row">
-    <button class="ghost" onclick="prev()" ${idx===0?'disabled':''}>Back</button>
-    <button class="nav" id="nextBtn" onclick="next()" ${answers[idx]===null?'disabled':''}>${idx===Q.length-1?'Finish':'Next'}</button>
-  </div>`;
-  card.innerHTML = html;
-  if(answers[idx]!==null) showFeedback(idx, answers[idx]);
+
+  document.getElementById("fb").innerHTML = ok
+    ? `<div class="fb good"><strong>Correct!</strong><span>${esc(q.e)}</span></div>`
+    : `<div class="fb bad"><strong>Not quite. The answer is ${esc(q.a)}.</strong><span>${esc(q.e)}</span></div>`;
+
+  const last = pos === order.length - 1;
+  document.getElementById("act").innerHTML = `<button class="btn" id="next">${last ? "See my results" : "Next question"}</button>`;
+  const next = document.getElementById("next");
+  next.onclick = () => { if (last) showResults(); else { pos++; showQuestion(); } };
+  next.focus();
 }
 
-function choose(i){
-  if(answers[idx]!==null) return;
-  answers[idx] = i;
-  render();
-}
+function showResults(){
+  const n = order.length;
+  const pct = Math.round((score / n) * 100);
+  const verdict =
+    pct >= 90 ? "Outstanding, Michelle! That's excellent English." :
+    pct >= 70 ? "Well done, Michelle! Strong work." :
+    pct >= 50 ? "Good effort, Michelle. A bit more practice will help." :
+                "Keep practising, Michelle. Reviewing the missed questions below will help.";
 
-function showFeedback(qi, chosen){
-  const item = Q[qi];
-  const opts = card.querySelectorAll('.opt');
-  opts.forEach((el,i)=>{
-    el.disabled = true;
-    if(i===item.ans) el.classList.add('correct');
-    else if(i===chosen) el.classList.add('wrong');
+  const byTopic = {};
+  log.forEach(l => {
+    const t = QUESTIONS[l.i].t;
+    byTopic[t] = byTopic[t] || { right: 0, total: 0 };
+    byTopic[t].total++;
+    if (l.ok) byTopic[t].right++;
   });
-  const fb = document.getElementById('fb');
-  if(chosen===item.ans){ fb.textContent = "Correct!"; fb.className='feedback good'; }
-  else { fb.textContent = `Not quite — ${item.a} ${item.o[item.ans]} ${item.b} is correct.`; fb.className='feedback bad'; }
+  const bars = Object.entries(byTopic).map(([t, v]) => {
+    const p = Math.round((v.right / v.total) * 100);
+    return `<div class="bar"><span>${esc(t)}</span><div class="bg"><i style="width:${p}%"></i></div><b>${v.right}/${v.total}</b></div>`;
+  }).join("");
+
+  const missed = log.filter(l => !l.ok);
+  const missedHTML = missed.length ? `
+    <h3 class="section">Questions to review</h3>
+    <div class="missed">
+      ${missed.map(l => {
+        const q = QUESTIONS[l.i];
+        return `<div class="miss">${esc(q.q)}<br>You said <em>${esc(l.picked)}</em>. Answer: <b>${esc(q.a)}</b></div>`;
+      }).join("")}
+    </div>` : "";
+
+  app.innerHTML = `
+    <section class="card">
+      <p class="verdict">${verdict}</p>
+      <div class="big">${score}<small> / ${n}</small></div>
+      <h3 class="section">How Michelle did by topic</h3>
+      <div class="bars">${bars}</div>
+      ${missedHTML}
+      <div class="actions">
+        <button class="btn" id="again">Try again</button>
+        ${missed.length ? `<button class="btn ghost" id="redo">Practise missed questions</button>` : ""}
+      </div>
+    </section>`;
+  document.getElementById("again").onclick = () => begin(QUESTIONS.map((_, i) => i), true);
+  const redo = document.getElementById("redo");
+  if (redo) redo.onclick = () => begin(missed.map(l => l.i), true);
+  window.scrollTo({ top: 0 });
 }
 
-function next(){ idx++; render(); }
-function prev(){ idx--; render(); }
+/* Keyboard: press A–D or 1–4 to answer */
+document.addEventListener("keydown", e => {
+  if (locked || e.ctrlKey || e.metaKey || e.altKey) return;
+  const opts = document.querySelectorAll(".opt");
+  if (!opts.length) return;
+  const k = e.key.toLowerCase();
+  let idx = "abcd".indexOf(k);
+  if (idx < 0) idx = "1234".indexOf(k);
+  if (idx >= 0 && opts[idx]) opts[idx].click();
+});
 
-function renderResult(){
-  bar.style.width = '100%';
-  subtitle.textContent = 'Quiz complete';
-  let correct = 0;
-  answers.forEach((a,i)=>{ if(a===Q[i].ans) correct++; });
-  const pct = Math.round(correct/Q.length*100);
-  let msg = pct>=80?"Excellent work!":pct>=60?"Good job — keep practicing!":"Keep practicing, you'll improve!";
-  card.innerHTML = `<div class="result">
-    <div class="qnum">RESULTS</div>
-    <div class="score">${correct} / ${Q.length}</div>
-    <div style="color:var(--muted);margin-bottom:10px;">${pct}% correct</div>
-    <div style="margin-bottom:18px;">${msg}</div>
-    <button class="nav" onclick="restart()">Try Again (new numbers)</button>
-  </div>`;
-}
-
-function restart(){
-  const fresh = genQuestions(100);
-  Q.length = 0;
-  fresh.forEach(item => Q.push({q:'', a:item.a, b:item.b, o:[">","<","="], ans:item.answer}));
-  idx = 0;
-  answers = new Array(Q.length).fill(null);
-  render();
-}
-
-render();
+showStart();
 </script>
 </body>
 </html>
