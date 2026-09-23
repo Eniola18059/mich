@@ -1,351 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Michelle's Grade 6 English Quiz — Challenge</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Grade 4 Math: Number Sense & Operations</title>
 <style>
 :root{
-  --bg:#FBF7F0; --card:#FFFFFF; --ink:#2B2420; --muted:#7A6F63; --line:#E3D9C9;
-  --plum:#6A3B5A; --plum-ink:#FFFFFF; --gold:#C79A3B; --good:#3E7A4F; --good-bg:#E4F1E4;
-  --bad:#B3453D; --bad-bg:#FBE7E3; --shadow:#D9CBB3;
+  --bg:#f7f8fb; --card:#ffffff; --ink:#1c2333; --sub:#5a6273;
+  --brand:#4f5bd5; --brand2:#7c3aed; --accent:#0ea5a4; --warn:#e0a100; --ok:#15803d; --bad:#c0362c;
+  --line:#e5e7ef;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){
+@media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#1E1A17; --card:#2A2420; --ink:#F3ECE1; --muted:#B7AA98; --line:#463C33;
-    --plum:#C084AC; --plum-ink:#241221; --gold:#E0B85B; --good:#78C68C; --good-bg:#26382B;
-    --bad:#E58C84; --bad-bg:#3E2422; --shadow:#141110;
+    --bg:#12141c; --card:#1b1e2b; --ink:#eef0f7; --sub:#a3a9bd; --line:#2b2f42;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#1E1A17; --card:#2A2420; --ink:#F3ECE1; --muted:#B7AA98; --line:#463C33;
-  --plum:#C084AC; --plum-ink:#241221; --gold:#E0B85B; --good:#78C68C; --good-bg:#26382B;
-  --bad:#E58C84; --bad-bg:#3E2422; --shadow:#141110;
-}
-*,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{
-  margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Karla","Segoe UI",system-ui,sans-serif;
-  font-size:17px; line-height:1.5; min-height:100vh;
-}
-.wrap{max-width:680px; margin:0 auto; padding:20px 16px 48px}
-button{font:inherit; color:inherit; cursor:pointer}
-:focus-visible{outline:4px solid var(--gold); outline-offset:3px}
-h1,h2,.serif{font-family:"Fraunces","Georgia",serif}
-
-.top{display:flex; justify-content:space-between; align-items:center; gap:12px; font-weight:600; font-size:15px}
-.top .score{background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 14px}
-.track{height:8px; background:var(--card); border:1px solid var(--line); border-radius:999px; margin:10px 0 20px; overflow:hidden}
-.fill{height:100%; background:var(--plum); border-radius:999px; transition:width .35s ease}
-
-.card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 24px; box-shadow:0 5px 0 var(--shadow)}
-.chip{display:inline-block; background:var(--gold); color:#2B2420; font-weight:700; font-size:13px; letter-spacing:.02em; padding:3px 13px; border-radius:999px}
-.diff{display:inline-block; background:var(--plum); color:#fff; font-weight:700; font-size:12px; letter-spacing:.03em; padding:3px 11px; border-radius:999px; margin-left:6px}
-.q{font-family:"Fraunces",serif; font-weight:600; font-size:clamp(20px,4.2vw,26px); line-height:1.3; margin:14px 0 18px}
-
-.passage{background:var(--bg); border:1px solid var(--line); border-left:4px solid var(--plum); border-radius:10px; padding:16px 18px; margin-bottom:18px}
-.passage h3{margin:0 0 8px; font-size:18px}
-.passage p{margin:0 0 10px; font-size:16px; color:var(--ink)}
-.passage p:last-child{margin-bottom:0}
-
-.opts{display:grid; gap:10px}
-.opt{
-  display:flex; align-items:center; gap:12px; text-align:left;
-  background:var(--card); border:2px solid var(--line); border-radius:12px;
-  padding:12px 15px; font-size:17px; min-height:52px;
-}
-.opt:hover:not(:disabled){border-color:var(--plum)}
-.key{flex:none; width:28px; height:28px; border-radius:50%; background:var(--bg); border:1px solid var(--line); display:grid; place-items:center; font-size:14px; color:var(--muted); font-weight:700}
-.opt:disabled{cursor:default}
-.opt.right{background:var(--good-bg); border-color:var(--good)}
-.opt.wrong{background:var(--bad-bg); border-color:var(--bad)}
-.opt.dim{opacity:.5}
-.mark{margin-left:auto; font-size:20px}
-
-.fb{margin-top:16px; border-radius:12px; padding:13px 15px; font-size:16px}
-.fb.good{background:var(--good-bg); border:1px solid var(--good)}
-.fb.bad{background:var(--bad-bg); border:1px solid var(--bad)}
-.fb strong{display:block; font-size:17px; margin-bottom:3px}
-.fb span{color:var(--muted)}
-
-.btn{
-  display:inline-block; background:var(--plum); color:var(--plum-ink); border:0; border-radius:12px;
-  padding:12px 24px; font-size:17px; font-weight:600; box-shadow:0 4px 0 rgba(0,0,0,.18);
-}
-.btn:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.18)}
-.btn.ghost{background:var(--card); color:var(--ink); border:2px solid var(--line); box-shadow:0 3px 0 var(--shadow)}
-.actions{margin-top:20px; display:flex; gap:12px; flex-wrap:wrap}
-
-h1{font-size:clamp(30px,7.5vw,42px); line-height:1.1; margin:0 0 10px; font-weight:700}
-.lead{color:var(--muted); font-size:17px; margin:0 0 18px}
-.topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 20px; padding:0; list-style:none}
-.topics li{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:3px 13px; font-size:14px; color:var(--muted)}
-.toggle{display:flex; align-items:center; gap:10px; margin:0 0 4px; font-size:16px}
-.toggle input{width:22px; height:22px; accent-color:var(--plum)}
-.big{font-family:"Fraunces",serif; font-size:clamp(52px,14vw,84px); font-weight:700; line-height:1; margin:4px 0}
-.big small{font-size:.35em; color:var(--muted); font-weight:500; font-family:"Karla",sans-serif}
-.verdict{font-size:20px; font-weight:600; margin:0 0 4px}
-h3.section{font-size:19px; margin:26px 0 10px; font-family:"Fraunces",serif}
-.bars{display:grid; gap:9px}
-.bar{display:grid; grid-template-columns:150px 1fr 50px; gap:10px; align-items:center; font-size:14px}
-@media (max-width:480px){ .bar{grid-template-columns:100px 1fr 40px; font-size:13px} }
-.bar .bg{height:10px; background:var(--bg); border:1px solid var(--line); border-radius:999px; overflow:hidden}
-.bar .bg i{display:block; height:100%; background:var(--good)}
-.bar b{text-align:right}
-.missed{display:grid; gap:9px}
-.miss{background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:15px}
-.miss b{color:var(--good)}
-.miss em{font-style:normal; color:var(--bad)}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+:root[data-theme="dark"]{--bg:#12141c; --card:#1b1e2b; --ink:#eef0f7; --sub:#a3a9bd; --line:#2b2f42;}
+html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; line-height:1.5;}
+header{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; padding:18px 16px calc(10px + env(safe-area-inset-top,0px));}
+header h1{margin:0 0 4px; font-size:1.3rem;}
+header p{margin:0; opacity:.9; font-size:.9rem;}
+nav{display:flex; gap:6px; overflow-x:auto; padding:10px 16px; background:var(--card); border-bottom:1px solid var(--line); position:sticky; top:calc(64px + env(safe-area-inset-top,0px)); z-index:9;}
+nav button{flex:0 0 auto; border:1px solid var(--line); background:var(--bg); color:var(--ink); padding:8px 14px; border-radius:20px; font-size:.85rem; cursor:pointer; white-space:nowrap;}
+nav button.active{background:var(--brand); color:#fff; border-color:var(--brand);}
+main{max-width:820px; margin:0 auto; padding:18px 16px 60px;}
+section{display:none;}
+section.active{display:block; animation:fade .2s ease;}
+@keyframes fade{from{opacity:0} to{opacity:1}}
+.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:16px;}
+h2{margin-top:0; color:var(--brand);}
+h3{color:var(--sub); font-size:1rem; text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px;}
+.ex{background:var(--bg); border-left:4px solid var(--accent); padding:10px 14px; border-radius:8px; margin:10px 0; overflow-x:auto;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin:10px 0;}
+.chip{background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:8px 10px; text-align:center; font-weight:600;}
+.tip{background:#fff7e0; color:#5a4600; border-radius:10px; padding:10px 14px; margin:10px 0; font-size:.92rem;}
+:root[data-theme="dark"] .tip, @media (prefers-color-scheme:dark){ .tip{background:#3a3210; color:#ffe9a8;} }
+table{width:100%; border-collapse:collapse; margin:10px 0;}
+td,th{border:1px solid var(--line); padding:6px 8px; text-align:center;}
+.navbtns{display:flex; justify-content:space-between; margin-top:18px;}
+.navbtns button{background:var(--brand); color:#fff; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; font-size:.9rem;}
+/* quiz */
+#quizArea .qcard{margin-bottom:14px;}
+.opt{display:block; width:100%; text-align:left; background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin:6px 0; cursor:pointer; color:var(--ink); font-size:.95rem;}
+.opt.correct{background:#d9f7e4; border-color:var(--ok); color:#0b3d20;}
+.opt.wrong{background:#fbdedb; border-color:var(--bad); color:#5a0f0a;}
+.opt[disabled]{cursor:default;}
+#scoreBar{position:sticky; top:calc(64px + 48px + env(safe-area-inset-top,0px)); background:var(--card); border-bottom:1px solid var(--line); padding:8px 16px; font-weight:600; z-index:8;}
+.progress{height:6px; background:var(--line); border-radius:4px; overflow:hidden; margin-top:6px;}
+.progress > div{height:100%; background:var(--accent); width:0%;}
+#result{text-align:center;}
+#result .big{font-size:2.4rem; font-weight:800; color:var(--brand);}
+.startBtn{display:block; margin:16px auto 0; background:var(--brand); color:#fff; border:none; padding:14px 28px; border-radius:12px; font-size:1rem; cursor:pointer;}
+footer{text-align:center; color:var(--sub); font-size:.8rem; padding:20px;}
 </style>
 </head>
 <body>
-<main class="wrap" id="app"></main>
+<header>
+  <h1>🔢 Grade 4 Math</h1>
+  <p>Number Sense &amp; Operations — full lessons + 100-question quiz</p>
+</header>
+<nav id="tabs"></nav>
+<main>
+
+<section id="s-place" class="card"><div class="card">
+<h2>1. Place Value (up to Millions)</h2>
+<h3>What place value means</h3>
+<p>Every digit in a number has a value based on <b>where it sits</b>. Grade 4 works with numbers up to the millions place.</p>
+<div class="ex">Number: <b>4,527,981</b><br>
+4 = 4,000,000 (millions) · 5 = 500,000 (hundred thousands) · 2 = 20,000 (ten thousands)<br>
+7 = 7,000 (thousands) · 9 = 900 (hundreds) · 8 = 80 (tens) · 1 = 1 (ones)</div>
+<div class="grid">
+<div class="chip">Millions</div><div class="chip">Hundred Th.</div><div class="chip">Ten Th.</div><div class="chip">Thousands</div><div class="chip">Hundreds</div><div class="chip">Tens</div><div class="chip">Ones</div>
+</div>
+<h3>Expanded form</h3>
+<div class="ex">4,527,981 = 4,000,000 + 500,000 + 20,000 + 7,000 + 900 + 80 + 1</div>
+<h3>Reading and writing numbers in words</h3>
+<p>Split big numbers into 3-digit groups using the commas — each group is read like a small number, then you say its group name.</p>
+<div class="ex">4,527,981 → "four million, five hundred twenty-seven thousand, nine hundred eighty-one"</div>
+<h3>Comparing numbers</h3>
+<p>Line digits up by place value, starting from the largest place. The first place where digits differ decides which number is bigger. If every digit matches, the numbers are equal.</p>
+<div class="ex">Compare 356,201 and 356,198<br>3=3, 5=5, 6=6, 2 (0)0 vs 1(9)8 → compare the hundreds: 2 &gt; 1<br>so <b>356,201 &gt; 356,198</b></div>
+<h3>Ordering numbers</h3>
+<p>To put a list in order: compare the numbers with the most digits first (more digits usually means a bigger number), then use place-value comparison for numbers with the same digit count.</p>
+<div class="ex">Order from least to greatest: 45,302 / 8,910 / 45,032 / 129,004<br>Step 1 — sort by digit count: 8,910 (4 digits) is smallest; 129,004 (6 digits) is biggest.<br>Step 2 — compare 45,302 vs 45,032: 4=4, 5=5, then 3&gt;0 → 45,302 &gt; 45,032<br>Answer: <b>8,910 &lt; 45,032 &lt; 45,302 &lt; 129,004</b></div>
+<h3>Rounding</h3>
+<p>Rounding makes a number simpler while keeping it close to the original. Steps:</p>
+<ol style="margin:6px 0;padding-left:22px">
+<li>Find the place you're rounding to and underline it.</li>
+<li>Look at the digit <b>immediately to its right</b> — this is the "decider" digit.</li>
+<li>Decider is 5, 6, 7, 8, or 9 → round <b>up</b> (add 1 to the underlined digit).</li>
+<li>Decider is 0, 1, 2, 3, or 4 → round <b>down</b> (keep the underlined digit the same).</li>
+<li>Change every digit to the right of the underlined place to 0.</li>
+</ol>
+<div class="ex">Round 683,417 to the nearest thousand<br>Underline the thousands digit: 683,<u>4</u>17 → decider is the hundreds digit (4)<br>4 is less than 5 → round down → <b>683,000</b></div>
+<div class="ex">Round 2,758 to the nearest hundred<br>Underline the hundreds digit: 2,<u>7</u>58 → decider is the tens digit (5)<br>5 rounds up → 700 becomes 800 → <b>2,800</b></div>
+<div class="tip">💡 Trick: cover every digit to the right of your rounding place with your finger, then decide up or down using only the very next digit.</div>
+<h3>Common mistakes to avoid</h3>
+<ul style="margin:6px 0;padding-left:22px">
+<li>Mixing up "ten thousands" and "hundred thousands" — always count place columns from the ones digit.</li>
+<li>Rounding using the wrong digit (always the one right next to the rounding place, never further away).</li>
+<li>Forgetting to zero out the digits after rounding.</li>
+</ul>
+<h3>Try it yourself</h3>
+<p>1) What is the value of the 7 in 372,456? &nbsp; 2) Round 91,482 to the nearest ten thousand. &nbsp; 3) Order: 6,204 / 62,004 / 6,024 (least to greatest).</p>
+<p style="color:var(--sub);font-size:.85rem">Answers: 1) 70,000 &nbsp; 2) 90,000 &nbsp; 3) 6,024 &lt; 6,204 &lt; 62,004</p>
+</div></section>
+
+<section id="s-addsub" class="card"><div class="card">
+<h2>2. Addition &amp; Subtraction</h2>
+<h3>Adding multi-digit numbers</h3>
+<p>Line up numbers by place value (ones under ones, tens under tens, and so on). Add one column at a time starting from the <b>ones</b> column on the right. If a column's total is 10 or more, write down the ones digit and <b>carry</b> the tens digit to the top of the next column.</p>
+<div class="ex">    1 1&nbsp;&nbsp;← carried digits<br>&nbsp;&nbsp;2 4 6 7<br>+ 1 8 9 5<br>———————<br>&nbsp;&nbsp;4 3 6 2<br><br>Ones: 7+5=12 → write 2, carry 1<br>Tens: 6+9+1=16 → write 6, carry 1<br>Hundreds: 4+8+1=13 → write 3, carry 1<br>Thousands: 2+1+1=4</div>
+<h3>Subtracting multi-digit numbers</h3>
+<p>Line up the same way. Subtract one column at a time from the right. If the top digit is smaller than the bottom digit, <b>borrow (regroup)</b> 1 from the column to its left — that column's digit goes down by 1, and 10 is added to your current column.</p>
+<div class="ex">Start: &nbsp;5 0 0 3 &nbsp;−&nbsp; 1 8 7 6<br>Ones: 3 &lt; 6, so borrow from tens → tens digit 0 becomes 9 (after its own borrow chain) and ones becomes 13 → 13−6 = <b>7</b><br>Tens: now 9, borrow again for hundreds → hundreds 0 becomes 9, tens becomes 9−1=8 → 8−7 = <b>1</b><br>Hundreds: now 9, borrow from thousands → thousands 5 becomes 4, hundreds becomes 9 → 9−8 = <b>1</b><br>Thousands: 4−1 = <b>3</b><br>Answer: <b>3,127</b></div>
+<h3>Regrouping across zeros</h3>
+<p>When you need to borrow but the next column is 0, you must "chain" the borrow further left until you reach a column with something to lend.</p>
+<div class="ex">7,004 − 2,586<br>Ones column needs to borrow, but tens and hundreds are 0 — borrow ripples from the thousands: 7,004 becomes 6, 9, 9, 14 → 6,994 + borrowed ones<br>6,994+10−2,586... following the steps carefully gives <b>4,418</b></div>
+<h3>Estimating sums &amp; differences</h3>
+<p>Round each number to its largest place first, then add/subtract the rounded numbers. This tells you if your exact answer is reasonable — a good habit for catching mistakes.</p>
+<div class="ex">3,872 + 5,190 ≈ 4,000 + 5,000 = 9,000 (exact answer 9,062 — very close, so it's reasonable)</div>
+<h3>Word problems — step by step</h3>
+<div class="ex"><b>Problem:</b> A school had 4,215 books. It donated 1,348 to another school and later received 620 new books. How many books does it have now?<br><b>Step 1</b> (donated): 4,215 − 1,348 = 2,867<br><b>Step 2</b> (received): 2,867 + 620 = <b>3,487 books</b></div>
+<h3>Common mistakes to avoid</h3>
+<ul style="margin:6px 0;padding-left:22px">
+<li>Forgetting to carry the extra ten into the next column.</li>
+<li>Borrowing but forgetting to reduce the digit you borrowed from.</li>
+<li>Not lining up place values correctly when the numbers have different digit counts.</li>
+</ul>
+</div></section>
+
+<section id="s-mult" class="card"><div class="card">
+<h2>3. Multiplication</h2>
+<h3>Multiplying by a 1-digit number</h3>
+<p>Multiply each digit of the bigger number by the 1-digit number, working right to left, carrying extra tens just like in addition.</p>
+<div class="ex">&nbsp;&nbsp;&nbsp;4<br>&nbsp;&nbsp;3 4 8<br>×&nbsp;&nbsp;&nbsp;&nbsp;6<br>———————<br>2 0 8 8<br><br>Ones: 8×6=48 → write 8, carry 4<br>Tens: 4×6=24, +4 carried = 28 → write 8, carry 2<br>Hundreds: 3×6=18, +2 carried = 20 → write 20</div>
+<h3>Multiplying a 2-digit × 2-digit number (long multiplication)</h3>
+<p>Multiply the top number by the ones digit of the bottom number first (row 1). Then multiply the top number by the tens digit of the bottom number, shifting your answer one place left because you're really multiplying by a multiple of ten (row 2). Add the two rows.</p>
+<div class="ex">&nbsp;&nbsp;4 3<br>×&nbsp;2 7<br>———————<br>&nbsp;&nbsp;3 0 1&nbsp;&nbsp;(43×7)<br>8 6 0 &nbsp;&nbsp;&nbsp;(43×20, shifted left)<br>———————<br>1,1 6 1</div>
+<h3>Area model / breaking numbers apart (distributive method)</h3>
+<p>Split one or both numbers into tens and ones, multiply each piece, then add all the partial products. This mirrors exactly what long multiplication does, step by step.</p>
+<div class="ex">43 × 27 = 43 × (20 + 7) = (43×20) + (43×7) = 860 + 301 = <b>1,161</b></div>
+<div class="ex">Breaking both apart: 43 × 27 = (40+3)(20+7)<br>= 40×20 + 40×7 + 3×20 + 3×7<br>= 800 + 280 + 60 + 21 = <b>1,161</b></div>
+<h3>Multiplying by multiples of 10 and 100</h3>
+<p>Multiply the non-zero digits first, then attach the same number of zeros.</p>
+<div class="ex">60 × 300 → 6×3=18, then attach 1+2=3 zeros → <b>18,000</b></div>
+<h3>Estimating products</h3>
+<div class="ex">38 × 52 ≈ 40 × 50 = 2,000 (exact answer 1,976 — close, so it's reasonable)</div>
+<h3>Word problems</h3>
+<div class="ex">A theatre has 24 rows with 18 seats in each row. How many seats total?<br>24 × 18 = (24×10) + (24×8) = 240 + 192 = <b>432 seats</b></div>
+<h3>Multiplication facts to know cold</h3>
+<div class="grid"><div class="chip">6×7=42</div><div class="chip">7×8=56</div><div class="chip">8×9=72</div><div class="chip">9×9=81</div><div class="chip">7×7=49</div><div class="chip">8×8=64</div><div class="chip">6×9=54</div><div class="chip">7×9=63</div></div>
+<h3>Common mistakes to avoid</h3>
+<ul style="margin:6px 0;padding-left:22px">
+<li>Forgetting to shift the second row one place left in long multiplication.</li>
+<li>Losing track of a carried digit.</li>
+<li>Miscounting zeros when multiplying multiples of 10/100.</li>
+</ul>
+</div></section>
+
+<section id="s-div" class="card"><div class="card">
+<h2>4. Long Division (with Remainders)</h2>
+<h3>The steps: Divide, Multiply, Subtract, Bring down (DMSB)</h3>
+<div class="ex">   1 5 r2<br>7 ⟌ 1 0 7<br>&nbsp;&nbsp;− 7&nbsp;&nbsp;&nbsp;&nbsp;(7×1)<br>&nbsp;&nbsp;——<br>&nbsp;&nbsp;&nbsp;3 7<br>&nbsp;&nbsp;−3 5&nbsp;&nbsp;&nbsp;(7×5)<br>&nbsp;&nbsp;——<br>&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;← remainder</div>
+<p>1. <b>Divide</b>: how many times does 7 go into the first digit(s) of what's left?<br>
+2. <b>Multiply</b>: that answer × the divisor.<br>
+3. <b>Subtract</b>: the result from the part you're dividing.<br>
+4. <b>Bring down</b> the next digit and repeat from step 1 until there are no more digits.</p>
+<h3>A bigger example — 3-digit divided by 1-digit</h3>
+<div class="ex">&nbsp;&nbsp;&nbsp;&nbsp;2 1 3<br>4 ⟌ 8 5 2<br>&nbsp;&nbsp;−8&nbsp;&nbsp;&nbsp;&nbsp;(4×2, using the 8)<br>&nbsp;&nbsp;——<br>&nbsp;&nbsp;&nbsp;&nbsp;0 5<br>&nbsp;&nbsp;&nbsp;&nbsp;−4&nbsp;&nbsp;&nbsp;(4×1)<br>&nbsp;&nbsp;&nbsp;&nbsp;——<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 2<br>&nbsp;&nbsp;&nbsp;&nbsp;−1 2&nbsp;&nbsp;(4×3)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;← no remainder<br>Answer: 852 ÷ 4 = <b>213</b></div>
+<h3>What a remainder means</h3>
+<p>A remainder is what's <b>left over</b> after sharing as evenly as possible — it's always smaller than the divisor. Depending on the problem, you round the answer up, round it down, or report the remainder itself.</p>
+<div class="ex">45 stickers packed into bags of 6 → 45÷6 = 7 r3 → you can fill <b>7 full bags</b>, with 3 stickers left over (round DOWN)</div>
+<div class="ex">45 students need vans that seat 6 each → 45÷6 = 7 r3 → you need <b>8 vans</b> so nobody is left behind (round UP)</div>
+<h3>Checking your answer</h3>
+<div class="ex">divisor × quotient + remainder = dividend<br>7 × 15 + 2 = 107 ✓</div>
+<h3>Word problems</h3>
+<div class="ex">96 stickers shared equally among 8 friends → 96 ÷ 8 = <b>12 stickers each</b></div>
+<div class="ex">A baker makes 134 muffins and puts 5 in each box. How many full boxes, and how many muffins are left over?<br>134 ÷ 5 = 26 r4 → <b>26 full boxes, 4 muffins left over</b></div>
+<h3>Common mistakes to avoid</h3>
+<ul style="margin:6px 0;padding-left:22px">
+<li>Forgetting to bring down the next digit before dividing again.</li>
+<li>Writing a remainder that's equal to or bigger than the divisor (it means you didn't divide enough times).</li>
+<li>Placing digits in the wrong spot in the quotient (line them up above the digit you just brought down).</li>
+</ul>
+</div></section>
+
+<section id="s-fact" class="card"><div class="card">
+<h2>5. Factors, Multiples &amp; Prime/Composite</h2>
+<h3>Factors</h3>
+<p>Factors are numbers that <b>divide evenly</b> into another number (no remainder). Find them by testing each number starting from 1, in pairs.</p>
+<div class="ex">Factors of 24: try 1×24, 2×12, 3×8, 4×6 (5 doesn't work) — so the factors are <b>1, 2, 3, 4, 6, 8, 12, 24</b></div>
+<h3>Multiples</h3>
+<p>Multiples are what you get from <b>skip-counting</b> a number (multiplying it by 1, 2, 3…). A number has infinitely many multiples.</p>
+<div class="ex">Multiples of 6: 6, 12, 18, 24, 30, 36 …</div>
+<h3>Greatest Common Factor (GCF)</h3>
+<p>The GCF of two numbers is the biggest number that divides evenly into both. List the factors of each number, then pick the largest one they share.</p>
+<div class="ex">GCF of 18 and 24<br>Factors of 18: 1, 2, 3, 6, 9, 18<br>Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24<br>Shared: 1, 2, 3, 6 → GCF = <b>6</b></div>
+<h3>Least Common Multiple (LCM)</h3>
+<p>The LCM of two numbers is the smallest number that's a multiple of both. List multiples of each until you find a match.</p>
+<div class="ex">LCM of 4 and 6<br>Multiples of 4: 4, 8, 12, 16 …<br>Multiples of 6: 6, 12, 18 …<br>First match: <b>12</b></div>
+<h3>Prime numbers</h3>
+<p>A prime number has <b>exactly two</b> factors: 1 and itself. It cannot be split evenly by any other number.</p>
+<div class="grid"><div class="chip">2</div><div class="chip">3</div><div class="chip">5</div><div class="chip">7</div><div class="chip">11</div><div class="chip">13</div><div class="chip">17</div><div class="chip">19</div><div class="chip">23</div><div class="chip">29</div><div class="chip">31</div><div class="chip">37</div></div>
+<h3>Composite numbers</h3>
+<p>A composite number has <b>more than two</b> factors (it can be divided evenly by numbers other than 1 and itself).</p>
+<div class="ex">4, 6, 8, 9, 10, 12 … are all composite.</div>
+<div class="tip">💡 Note: 1 is neither prime nor composite — it only has one factor (itself).</div>
+<h3>Prime factorization</h3>
+<p>Every composite number can be broken down into a product of prime numbers only — its "prime building blocks." Keep dividing by the smallest prime that works until only primes are left.</p>
+<div class="ex">Prime factorization of 60<br>60 ÷ 2 = 30 → 30 ÷ 2 = 15 → 15 ÷ 3 = 5 → 5 is prime<br>60 = 2 × 2 × 3 × 5</div>
+<h3>Word problems</h3>
+<div class="ex">Two runners lap a track every 4 and 6 minutes. If they start together, after how many minutes will they meet again at the start?<br>This is the LCM of 4 and 6 = <b>12 minutes</b></div>
+<div class="ex">A baker wants to split 18 cookies and 24 brownies into identical goodie bags with no leftovers, using the most bags possible. How many bags?<br>This is the GCF of 18 and 24 = <b>6 bags</b> (3 cookies + 4 brownies each)</div>
+<h3>Common mistakes to avoid</h3>
+<ul style="margin:6px 0;padding-left:22px">
+<li>Mixing up GCF (biggest shared factor) with LCM (smallest shared multiple).</li>
+<li>Forgetting 1 and the number itself when listing factors.</li>
+<li>Calling 1 a prime number — it isn't (it only has one factor, not two).</li>
+</ul>
+</div></section>
+
+<section id="s-quiz" class="card"><div class="card">
+<h2>🏆 100-Question Quiz</h2>
+<p>Covers place value, addition, subtraction, multiplication, division, and factors/multiples/primes — Grade 4 level. Get instant feedback after every answer.</p>
+<button class="startBtn" onclick="startQuiz()">Start the Quiz</button>
+</div>
+<div id="scoreBarWrap"></div>
+<div id="quizArea"></div>
+</section>
+
+</main>
+<footer>Made for Grade 4 practice · Number Sense &amp; Operations</footer>
 
 <script>
-/* ---------- Reading passage (harder: denser vocabulary, figurative language, no easy lookups) ---------- */
-const PASSAGE_TITLE = "The Cartographer's Error";
-const PASSAGE = [
-  "For three generations, the Okafor family had produced the finest maps in the province, each one a small miracle of patience and ink. So when eleven-year-old Dara discovered a discrepancy on her grandfather's most celebrated chart \u2014 a river that curved west on the parchment but, according to every traveller she'd questioned, actually bent east \u2014 she was reluctant to say anything at all. Doubting a map that hung in the guild hall felt uncomfortably close to doubting her grandfather himself.",
-  "She spent a fortnight gathering evidence instead of accusations: sketches from merchants who had forded the river, tide tables borrowed from the harbour master, even a faded letter her grandfather had written decades earlier, in which he confessed that the eastern crossing had been \u201cimpassable with mud\u201d during the season he'd surveyed it. Reading between the lines, Dara realised he must have guessed at the river's true course rather than walking it himself.",
-  "When she finally laid her findings before the guild, she expected reprimand, not applause. Instead, the eldest cartographer studied her notes for a long moment and admitted that maps were never truths carved in stone \u2014 only the best guesses of whoever held the pen, waiting patiently to be corrected. Dara's revision was pinned beside the original that same afternoon, not to replace her grandfather's legacy, but to extend it.",
-  "It was her uncle, watching from the doorway, who put it best: \u201cHumility isn't pretending you might be wrong. It's being willing to find out.\u201d Dara didn't fully understand what he meant until years later, when she caught herself, quill in hand, hesitating over a coastline that didn't look quite right either."
-];
-
-/* ---------- Questions (60, harder) ---------- */
-const Q = (t, q, a, w, e, p) => ({ t, q, a, w, e, p: !!p });
-
-const QUESTIONS = [
-  // Comprehension — inference and interpretation (10)
-  Q("Comprehension", "Why was Dara initially reluctant to point out the error on the map?", "Correcting the map felt like questioning her grandfather's authority", ["She was certain the merchants were lying", "She did not understand how maps were made", "She was forbidden from entering the guild hall"], "The passage says doubting the map \u201cfelt uncomfortably close to doubting her grandfather himself.\u201d", true),
-  Q("Comprehension", "What can you infer about why the grandfather's original map was wrong?", "He likely guessed at the river's course instead of surveying it firsthand", ["He deliberately drew the river incorrectly", "The river's course had recently changed", "He copied the error from an older map"], "His letter said the crossing was \u201cimpassable with mud,\u201d and Dara \u201crealised he must have guessed... rather than walking it himself.\u201d", true),
-  Q("Comprehension", "What kind of evidence did Dara gather, based on the passage?", "Eyewitness accounts, tide records, and a personal letter", ["Only her own observations of the river", "Official guild court testimony", "New surveying equipment readings"], "She collected \u201csketches from merchants,\u201d \u201ctide tables,\u201d and \u201ca faded letter\u201d \u2014 no mention of new equipment or a court process.", true),
-  Q("Comprehension", "What does the phrase \u201creading between the lines\u201d suggest about how Dara reached her conclusion?", "She understood something the letter implied, not something it stated directly", ["She misread the letter and reached the wrong conclusion", "The letter directly stated the river's true course", "She ignored the letter entirely"], "\u201cReading between the lines\u201d means inferring meaning beyond the literal words \u2014 the letter never says he guessed; she deduced it.", true),
-  Q("Comprehension", "How did Dara's expectation of the guild's reaction differ from what actually happened?", "She expected reprimand, but received acceptance and respect", ["She expected praise, but was punished instead", "She expected indifference, and received exactly that", "She expected the map to be destroyed, but it was preserved unchanged"], "\u201cShe expected reprimand, not applause,\u201d yet the eldest cartographer respected her work and pinned her revision beside the original.", true),
-  Q("Comprehension", "What does the eldest cartographer's comment about maps suggest is the guild's underlying attitude toward their own work?", "Their maps are their best current understanding, always open to correction", ["Their maps are considered permanently accurate once published", "Errors in maps should never be publicly acknowledged", "Only senior cartographers are allowed to correct maps"], "He says maps are \u201cnever truths carved in stone \u2014 only the best guesses... waiting patiently to be corrected.\u201d", true),
-  Q("Comprehension", "Why was Dara's revision pinned beside the original map rather than replacing it?", "To build on her grandfather's legacy rather than erase it", ["Because the guild could not decide which version was correct", "Because her grandfather demanded both versions be kept", "Because replacing old maps was against guild rules"], "The text explicitly says it was done \u201cnot to replace her grandfather's legacy, but to extend it.\u201d", true),
-  Q("Comprehension", "What does the uncle mean by \u201cHumility isn't pretending you might be wrong. It's being willing to find out\u201d?", "True humility means actively investigating the truth, not just claiming uncertainty", ["Humble people should always assume they are wrong", "It is disrespectful to question people who might be wrong", "Only experts are allowed to be humble"], "The uncle contrasts passive self-doubt (\u201cpretending\u201d) with the active effort Dara made (\u201cbeing willing to find out\u201d) through her research.", true),
-  Q("Comprehension", "What does the final paragraph, about Dara hesitating over a coastline years later, suggest?", "She had internalised her uncle's lesson and now questions her own work with the same care", ["She had become as overconfident as her grandfather once was", "She regretted correcting her grandfather's map", "She had given up cartography for another profession"], "The closing image mirrors her earlier care and doubt, showing she carries the lesson about willingness to \u201cfind out\u201d into her own work.", true),
-  Q("Comprehension", "Which best describes the overall theme of the passage?", "Respecting a legacy can include improving on it, not just preserving it unchanged", ["Younger people are always more accurate than their elders", "Family traditions should never be questioned", "Maps are more reliable than eyewitness accounts"], "Dara's respectful, evidence-based correction \u2014 extending rather than erasing her grandfather's work \u2014 is the passage's central idea.", true),
-
-  // Vocabulary — harder words, nuance, connotation (10)
-  Q("Vocabulary", "Which word most nearly means \u201ctenacious\u201d?", "Persistent", ["Careless","Timid","Forgetful"], "\u201cTenacious\u201d describes someone who holds firmly to a course of action; \u201cpersistent\u201d is the closest match."),
-  Q("Vocabulary", "Which sentence uses \u201cambiguous\u201d correctly?", "The instructions were ambiguous, so we weren't sure which door to use.", ["The instructions were ambiguous, so we understood them at once.","The room was ambiguous with bright light.","She ran at an ambiguous speed."], "\u201cAmbiguous\u201d means open to more than one interpretation, which matches confusion over which door to use."),
-  Q("Vocabulary", "Choose the word closest in meaning to \u201cfutile\u201d.", "Pointless", ["Successful","Dangerous","Expensive"], "\u201cFutile\u201d describes an effort that is incapable of producing a useful result \u2014 essentially pointless."),
-  Q("Vocabulary", "Which word best completes the sentence? \u201cHer ___ remarks made it clear she disagreed, even though she never said so directly.\u201d", "Cryptic", ["Blunt","Obvious","Loud"], "\u201cCryptic\u201d means mysterious or indirect in meaning, which fits remarks that imply disagreement without stating it."),
-  Q("Vocabulary", "What does \u201cbenevolent\u201d mean?", "Kind and generous", ["Angry and impatient","Confused and lost","Proud and boastful"], "\u201cBenevolent\u201d describes a well-meaning, kindly disposition."),
-  Q("Vocabulary", "Which word is closest in meaning to \u201cmeticulous\u201d?", "Careful", ["Careless","Hurried","Lazy"], "\u201cMeticulous\u201d describes extreme carefulness and attention to detail."),
-  Q("Vocabulary", "In the sentence \u201cThe committee's decision was final and irrevocable,\u201d what does \u201cirrevocable\u201d mean?", "Unable to be changed or undone", ["Easily reversed", "Still being discussed", "Made by mistake"], "\u201cIrrevocable\u201d means not able to be revoked, altered, or undone."),
-  Q("Vocabulary", "Which word means the opposite of \u201cconceal\u201d?", "Reveal", ["Protect","Store","Wrap"], "\u201cConceal\u201d means to hide something; \u201creveal\u201d is its direct opposite."),
-  Q("Vocabulary", "\u201cThe explorer's account of the journey was so vivid that readers felt they had travelled with her.\u201d What does \u201cvivid\u201d suggest about the writing?", "It created strong, clear mental images", ["It was confusing and hard to follow", "It was extremely short", "It avoided describing any details"], "\u201cVivid\u201d describes writing or description that is strikingly realistic and detailed, producing clear images in the reader's mind."),
-  Q("Vocabulary", "Which word best fits: \u201cDespite the criticism, she remained ___ in her belief that the plan would work.\u201d", "Resolute", ["Indifferent","Uncertain","Apologetic"], "\u201cResolute\u201d means firm and unwavering, matching someone who remains determined despite criticism."),
-
-  // Grammar — more advanced usage (8)
-  Q("Grammar", "Which sentence uses \u201cwho\u201d or \u201cwhom\u201d correctly?", "To whom should I address this letter?", ["To who should I address this letter?","Who should I address this letter to whom?","Whom is responsible for this?"], "\u201cWhom\u201d is used as the object of a preposition (\u201cto whom\u201d); \u201cwho\u201d is reserved for the subject of a clause."),
-  Q("Grammar", "Which sentence correctly uses the subjunctive mood?", "If I were taller, I could reach the shelf.", ["If I was taller, I could reach the shelf.","If I am taller, I could reach the shelf.","If I be taller, I could reach the shelf."], "The subjunctive mood uses \u201cwere\u201d (not \u201cwas\u201d) for hypothetical or unreal situations, as in \u201cIf I were...\u201d"),
-  Q("Grammar", "Choose the correctly punctuated sentence using \u201clie\u201d or \u201clay\u201d.", "I need to lie down for a while.", ["I need to lay down for a while.","I need to lied down for a while.","I need to laying down for a while."], "\u201cLie\u201d means to recline (I lie, I lay, I have lain); \u201clay\u201d means to place something down and needs an object."),
-  Q("Grammar", "Which sentence correctly uses a collective noun with subject-verb agreement?", "The jury is deliberating its verdict.", ["The jury are deliberating its verdict.","The jury is deliberating their verdict.","The jury were is deliberating its verdict."], "\u201cJury\u201d is treated as a single unit acting together, so it takes the singular verb \u201cis\u201d and pronoun \u201cits.\u201d"),
-  Q("Grammar", "Which sentence is written in the passive voice?", "The bridge was designed by a team of engineers.", ["A team of engineers designed the bridge.","The engineers are designing the bridge.","The team will design a new bridge."], "In passive voice, the subject receives the action rather than performing it \u2014 here, \u201cthe bridge\u201d receives the action \u201cwas designed.\u201d"),
-  Q("Grammar", "Which sentence uses \u201cfewer\u201d or \u201cless\u201d correctly?", "There were fewer students in class today.", ["There were less students in class today.","There was fewer students in class today.","There were fewer of student in class today."], "\u201cFewer\u201d is used for countable nouns like \u201cstudents\u201d; \u201cless\u201d is used for uncountable quantities."),
-  Q("Grammar", "Which sentence correctly uses a gerund as the subject?", "Swimming every morning improved her stamina.", ["Swim every morning improved her stamina.","To swimming every morning improved her stamina.","Swum every morning improved her stamina."], "A gerund is the \u2013ing form of a verb used as a noun; \u201cSwimming\u201d correctly acts as the sentence's subject."),
-  Q("Grammar", "Which sentence correctly matches an indefinite pronoun with its verb?", "Everybody in the class has finished the assignment.", ["Everybody in the class have finished the assignment.","Everybody in the class finish the assignment.","Everybody in the class are finishing the assignment."], "Indefinite pronouns like \u201ceverybody\u201d are singular, so they take singular verbs such as \u201chas.\u201d"),
-
-  // Punctuation — advanced (8)
-  Q("Punctuation", "Which sentence correctly uses a semicolon?", "The rain had stopped; the streets still glistened with puddles.", ["The rain had stopped, the streets still glistened with puddles.","The rain had stopped; and the streets still glistened.","The rain; had stopped the streets still glistened."], "A semicolon can join two closely related independent clauses without a conjunction."),
-  Q("Punctuation", "Which sentence correctly punctuates a quotation within a quotation?", "She said, \u201cMy teacher told me, \u2018Practice makes progress,\u2019 and I believe her.\u201d", ["She said, \u201cMy teacher told me, \u201cPractice makes progress,\u201d and I believe her.\u201d","She said \u201cMy teacher told me, 'Practice makes progress, and I believe her.\u201d","She said, My teacher told me, \u2018Practice makes progress,\u2019 and I believe her."], "A quotation inside another quotation uses single quotation marks, nested inside the double quotation marks."),
-  Q("Punctuation", "Which sentence correctly uses a comma to avoid a comma splice?", "The storm knocked out the power, so we lit candles.", ["The storm knocked out the power, we lit candles.","The storm knocked out the power we lit candles.","The storm, knocked out the power, so we lit candles."], "Joining two independent clauses with only a comma creates a comma splice; adding the conjunction \u201cso\u201d after the comma fixes it."),
-  Q("Punctuation", "Which sentence uses parentheses correctly?", "The recipe (which serves six) takes about an hour to prepare.", ["The recipe, (which serves six) takes about an hour to prepare.","The recipe which serves six, takes about (an hour) to prepare.","The recipe (which serves six, takes about an hour) to prepare."], "Parentheses enclose the complete extra information \u2014 \u201cwhich serves six\u201d \u2014 without breaking the rest of the sentence."),
-  Q("Punctuation", "Which sentence correctly uses a hyphen in a compound adjective?", "It was a well-known fact among the villagers.", ["It was a well known fact among the villagers.","It was a well-known-fact among the villagers.","It was a well known-fact among the villagers."], "When two words work together as a single adjective before a noun, they are joined with a hyphen: \u201cwell-known.\u201d"),
-  Q("Punctuation", "Which sentence correctly uses an em dash?", "The answer \u2014 though no one expected it \u2014 changed everything.", ["The answer, though no one expected it \u2014 changed everything.","The answer \u2014 though no one expected it, changed everything.","The answer though \u2014 no one expected it \u2014 changed everything."], "A pair of em dashes sets off an interrupting phrase, matching the structure at both ends of the inserted idea."),
-  Q("Punctuation", "Which sentence uses an apostrophe correctly to show joint possession?", "Maria and Josh's project won first prize.", ["Maria's and Josh's project won first prize.","Marias and Josh's project won first prize.","Maria and Joshs' project won first prize."], "When two people share ownership of one thing, the apostrophe goes only on the last name: \u201cMaria and Josh's.\u201d"),
-  Q("Punctuation", "Which sentence is correctly punctuated with an introductory dependent clause?", "Although she was exhausted, she finished the race.", ["Although she was exhausted she finished the race.","Although, she was exhausted, she finished the race.","She finished, the race although she was exhausted."], "A comma follows an introductory dependent clause before the main clause begins."),
-
-  // Figurative language & literary devices (6)
-  Q("Figurative language", "\u201cThe city never sleeps.\u201d This is an example of…", "Personification", ["Simile","Onomatopoeia","Hyperbole"], "Giving the city the human trait of sleeping (or not sleeping) is personification."),
-  Q("Figurative language", "Which literary device is used in \u201cJumbo shrimp\u201d?", "Oxymoron", ["Simile","Alliteration","Metaphor"], "An oxymoron combines two contradictory terms; \u201cjumbo\u201d (large) and \u201cshrimp\u201d (small) contradict each other."),
-  Q("Figurative language", "A story ends with a character who spent years building a fireproof house, only to have it flooded. This outcome is an example of…", "Situational irony", ["Foreshadowing","Simile","Onomatopoeia"], "Situational irony occurs when the actual outcome is the opposite of what was expected \u2014 fireproofing does not protect against flooding."),
-  Q("Figurative language", "\u201cHer laughter was a symphony that lifted the whole room.\u201d This sentence is an example of…", "Metaphor", ["Simile","Onomatopoeia","Alliteration"], "This compares laughter directly to a symphony without using \u201clike\u201d or \u201cas,\u201d making it a metaphor."),
-  Q("Figurative language", "What is the effect of an idiom such as \u201cit's raining cats and dogs\u201d?", "It expresses an idea in a way that isn't meant to be taken literally", ["It gives exact, literal weather information", "It uses a made-up sound word", "It repeats the same starting letter"], "Idioms carry a figurative meaning that differs from the literal words used."),
-  Q("Figurative language", "\u201cThe old clock in the hallway groaned with every tick.\u201d Which two devices work together in this sentence?", "Personification and onomatopoeia", ["Simile and hyperbole","Alliteration and metaphor","Irony and simile"], "\u201cGroaned\u201d gives the clock a human trait (personification), while \u201ctick\u201d imitates a sound (onomatopoeia)."),
-
-  // Sentence structure — advanced (5)
-  Q("Sentence structure", "Which sentence is a compound-complex sentence?", "Although it was raining, we went for a walk, and we still had a great time.", ["We went for a walk in the rain.","Although it was raining, we went for a walk.","We went for a walk, and we had a great time."], "A compound-complex sentence has at least two independent clauses and one dependent clause \u2014 here, \u201cAlthough it was raining\u201d (dependent) plus two joined independent clauses."),
-  Q("Sentence structure", "Which sentence contains a misplaced modifier?", "Running late for school, the bus pulled away just as Amir arrived.", ["Amir arrived just as the bus, running late, pulled away.","Running late for school, Amir arrived just as the bus pulled away.","The bus pulled away just as Amir, running late for school, arrived."], "As written, the phrase \u201cRunning late for school\u201d appears to describe the bus rather than Amir, which is a misplaced modifier."),
-  Q("Sentence structure", "Which sentence corrects a dangling modifier?", "Having finished her homework, Priya turned on the television.", ["Having finished her homework, the television was turned on.","The television was turned on, having finished her homework.","Turning on the television, homework was finished by Priya."], "The modifier \u201cHaving finished her homework\u201d must be followed immediately by the person who finished it \u2014 Priya, not the television."),
-  Q("Sentence structure", "Which sentence uses parallel structure correctly?", "She enjoys hiking, swimming, and biking.", ["She enjoys hiking, swimming, and to bike.","She enjoys to hike, swimming, and biking.","She enjoys hiking, to swim, and biking."], "Parallel structure requires items in a list to share the same grammatical form \u2014 here, all three end in \u201c-ing.\u201d"),
-  Q("Sentence structure", "Which sentence avoids a run-on by using a subordinating conjunction correctly?", "Because the bridge was closed, traffic backed up for miles.", ["The bridge was closed traffic backed up for miles.","The bridge was closed, traffic backed up for miles.","Traffic backed up for miles, the bridge was closed."], "\u201cBecause\u201d turns the first clause into a dependent clause, correctly linking it to the independent clause that follows the comma."),
-
-  // Spelling — harder words (5)
-  Q("Spelling", "Which word is spelled correctly?", "Conscientious", ["Consciencious","Conscienteous","Consciencous"], "\u201cConscientious\u201d follows the pattern of \u201cscience\u201d plus the \u201c-tious\u201d ending."),
-  Q("Spelling", "Which word is spelled correctly?", "Rhythm", ["Rythm","Rhythem","Rhithm"], "\u201cRhythm\u201d is often remembered as having no vowels except \u201cy,\u201d spelled r-h-y-t-h-m."),
-  Q("Spelling", "Which word is spelled correctly?", "Embarrass", ["Embarass","Emberrass","Embarras"], "\u201cEmbarrass\u201d has a double r and a double s."),
-  Q("Spelling", "Which word is spelled correctly?", "Occurrence", ["Occurence","Occurrance","Ocurrence"], "\u201cOccurrence\u201d has a double c and a double r."),
-  Q("Spelling", "Which word is spelled correctly?", "Privilege", ["Priviledge","Privelege","Privilage"], "\u201cPrivilege\u201d has no \u201cd\u201d and ends in \u201c-lege,\u201d not \u201c-ledge.\u201d")
-];
-
-/* ---------- Helpers ---------- */
-const app = document.getElementById("app");
-const TOTAL = QUESTIONS.length;
-const LETTERS = ["A", "B", "C", "D"];
-let order = [], pos = 0, score = 0, log = [], locked = false;
-
-function shuffle(a){
-  const b = a.slice();
-  for (let i = b.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [b[i], b[j]] = [b[j], b[i]];
-  }
-  return b;
-}
-function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-/* ---------- Screens ---------- */
-function showStart(){
-  const topics = [...new Set(QUESTIONS.map(q => q.t))];
-  app.innerHTML = `
-    <section class="card">
-      <h1>Michelle's Grade 6 English Quiz <span class="diff">CHALLENGE</span></h1>
-      <p class="lead">${TOTAL} tougher questions, including a denser story and ten inference-based comprehension questions about it. Read closely \u2014 some answers aren't stated directly.</p>
-      <ul class="topics">${topics.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
-      <label class="toggle"><input type="checkbox" id="mix" checked> Mix up the question order</label>
-      <div class="actions"><button class="btn" id="go">Start quiz</button></div>
-    </section>`;
-  document.getElementById("go").onclick = () => {
-    const mix = document.getElementById("mix").checked;
-    begin(QUESTIONS.map((_, i) => i), mix);
-  };
-  document.getElementById("go").focus();
-}
-
-function begin(indexes, mix){
-  order = mix ? shuffle(indexes) : indexes.slice();
-  pos = 0; score = 0; log = [];
-  showQuestion();
-}
-
-function showQuestion(){
-  locked = false;
-  const q = QUESTIONS[order[pos]];
-  const opts = shuffle([q.a, ...q.w]);
-  const pct = (pos / order.length) * 100;
-  const passageHTML = q.p ? `
-    <div class="passage">
-      <h3 class="serif">${esc(PASSAGE_TITLE)}</h3>
-      ${PASSAGE.map(p => `<p>${p}</p>`).join("")}
-    </div>` : "";
-  app.innerHTML = `
-    <div class="top"><div>Question ${pos + 1} of ${order.length}</div><div class="score">Score: ${score}</div></div>
-    <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="${order.length}" aria-valuenow="${pos}">
-      <div class="fill" style="width:${pct}%"></div>
-    </div>
-    <section class="card">
-      <span class="chip">${esc(q.t)}</span>
-      ${passageHTML}
-      <h2 class="q">${esc(q.q)}</h2>
-      <div class="opts" id="opts">
-        ${opts.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="key">${LETTERS[i]}</span><span>${esc(o)}</span><span class="mark" aria-hidden="true"></span></button>`).join("")}
-      </div>
-      <div id="fb" aria-live="polite"></div>
-      <div class="actions" id="act"></div>
-    </section>`;
-  document.querySelectorAll(".opt").forEach(b => b.onclick = () => choose(b, q));
-  window.scrollTo({ top: 0 });
-}
-
-function choose(btn, q){
-  if (locked) return;
-  locked = true;
-  const picked = btn.dataset.v;
-  const ok = picked === q.a;
-  if (ok) score++;
-  log.push({ i: order[pos], ok, picked });
-
-  document.querySelectorAll(".opt").forEach(b => {
-    b.disabled = true;
-    const mark = b.querySelector(".mark");
-    if (b.dataset.v === q.a){ b.classList.add("right"); mark.textContent = "✓"; }
-    else if (b === btn){ b.classList.add("wrong"); mark.textContent = "✗"; }
-    else b.classList.add("dim");
-  });
-
-  document.getElementById("fb").innerHTML = ok
-    ? `<div class="fb good"><strong>Correct!</strong><span>${esc(q.e)}</span></div>`
-    : `<div class="fb bad"><strong>Not quite. The answer is ${esc(q.a)}.</strong><span>${esc(q.e)}</span></div>`;
-
-  const last = pos === order.length - 1;
-  document.getElementById("act").innerHTML = `<button class="btn" id="next">${last ? "See my results" : "Next question"}</button>`;
-  const next = document.getElementById("next");
-  next.onclick = () => { if (last) showResults(); else { pos++; showQuestion(); } };
-  next.focus();
-}
-
-function showResults(){
-  const n = order.length;
-  const pct = Math.round((score / n) * 100);
-  const verdict =
-    pct >= 90 ? "Exceptional, Michelle! That's a mastery-level score on a genuinely hard quiz." :
-    pct >= 70 ? "Strong work, Michelle! This set was tough, and you handled it well." :
-    pct >= 50 ? "Solid effort, Michelle. This challenge set trips up a lot of readers \u2014 review and try again." :
-                "This was the hard version, Michelle \u2014 don't worry. Review the explanations below and give it another go.";
-
-  const byTopic = {};
-  log.forEach(l => {
-    const t = QUESTIONS[l.i].t;
-    byTopic[t] = byTopic[t] || { right: 0, total: 0 };
-    byTopic[t].total++;
-    if (l.ok) byTopic[t].right++;
-  });
-  const bars = Object.entries(byTopic).map(([t, v]) => {
-    const p = Math.round((v.right / v.total) * 100);
-    return `<div class="bar"><span>${esc(t)}</span><div class="bg"><i style="width:${p}%"></i></div><b>${v.right}/${v.total}</b></div>`;
-  }).join("");
-
-  const missed = log.filter(l => !l.ok);
-  const missedHTML = missed.length ? `
-    <h3 class="section">Questions to review</h3>
-    <div class="missed">
-      ${missed.map(l => {
-        const q = QUESTIONS[l.i];
-        return `<div class="miss">${esc(q.q)}<br>You said <em>${esc(l.picked)}</em>. Answer: <b>${esc(q.a)}</b></div>`;
-      }).join("")}
-    </div>` : "";
-
-  app.innerHTML = `
-    <section class="card">
-      <p class="verdict">${verdict}</p>
-      <div class="big">${score}<small> / ${n}</small></div>
-      <h3 class="section">How Michelle did by topic</h3>
-      <div class="bars">${bars}</div>
-      ${missedHTML}
-      <div class="actions">
-        <button class="btn" id="again">Try again</button>
-        ${missed.length ? `<button class="btn ghost" id="redo">Practise missed questions</button>` : ""}
-      </div>
-    </section>`;
-  document.getElementById("again").onclick = () => begin(QUESTIONS.map((_, i) => i), true);
-  const redo = document.getElementById("redo");
-  if (redo) redo.onclick = () => begin(missed.map(l => l.i), true);
-  window.scrollTo({ top: 0 });
-}
-
-/* Keyboard: press A–D or 1–4 to answer */
-document.addEventListener("keydown", e => {
-  if (locked || e.ctrlKey || e.metaKey || e.altKey) return;
-  const opts = document.querySelectorAll(".opt");
-  if (!opts.length) return;
-  const k = e.key.toLowerCase();
-  let idx = "abcd".indexOf(k);
-  if (idx < 0) idx = "1234".indexOf(k);
-  if (idx >= 0 && opts[idx]) opts[idx].click();
+// ---- tabs ----
+const tabs=[["s-place","Place Value"],["s-addsub","Add & Sub"],["s-mult","Multiply"],["s-div","Division"],["s-fact","Factors"],["s-quiz","Quiz 🏆"]];
+const navEl=document.getElementById('tabs');
+tabs.forEach(([id,label],i)=>{
+  const b=document.createElement('button'); b.textContent=label; b.onclick=()=>show(id);
+  b.id='btn-'+id; navEl.appendChild(b);
 });
+function show(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  navEl.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+show('s-place');
 
-showStart();
+// ---- quiz generation ----
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+
+function makeOptions(correct,spread){
+  const set=new Set([correct]);
+  while(set.size<4){
+    let d=rnd(-spread,spread); if(d===0)d=1;
+    let v=correct+d;
+    if(v>=0) set.add(v);
+  }
+  return shuffle([...set]);
+}
+
+function qPlaceValue(){
+  const num=rnd(100000,9999999);
+  const s=num.toString();
+  const places=["ones","tens","hundreds","thousands","ten thousands","hundred thousands","millions"];
+  const idx=rnd(0,s.length-1);
+  const placeName=places[idx];
+  const digit=parseInt(s[s.length-1-idx]);
+  const value=digit*Math.pow(10,idx);
+  return {q:`In ${num.toLocaleString()}, what is the value of the digit in the ${placeName} place?`, correct:value, spread:Math.max(10,value*0.5)};
+}
+function qRound(){
+  const num=rnd(1000,999999);
+  const roundTo=[10,100,1000][rnd(0,2)];
+  const rounded=Math.round(num/roundTo)*roundTo;
+  return {q:`Round ${num.toLocaleString()} to the nearest ${roundTo.toLocaleString()}.`, correct:rounded, spread:roundTo*2};
+}
+function qCompare(){
+  const a=rnd(1000,999999), b=rnd(1000,999999);
+  const sym = a>b?">":(a<b?"<":"=");
+  const opts=shuffle([">","<","="]);
+  return {q:`Which symbol correctly compares ${a.toLocaleString()} and ${b.toLocaleString()}?`, correctStr:sym, opts:opts};
+}
+function qAdd(){
+  const a=rnd(1000,9999), b=rnd(1000,9999);
+  return {q:`${a.toLocaleString()} + ${b.toLocaleString()} = ?`, correct:a+b, spread:200};
+}
+function qSub(){
+  let a=rnd(1000,9999), b=rnd(1000,9999);
+  if(b>a)[a,b]=[b,a];
+  return {q:`${a.toLocaleString()} − ${b.toLocaleString()} = ?`, correct:a-b, spread:200};
+}
+function qMult1(){
+  const a=rnd(100,999), b=rnd(2,9);
+  return {q:`${a} × ${b} = ?`, correct:a*b, spread:50};
+}
+function qMult2(){
+  const a=rnd(12,89), b=rnd(12,89);
+  return {q:`${a} × ${b} = ?`, correct:a*b, spread:200};
+}
+function qDiv(){
+  const divisor=rnd(2,12), quotient=rnd(4,20), extra=rnd(0,divisor-1);
+  const dividend=divisor*quotient+extra;
+  return {q:`${dividend} ÷ ${divisor} = ? (give the whole number part, ignore remainder)`, correct:quotient, spread:10};
+}
+function qDivRem(){
+  const divisor=rnd(2,9), quotient=rnd(3,15), extra=rnd(1,divisor-1||1);
+  const dividend=divisor*quotient+extra;
+  return {q:`What is the remainder when ${dividend} is divided by ${divisor}?`, correct:extra, spread:divisor};
+}
+function factorsOf(n){const f=[];for(let i=1;i<=n;i++)if(n%i===0)f.push(i);return f;}
+function isPrime(n){if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;}
+function qFactorCount(){
+  const n=rnd(12,60);
+  const f=factorsOf(n);
+  return {q:`How many factors does ${n} have?`, correct:f.length, spread:4};
+}
+function qMultipleCheck(){
+  const base=rnd(2,12);
+  const isMult=Math.random()<0.5;
+  let n;
+  if(isMult){ n=base*rnd(2,10); } else { n=base*rnd(2,10)+rnd(1,base-1); }
+  const answer=(n%base===0)?"Yes":"No";
+  return {q:`Is ${n} a multiple of ${base}?`, correctStr:answer, opts:["Yes","No"]};
+}
+function qPrimeComposite(){
+  const n=rnd(2,50);
+  const answer= n===1?"Neither": isPrime(n)?"Prime":"Composite";
+  return {q:`Is ${n} prime, composite, or neither?`, correctStr:answer, opts:shuffle(["Prime","Composite","Neither"])};
+}
+function qWordAddSub(){
+  const total=rnd(2000,9000), used=rnd(500,total-500);
+  const isAdd=Math.random()<0.5;
+  if(isAdd){
+    const a=rnd(500,4000), b=rnd(500,4000);
+    return {q:`A library had ${a.toLocaleString()} books and received ${b.toLocaleString()} more. How many books now?`, correct:a+b, spread:300};
+  } else {
+    return {q:`A shop had ${total.toLocaleString()} items and sold ${used.toLocaleString()}. How many are left?`, correct:total-used, spread:300};
+  }
+}
+function qWordMultDiv(){
+  const isMult=Math.random()<0.5;
+  if(isMult){
+    const a=rnd(4,25), b=rnd(4,12);
+    return {q:`Each box holds ${b} apples. There are ${a} boxes. How many apples in total?`, correct:a*b, spread:40};
+  } else {
+    const per=rnd(3,12), groups=rnd(3,12);
+    const total=per*groups;
+    return {q:`${total} candies are shared equally among ${groups} kids. How many candies does each kid get?`, correct:per, spread:6};
+  }
+}
+
+const generators=[qPlaceValue,qRound,qCompare,qAdd,qSub,qMult1,qMult2,qDiv,qDivRem,qFactorCount,qMultipleCheck,qPrimeComposite,qWordAddSub,qWordMultDiv];
+
+function buildQuizSet(n){
+  const list=[];
+  for(let i=0;i<n;i++){
+    const gen=generators[i % generators.length];
+    list.push(gen());
+  }
+  return shuffle(list);
+}
+
+let quizData=[], current=0, score=0;
+function startQuiz(){
+  quizData=buildQuizSet(100);
+  current=0; score=0;
+  document.getElementById('scoreBarWrap').innerHTML=`<div id="scoreBar">Question <span id="qnum">1</span> / 100 &nbsp;·&nbsp; Score: <span id="scoreNum">0</span><div class="progress"><div id="prog"></div></div></div>`;
+  renderQuestion();
+}
+function renderQuestion(){
+  const area=document.getElementById('quizArea');
+  if(current>=quizData.length){ showResult(); return; }
+  const item=quizData[current];
+  let opts;
+  if(item.opts){ opts=item.opts; }
+  else { opts=makeOptions(item.correct,item.spread).map(v=>v.toString()); }
+  const correctVal = item.correctStr!==undefined ? item.correctStr : item.correct.toString();
+  area.innerHTML=`<div class="card qcard"><h3>Question ${current+1}</h3><p style="font-size:1.05rem">${item.q}</p>
+    <div id="opts">${opts.map(o=>`<button class="opt" onclick="answer(this,'${String(o).replace(/'/g,"\\'")}','${String(correctVal).replace(/'/g,"\\'")}')">${o}</button>`).join('')}</div></div>`;
+  document.getElementById('qnum').textContent=current+1;
+  document.getElementById('scoreNum').textContent=score;
+  document.getElementById('prog').style.width=((current)/quizData.length*100)+'%';
+}
+function answer(btn,chosen,correct){
+  document.querySelectorAll('#opts .opt').forEach(o=>{
+    o.disabled=true;
+    if(o.textContent===correct) o.classList.add('correct');
+  });
+  if(chosen===correct){ btn.classList.add('correct'); score++; }
+  else { btn.classList.add('wrong'); }
+  document.getElementById('scoreNum').textContent=score;
+  setTimeout(()=>{ current++; renderQuestion(); }, 900);
+}
+function showResult(){
+  const pct=Math.round(score/quizData.length*100);
+  let msg = pct>=90?"Outstanding! You know this really well. 🌟" : pct>=70?"Great job! A little more practice and you'll master it. 👍" : pct>=50?"Good effort — review the lessons and try again. 📘" : "Keep practicing — go back through each lesson and try again. 💪";
+  document.getElementById('quizArea').innerHTML=`<div class="card" id="result"><h2>Quiz Complete!</h2><div class="big">${score} / ${quizData.length}</div><p>${pct}% correct</p><p>${msg}</p><button class="startBtn" onclick="startQuiz()">Try Again</button></div>`;
+  document.getElementById('prog').style.width='100%';
+}
 </script>
 </body>
 </html>
