@@ -1,153 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grade 4 Math Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 6 Fractions Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1f2a44;--bg:#eaf4ff;--card:#fff;--blue:#2f6fed;--ok:#1a9d5c;--okbg:#e2f6ea;--bad:#d6384f;--badbg:#fde6ea;--sun:#ffc93c;--line:#c9d9f2}
-@media(prefers-color-scheme:dark){:root{--ink:#eef2fb;--bg:#141b2e;--card:#1f2842;--blue:#7ea6ff;--ok:#5fd596;--okbg:#18372a;--bad:#ff8396;--badbg:#42202a;--line:#33406300;--line:#364268}}
+:root{--bg:#eef6f1;--ink:#12263a;--card:#fff;--line:#c9dcd1;--acc:#f26a1b;--accink:#fff;--ok:#12805c;--okbg:#dcf3e9;--bad:#b83232;--badbg:#fbe4e4;--mut:#4d6275;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c28;--ink:#e8f1f5;--card:#172a3a;--line:#2b4357;--acc:#ff8a3d;--accink:#1a1209;--ok:#4fd1a1;--okbg:#12372c;--bad:#ff8080;--badbg:#3d1f24;--mut:#9db3c3}}
+:root[data-theme="dark"]{--bg:#0f1c28;--ink:#e8f1f5;--card:#172a3a;--line:#2b4357;--acc:#ff8a3d;--accink:#1a1209;--ok:#4fd1a1;--okbg:#12372c;--bad:#ff8080;--badbg:#3d1f24;--mut:#9db3c3}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:18px/1.5 "Trebuchet MS","Segoe UI",system-ui,sans-serif;min-height:100vh;padding:20px 14px 40px}
-main{max-width:640px;margin:0 auto}
-h1{font-size:2rem;line-height:1.15;margin:0 0 8px}
-h2{font-size:1.35rem;line-height:1.35;margin:0 0 18px}
-.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:24px}
-.tag{display:inline-block;background:var(--sun);color:#1f2a44;font-weight:700;font-size:.85rem;padding:3px 12px;border-radius:99px;margin-bottom:12px}
-.topics{display:grid;gap:8px;margin:18px 0 22px;padding:0;list-style:none}
-.topics li{background:var(--bg);border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between}
-button{font:inherit;cursor:pointer}
-.btn{background:var(--blue);color:#fff;border:0;border-radius:14px;padding:13px 26px;font-weight:700;font-size:1.05rem}
-.btn:hover{filter:brightness(1.08)}
-.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
-:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
-.top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:8px}
-.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:18px}
-.bar i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Fredoka,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:18px;line-height:1.45}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.6rem;margin:0;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--mut);margin:2px 0 16px}
+.bar{display:flex;gap:2px;height:12px;margin:10px 0 6px}
+.bar i{flex:1;background:var(--line);border-radius:2px}
+.bar i.on{background:var(--ok)}.bar i.x{background:var(--bad)}.bar i.cur{background:var(--acc)}
+.meta{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin-top:14px}
+.q{font-size:1.3rem;font-weight:500;margin:0 0 16px}
 .opts{display:grid;gap:10px}
-.opt{display:flex;gap:12px;align-items:center;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:13px 16px;font-size:1.1rem}
-.opt b{background:var(--bg);border-radius:8px;min-width:30px;height:30px;display:grid;place-items:center;font-size:.95rem}
-.opt:not(:disabled):hover{border-color:var(--blue)}
-.opt.ok{background:var(--okbg);border-color:var(--ok)}
-.opt.bad{background:var(--badbg);border-color:var(--bad)}
+.opt{font:inherit;font-size:1.15rem;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;min-height:52px}
+.opt:hover:not(:disabled){border-color:var(--acc)}
 .opt:disabled{cursor:default}
-.fb{margin-top:16px;padding:14px 16px;border-radius:14px;font-size:1rem}
-.fb.ok{background:var(--okbg)}.fb.bad{background:var(--badbg)}
-.fb strong{display:block;margin-bottom:2px}
-.next{margin-top:16px;text-align:right}
-.score{font-size:3.2rem;font-weight:800;line-height:1;margin:6px 0}
-.rows{margin:18px 0;display:grid;gap:10px}
-.row{display:grid;grid-template-columns:1fr 60px;gap:4px 12px;align-items:center}
-.row .bar{grid-column:1/-1;height:8px;margin:0}
-.rev{margin:22px 0 0;padding:0;list-style:none;display:grid;gap:10px}
-.rev li{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:.98rem}
-.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.no{background:var(--badbg);border-color:var(--bad)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:1rem}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.btn{font:inherit;font-weight:600;background:var(--acc);color:var(--accink);border:0;border-radius:12px;padding:12px 22px;margin-top:16px;cursor:pointer;font-size:1.05rem}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.big{font-size:3rem;font-weight:700;margin:0;line-height:1.1}
+.f{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.1;margin:0 .15em;font-size:.85em}
+.f b{font-weight:600;padding:0 .2em}.f b:first-child{border-bottom:2px solid currentColor}
+.rev{margin:10px 0 0;padding:0;list-style:none}
+.rev li{padding:10px 0;border-top:1px solid var(--line);font-size:1rem}
+.rev span{color:var(--ok);font-weight:600}
+.hide{display:none}
 </style>
 </head>
 <body>
-<main id="app"></main>
+<main>
+<h1>Fractions Quiz</h1>
+<p class="sub">Grade 6 maths &middot; add, subtract, multiply and divide fractions &middot; 50 questions</p>
+<div id="app"></div>
+</main>
 <script>
-// [topic, question, correct answer, wrong, wrong, wrong, explanation]
-const Q=[
-["Rounding","Round 3,476 to the nearest hundred.","3,500","3,400","3,000","3,480","The tens digit is 7, so round the hundreds up: 3,500."],
-["Rounding","Round 4,832 to the nearest ten.","4,830","4,800","4,840","4,900","The ones digit is 2, so keep the tens the same: 4,830."],
-["Rounding","Round 6,500 to the nearest thousand.","7,000","6,000","6,500","7,500","The hundreds digit is 5, so round up to 7,000."],
-["Rounding","Round 52,718 to the nearest thousand.","53,000","52,000","52,700","50,000","The hundreds digit is 7, so round up: 53,000."],
-["Rounding","Round 285 to the nearest ten.","290","280","300","285","The ones digit is 5, so round up to 290."],
-["Rounding","Round 9,964 to the nearest hundred.","10,000","9,900","9,000","9,960","The tens digit is 6, so 9,900 rounds up to 10,000."],
-["Rounding","Which number rounds to 400 when rounded to the nearest hundred?","351","349","450","460","351 is closer to 400 than to 300. 349 rounds to 300; 450 and 460 round to 500."],
-["Rounding","Round 14,639 to the nearest ten thousand.","10,000","15,000","14,000","20,000","The thousands digit is 4, so round down to 10,000."],
-["Rounding","Round 7,350 to the nearest hundred.","7,400","7,300","7,000","8,000","The tens digit is 5, so round up to 7,400."],
-["Rounding","Round 99,501 to the nearest thousand.","100,000","99,000","99,500","99,900","The hundreds digit is 5, so 99,000 rounds up to 100,000."],
-["Differences","Find the difference: 8,000 − 3,456","4,544","4,656","5,544","4,444","3,456 + 4,544 = 8,000."],
-["Differences","Find the difference: 5,203 − 1,876","3,327","3,437","4,327","3,433","1,876 + 3,327 = 5,203."],
-["Differences","Find the difference: 700 − 258","442","458","452","542","258 + 442 = 700."],
-["Differences","Find the difference: 6,000 − 2,999","3,001","3,011","3,999","2,001","Take 3,000 from 6,000, then add back 1: 3,001."],
-["Differences","Find the difference: 12,345 − 2,345","10,000","9,000","10,100","11,000","The 2,345 cancels out, leaving 10,000."],
-["Differences","Find the difference: 4,501 − 3,899","602","702","698","612","3,899 + 602 = 4,501."],
-["Differences","What is the difference between 9,100 and 4,650?","4,450","5,550","4,550","5,450","9,100 − 4,650 = 4,450."],
-["Differences","Find the difference: 30,000 − 14,562","15,438","16,438","15,562","14,438","14,562 + 15,438 = 30,000."],
-["Differences","Estimate 6,812 − 2,194 by rounding both numbers to the nearest thousand.","5,000","4,000","6,000","4,600","7,000 − 2,000 = 5,000."],
-["Differences","Which subtraction has a difference of 250?","1,000 − 750","900 − 750","1,000 − 650","800 − 500","1,000 − 750 = 250."],
-["Multiplication","12 × 6 = ?","72","62","66","78","10 × 6 = 60 and 2 × 6 = 12. 60 + 12 = 72."],
-["Multiplication","34 × 5 = ?","170","150","160","175","30 × 5 = 150 and 4 × 5 = 20. 150 + 20 = 170."],
-["Multiplication","48 × 3 = ?","144","124","134","154","40 × 3 = 120 and 8 × 3 = 24. 120 + 24 = 144."],
-["Multiplication","25 × 12 = ?","300","250","275","320","25 × 4 = 100, so 25 × 12 = 3 × 100 = 300."],
-["Multiplication","123 × 4 = ?","492","472","482","512","100 × 4 = 400, 20 × 4 = 80, 3 × 4 = 12. Total 492."],
-["Multiplication","60 × 70 = ?","4,200","420","42,000","3,600","6 × 7 = 42, then add two zeros: 4,200."],
-["Multiplication","36 × 20 = ?","720","72","7,200","560","36 × 2 = 72, then add a zero: 720."],
-["Multiplication","215 × 6 = ?","1,290","1,190","1,260","1,390","200 × 6 = 1,200 and 15 × 6 = 90. Total 1,290."],
-["Multiplication","14 × 15 = ?","210","190","200","225","14 × 10 = 140 and 14 × 5 = 70. 140 + 70 = 210."],
-["Multiplication","40 × 300 = ?","12,000","1,200","120,000","1,000","4 × 3 = 12, then add three zeros: 12,000."],
-["Number expressions","6 + 4 × 3 = ?","18","30","13","24","Multiply first: 4 × 3 = 12. Then 6 + 12 = 18."],
-["Number expressions","(6 + 4) × 3 = ?","30","18","13","12","Brackets first: 6 + 4 = 10. Then 10 × 3 = 30."],
-["Number expressions","20 − 2 × 5 = ?","10","90","30","0","Multiply first: 2 × 5 = 10. Then 20 − 10 = 10."],
-["Number expressions","Which expression means \"5 more than 3 times 8\"?","3 × 8 + 5","3 + 5 × 8","(3 + 8) × 5","5 × 3 + 8","\"3 times 8\" is 3 × 8. \"5 more than\" means add 5."],
-["Number expressions","Which expression means \"the sum of 9 and 6, times 2\"?","(9 + 6) × 2","9 + 6 × 2","9 × 6 + 2","(9 × 6) × 2","The sum is in brackets, then multiply by 2."],
-["Number expressions","18 ÷ 3 + 4 = ?","10","2","6","14","Divide first: 18 ÷ 3 = 6. Then 6 + 4 = 10."],
-["Number expressions","3 × (8 − 5) + 2 = ?","11","17","9","13","Brackets: 8 − 5 = 3. Then 3 × 3 = 9, and 9 + 2 = 11."],
-["Number expressions","Which expression is equal to 4 × (3 + 2)?","4 × 3 + 4 × 2","4 × 3 + 2","4 + 3 × 2","4 × 3 × 2","Both 3 and 2 get multiplied by 4. 12 + 8 = 20."],
-["Number expressions","50 − (10 + 15) = ?","25","55","75","15","Brackets first: 10 + 15 = 25. Then 50 − 25 = 25."],
-["Number expressions","2 × 5 + 3 × 4 = ?","22","32","27","60","Multiply first: 10 and 12. Then 10 + 12 = 22."],
-["Word problems","A box holds 24 pencils. How many pencils are in 6 boxes?","144","124","154","30","24 × 6 = 144."],
-["Word problems","Ada had 350 stickers and gave away 128. How many stickers does she have left?","222","232","478","228","350 − 128 = 222."],
-["Word problems","A school bus carries 45 students. How many students can 8 buses carry?","360","320","53","400","45 × 8 = 40 × 8 + 5 × 8 = 320 + 40 = 360."],
-["Word problems","A library had 1,250 books. It bought 375 more. How many books does it have now?","1,625","1,525","875","1,725","1,250 + 375 = 1,625."],
-["Word problems","A hall has 9 rows with 15 chairs in each row. 20 chairs are empty. How many chairs are filled?","115","135","155","24","9 × 15 = 135 chairs. Then 135 − 20 = 115."],
-["Word problems","A baker makes 3 trays of 12 buns and 2 trays of 10 buns. How many buns is that in all?","56","46","66","22","3 × 12 = 36 and 2 × 10 = 20. 36 + 20 = 56."],
-["Word problems","A farmer had 1,000 eggs and sold 4 crates with 125 eggs in each. How many eggs are left?","500","875","600","400","4 × 125 = 500 sold. Then 1,000 − 500 = 500."],
-["Word problems","Tunde saved ₦2,400. A bike costs ₦5,000. How much more does he need?","₦2,600","₦2,400","₦3,600","₦7,400","5,000 − 2,400 = 2,600."],
-["Word problems","4,872 fans came to a match. Round this to the nearest hundred.","4,900","4,800","5,000","4,870","The tens digit is 7, so round the hundreds up: 4,900."],
-["Word problems","Mum buys 5 notebooks at ₦120 each and pays with ₦1,000. How much change does she get?","₦400","₦600","₦880","₦500","5 × 120 = 600 spent. Then 1,000 − 600 = 400."]
+const Q=(q,a,b,c,d,e,t)=>({q,o:[a,b,c,d],e,t});
+const QS=[
+Q("1/2 + 1/4 = ?","3/4","1/3","1/8","1","Use denominator 4: 2/4 + 1/4 = 3/4.","Adding"),
+Q("2/5 + 1/5 = ?","3/5","3/10","2/25","4/5","Use denominator 5: 2/5 + 1/5 = 3/5.","Adding"),
+Q("1/3 + 1/6 = ?","1/2","2/9","1/18","2/3","Use denominator 6: 2/6 + 1/6 = 3/6, which is 1/2.","Adding"),
+Q("3/4 + 1/8 = ?","7/8","1/3","3/32","1","Use denominator 8: 6/8 + 1/8 = 7/8.","Adding"),
+Q("2/3 + 1/4 = ?","11/12","3/7","1/6","1","Use denominator 12: 8/12 + 3/12 = 11/12.","Adding"),
+Q("5/6 + 1/3 = ?","1 1/6","2/3","5/18","1 1/3","Use denominator 6: 5/6 + 2/6 = 7/6, which is 1 1/6.","Adding"),
+Q("3/5 + 3/10 = ?","9/10","2/5","9/50","1","Use denominator 10: 6/10 + 3/10 = 9/10.","Adding"),
+Q("7/8 + 3/4 = ?","1 5/8","5/6","21/32","1 3/4","Use denominator 8: 7/8 + 6/8 = 13/8, which is 1 5/8.","Adding"),
+Q("2 1/2 + 1 1/4 = ?","3 3/4","1 2/3","3 1/8","4","Use denominator 4: 10/4 + 5/4 = 15/4, which is 3 3/4.","Adding"),
+Q("3 1/3 + 2 1/6 = ?","5 1/2","2 5/9","7 2/9","5 2/3","Use denominator 6: 20/6 + 13/6 = 33/6, which is 5 1/2.","Adding"),
+Q("4 2/5 + 1 7/10 = ?","6 1/10","2 3/5","7 12/25","6 1/5","Use denominator 10: 44/10 + 17/10 = 61/10, which is 6 1/10.","Adding"),
+Q("Ada drank 1/3 litre of water in the morning and 1/4 litre in the afternoon. How many litres did she drink?","7/12","2/7","1/12","2/3","Use denominator 12: 4/12 + 3/12 = 7/12.","Adding"),
+Q("Tayo ran 1 1/2 km on Monday and 2 3/4 km on Tuesday. How far did he run in total?","4 1/4","2 1/3","4 1/8","4 1/2","Use denominator 4: 6/4 + 11/4 = 17/4, which is 4 1/4.","Adding"),
+Q("3/4 − 1/4 = ?","1/2","1","3/4","1/4","Use denominator 4: 3/4 − 1/4 = 2/4, which is 1/2.","Subtracting"),
+Q("7/10 − 2/5 = ?","3/10","1 1/10","1","2/5","Use denominator 10: 7/10 − 4/10 = 3/10.","Subtracting"),
+Q("5/6 − 1/3 = ?","1/2","1 1/6","1 1/3","2/3","Use denominator 6: 5/6 − 2/6 = 3/6, which is 1/2.","Subtracting"),
+Q("3/4 − 1/6 = ?","7/12","11/12","1","2/3","Use denominator 12: 9/12 − 2/12 = 7/12.","Subtracting"),
+Q("7/8 − 1/2 = ?","3/8","1 3/8","1","1/2","Use denominator 8: 7/8 − 4/8 = 3/8.","Subtracting"),
+Q("2/3 − 1/5 = ?","7/15","13/15","1/2","8/15","Use denominator 15: 10/15 − 3/15 = 7/15.","Subtracting"),
+Q("3 1/2 − 1 1/4 = ?","2 1/4","4 3/4","1","2 1/2","Use denominator 4: 14/4 − 5/4 = 9/4, which is 2 1/4.","Subtracting"),
+Q("4 1/3 − 1 2/3 = ?","2 2/3","6","3","2 1/3","Use denominator 3: 13/3 − 5/3 = 8/3, which is 2 2/3.","Subtracting"),
+Q("5 − 2 3/4 = ?","2 1/4","7 3/4","2","2 1/2","Use denominator 4: 20/4 − 11/4 = 9/4, which is 2 1/4.","Subtracting"),
+Q("6 1/5 − 2 7/10 = ?","3 1/2","8 9/10","4/5","3 3/5","Use denominator 10: 62/10 − 27/10 = 35/10, which is 3 1/2.","Subtracting"),
+Q("A ribbon is 5/6 m long. Bisi uses 1/2 m of it. How much ribbon is left?","1/3","1 1/3","1","1/2","Use denominator 6: 5/6 − 3/6 = 2/6, which is 1/3.","Subtracting"),
+Q("Kemi had 3 1/4 kg of rice and used 1 1/2 kg. How much rice is left?","1 3/4","4 3/4","5","2","Use denominator 4: 13/4 − 6/4 = 7/4, which is 1 3/4.","Subtracting"),
+Q("1/2 × 3/5 = ?","3/10","1 1/10","3/7","3/5","Multiply tops, multiply bottoms: 1/2 × 3/5 = 3/10.","Multiplying"),
+Q("2/3 × 3/4 = ?","1/2","1 5/12","6/7","1","Multiply tops, multiply bottoms: 2/3 × 3/4 = 6/12, which is 1/2.","Multiplying"),
+Q("4/5 × 5/8 = ?","1/2","1 17/40","1 7/13","1","Multiply tops, multiply bottoms: 4/5 × 5/8 = 20/40, which is 1/2.","Multiplying"),
+Q("3/4 × 2/9 = ?","1/6","35/36","6/13","1/3","Multiply tops, multiply bottoms: 3/4 × 2/9 = 6/36, which is 1/6.","Multiplying"),
+Q("1/3 × 6 = ?","2","6 1/3","1 1/2","4","Multiply tops, multiply bottoms: 1/3 × 6 = 6/3, which is 2.","Multiplying"),
+Q("5/6 × 3/10 = ?","1/4","1 2/15","15/16","1/2","Multiply tops, multiply bottoms: 5/6 × 3/10 = 15/60, which is 1/4.","Multiplying"),
+Q("2/7 × 7/8 = ?","1/4","1 9/56","14/15","1/2","Multiply tops, multiply bottoms: 2/7 × 7/8 = 14/56, which is 1/4.","Multiplying"),
+Q("1 1/2 × 2/3 = ?","1","2 1/6","1 1/5","2","Multiply tops, multiply bottoms: 3/2 × 2/3 = 6/6, which is 1.","Multiplying"),
+Q("2 1/4 × 4 = ?","9","6 1/4","7 1/5","18","Multiply tops, multiply bottoms: 9/4 × 4 = 36/4, which is 9.","Multiplying"),
+Q("1 1/3 × 2 1/4 = ?","3","3 7/12","5 1/7","6","Multiply tops, multiply bottoms: 4/3 × 9/4 = 36/12, which is 3.","Multiplying"),
+Q("3 1/2 × 1 2/7 = ?","4 1/2","4 11/14","7","9","Multiply tops, multiply bottoms: 7/2 × 9/7 = 63/14, which is 4 1/2.","Multiplying"),
+Q("Each cup of soup needs 3/4 teaspoon of salt. How much salt is needed for 5 cups?","3 3/4","5 3/4","3","7 1/2","Multiply tops, multiply bottoms: 3/4 × 5 = 15/4, which is 3 3/4.","Multiplying"),
+Q("A path is 2/3 km long. Musa walks 3/4 of it. How many km did he walk?","1/2","1 5/12","6/7","1","Multiply tops, multiply bottoms: 2/3 × 3/4 = 6/12, which is 1/2.","Multiplying"),
+Q("3/4 ÷ 1/2 = ?","1 1/2","3/8","2/3","2 1/2","Flip the second fraction and multiply: 3/4 × 2 = 1 1/2.","Dividing"),
+Q("2/3 ÷ 4 = ?","1/6","2 2/3","6","1 1/6","Flip the second fraction and multiply: 2/3 × 1/4 = 1/6.","Dividing"),
+Q("5 ÷ 1/3 = ?","15","1 2/3","1/15","16","Flip the second fraction and multiply: 5 × 3 = 15.","Dividing"),
+Q("3/5 ÷ 3/10 = ?","2","9/50","1/2","3","Flip the second fraction and multiply: 3/5 × 10/3 = 2.","Dividing"),
+Q("1 1/2 ÷ 3/4 = ?","2","1 1/8","1/2","3","Flip the second fraction and multiply: 3/2 × 4/3 = 2.","Dividing"),
+Q("4/5 ÷ 2/5 = ?","2","8/25","1/2","3","Flip the second fraction and multiply: 4/5 × 5/2 = 2.","Dividing"),
+Q("7/8 ÷ 1/4 = ?","3 1/2","7/32","2/7","4 1/2","Flip the second fraction and multiply: 7/8 × 4 = 3 1/2.","Dividing"),
+Q("2 1/2 ÷ 5/6 = ?","3","2 1/12","1/3","4","Flip the second fraction and multiply: 5/2 × 6/5 = 3.","Dividing"),
+Q("6 ÷ 3/4 = ?","8","4 1/2","1/8","9","Flip the second fraction and multiply: 6 × 4/3 = 8.","Dividing"),
+Q("1/2 ÷ 3/8 = ?","1 1/3","3/16","3/4","2 1/3","Flip the second fraction and multiply: 1/2 × 8/3 = 1 1/3.","Dividing"),
+Q("How many 1/4 kg bags can be filled from 3 kg of beans?","12","3/4","1/12","13","Flip the second fraction and multiply: 3 × 4 = 12.","Dividing"),
+Q("3/4 litre of juice is shared equally among 3 children. How many litres does each child get?","1/4","2 1/4","4","1 1/4","Flip the second fraction and multiply: 3/4 × 1/3 = 1/4.","Dividing")
 ];
-const TOPICS=[...new Set(Q.map(q=>q[0]))], L="ABCD", app=document.getElementById("app");
-let qs,i,score,picked,missed,byTopic;
-const shuffle=a=>{a=[...a];for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]]}return a};
-
-function start(){
-  app.innerHTML=`<div class="card"><span class="tag">Grade 4 Math</span><h1>Math Quiz</h1>
-  <p>${Q.length} questions. Pick an answer, read the tip, then move on.</p>
-  <ul class="topics">${TOPICS.map(t=>`<li><span>${t}</span><b>${Q.filter(q=>q[0]==t).length} questions</b></li>`).join("")}</ul>
-  <button class="btn" id="go">Start quiz</button></div>`;
-  document.getElementById("go").onclick=begin;
-}
-function begin(){
-  qs=Q.map(q=>({t:q[0],q:q[1],a:q[2],o:shuffle(q.slice(2,6)),e:q[6]}));
-  i=0;score=0;missed=[];byTopic=Object.fromEntries(TOPICS.map(t=>[t,0]));show();
-}
+const app=document.getElementById('app');
+const fr=s=>s.replace(/(\d+)\/(\d+)/g,'<span class="f"><b>$1</b><b>$2</b></span>');
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let i=0,score=0,res=[],done=false,missed=[];
+function bar(){return '<div class="bar" aria-hidden="true">'+QS.map((_,k)=>'<i class="'+(k<res.length?(res[k]?'on':'x'):(k===i&&!done?'cur':''))+'"></i>').join('')+'</div>'}
 function show(){
-  const c=qs[i];picked=false;
-  app.innerHTML=`<div class="card"><div class="top"><span>${c.t}</span><span>${i+1} of ${qs.length}</span></div>
-  <div class="bar"><i style="width:${i/qs.length*100}%"></i></div>
-  <h2>${c.q}</h2><div class="opts">${c.o.map((o,k)=>`<button class="opt" data-k="${k}"><b>${L[k]}</b>${o}</button>`).join("")}</div>
-  <div id="fb" aria-live="polite"></div></div>`;
-  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(b));
+ if(i>=QS.length)return end();
+ const q=QS[i],opts=shuf(q.o.map((t,k)=>({t,k})));
+ app.innerHTML=bar()+'<div class="meta"><span>Question '+(i+1)+' of '+QS.length+' &middot; '+q.t+'</span><span>Score: '+score+'</span></div>'+
+ '<div class="card"><p class="q">'+fr(q.q)+'</p><div class="opts">'+opts.map(o=>'<button class="opt" data-k="'+o.k+'">'+fr(o.t)+'</button>').join('')+'</div><div id="fb"></div></div>';
+ app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,q));
 }
-function answer(b){
-  if(picked)return;picked=true;
-  const c=qs[i],ans=c.o[b.dataset.k],right=ans===c.a;
-  app.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(c.o[x.dataset.k]===c.a)x.classList.add("ok")});
-  if(right){score++;byTopic[c.t]++}else{b.classList.add("bad");missed.push({c,ans})}
-  const last=i==qs.length-1;
-  document.getElementById("fb").innerHTML=`<div class="fb ${right?"ok":"bad"}"><strong>${right?"Correct!":"Not quite. The answer is "+c.a+"."}</strong>${c.e}</div>
-  <div class="next"><button class="btn" id="nx">${last?"See results":"Next question"}</button></div>`;
-  const nx=document.getElementById("nx");nx.focus();
-  nx.onclick=()=>{i++;last?finish():show()};
+function pick(b,q){
+ const ok=b.dataset.k==='0';
+ app.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('ok')});
+ if(!ok){b.classList.add('no');missed.push(q)}else score++;
+ res.push(ok);
+ document.getElementById('fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><strong>'+(ok?'Correct!':'Not quite.')+'</strong> '+fr(q.e)+'</div><button class="btn" id="nx">'+(i===QS.length-1?'See results':'Next question')+'</button>';
+ const n=document.getElementById('nx');n.onclick=()=>{i++;show()};n.focus();
 }
-function finish(){
-  const pct=Math.round(score/qs.length*100),
-  msg=pct>=90?"Outstanding work!":pct>=70?"Great job!":pct>=50?"Good effort. Keep practising!":"Nice try. Review the tips and try again.";
-  app.innerHTML=`<div class="card"><span class="tag">Results</span><div class="score">${score} / ${qs.length}</div>
-  <p><b>${pct}%</b>. ${msg}</p>
-  <div class="rows">${TOPICS.map(t=>{const n=Q.filter(q=>q[0]==t).length,s=byTopic[t];return`<div class="row"><span>${t}</span><b>${s} / ${n}</b><div class="bar"><i style="width:${s/n*100}%"></i></div></div>`}).join("")}</div>
-  ${missed.length?`<h2>Questions to review</h2><ul class="rev">${missed.map(m=>`<li><b>${m.c.q}</b><br>Your answer: ${m.ans}<br>Correct answer: ${m.c.a}<br>${m.c.e}</li>`).join("")}</ul>`:""}
-  <div class="acts"><button class="btn" id="again">Try again</button><button class="btn alt" id="home">Home</button></div></div>`;
-  document.getElementById("again").onclick=begin;
-  document.getElementById("home").onclick=start;
-  window.scrollTo(0,0);
+function end(){
+ done=true;
+ const p=Math.round(score/QS.length*100);
+ const msg=p>=90?'Fraction champion!':p>=70?'Great work.':p>=50?'Good effort. Review the ones you missed.':'Keep practising. You will get there.';
+ app.innerHTML=bar()+'<div class="card"><p class="big">'+score+' / '+QS.length+'</p><p class="q">'+p+'% &middot; '+msg+'</p>'+
+ (missed.length?'<p class="meta">Review these '+missed.length+' questions</p><ul class="rev">'+missed.map(q=>'<li>'+fr(q.q)+'<br><span>Answer: '+fr(q.o[0])+'</span> &mdash; '+fr(q.e)+'</li>').join('')+'</ul>':'<p>Perfect score. No mistakes to review.</p>')+
+ '<button class="btn" id="rs">Try again</button></div>';
+ document.getElementById('rs').onclick=()=>{i=0;score=0;res=[];missed=[];done=false;show()};
 }
-start();
+show();
 </script>
 </body>
 </html>
