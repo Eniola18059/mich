@@ -2,135 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grade 6 Fractions Quiz</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>About Myself</title>
 <style>
-:root{--bg:#eef6f1;--ink:#12263a;--card:#fff;--line:#c9dcd1;--acc:#f26a1b;--accink:#fff;--ok:#12805c;--okbg:#dcf3e9;--bad:#b83232;--badbg:#fbe4e4;--mut:#4d6275;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c28;--ink:#e8f1f5;--card:#172a3a;--line:#2b4357;--acc:#ff8a3d;--accink:#1a1209;--ok:#4fd1a1;--okbg:#12372c;--bad:#ff8080;--badbg:#3d1f24;--mut:#9db3c3}}
-:root[data-theme="dark"]{--bg:#0f1c28;--ink:#e8f1f5;--card:#172a3a;--line:#2b4357;--acc:#ff8a3d;--accink:#1a1209;--ok:#4fd1a1;--okbg:#12372c;--bad:#ff8080;--badbg:#3d1f24;--mut:#9db3c3}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Fredoka,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:18px;line-height:1.45}
-main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
-h1{font-size:1.6rem;margin:0;font-weight:700;letter-spacing:-.01em}
-.sub{color:var(--mut);margin:2px 0 16px}
-.bar{display:flex;gap:2px;height:12px;margin:10px 0 6px}
-.bar i{flex:1;background:var(--line);border-radius:2px}
-.bar i.on{background:var(--ok)}.bar i.x{background:var(--bad)}.bar i.cur{background:var(--acc)}
-.meta{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem}
-.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin-top:14px}
-.q{font-size:1.3rem;font-weight:500;margin:0 0 16px}
-.opts{display:grid;gap:10px}
-.opt{font:inherit;font-size:1.15rem;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;min-height:52px}
-.opt:hover:not(:disabled){border-color:var(--acc)}
-.opt:disabled{cursor:default}
-.opt.ok{background:var(--okbg);border-color:var(--ok)}
-.opt.no{background:var(--badbg);border-color:var(--bad)}
-:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:1rem}
-.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
-.btn{font:inherit;font-weight:600;background:var(--acc);color:var(--accink);border:0;border-radius:12px;padding:12px 22px;margin-top:16px;cursor:pointer;font-size:1.05rem}
-.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
-.big{font-size:3rem;font-weight:700;margin:0;line-height:1.1}
-.f{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.1;margin:0 .15em;font-size:.85em}
-.f b{font-weight:600;padding:0 .2em}.f b:first-child{border-bottom:2px solid currentColor}
-.rev{margin:10px 0 0;padding:0;list-style:none}
-.rev li{padding:10px 0;border-top:1px solid var(--line);font-size:1rem}
-.rev span{color:var(--ok);font-weight:600}
-.hide{display:none}
+  body{font-family:Georgia,'Times New Roman',serif;max-width:680px;margin:50px auto;padding:0 20px;color:#111;line-height:1.9}
+  h1{text-align:center;font-size:28px;margin-bottom:28px}
+  p{font-size:19px;text-indent:40px;margin:0 0 14px}
+  u{text-decoration:underline;text-decoration-thickness:2px;font-weight:bold}
+  .key{margin-top:36px;font-family:Arial,sans-serif;font-size:14px;line-height:1.7;border-top:1px solid #aaa;padding-top:12px}
+  @media print{.key{page-break-inside:avoid}}
 </style>
 </head>
 <body>
-<main>
-<h1>Fractions Quiz</h1>
-<p class="sub">Grade 6 maths &middot; add, subtract, multiply and divide fractions &middot; 50 questions</p>
-<div id="app"></div>
-</main>
-<script>
-const Q=(q,a,b,c,d,e,t)=>({q,o:[a,b,c,d],e,t});
-const QS=[
-Q("1/2 + 1/4 = ?","3/4","1/3","1/8","1","Use denominator 4: 2/4 + 1/4 = 3/4.","Adding"),
-Q("2/5 + 1/5 = ?","3/5","3/10","2/25","4/5","Use denominator 5: 2/5 + 1/5 = 3/5.","Adding"),
-Q("1/3 + 1/6 = ?","1/2","2/9","1/18","2/3","Use denominator 6: 2/6 + 1/6 = 3/6, which is 1/2.","Adding"),
-Q("3/4 + 1/8 = ?","7/8","1/3","3/32","1","Use denominator 8: 6/8 + 1/8 = 7/8.","Adding"),
-Q("2/3 + 1/4 = ?","11/12","3/7","1/6","1","Use denominator 12: 8/12 + 3/12 = 11/12.","Adding"),
-Q("5/6 + 1/3 = ?","1 1/6","2/3","5/18","1 1/3","Use denominator 6: 5/6 + 2/6 = 7/6, which is 1 1/6.","Adding"),
-Q("3/5 + 3/10 = ?","9/10","2/5","9/50","1","Use denominator 10: 6/10 + 3/10 = 9/10.","Adding"),
-Q("7/8 + 3/4 = ?","1 5/8","5/6","21/32","1 3/4","Use denominator 8: 7/8 + 6/8 = 13/8, which is 1 5/8.","Adding"),
-Q("2 1/2 + 1 1/4 = ?","3 3/4","1 2/3","3 1/8","4","Use denominator 4: 10/4 + 5/4 = 15/4, which is 3 3/4.","Adding"),
-Q("3 1/3 + 2 1/6 = ?","5 1/2","2 5/9","7 2/9","5 2/3","Use denominator 6: 20/6 + 13/6 = 33/6, which is 5 1/2.","Adding"),
-Q("4 2/5 + 1 7/10 = ?","6 1/10","2 3/5","7 12/25","6 1/5","Use denominator 10: 44/10 + 17/10 = 61/10, which is 6 1/10.","Adding"),
-Q("Ada drank 1/3 litre of water in the morning and 1/4 litre in the afternoon. How many litres did she drink?","7/12","2/7","1/12","2/3","Use denominator 12: 4/12 + 3/12 = 7/12.","Adding"),
-Q("Tayo ran 1 1/2 km on Monday and 2 3/4 km on Tuesday. How far did he run in total?","4 1/4","2 1/3","4 1/8","4 1/2","Use denominator 4: 6/4 + 11/4 = 17/4, which is 4 1/4.","Adding"),
-Q("3/4 − 1/4 = ?","1/2","1","3/4","1/4","Use denominator 4: 3/4 − 1/4 = 2/4, which is 1/2.","Subtracting"),
-Q("7/10 − 2/5 = ?","3/10","1 1/10","1","2/5","Use denominator 10: 7/10 − 4/10 = 3/10.","Subtracting"),
-Q("5/6 − 1/3 = ?","1/2","1 1/6","1 1/3","2/3","Use denominator 6: 5/6 − 2/6 = 3/6, which is 1/2.","Subtracting"),
-Q("3/4 − 1/6 = ?","7/12","11/12","1","2/3","Use denominator 12: 9/12 − 2/12 = 7/12.","Subtracting"),
-Q("7/8 − 1/2 = ?","3/8","1 3/8","1","1/2","Use denominator 8: 7/8 − 4/8 = 3/8.","Subtracting"),
-Q("2/3 − 1/5 = ?","7/15","13/15","1/2","8/15","Use denominator 15: 10/15 − 3/15 = 7/15.","Subtracting"),
-Q("3 1/2 − 1 1/4 = ?","2 1/4","4 3/4","1","2 1/2","Use denominator 4: 14/4 − 5/4 = 9/4, which is 2 1/4.","Subtracting"),
-Q("4 1/3 − 1 2/3 = ?","2 2/3","6","3","2 1/3","Use denominator 3: 13/3 − 5/3 = 8/3, which is 2 2/3.","Subtracting"),
-Q("5 − 2 3/4 = ?","2 1/4","7 3/4","2","2 1/2","Use denominator 4: 20/4 − 11/4 = 9/4, which is 2 1/4.","Subtracting"),
-Q("6 1/5 − 2 7/10 = ?","3 1/2","8 9/10","4/5","3 3/5","Use denominator 10: 62/10 − 27/10 = 35/10, which is 3 1/2.","Subtracting"),
-Q("A ribbon is 5/6 m long. Bisi uses 1/2 m of it. How much ribbon is left?","1/3","1 1/3","1","1/2","Use denominator 6: 5/6 − 3/6 = 2/6, which is 1/3.","Subtracting"),
-Q("Kemi had 3 1/4 kg of rice and used 1 1/2 kg. How much rice is left?","1 3/4","4 3/4","5","2","Use denominator 4: 13/4 − 6/4 = 7/4, which is 1 3/4.","Subtracting"),
-Q("1/2 × 3/5 = ?","3/10","1 1/10","3/7","3/5","Multiply tops, multiply bottoms: 1/2 × 3/5 = 3/10.","Multiplying"),
-Q("2/3 × 3/4 = ?","1/2","1 5/12","6/7","1","Multiply tops, multiply bottoms: 2/3 × 3/4 = 6/12, which is 1/2.","Multiplying"),
-Q("4/5 × 5/8 = ?","1/2","1 17/40","1 7/13","1","Multiply tops, multiply bottoms: 4/5 × 5/8 = 20/40, which is 1/2.","Multiplying"),
-Q("3/4 × 2/9 = ?","1/6","35/36","6/13","1/3","Multiply tops, multiply bottoms: 3/4 × 2/9 = 6/36, which is 1/6.","Multiplying"),
-Q("1/3 × 6 = ?","2","6 1/3","1 1/2","4","Multiply tops, multiply bottoms: 1/3 × 6 = 6/3, which is 2.","Multiplying"),
-Q("5/6 × 3/10 = ?","1/4","1 2/15","15/16","1/2","Multiply tops, multiply bottoms: 5/6 × 3/10 = 15/60, which is 1/4.","Multiplying"),
-Q("2/7 × 7/8 = ?","1/4","1 9/56","14/15","1/2","Multiply tops, multiply bottoms: 2/7 × 7/8 = 14/56, which is 1/4.","Multiplying"),
-Q("1 1/2 × 2/3 = ?","1","2 1/6","1 1/5","2","Multiply tops, multiply bottoms: 3/2 × 2/3 = 6/6, which is 1.","Multiplying"),
-Q("2 1/4 × 4 = ?","9","6 1/4","7 1/5","18","Multiply tops, multiply bottoms: 9/4 × 4 = 36/4, which is 9.","Multiplying"),
-Q("1 1/3 × 2 1/4 = ?","3","3 7/12","5 1/7","6","Multiply tops, multiply bottoms: 4/3 × 9/4 = 36/12, which is 3.","Multiplying"),
-Q("3 1/2 × 1 2/7 = ?","4 1/2","4 11/14","7","9","Multiply tops, multiply bottoms: 7/2 × 9/7 = 63/14, which is 4 1/2.","Multiplying"),
-Q("Each cup of soup needs 3/4 teaspoon of salt. How much salt is needed for 5 cups?","3 3/4","5 3/4","3","7 1/2","Multiply tops, multiply bottoms: 3/4 × 5 = 15/4, which is 3 3/4.","Multiplying"),
-Q("A path is 2/3 km long. Musa walks 3/4 of it. How many km did he walk?","1/2","1 5/12","6/7","1","Multiply tops, multiply bottoms: 2/3 × 3/4 = 6/12, which is 1/2.","Multiplying"),
-Q("3/4 ÷ 1/2 = ?","1 1/2","3/8","2/3","2 1/2","Flip the second fraction and multiply: 3/4 × 2 = 1 1/2.","Dividing"),
-Q("2/3 ÷ 4 = ?","1/6","2 2/3","6","1 1/6","Flip the second fraction and multiply: 2/3 × 1/4 = 1/6.","Dividing"),
-Q("5 ÷ 1/3 = ?","15","1 2/3","1/15","16","Flip the second fraction and multiply: 5 × 3 = 15.","Dividing"),
-Q("3/5 ÷ 3/10 = ?","2","9/50","1/2","3","Flip the second fraction and multiply: 3/5 × 10/3 = 2.","Dividing"),
-Q("1 1/2 ÷ 3/4 = ?","2","1 1/8","1/2","3","Flip the second fraction and multiply: 3/2 × 4/3 = 2.","Dividing"),
-Q("4/5 ÷ 2/5 = ?","2","8/25","1/2","3","Flip the second fraction and multiply: 4/5 × 5/2 = 2.","Dividing"),
-Q("7/8 ÷ 1/4 = ?","3 1/2","7/32","2/7","4 1/2","Flip the second fraction and multiply: 7/8 × 4 = 3 1/2.","Dividing"),
-Q("2 1/2 ÷ 5/6 = ?","3","2 1/12","1/3","4","Flip the second fraction and multiply: 5/2 × 6/5 = 3.","Dividing"),
-Q("6 ÷ 3/4 = ?","8","4 1/2","1/8","9","Flip the second fraction and multiply: 6 × 4/3 = 8.","Dividing"),
-Q("1/2 ÷ 3/8 = ?","1 1/3","3/16","3/4","2 1/3","Flip the second fraction and multiply: 1/2 × 8/3 = 1 1/3.","Dividing"),
-Q("How many 1/4 kg bags can be filled from 3 kg of beans?","12","3/4","1/12","13","Flip the second fraction and multiply: 3 × 4 = 12.","Dividing"),
-Q("3/4 litre of juice is shared equally among 3 children. How many litres does each child get?","1/4","2 1/4","4","1 1/4","Flip the second fraction and multiply: 3/4 × 1/3 = 1/4.","Dividing")
-];
-const app=document.getElementById('app');
-const fr=s=>s.replace(/(\d+)\/(\d+)/g,'<span class="f"><b>$1</b><b>$2</b></span>');
-const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-let i=0,score=0,res=[],done=false,missed=[];
-function bar(){return '<div class="bar" aria-hidden="true">'+QS.map((_,k)=>'<i class="'+(k<res.length?(res[k]?'on':'x'):(k===i&&!done?'cur':''))+'"></i>').join('')+'</div>'}
-function show(){
- if(i>=QS.length)return end();
- const q=QS[i],opts=shuf(q.o.map((t,k)=>({t,k})));
- app.innerHTML=bar()+'<div class="meta"><span>Question '+(i+1)+' of '+QS.length+' &middot; '+q.t+'</span><span>Score: '+score+'</span></div>'+
- '<div class="card"><p class="q">'+fr(q.q)+'</p><div class="opts">'+opts.map(o=>'<button class="opt" data-k="'+o.k+'">'+fr(o.t)+'</button>').join('')+'</div><div id="fb"></div></div>';
- app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,q));
-}
-function pick(b,q){
- const ok=b.dataset.k==='0';
- app.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('ok')});
- if(!ok){b.classList.add('no');missed.push(q)}else score++;
- res.push(ok);
- document.getElementById('fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><strong>'+(ok?'Correct!':'Not quite.')+'</strong> '+fr(q.e)+'</div><button class="btn" id="nx">'+(i===QS.length-1?'See results':'Next question')+'</button>';
- const n=document.getElementById('nx');n.onclick=()=>{i++;show()};n.focus();
-}
-function end(){
- done=true;
- const p=Math.round(score/QS.length*100);
- const msg=p>=90?'Fraction champion!':p>=70?'Great work.':p>=50?'Good effort. Review the ones you missed.':'Keep practising. You will get there.';
- app.innerHTML=bar()+'<div class="card"><p class="big">'+score+' / '+QS.length+'</p><p class="q">'+p+'% &middot; '+msg+'</p>'+
- (missed.length?'<p class="meta">Review these '+missed.length+' questions</p><ul class="rev">'+missed.map(q=>'<li>'+fr(q.q)+'<br><span>Answer: '+fr(q.o[0])+'</span> &mdash; '+fr(q.e)+'</li>').join('')+'</ul>':'<p>Perfect score. No mistakes to review.</p>')+
- '<button class="btn" id="rs">Try again</button></div>';
- document.getElementById('rs').onclick=()=>{i=0;score=0;res=[];missed=[];done=false;show()};
-}
-show();
-</script>
+<h1>About Myself</h1>
+
+<p>My name is <u>Daniel Adeyemi</u>, and I am <u>thirteen</u> years old. I was born on the <u>fifth of March</u>, and I am in Grade 8 at <u>Creative Minds</u>. I live in <u>Lagos, Nigeria</u>, with my parents and my <u>two younger sisters</u>. I am writing this essay to tell you more about who I am. I hope you will enjoy reading it.</p>
+
+<p>My family is very important to me. My father is a <u>civil engineer</u>, and my mother is a <u>nurse</u>. They work hard every day to give us a good life. My sisters are called <u>Tola and Ife</u>, and we enjoy playing <u>board games</u> together on weekends. At home, I help by <u>washing the plates</u> and keeping my room neat.</p>
+
+<p>In my free time, I love playing <u>football</u> with my friends. My favourite team is <u>Arsenal</u>, and my favourite player is <u>Bukayo Saka</u>. I also enjoy <u>drawing</u> and reading adventure stories. At school, my best subject is <u>Mathematics</u> because I like solving problems. I am not very good at <u>Spelling</u>, but I practise a little every night to improve. My favourite teacher is <u>Miss Grace</u>, who always encourages me.</p>
+
+<p>I have many good friends at school, and we help each other with our homework. My best friend is <u>Chidi</u>, and we have known each other since we were <u>seven</u>. A normal school day for me begins at <u>six o'clock</u> in the morning. I wake up, <u>pray</u>, take my bath, and eat breakfast before <u>my father drives me</u> to school. After school, I do my homework, watch a little <u>television</u>, and go to bed early. I believe that <u>honesty and respect</u> are the most important values a person can have, and I try to practise them every day of my life.</p>
+
+<p>I have many dreams for my future. When I grow up, I want to become a <u>doctor</u> so that I can help sick people and make my community healthier. To reach this goal, I must study hard, read many books, and never give up when things become difficult. I also want to learn how to write <u>computer programs</u> because technology is changing the world. In the next five years, I hope to finish secondary school with excellent grades and win a place at a good university. I am a <u>kind, curious, and hardworking</u> boy, and I believe I can achieve anything if I work for it. Thank you for reading about me.</p>
+
+<div class="key">
+<b>How to use this:</b> The underlined words are the details about the writer. Replace each one with the true detail about you, then copy the whole essay into your book. Keep the essay at about 400 words.
+</div>
 </body>
 </html>
