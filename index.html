@@ -1,32 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>About Myself</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 1 Maths: Add and Subtract Stories</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  body{font-family:Georgia,'Times New Roman',serif;max-width:680px;margin:50px auto;padding:0 20px;color:#111;line-height:1.9}
-  h1{text-align:center;font-size:28px;margin-bottom:28px}
-  p{font-size:19px;text-indent:40px;margin:0 0 14px}
-  u{text-decoration:underline;text-decoration-thickness:2px;font-weight:bold}
-  .key{margin-top:36px;font-family:Arial,sans-serif;font-size:14px;line-height:1.7;border-top:1px solid #aaa;padding-top:12px}
-  @media print{.key{page-break-inside:avoid}}
+:root{--bg:#e8f5ff;--card:#fff;--ink:#1f3a5f;--mute:#5d7391;--pri:#ff9f1c;--priink:#3b2300;--blue:#3a86ff;--ok:#1fa968;--okbg:#dff7ea;--bad:#e5385a;--badbg:#fde4ea;--line:#cfe3f5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101c33;--card:#1b2d50;--ink:#eaf2ff;--mute:#9db3d3;--priink:#2b1a00;--ok:#4fd997;--okbg:#17402f;--bad:#ff7a93;--badbg:#4a1f2b;--line:#2d4573}}
+:root[data-theme="dark"]{--bg:#101c33;--card:#1b2d50;--ink:#eaf2ff;--mute:#9db3d3;--priink:#2b1a00;--ok:#4fd997;--okbg:#17402f;--bad:#ff7a93;--badbg:#4a1f2b;--line:#2d4573}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Fredoka","Trebuchet MS","Comic Sans MS",system-ui,sans-serif;font-size:18px;line-height:1.4}
+main{max-width:560px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:20px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .4em}
+p{margin:.4em 0}
+.mute{color:var(--mute)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:4px solid var(--blue);outline-offset:2px}
+.go{display:block;width:100%;min-height:60px;margin-top:16px;border:0;border-radius:18px;background:var(--pri);color:var(--priink);font-weight:700;font-size:1.3rem}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-weight:600}
+.bar{flex:1;height:14px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue);border-radius:9px;transition:width .3s}
+.vis{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;font-size:1.7rem;line-height:1.25;margin-bottom:12px;padding:10px;background:var(--bg);border-radius:16px}
+.vis b{font-size:1.8rem;padding:0 6px}
+.vis i{font-style:normal}.vis i.x{opacity:.22;filter:grayscale(1)}
+.q{font-size:1.3rem;font-weight:600;margin:6px 0 14px}
+.say{border:2px solid var(--line);background:transparent;border-radius:14px;padding:6px 12px;font-size:.95rem;margin-bottom:8px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{min-height:76px;border:3px solid var(--line);background:var(--card);border-radius:18px;font-size:2.1rem;font-weight:700}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:16px;font-weight:600}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.bad{background:var(--badbg);color:var(--bad)}
+.big{font-size:3.4rem;font-weight:700;line-height:1}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.split div{background:var(--bg);border-radius:16px;padding:12px;text-align:center}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 </head>
 <body>
-<h1>About Myself</h1>
-
-<p>My name is <u>Daniel Adeyemi</u>, and I am <u>thirteen</u> years old. I was born on the <u>fifth of March</u>, and I am in Grade 8 at <u>Creative Minds</u>. I live in <u>Lagos, Nigeria</u>, with my parents and my <u>two younger sisters</u>. I am writing this essay to tell you more about who I am. I hope you will enjoy reading it.</p>
-
-<p>My family is very important to me. My father is a <u>civil engineer</u>, and my mother is a <u>nurse</u>. They work hard every day to give us a good life. My sisters are called <u>Tola and Ife</u>, and we enjoy playing <u>board games</u> together on weekends. At home, I help by <u>washing the plates</u> and keeping my room neat.</p>
-
-<p>In my free time, I love playing <u>football</u> with my friends. My favourite team is <u>Arsenal</u>, and my favourite player is <u>Bukayo Saka</u>. I also enjoy <u>drawing</u> and reading adventure stories. At school, my best subject is <u>Mathematics</u> because I like solving problems. I am not very good at <u>Spelling</u>, but I practise a little every night to improve. My favourite teacher is <u>Miss Grace</u>, who always encourages me.</p>
-
-<p>I have many good friends at school, and we help each other with our homework. My best friend is <u>Chidi</u>, and we have known each other since we were <u>seven</u>. A normal school day for me begins at <u>six o'clock</u> in the morning. I wake up, <u>pray</u>, take my bath, and eat breakfast before <u>my father drives me</u> to school. After school, I do my homework, watch a little <u>television</u>, and go to bed early. I believe that <u>honesty and respect</u> are the most important values a person can have, and I try to practise them every day of my life.</p>
-
-<p>I have many dreams for my future. When I grow up, I want to become a <u>doctor</u> so that I can help sick people and make my community healthier. To reach this goal, I must study hard, read many books, and never give up when things become difficult. I also want to learn how to write <u>computer programs</u> because technology is changing the world. In the next five years, I hope to finish secondary school with excellent grades and win a place at a good university. I am a <u>kind, curious, and hardworking</u> boy, and I believe I can achieve anything if I work for it. Thank you for reading about me.</p>
-
-<div class="key">
-<b>How to use this:</b> The underlined words are the details about the writer. Replace each one with the true detail about you, then copy the whole essay into your book. Keep the essay at about 400 words.
-</div>
+<main id="app"></main>
+<script>
+const NAMES=["Ada","Tunde","Mia","Sam","Zara","Leo","Ife","Noah","Ayo","Lily","Kofi","Emma"];
+const OBJ=[["🍎","apple","apples"],["🍪","cookie","cookies"],["⚽","ball","balls"],["🎈","balloon","balloons"],["🐟","fish","fish"],["🌸","flower","flowers"],["⭐","star","stars"],["🚗","toy car","toy cars"],["🍓","strawberry","strawberries"],["🐶","puppy","puppies"],["📚","book","books"],["🍬","candy","candies"],["🐞","ladybug","ladybugs"]];
+let seed=2026;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1));
+const pick=a=>a[Math.floor(rnd()*a.length)];
+function build(){
+  seed=2026;const qs=[];
+  for(let i=0;i<100;i++){
+    const add=i%2===0,max=i<30?10:i<65?15:20;
+    const [e,s,p]=pick(OBJ),N=pick(NAMES);let M=pick(NAMES);while(M===N)M=pick(NAMES);
+    const c=x=>x+" "+(x===1?s:p);
+    let a,b,ans,t;
+    if(add){
+      a=ri(1,max-1);b=ri(1,max-a);ans=a+b;
+      t=pick([
+        `${N} has ${c(a)}. ${M} gives ${N} ${b} more. How many ${p} does ${N} have now?`,
+        `There are ${c(a)} in a box and ${c(b)} on the table. How many ${p} are there in all?`,
+        `${N} has ${c(a)}. ${M} has ${c(b)}. How many ${p} do they have together?`,
+        `${N} finds ${c(a)} in the morning and ${b} more in the afternoon. How many ${p} did ${N} find?`]);
+    }else{
+      a=ri(2,max);b=ri(1,a-1);ans=a-b;
+      t=pick([
+        `${N} has ${c(a)}. ${N} gives ${b} to ${M}. How many ${p} does ${N} have left?`,
+        `There are ${c(a)} in a bag. ${N} takes out ${b}. How many ${p} are still in the bag?`,
+        `${N} had ${c(a)}. ${b} got lost. How many ${p} are left?`,
+        `${a} ${p} are on a shelf. ${M} takes ${b} away. How many ${p} are on the shelf now?`]);
+    }
+    const ds=[ans-2,ans-1,ans+1,ans+2,ans+3].filter(x=>x>=0).sort(()=>rnd()-.5).slice(0,3);
+    const opts=[ans,...ds].sort((x,y)=>x-y);
+    const vis=add?`<span>${(e+" ").repeat(a)}</span><b>+</b><span>${(e+" ").repeat(b)}</span>`
+      :Array.from({length:a},(_,k)=>`<i class="${k>=a-b?'x':''}">${e}</i>`).join("");
+    qs.push({add,t,ans,opts,vis});
+  }
+  return qs;
+}
+const Q=build();let i=0,score=0,done=false,res=[];
+const app=document.getElementById("app");
+function best(set){try{if(set!=null)localStorage.setItem("g1best",set);return +localStorage.getItem("g1best")||0}catch(e){return 0}}
+function start(){
+  const b=best();
+  app.innerHTML=`<div class="card"><div class="big">➕➖</div><h1>Add and Subtract Stories</h1>
+  <p>100 story questions. Read each one, count the pictures, then tap the answer.</p>
+  <p class="mute">Tap 🔊 on any question to hear it read aloud.</p>${b?`<p class="mute">Best score: ${b} / 100</p>`:""}
+  <button class="go" onclick="begin()">Start</button></div>`;
+}
+function begin(){i=0;score=0;res=[];show()}
+function show(){
+  const q=Q[i];done=false;
+  app.innerHTML=`<div class="top"><div class="bar"><i style="width:${i/100*100}%"></i></div><span>${i+1} / 100</span><span>⭐ ${score}</span></div>
+  <div class="card"><div class="vis" aria-hidden="true">${q.vis}</div>
+  ${"speechSynthesis" in window?`<button class="say" onclick="speak()">🔊 Read to me</button>`:""}
+  <p class="q">${q.t}</p>
+  <div class="opts">${q.opts.map(o=>`<button class="opt" onclick="ans(${o},this)">${o}</button>`).join("")}</div>
+  <div id="fb" aria-live="polite"></div></div>`;
+}
+function speak(){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(Q[i].t);u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+function ans(v,btn){
+  if(done)return;done=true;
+  const q=Q[i],ok=v===q.ans;
+  if(ok)score++;res.push(ok?q.add?"a":"s":"");
+  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.textContent===q.ans)b.classList.add("ok")});
+  if(!ok)btn.classList.add("bad");
+  const last=i===99;
+  document.getElementById("fb").innerHTML=`<div class="fb ${ok?"ok":"bad"}">${ok?"Correct! Great job!":"Not quite. The answer is "+q.ans+"."}</div>
+  <button class="go" onclick="next()" autofocus>${last?"See my score":"Next question"}</button>`;
+  document.querySelector("#fb .go").focus();
+}
+function next(){if(i===99){end()}else{i++;show()}}
+function end(){
+  const a=res.filter(x=>x==="a").length,s=res.filter(x=>x==="s").length;
+  if(score>best())best(score);
+  const m=score>=90?"Super maths star! 🌟":score>=70?"Great work! 🎉":score>=50?"Good try! Keep practising. 💪":"Nice effort! Try again to get better. 🙂";
+  app.innerHTML=`<div class="card"><div class="big">${score} / 100</div><h1>${m}</h1>
+  <div class="split"><div><b>${a} / 50</b><br>Adding right</div><div><b>${s} / 50</b><br>Taking away right</div></div>
+  <p class="mute">Best score: ${best()} / 100</p>
+  <button class="go" onclick="begin()">Play again</button></div>`;
+}
+start();
+</script>
 </body>
 </html>
