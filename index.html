@@ -1,128 +1,342 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grade 1 Maths: Add and Subtract Stories</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Synonym Safari - Grade 2 Quiz</title>
 <style>
-:root{--bg:#e8f5ff;--card:#fff;--ink:#1f3a5f;--mute:#5d7391;--pri:#ff9f1c;--priink:#3b2300;--blue:#3a86ff;--ok:#1fa968;--okbg:#dff7ea;--bad:#e5385a;--badbg:#fde4ea;--line:#cfe3f5;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101c33;--card:#1b2d50;--ink:#eaf2ff;--mute:#9db3d3;--priink:#2b1a00;--ok:#4fd997;--okbg:#17402f;--bad:#ff7a93;--badbg:#4a1f2b;--line:#2d4573}}
-:root[data-theme="dark"]{--bg:#101c33;--card:#1b2d50;--ink:#eaf2ff;--mute:#9db3d3;--priink:#2b1a00;--ok:#4fd997;--okbg:#17402f;--bad:#ff7a93;--badbg:#4a1f2b;--line:#2d4573}
+:root{
+  --bg:#fff6e0; --card:#ffffff; --ink:#2b2a4c; --muted:#6b6a8a;
+  --c0:#ff6b6b; --c1:#4dabf7; --c2:#51cf66; --c3:#ffa94d;
+  --good:#2f9e44; --goodbg:#d3f9d8; --bad:#e03131; --badbg:#ffe3e3;
+  --brand:#7048e8; --shadow:0 6px 0 rgba(43,42,76,.15);
+}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:"Fredoka","Trebuchet MS","Comic Sans MS",system-ui,sans-serif;font-size:18px;line-height:1.4}
-main{max-width:560px;margin:0 auto;padding:16px}
-.card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:20px}
-h1{font-size:2rem;line-height:1.15;margin:.2em 0 .4em}
-p{margin:.4em 0}
-.mute{color:var(--mute)}
-button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible{outline:4px solid var(--blue);outline-offset:2px}
-.go{display:block;width:100%;min-height:60px;margin-top:16px;border:0;border-radius:18px;background:var(--pri);color:var(--priink);font-weight:700;font-size:1.3rem}
-.top{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-weight:600}
-.bar{flex:1;height:14px;background:var(--line);border-radius:9px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--blue);border-radius:9px;transition:width .3s}
-.vis{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;font-size:1.7rem;line-height:1.25;margin-bottom:12px;padding:10px;background:var(--bg);border-radius:16px}
-.vis b{font-size:1.8rem;padding:0 6px}
-.vis i{font-style:normal}.vis i.x{opacity:.22;filter:grayscale(1)}
-.q{font-size:1.3rem;font-weight:600;margin:6px 0 14px}
-.say{border:2px solid var(--line);background:transparent;border-radius:14px;padding:6px 12px;font-size:.95rem;margin-bottom:8px}
+body{
+  background:linear-gradient(160deg,#fff6e0 0%,#e7f5ff 100%) fixed;
+  color:var(--ink);
+  font-family:"Trebuchet MS","Comic Sans MS","Segoe UI",system-ui,sans-serif;
+  min-height:100vh; line-height:1.4;
+}
+#app{max-width:720px;margin:0 auto;padding:16px}
+h1,h2,h3{margin:0}
+.card{background:var(--card);border-radius:24px;padding:24px;box-shadow:var(--shadow);border:3px solid #fff}
+.center{text-align:center}
+.top{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.pill{background:#fff;border-radius:999px;padding:6px 14px;font-weight:700;box-shadow:0 3px 0 rgba(43,42,76,.12);font-size:.95rem}
+.bar{height:14px;background:#fff;border-radius:999px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 2px 3px rgba(0,0,0,.1)}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));border-radius:999px;transition:width .35s}
+.ask{margin:0 0 6px;color:var(--muted);font-weight:700;font-size:1.05rem}
+.word{font-size:clamp(2.2rem,9vw,3.4rem);color:var(--brand);margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;text-transform:uppercase;letter-spacing:1px}
+#say{font-size:1.5rem;border:0;background:#f3f0ff;border-radius:50%;width:48px;height:48px;cursor:pointer}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.opt{min-height:76px;border:3px solid var(--line);background:var(--card);border-radius:18px;font-size:2.1rem;font-weight:700}
+@media(max-width:520px){.opts{grid-template-columns:1fr}}
+.opt{
+  display:flex;align-items:center;gap:10px;text-align:left;
+  font:inherit;font-size:1.35rem;font-weight:800;color:#fff;border:0;border-radius:18px;
+  padding:16px 14px;cursor:pointer;box-shadow:var(--shadow);min-height:64px;transition:transform .1s;
+}
+.opt:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(43,42,76,.15)}
+.opt .key{background:rgba(255,255,255,.35);border-radius:10px;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;flex:none}
+.c0{background:var(--c0)}.c1{background:var(--c1)}.c2{background:var(--c2)}.c3{background:var(--c3)}
+.opt.right{background:var(--good);animation:pop .4s}
+.opt.wrong{background:var(--bad);animation:shake .4s}
+.opt.dim{opacity:.45}
 .opt:disabled{cursor:default}
-.opt.ok{border-color:var(--ok);background:var(--okbg)}
-.opt.bad{border-color:var(--bad);background:var(--badbg)}
-.fb{margin-top:14px;padding:12px 14px;border-radius:16px;font-weight:600}
-.fb.ok{background:var(--okbg);color:var(--ok)}.fb.bad{background:var(--badbg);color:var(--bad)}
-.big{font-size:3.4rem;font-weight:700;line-height:1}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.split div{background:var(--bg);border-radius:16px;padding:12px;text-align:center}
-@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+@keyframes pop{50%{transform:scale(1.06)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{margin-top:16px;border-radius:16px;padding:12px 16px;font-size:1.15rem;font-weight:700;min-height:0}
+.fb.ok{background:var(--goodbg);color:#1b6b2f}
+.fb.no{background:var(--badbg);color:#a61e1e}
+.btn{
+  font:inherit;font-size:1.2rem;font-weight:800;border:0;border-radius:16px;padding:14px 26px;cursor:pointer;
+  background:var(--brand);color:#fff;box-shadow:var(--shadow)
+}
+.btn.alt{background:#fff;color:var(--brand);border:3px solid var(--brand)}
+.btn:active{transform:translateY(3px)}
+.next{margin-top:16px;width:100%}
+input[type=text]{font:inherit;font-size:1.3rem;padding:12px 16px;border-radius:14px;border:3px solid #d0bfff;width:100%;max-width:340px;text-align:center;color:var(--ink);background:#fff}
+.hero{font-size:4rem;margin-bottom:6px}
+.stack{display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:18px}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.score{font-size:3.4rem;font-weight:900;color:var(--brand)}
+.stars{font-size:2.6rem;letter-spacing:6px}
+.missed{margin-top:18px;text-align:left;max-height:320px;overflow:auto;border-radius:16px;background:#f8f9ff;padding:8px 14px}
+.missed div{padding:8px 0;border-bottom:2px dashed #e0e0f0;font-size:1.05rem}
+.missed div:last-child{border:0}
+.missed b{color:var(--brand)}
+.small{font-size:.95rem;color:var(--muted)}
+.mute{border:0;background:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:1rem;box-shadow:0 3px 0 rgba(43,42,76,.12)}
+:focus-visible{outline:4px solid #ffd43b;outline-offset:2px}
 </style>
 </head>
 <body>
-<main id="app"></main>
+<div id="app"></div>
+
 <script>
-const NAMES=["Ada","Tunde","Mia","Sam","Zara","Leo","Ife","Noah","Ayo","Lily","Kofi","Emma"];
-const OBJ=[["🍎","apple","apples"],["🍪","cookie","cookies"],["⚽","ball","balls"],["🎈","balloon","balloons"],["🐟","fish","fish"],["🌸","flower","flowers"],["⭐","star","stars"],["🚗","toy car","toy cars"],["🍓","strawberry","strawberries"],["🐶","puppy","puppies"],["📚","book","books"],["🍬","candy","candies"],["🐞","ladybug","ladybugs"]];
-let seed=2026;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
-const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1));
-const pick=a=>a[Math.floor(rnd()*a.length)];
-function build(){
-  seed=2026;const qs=[];
-  for(let i=0;i<100;i++){
-    const add=i%2===0,max=i<30?10:i<65?15:20;
-    const [e,s,p]=pick(OBJ),N=pick(NAMES);let M=pick(NAMES);while(M===N)M=pick(NAMES);
-    const c=x=>x+" "+(x===1?s:p);
-    let a,b,ans,t;
-    if(add){
-      a=ri(1,max-1);b=ri(1,max-a);ans=a+b;
-      t=pick([
-        `${N} has ${c(a)}. ${M} gives ${N} ${b} more. How many ${p} does ${N} have now?`,
-        `There are ${c(a)} in a box and ${c(b)} on the table. How many ${p} are there in all?`,
-        `${N} has ${c(a)}. ${M} has ${c(b)}. How many ${p} do they have together?`,
-        `${N} finds ${c(a)} in the morning and ${b} more in the afternoon. How many ${p} did ${N} find?`]);
-    }else{
-      a=ri(2,max);b=ri(1,a-1);ans=a-b;
-      t=pick([
-        `${N} has ${c(a)}. ${N} gives ${b} to ${M}. How many ${p} does ${N} have left?`,
-        `There are ${c(a)} in a bag. ${N} takes out ${b}. How many ${p} are still in the bag?`,
-        `${N} had ${c(a)}. ${b} got lost. How many ${p} are left?`,
-        `${a} ${p} are on a shelf. ${M} takes ${b} away. How many ${p} are on the shelf now?`]);
-    }
-    const ds=[ans-2,ans-1,ans+1,ans+2,ans+3].filter(x=>x>=0).sort(()=>rnd()-.5).slice(0,3);
-    const opts=[ans,...ds].sort((x,y)=>x-y);
-    const vis=add?`<span>${(e+" ").repeat(a)}</span><b>+</b><span>${(e+" ").repeat(b)}</span>`
-      :Array.from({length:a},(_,k)=>`<i class="${k>=a-b?'x':''}">${e}</i>`).join("");
-    qs.push({add,t,ans,opts,vis});
-  }
-  return qs;
+// [word, synonym, [three words that do NOT mean the same]]
+const Q=[
+["big","large",["tiny","thin","slow"]],
+["small","little",["huge","tall","loud"]],
+["happy","glad",["sad","angry","sleepy"]],
+["sad","unhappy",["joyful","brave","quick"]],
+["fast","quick",["slow","heavy","soft"]],
+["begin","start",["stop","finish","hide"]],
+["end","finish",["begin","start","grow"]],
+["choose","pick",["drop","wash","hide"]],
+["close","shut",["open","lose","spill"]],
+["see","notice",["hear","smell","touch"]],
+["loud","noisy",["quiet","soft","slow"]],
+["quiet","silent",["noisy","loud","fast"]],
+["smart","clever",["silly","slow","tiny"]],
+["pretty","beautiful",["ugly","angry","heavy"]],
+["tiny","teeny",["giant","loud","thick"]],
+["huge","giant",["small","slow","thin"]],
+["jump","leap",["sit","crawl","sleep"]],
+["run","sprint",["walk","sit","stand"]],
+["walk","stroll",["race","dash","sprint"]],
+["talk","speak",["listen","sleep","hide"]],
+["shout","yell",["whisper","smile","nap"]],
+["laugh","giggle",["cry","frown","sleep"]],
+["cry","weep",["laugh","jump","sing"]],
+["smile","grin",["frown","shout","cry"]],
+["hug","cuddle",["push","kick","pull"]],
+["rest","relax",["work","jump","shout"]],
+["sleep","snooze",["wake","run","eat"]],
+["tired","sleepy",["awake","lively","hungry"]],
+["cold","chilly",["hot","sunny","dry"]],
+["damp","wet",["dry","hard","hot"]],
+["ill","sick",["well","strong","happy"]],
+["mad","angry",["glad","calm","sleepy"]],
+["scared","afraid",["brave","bold","happy"]],
+["brave","bold",["scared","shy","tired"]],
+["kind","nice",["mean","rude","sad"]],
+["mean","unkind",["friendly","funny","tiny"]],
+["rich","wealthy",["poor","weak","thin"]],
+["simple","easy",["hard","heavy","tall"]],
+["hard","difficult",["easy","soft","kind"]],
+["shiny","bright",["dull","wet","rough"]],
+["dull","boring",["shiny","noisy","fast"]],
+["neat","tidy",["messy","loud","wet"]],
+["messy","untidy",["neat","clean","tidy"]],
+["sofa","couch",["table","bed","door"]],
+["car","automobile",["bicycle","boat","kite"]],
+["street","road",["river","roof","wall"]],
+["home","house",["school","shop","park"]],
+["present","gift",["bag","rain","chair"]],
+["rock","stone",["leaf","cloud","stick"]],
+["pail","bucket",["spoon","plate","pencil"]],
+["dad","father",["mother","uncle","sister"]],
+["mom","mother",["father","brother","aunt"]],
+["kid","child",["adult","teacher","pilot"]],
+["bunny","rabbit",["puppy","kitten","duck"]],
+["tale","story",["song","game","map"]],
+["peek","glance",["stare","shout","hide"]],
+["fix","repair",["break","lose","drop"]],
+["break","crack",["mend","fix","paint"]],
+["build","make",["break","drop","erase"]],
+["buy","purchase",["sell","borrow","wash"]],
+["give","offer",["take","keep","hide"]],
+["grab","snatch",["drop","throw","wave"]],
+["toss","throw",["catch","hold","keep"]],
+["pull","tug",["push","drop","kick"]],
+["hurry","rush",["wait","rest","sleep"]],
+["wait","pause",["hurry","run","jump"]],
+["stop","halt",["go","start","skip"]],
+["go","leave",["arrive","stay","sit"]],
+["come","arrive",["leave","go","wave"]],
+["keep","hold",["lose","throw","drop"]],
+["find","discover",["lose","hide","break"]],
+["mix","blend",["split","drop","freeze"]],
+["reply","answer",["ask","shout","hide"]],
+["tell","say",["ask","hide","hear"]],
+["joyful","cheerful",["gloomy","sleepy","angry"]],
+["calm","peaceful",["noisy","angry","busy"]],
+["nervous","worried",["relaxed","proud","sleepy"]],
+["odd","strange",["normal","usual","plain"]],
+["strong","powerful",["weak","tiny","sleepy"]],
+["thin","skinny",["fat","tall","round"]],
+["chubby","plump",["skinny","tall","tiny"]],
+["tall","high",["short","low","wide"]],
+["short","brief",["tall","wide","long"]],
+["wide","broad",["narrow","thin","short"]],
+["freezing","icy",["boiling","sunny","dry"]],
+["gentle","soft",["rough","loud","hard"]],
+["rough","bumpy",["smooth","flat","soft"]],
+["correct","right",["wrong","false","silly"]],
+["wrong","incorrect",["right","true","correct"]],
+["true","real",["fake","false","pretend"]],
+["fake","false",["real","true","right"]],
+["sure","certain",["unsure","unsafe","unkind"]],
+["maybe","perhaps",["never","always","today"]],
+["almost","nearly",["never","always","slowly"]],
+["also","too",["not","only","never"]],
+["very","really",["never","little","slowly"]],
+["soon","shortly",["never","late","yesterday"]],
+["trip","journey",["meal","game","nap"]],
+["shop","store",["house","school","farm"]],
+["enjoy","like",["hate","fear","drop"]]
+];
+
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const KEY="synonymSafariG2";
+let S={name:"",order:[],i:0,answers:[],score:0,streak:0,practice:false};
+let muted=false, locked=false, curOpts=[];
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null;}catch(e){return null;}}
+function clearSave(){try{localStorage.removeItem(KEY);}catch(e){}}
+function best(){try{return +localStorage.getItem(KEY+"Best")||0;}catch(e){return 0;}}
+function setBest(n){try{if(n>best())localStorage.setItem(KEY+"Best",n);}catch(e){}}
+
+function beep(ok){
+  if(muted)return;
+  try{
+    const C=window.AudioContext||window.webkitAudioContext; if(!C)return;
+    const ctx=new C(), o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type="sine";
+    const t=ctx.currentTime;
+    if(ok){o.frequency.setValueAtTime(660,t);o.frequency.setValueAtTime(880,t+.12);}
+    else{o.frequency.setValueAtTime(220,t);o.frequency.setValueAtTime(180,t+.15);}
+    g.gain.setValueAtTime(.15,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);
+    o.start(t);o.stop(t+.35);
+  }catch(e){}
 }
-const Q=build();let i=0,score=0,done=false,res=[];
-const app=document.getElementById("app");
-function best(set){try{if(set!=null)localStorage.setItem("g1best",set);return +localStorage.getItem("g1best")||0}catch(e){return 0}}
-function start(){
-  const b=best();
-  app.innerHTML=`<div class="card"><div class="big">➕➖</div><h1>Add and Subtract Stories</h1>
-  <p>100 story questions. Read each one, count the pictures, then tap the answer.</p>
-  <p class="mute">Tap 🔊 on any question to hear it read aloud.</p>${b?`<p class="mute">Best score: ${b} / 100</p>`:""}
-  <button class="go" onclick="begin()">Start</button></div>`;
+function speak(t){
+  try{
+    if(!("speechSynthesis" in window))return;
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.8;
+    speechSynthesis.speak(u);
+  }catch(e){}
 }
-function begin(){i=0;score=0;res=[];show()}
-function show(){
-  const q=Q[i];done=false;
-  app.innerHTML=`<div class="top"><div class="bar"><i style="width:${i/100*100}%"></i></div><span>${i+1} / 100</span><span>⭐ ${score}</span></div>
-  <div class="card"><div class="vis" aria-hidden="true">${q.vis}</div>
-  ${"speechSynthesis" in window?`<button class="say" onclick="speak()">🔊 Read to me</button>`:""}
-  <p class="q">${q.t}</p>
-  <div class="opts">${q.opts.map(o=>`<button class="opt" onclick="ans(${o},this)">${o}</button>`).join("")}</div>
-  <div id="fb" aria-live="polite"></div></div>`;
+
+/* ---------- Start screen ---------- */
+function home(){
+  const saved=load();
+  const canResume=saved&&saved.order&&saved.i<saved.order.length&&saved.i>0;
+  app.innerHTML=`
+  <div class="card center">
+    <div class="hero">🦁🌿</div>
+    <h1>Synonym Safari</h1>
+    <p class="ask" style="margin-top:8px">Synonyms are words that mean the same, or almost the same, thing.<br>Example: <b>big</b> and <b>large</b>.</p>
+    <p class="small">100 questions &middot; Grade 2</p>
+    <div class="stack">
+      <input type="text" id="nm" placeholder="Type your name" maxlength="20" value="${(S.name||(saved&&saved.name)||"").replace(/"/g,"")}" aria-label="Your name">
+      <button class="btn" id="go">Start the quiz &#10132;</button>
+      ${canResume?`<button class="btn alt" id="resume">Continue (question ${saved.i+1})</button>`:""}
+      <label class="small"><input type="checkbox" id="shuf" checked> Mix up the question order</label>
+      ${best()?`<div class="pill">🏆 Best score: ${best()}</div>`:""}
+    </div>
+  </div>`;
+  $("#go").onclick=()=>{
+    S={name:$("#nm").value.trim(),order:[],i:0,answers:[],score:0,streak:0,practice:false};
+    const idx=Q.map((_,k)=>k);
+    S.order=$("#shuf").checked?shuffle(idx):idx;
+    save();showQuestion();
+  };
+  if(canResume)$("#resume").onclick=()=>{S=saved;S.name=$("#nm").value.trim()||S.name;showQuestion();};
 }
-function speak(){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(Q[i].t);u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
-function ans(v,btn){
-  if(done)return;done=true;
-  const q=Q[i],ok=v===q.ans;
-  if(ok)score++;res.push(ok?q.add?"a":"s":"");
-  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.textContent===q.ans)b.classList.add("ok")});
-  if(!ok)btn.classList.add("bad");
-  const last=i===99;
-  document.getElementById("fb").innerHTML=`<div class="fb ${ok?"ok":"bad"}">${ok?"Correct! Great job!":"Not quite. The answer is "+q.ans+"."}</div>
-  <button class="go" onclick="next()" autofocus>${last?"See my score":"Next question"}</button>`;
-  document.querySelector("#fb .go").focus();
+
+/* ---------- Question screen ---------- */
+function showQuestion(){
+  const q=Q[S.order[S.i]];
+  curOpts=shuffle([q[1],...q[2]]);
+  locked=false;
+  const total=S.order.length;
+  app.innerHTML=`
+  <div class="top">
+    <div class="pill">${S.practice?"Practice &middot; ":""}Question ${S.i+1} of ${total}</div>
+    <div class="pill">⭐ ${S.score}</div>
+    <div class="pill">🔥 ${S.streak}</div>
+    <button class="mute" id="mute" aria-label="Sound on or off">${muted?"🔇":"🔊"}</button>
+    <button class="mute" id="home" aria-label="Back to start">🏠</button>
+  </div>
+  <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${S.i}"><div style="width:${S.i/total*100}%"></div></div>
+  <main class="card">
+    <p class="ask">Which word means the same as&hellip;</p>
+    <h2 class="word"><span>${q[0]}</span><button id="say" aria-label="Read the word aloud">🔊</button></h2>
+    <div class="opts">
+      ${curOpts.map((o,k)=>`<button class="opt c${k}" data-o="${o}"><span class="key">${k+1}</span>${o}</button>`).join("")}
+    </div>
+    <div id="fb" class="fb" aria-live="polite" hidden></div>
+    <button id="next" class="btn next" hidden></button>
+  </main>`;
+  $("#say").onclick=()=>speak(q[0]);
+  $("#mute").onclick=e=>{muted=!muted;e.target.textContent=muted?"🔇":"🔊";};
+  $("#home").onclick=()=>{save();home();};
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(b.dataset.o));
 }
-function next(){if(i===99){end()}else{i++;show()}}
-function end(){
-  const a=res.filter(x=>x==="a").length,s=res.filter(x=>x==="s").length;
-  if(score>best())best(score);
-  const m=score>=90?"Super maths star! 🌟":score>=70?"Great work! 🎉":score>=50?"Good try! Keep practising. 💪":"Nice effort! Try again to get better. 🙂";
-  app.innerHTML=`<div class="card"><div class="big">${score} / 100</div><h1>${m}</h1>
-  <div class="split"><div><b>${a} / 50</b><br>Adding right</div><div><b>${s} / 50</b><br>Taking away right</div></div>
-  <p class="mute">Best score: ${best()} / 100</p>
-  <button class="go" onclick="begin()">Play again</button></div>`;
+
+function choose(o){
+  if(locked)return; locked=true;
+  const q=Q[S.order[S.i]], ok=(o===q[1]);
+  S.answers.push({w:q[0],c:q[1],g:o,ok,id:S.order[S.i]});
+  if(ok){S.score++;S.streak++;}else S.streak=0;
+  beep(ok);
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.o===q[1])b.classList.add("right");
+    else if(b.dataset.o===o)b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  const fb=$("#fb");fb.hidden=false;
+  fb.className="fb "+(ok?"ok":"no");
+  const praise=["Great job!","Super!","You got it!","Awesome!","Brilliant!"][Math.floor(Math.random()*5)];
+  fb.innerHTML=ok
+    ?`${praise} <b>${q[0]}</b> and <b>${q[1]}</b> mean almost the same thing.${S.streak>=5?" 🔥 "+S.streak+" in a row!":""}`
+    :`Not quite. <b>${q[0]}</b> means the same as <b>${q[1]}</b>.`;
+  const last=S.i===S.order.length-1;
+  const nx=$("#next");nx.hidden=false;nx.textContent=last?"See my results 🎉":"Next question ➜";
+  nx.onclick=()=>{S.i++;save();S.i>=S.order.length?results():showQuestion();};
+  nx.focus();
+  save();
 }
-start();
+
+/* ---------- Results ---------- */
+function results(){
+  const total=S.order.length, pct=Math.round(S.score/total*100);
+  const missed=S.answers.filter(a=>!a.ok);
+  if(!S.practice)setBest(S.score);
+  clearSave();
+  const stars=pct>=90?3:pct>=70?2:pct>=40?1:0;
+  const msg=pct===100?"Perfect! You are a Synonym Superstar!":
+            pct>=90?"Amazing work!":pct>=70?"Great job! Keep practising!":
+            pct>=40?"Good try! Practise the missed words.":"Keep going. Practice makes you stronger!";
+  const who=S.name?`, ${S.name}`:"";
+  app.innerHTML=`
+  <div class="card center">
+    <div class="hero">${pct>=70?"🏆":"🌟"}</div>
+    <h1>${S.practice?"Practice done":"All done"}${who}!</h1>
+    <div class="stars" aria-label="${stars} out of 3 stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div>
+    <div class="score">${S.score} / ${total}</div>
+    <p class="ask">${msg}</p>
+    <div class="row">
+      ${missed.length?`<button class="btn" id="prac">Practice ${missed.length} missed word${missed.length>1?"s":""}</button>`:""}
+      <button class="btn alt" id="again">Play again</button>
+    </div>
+    ${missed.length?`<h3 style="margin-top:22px">Words to remember</h3>
+    <div class="missed">${missed.map(a=>`<div><b>${a.w}</b> = ${a.c} <span class="small">(you picked ${a.g})</span></div>`).join("")}</div>`:""}
+  </div>`;
+  if(missed.length)$("#prac").onclick=()=>{
+    S={name:S.name,order:shuffle(missed.map(a=>a.id)),i:0,answers:[],score:0,streak:0,practice:true};
+    save();showQuestion();
+  };
+  $("#again").onclick=()=>{S.practice=false;home();};
+}
+
+/* ---------- Keyboard: 1-4 to answer, Enter for next ---------- */
+document.addEventListener("keydown",e=>{
+  if(e.target.tagName==="INPUT")return;
+  const n=+e.key;
+  if(!locked&&n>=1&&n<=4&&curOpts[n-1]&&$(".opt"))choose(curOpts[n-1]);
+});
+
+home();
 </script>
 </body>
 </html>
