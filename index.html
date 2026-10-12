@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Synonym Safari - Grade 2 Quiz</title>
+<title>Synonym Safari - Grade 1 Quiz</title>
 <style>
 :root{
   --bg:#fff6e0; --card:#ffffff; --ink:#2b2a4c; --muted:#6b6a8a;
-  --c0:#ff6b6b; --c1:#4dabf7; --c2:#51cf66; --c3:#ffa94d;
+  --c0:#d6336c; --c1:#1c7ed6; --c2:#087f5b; --c3:#c25e00;
   --good:#2f9e44; --goodbg:#d3f9d8; --bad:#e03131; --badbg:#ffe3e3;
   --brand:#7048e8; --shadow:0 6px 0 rgba(43,42,76,.15);
 }
@@ -28,17 +28,17 @@ h1,h2,h3{margin:0}
 .bar{height:14px;background:#fff;border-radius:999px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 2px 3px rgba(0,0,0,.1)}
 .bar>div{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));border-radius:999px;transition:width .35s}
 .ask{margin:0 0 6px;color:var(--muted);font-weight:700;font-size:1.05rem}
-.word{font-size:clamp(2.2rem,9vw,3.4rem);color:var(--brand);margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;text-transform:uppercase;letter-spacing:1px}
-#say{font-size:1.5rem;border:0;background:#f3f0ff;border-radius:50%;width:48px;height:48px;cursor:pointer}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:520px){.opts{grid-template-columns:1fr}}
+.word{font-size:clamp(2.8rem,13vw,4.6rem);color:var(--brand);margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;text-transform:uppercase;letter-spacing:1px}
+#say{font-size:1.8rem;border:0;background:#f3f0ff;border-radius:50%;width:60px;height:60px;cursor:pointer}
+.opts{display:grid;grid-template-columns:1fr;gap:14px}
+
 .opt{
   display:flex;align-items:center;gap:10px;text-align:left;
-  font:inherit;font-size:1.35rem;font-weight:800;color:#fff;border:0;border-radius:18px;
-  padding:16px 14px;cursor:pointer;box-shadow:var(--shadow);min-height:64px;transition:transform .1s;
+  font:inherit;font-size:1.9rem;font-weight:800;color:#fff;border:0;border-radius:20px;
+  padding:20px 18px;cursor:pointer;box-shadow:var(--shadow);min-height:88px;transition:transform .1s;
 }
 .opt:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(43,42,76,.15)}
-.opt .key{background:rgba(255,255,255,.35);border-radius:10px;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;flex:none}
+.opt .key{background:rgba(255,255,255,.35);border-radius:10px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:1.2rem;flex:none}
 .c0{background:var(--c0)}.c1{background:var(--c1)}.c2{background:var(--c2)}.c3{background:var(--c3)}
 .opt.right{background:var(--good);animation:pop .4s}
 .opt.wrong{background:var(--bad);animation:shake .4s}
@@ -46,7 +46,7 @@ h1,h2,h3{margin:0}
 .opt:disabled{cursor:default}
 @keyframes pop{50%{transform:scale(1.06)}}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.fb{margin-top:16px;border-radius:16px;padding:12px 16px;font-size:1.15rem;font-weight:700;min-height:0}
+.fb{margin-top:16px;border-radius:16px;padding:14px 18px;font-size:1.35rem;font-weight:700;min-height:0}
 .fb.ok{background:var(--goodbg);color:#1b6b2f}
 .fb.no{background:var(--badbg);color:#a61e1e}
 .btn{
@@ -75,113 +75,113 @@ input[type=text]{font:inherit;font-size:1.3rem;padding:12px 16px;border-radius:1
 <div id="app"></div>
 
 <script>
-// [word, synonym, [three words that do NOT mean the same]]
+// [word, synonym, [two words that do NOT mean the same]]
 const Q=[
-["big","large",["tiny","thin","slow"]],
-["small","little",["huge","tall","loud"]],
-["happy","glad",["sad","angry","sleepy"]],
-["sad","unhappy",["joyful","brave","quick"]],
-["fast","quick",["slow","heavy","soft"]],
-["begin","start",["stop","finish","hide"]],
-["end","finish",["begin","start","grow"]],
-["choose","pick",["drop","wash","hide"]],
-["close","shut",["open","lose","spill"]],
-["see","notice",["hear","smell","touch"]],
-["loud","noisy",["quiet","soft","slow"]],
-["quiet","silent",["noisy","loud","fast"]],
-["smart","clever",["silly","slow","tiny"]],
-["pretty","beautiful",["ugly","angry","heavy"]],
-["tiny","teeny",["giant","loud","thick"]],
-["huge","giant",["small","slow","thin"]],
-["jump","leap",["sit","crawl","sleep"]],
-["run","sprint",["walk","sit","stand"]],
-["walk","stroll",["race","dash","sprint"]],
-["talk","speak",["listen","sleep","hide"]],
-["shout","yell",["whisper","smile","nap"]],
-["laugh","giggle",["cry","frown","sleep"]],
-["cry","weep",["laugh","jump","sing"]],
-["smile","grin",["frown","shout","cry"]],
-["hug","cuddle",["push","kick","pull"]],
-["rest","relax",["work","jump","shout"]],
-["sleep","snooze",["wake","run","eat"]],
-["tired","sleepy",["awake","lively","hungry"]],
-["cold","chilly",["hot","sunny","dry"]],
-["damp","wet",["dry","hard","hot"]],
-["ill","sick",["well","strong","happy"]],
-["mad","angry",["glad","calm","sleepy"]],
-["scared","afraid",["brave","bold","happy"]],
-["brave","bold",["scared","shy","tired"]],
-["kind","nice",["mean","rude","sad"]],
-["mean","unkind",["friendly","funny","tiny"]],
-["rich","wealthy",["poor","weak","thin"]],
-["simple","easy",["hard","heavy","tall"]],
-["hard","difficult",["easy","soft","kind"]],
-["shiny","bright",["dull","wet","rough"]],
-["dull","boring",["shiny","noisy","fast"]],
-["neat","tidy",["messy","loud","wet"]],
-["messy","untidy",["neat","clean","tidy"]],
-["sofa","couch",["table","bed","door"]],
-["car","automobile",["bicycle","boat","kite"]],
-["street","road",["river","roof","wall"]],
-["home","house",["school","shop","park"]],
-["present","gift",["bag","rain","chair"]],
-["rock","stone",["leaf","cloud","stick"]],
-["pail","bucket",["spoon","plate","pencil"]],
-["dad","father",["mother","uncle","sister"]],
-["mom","mother",["father","brother","aunt"]],
-["kid","child",["adult","teacher","pilot"]],
-["bunny","rabbit",["puppy","kitten","duck"]],
-["tale","story",["song","game","map"]],
-["peek","glance",["stare","shout","hide"]],
-["fix","repair",["break","lose","drop"]],
-["break","crack",["mend","fix","paint"]],
-["build","make",["break","drop","erase"]],
-["buy","purchase",["sell","borrow","wash"]],
-["give","offer",["take","keep","hide"]],
-["grab","snatch",["drop","throw","wave"]],
-["toss","throw",["catch","hold","keep"]],
-["pull","tug",["push","drop","kick"]],
-["hurry","rush",["wait","rest","sleep"]],
-["wait","pause",["hurry","run","jump"]],
-["stop","halt",["go","start","skip"]],
-["go","leave",["arrive","stay","sit"]],
-["come","arrive",["leave","go","wave"]],
-["keep","hold",["lose","throw","drop"]],
-["find","discover",["lose","hide","break"]],
-["mix","blend",["split","drop","freeze"]],
-["reply","answer",["ask","shout","hide"]],
-["tell","say",["ask","hide","hear"]],
-["joyful","cheerful",["gloomy","sleepy","angry"]],
-["calm","peaceful",["noisy","angry","busy"]],
-["nervous","worried",["relaxed","proud","sleepy"]],
-["odd","strange",["normal","usual","plain"]],
-["strong","powerful",["weak","tiny","sleepy"]],
-["thin","skinny",["fat","tall","round"]],
-["chubby","plump",["skinny","tall","tiny"]],
-["tall","high",["short","low","wide"]],
-["short","brief",["tall","wide","long"]],
-["wide","broad",["narrow","thin","short"]],
-["freezing","icy",["boiling","sunny","dry"]],
-["gentle","soft",["rough","loud","hard"]],
-["rough","bumpy",["smooth","flat","soft"]],
-["correct","right",["wrong","false","silly"]],
-["wrong","incorrect",["right","true","correct"]],
-["true","real",["fake","false","pretend"]],
-["fake","false",["real","true","right"]],
-["sure","certain",["unsure","unsafe","unkind"]],
-["maybe","perhaps",["never","always","today"]],
-["almost","nearly",["never","always","slowly"]],
-["also","too",["not","only","never"]],
-["very","really",["never","little","slowly"]],
-["soon","shortly",["never","late","yesterday"]],
-["trip","journey",["meal","game","nap"]],
-["shop","store",["house","school","farm"]],
-["enjoy","like",["hate","fear","drop"]]
+["big","large",["small","red"]],
+["small","little",["tall","cold"]],
+["happy","glad",["sad","mad"]],
+["sad","unhappy",["glad","funny"]],
+["fast","quick",["slow","soft"]],
+["start","begin",["stop","sit"]],
+["end","finish",["begin","wash"]],
+["pick","choose",["drop","hide"]],
+["shut","close",["open","jump"]],
+["look","see",["hear","eat"]],
+["loud","noisy",["quiet","soft"]],
+["quiet","silent",["loud","fast"]],
+["smart","clever",["silly","sleepy"]],
+["pretty","lovely",["ugly","slow"]],
+["tiny","small",["giant","loud"]],
+["huge","giant",["tiny","thin"]],
+["jump","hop",["sit","nap"]],
+["run","dash",["sit","stop"]],
+["talk","speak",["listen","sleep"]],
+["yell","shout",["whisper","hum"]],
+["laugh","giggle",["cry","frown"]],
+["grin","smile",["frown","cry"]],
+["hug","cuddle",["kick","push"]],
+["sleepy","tired",["awake","hungry"]],
+["cold","chilly",["hot","dry"]],
+["wet","damp",["dry","hard"]],
+["sick","ill",["well","fast"]],
+["mad","angry",["glad","tired"]],
+["scared","afraid",["brave","happy"]],
+["nice","kind",["mean","loud"]],
+["mean","unkind",["nice","funny"]],
+["easy","simple",["hard","tall"]],
+["hard","difficult",["easy","soft"]],
+["shiny","bright",["dull","wet"]],
+["sofa","couch",["table","door"]],
+["road","street",["river","roof"]],
+["home","house",["school","shop"]],
+["gift","present",["bag","chair"]],
+["rock","stone",["leaf","cloud"]],
+["bucket","pail",["spoon","plate"]],
+["dad","father",["mother","sister"]],
+["mom","mother",["father","brother"]],
+["kid","child",["adult","pilot"]],
+["bunny","rabbit",["puppy","duck"]],
+["story","tale",["song","map"]],
+["fix","repair",["break","lose"]],
+["make","build",["break","drop"]],
+["toss","throw",["catch","keep"]],
+["pull","tug",["push","kick"]],
+["hurry","rush",["wait","rest"]],
+["stop","quit",["go","jump"]],
+["go","leave",["stay","sit"]],
+["keep","hold",["lose","drop"]],
+["find","spot",["lose","hide"]],
+["mix","stir",["drop","freeze"]],
+["answer","reply",["ask","hide"]],
+["say","tell",["ask","hide"]],
+["correct","right",["wrong","silly"]],
+["near","close",["far","high"]],
+["also","too",["not","only"]],
+["very","really",["never","little"]],
+["almost","nearly",["never","always"]],
+["shop","store",["house","farm"]],
+["enjoy","like",["hate","drop"]],
+["tall","high",["short","wide"]],
+["thin","skinny",["fat","tall"]],
+["gentle","soft",["rough","loud"]],
+["rough","bumpy",["smooth","soft"]],
+["true","real",["fake","false"]],
+["fake","pretend",["real","true"]],
+["yummy","tasty",["yucky","hot"]],
+["yucky","gross",["yummy","nice"]],
+["cap","hat",["shoe","sock"]],
+["tummy","stomach",["head","hand"]],
+["sack","bag",["box","cup"]],
+["pal","friend",["enemy","teacher"]],
+["boat","ship",["car","bus"]],
+["mug","cup",["fork","plate"]],
+["jacket","coat",["hat","sock"]],
+["dinner","supper",["breakfast","snack"]],
+["rug","carpet",["bed","wall"]],
+["kitty","cat",["dog","cow"]],
+["grab","take",["give","drop"]],
+["last","final",["first","next"]],
+["same","alike",["different","new"]],
+["neat","tidy",["messy","loud"]],
+["messy","untidy",["neat","clean"]],
+["dirty","filthy",["clean","shiny"]],
+["bad","awful",["good","nice"]],
+["good","fine",["bad","sad"]],
+["great","super",["bad","small"]],
+["hungry","starving",["full","sleepy"]],
+["silly","funny",["serious","sad"]],
+["noise","sound",["quiet","color"]],
+["joy","happiness",["sadness","fear"]],
+["drop","fall",["rise","jump"]],
+["munch","eat",["drink","sleep"]],
+["meal","food",["toy","bed"]],
+["listen","hear",["see","taste"]],
+["lady","woman",["man","boy"]]
 ];
 
 const $=s=>document.querySelector(s);
 const app=$("#app");
-const KEY="synonymSafariG2";
+const KEY="synonymSafariG1";
 let S={name:"",order:[],i:0,answers:[],score:0,streak:0,practice:false};
 let muted=false, locked=false, curOpts=[];
 
@@ -215,6 +215,17 @@ function speak(t){
   }catch(e){}
 }
 
+function speakAll(word,opts){
+  try{
+    if(!("speechSynthesis" in window))return;
+    speechSynthesis.cancel();
+    const say=(t,r)=>{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=r||.8;speechSynthesis.speak(u);};
+    say(word,.7);
+    say("Which word means the same?",.8);
+    opts.forEach(o=>say(o,.7));
+  }catch(e){}
+}
+
 /* ---------- Start screen ---------- */
 function home(){
   const saved=load();
@@ -223,8 +234,8 @@ function home(){
   <div class="card center">
     <div class="hero">🦁🌿</div>
     <h1>Synonym Safari</h1>
-    <p class="ask" style="margin-top:8px">Synonyms are words that mean the same, or almost the same, thing.<br>Example: <b>big</b> and <b>large</b>.</p>
-    <p class="small">100 questions &middot; Grade 2</p>
+    <p class="ask" style="margin-top:8px">Synonyms are words that mean the <b>same</b> thing.<br>Example: <b>big</b> and <b>large</b>.</p>
+    <p class="small">100 questions &middot; Grade 1</p>
     <div class="stack">
       <input type="text" id="nm" placeholder="Type your name" maxlength="20" value="${(S.name||(saved&&saved.name)||"").replace(/"/g,"")}" aria-label="Your name">
       <button class="btn" id="go">Start the quiz &#10132;</button>
@@ -259,14 +270,15 @@ function showQuestion(){
   <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${S.i}"><div style="width:${S.i/total*100}%"></div></div>
   <main class="card">
     <p class="ask">Which word means the same as&hellip;</p>
-    <h2 class="word"><span>${q[0]}</span><button id="say" aria-label="Read the word aloud">🔊</button></h2>
+    <h2 class="word"><span>${q[0]}</span><button id="say" aria-label="Read the word and the choices aloud">🔊</button></h2>
+    <p class="small">Tap 🔊 to hear the word and the choices.</p>
     <div class="opts">
       ${curOpts.map((o,k)=>`<button class="opt c${k}" data-o="${o}"><span class="key">${k+1}</span>${o}</button>`).join("")}
     </div>
     <div id="fb" class="fb" aria-live="polite" hidden></div>
     <button id="next" class="btn next" hidden></button>
   </main>`;
-  $("#say").onclick=()=>speak(q[0]);
+  $("#say").onclick=()=>speakAll(q[0],curOpts);
   $("#mute").onclick=e=>{muted=!muted;e.target.textContent=muted?"🔇":"🔊";};
   $("#home").onclick=()=>{save();home();};
   document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(b.dataset.o));
@@ -288,8 +300,8 @@ function choose(o){
   fb.className="fb "+(ok?"ok":"no");
   const praise=["Great job!","Super!","You got it!","Awesome!","Brilliant!"][Math.floor(Math.random()*5)];
   fb.innerHTML=ok
-    ?`${praise} <b>${q[0]}</b> and <b>${q[1]}</b> mean almost the same thing.${S.streak>=5?" 🔥 "+S.streak+" in a row!":""}`
-    :`Not quite. <b>${q[0]}</b> means the same as <b>${q[1]}</b>.`;
+    ?`${praise} <b>${q[0]}</b> and <b>${q[1]}</b> mean the same!${S.streak>=5?" 🔥 "+S.streak+" in a row!":""}`
+    :`Good try! <b>${q[0]}</b> means the same as <b>${q[1]}</b>.`;
   const last=S.i===S.order.length-1;
   const nx=$("#next");nx.hidden=false;nx.textContent=last?"See my results 🎉":"Next question ➜";
   nx.onclick=()=>{S.i++;save();S.i>=S.order.length?results():showQuestion();};
