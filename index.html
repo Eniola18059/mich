@@ -3,289 +3,141 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forces: Push, Pull and Everything Between</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<title>Forces Quiz: 50 Questions</title>
 <style>
-:root{--ink:#14213d;--bg:#eef5fb;--card:#fff;--app:#fb8500;--nor:#118ab2;--fri:#ef476f;--grv:#06a77d;--mag:#7b2cbf;--line:#c9d8e6}
+:root{--ink:#14213d;--bg:#e9f1fa;--card:#fff;--line:#c9d8e6;--app:#fb8500;--nor:#118ab2;--fri:#ef476f;--grv:#06a77d;--mag:#7b2cbf}
 @media (prefers-color-scheme:dark){:root{--ink:#e8eef6;--bg:#0f1a2b;--card:#182740;--line:#2f4466}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Nunito,Verdana,sans-serif}
-h1,h2,h3{font-family:Fredoka,"Trebuchet MS",sans-serif;line-height:1.15;margin:0 0 .5em}
-h1{font-size:clamp(2.2rem,6vw,3.8rem)}h2{font-size:2rem}h3{font-size:1.25rem}
-main{max-width:980px;margin:auto;padding:0 18px 60px}
-nav{position:sticky;top:0;z-index:5;background:var(--ink);display:flex;gap:4px;overflow-x:auto;padding:8px 12px}
-nav a{color:#fff;text-decoration:none;padding:6px 12px;border-radius:99px;white-space:nowrap;font-weight:700;font-size:.9rem}
-nav a:hover,nav a:focus{background:var(--app);color:#14213d;outline:none}
-@media (prefers-color-scheme:dark){nav{background:#0a1220}}
-section{padding:46px 0 10px}
-.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center;padding:40px 0 10px}
-@media(max-width:700px){.hero{grid-template-columns:1fr}}
-.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin:16px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.grid .card{margin:0}
-svg{width:100%;height:auto;display:block}
-svg text{font:700 13px Nunito,Verdana,sans-serif;fill:var(--ink)}
-.cap{font-size:.9rem;opacity:.8;margin-top:6px}
-.key{border-left:6px solid var(--app);padding:10px 16px;background:var(--card);border-radius:0 12px 12px 0;margin:16px 0;font-weight:700}
-.k-app{border-color:var(--app)}.k-nor{border-color:var(--nor)}.k-fri{border-color:var(--fri)}.k-mag{border-color:var(--mag)}
-.tag{display:inline-block;color:#fff;border-radius:8px;padding:0 9px;font-weight:700;font-size:.9rem}
-.t-app{background:var(--app);color:#14213d}.t-nor{background:var(--nor)}.t-fri{background:var(--fri)}.t-grv{background:var(--grv)}.t-mag{background:var(--mag)}
-.fill{background:#ffe8a3;color:#14213d;border-bottom:3px solid var(--app);padding:0 6px;border-radius:4px;font-weight:700}
-table{width:100%;border-collapse:collapse}
-th,td{border:2px solid var(--line);padding:8px 10px;text-align:left}th{background:var(--ink);color:var(--bg)}
-ul{padding-left:22px}
-label{font-weight:700}
-input[type=range]{width:100%;accent-color:var(--app)}
-select,button{font:inherit;padding:8px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
-button{cursor:pointer;font-weight:700}button:hover,button:focus{border-color:var(--app);outline:none}
-.opt{display:block;width:100%;text-align:left;margin:6px 0}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 "Trebuchet MS",Verdana,sans-serif;min-height:100vh}
+.wrap{max-width:720px;margin:auto;padding:20px 16px 50px}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin:.2em 0}
+h2{margin:.2em 0}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:22px;margin:16px 0}
+.dots{display:flex;gap:8px;margin:10px 0}.dots i{width:22px;height:22px;border-radius:50%}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:11px 16px}
+button:hover:not(:disabled),button:focus-visible{border-color:var(--app);outline:none}
+.opt{display:block;width:100%;text-align:left;margin:8px 0}
+.go{background:var(--app);color:#14213d;border-color:var(--app);padding:13px 26px;font-size:1.1rem}
 .ok{background:#c8f3e3!important;color:#14213d;border-color:var(--grv)!important}
 .no{background:#ffd3dc!important;color:#14213d;border-color:var(--fri)!important}
-.fb{min-height:1.5em;font-weight:700;margin-top:6px}
-.dl{font-size:.9rem;margin-top:30px;text-align:center;opacity:.8}
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar div{height:100%;width:0;background:var(--app);transition:width .3s}
+.top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+.fb{margin:12px 0 0;font-weight:700;min-height:1.6em}
+.big{font-size:3.2rem;font-weight:700;margin:0}
+.miss{border-left:6px solid var(--fri);padding:6px 14px;margin:10px 0;background:var(--bg);border-radius:0 10px 10px 0}
+.hide{display:none}
+@media (prefers-reduced-motion:reduce){.bar div{transition:none}}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<marker id="mO" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0L4,2L0,4z" fill="#fb8500"/></marker>
-<marker id="mN" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0L4,2L0,4z" fill="#118ab2"/></marker>
-<marker id="mF" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0L4,2L0,4z" fill="#ef476f"/></marker>
-<marker id="mG" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0L4,2L0,4z" fill="#06a77d"/></marker>
-<marker id="mM" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0L4,2L0,4z" fill="#7b2cbf"/></marker>
-</defs></svg>
+<div class="wrap">
 
-<nav aria-label="Sections">
-<a href="#what">What is a force?</a><a href="#types">Contact &amp; non-contact</a><a href="#applied">Applied force</a><a href="#normal">Normal force</a><a href="#friction">Friction</a><a href="#magnet">Magnetism</a><a href="#lab">Force lab</a><a href="#worked">Fill-in-the-blanks</a><a href="#quiz">Quiz</a>
-</nav>
-
-<main>
-<div class="hero">
-<div>
-<h1>Forces: the pushes and pulls that move our world</h1>
-<p>Hi Michelle! Every time you kick a ball, open a door or stick a magnet to the fridge, a <b>force</b> is at work. In this site you will meet four force heroes. Each has its own colour, and the colour stays the same in every diagram.</p>
-<p><span class="tag t-app">Applied force</span> <span class="tag t-nor">Normal force</span> <span class="tag t-fri">Friction</span> <span class="tag t-mag">Magnetic force</span> <span class="tag t-grv">Gravity</span></p>
-</div>
-<svg viewBox="0 0 400 230" role="img" aria-label="A girl pushing a box to the right. An orange arrow shows the applied force.">
-<rect x="0" y="190" width="400" height="40" fill="#8d6e63"/>
-<circle cx="95" cy="68" r="20" fill="#f1c27d"/><path d="M95 88V145M95 100L160 138M95 145L72 190M95 145L118 190" stroke="#14213d" stroke-width="7" stroke-linecap="round" fill="none"/>
-<rect x="165" y="120" width="70" height="70" rx="6" fill="#d9a05b" stroke="#14213d" stroke-width="3"/><path d="M165 120L235 190M235 120L165 190" stroke="#14213d" stroke-width="2" opacity=".4"/>
-<line x1="170" y1="105" x2="290" y2="105" stroke="#fb8500" stroke-width="8" marker-end="url(#mO)"/>
-<text x="195" y="92" fill="#fb8500" style="fill:#fb8500">Applied force</text>
-<line x1="230" y1="205" x2="190" y2="205" stroke="#ef476f" stroke-width="6" marker-end="url(#mF)"/>
-<text x="240" y="222" style="fill:#ef476f">Friction</text>
-</svg>
+<div id="start" class="card">
+<div class="dots" aria-hidden="true"><i style="background:var(--app)"></i><i style="background:var(--nor)"></i><i style="background:var(--fri)"></i><i style="background:var(--mag)"></i><i style="background:var(--grv)"></i></div>
+<h1>Forces Quiz</h1>
+<p>50 questions on forces, contact and non-contact forces, applied force, normal force, friction and magnetism.</p>
+<p>Pick an answer, read the explanation, then tap Next. Questions come in a new order every time.</p>
+<button class="go" id="begin">Start quiz</button>
 </div>
 
-<section id="what">
-<h2>What is a force?</h2>
-<div class="key">A force is a push or a pull on an object. We measure force in <b>newtons (N)</b>.</div>
-<p>A force can't be seen, but we can see what it <i>does</i>. Forces can make an object do five things:</p>
-<div class="grid">
-<div class="card"><svg viewBox="0 0 200 90"><circle cx="40" cy="60" r="16" fill="#e63946"/><line x1="70" y1="60" x2="150" y2="60" stroke="#fb8500" stroke-width="6" stroke-dasharray="4 6"/><circle cx="170" cy="60" r="16" fill="#e63946" opacity=".4"/><text x="20" y="22">Start moving</text></svg></div>
-<div class="card"><svg viewBox="0 0 200 90"><circle cx="150" cy="60" r="16" fill="#e63946"/><rect x="170" y="35" width="8" height="50" fill="#14213d"/><line x1="40" y1="60" x2="120" y2="60" stroke="#fb8500" stroke-width="6" marker-end="url(#mO)"/><text x="20" y="22">Stop moving</text></svg></div>
-<div class="card"><svg viewBox="0 0 200 90"><circle cx="40" cy="60" r="12" fill="#e63946"/><circle cx="90" cy="60" r="12" fill="#e63946"/><line x1="105" y1="60" x2="190" y2="60" stroke="#06a77d" stroke-width="6" marker-end="url(#mG)"/><text x="20" y="22">Speed up or slow down</text></svg></div>
-<div class="card"><svg viewBox="0 0 200 90"><path d="M20 70L90 70L150 20" stroke="#e63946" stroke-width="5" fill="none" stroke-dasharray="2 6"/><circle cx="170" cy="14" r="0"/><text x="20" y="22">Change direction</text><circle cx="90" cy="70" r="10" fill="#e63946"/></svg></div>
-<div class="card"><svg viewBox="0 0 200 90"><rect x="20" y="40" width="60" height="30" rx="4" fill="#d9a05b"/><path d="M120 50Q140 70 160 50Q180 70 190 50" stroke="#d9a05b" stroke-width="22" fill="none"/><line x1="100" y1="55" x2="100" y2="55"/><text x="20" y="22">Change shape</text></svg></div>
-</div>
-<p class="cap">Examples: a kicked football starts moving, a goalkeeper's glove stops it, a tennis racket changes its direction, and squeezing clay changes its shape.</p>
-</section>
-
-<section id="types">
-<h2>Contact and non-contact forces</h2>
-<div class="grid">
-<div class="card"><h3>Contact force</h3><p>The two objects must <b>touch</b>. Applied force, normal force and friction are all contact forces.</p>
-<svg viewBox="0 0 300 140"><rect x="0" y="120" width="300" height="20" fill="#8d6e63"/><circle cx="200" cy="100" r="20" fill="#e63946"/><rect x="60" y="80" width="60" height="30" rx="8" fill="#f1c27d" stroke="#14213d" stroke-width="2"/><line x1="40" y1="95" x2="175" y2="95" stroke="#fb8500" stroke-width="7" marker-end="url(#mO)"/><text x="60" y="60" style="fill:#fb8500">Hand touches ball</text></svg></div>
-<div class="card"><h3>Non-contact force</h3><p>The force works <b>across a gap</b>, with no touching. Magnetism and gravity are non-contact forces.</p>
-<svg viewBox="0 0 300 140"><rect x="10" y="50" width="60" height="30" fill="#ef476f"/><rect x="70" y="50" width="30" height="30" fill="#118ab2"/><text x="28" y="70" style="fill:#fff">N</text><text x="80" y="70" style="fill:#fff">S</text><path d="M240 62h25v14h-25z" fill="none" stroke="#14213d" stroke-width="3"/><line x1="230" y1="65" x2="115" y2="65" stroke="#7b2cbf" stroke-width="6" stroke-dasharray="1 0" marker-end="url(#mM)"/><text x="130" y="40" style="fill:#7b2cbf">Gap of air</text><text x="200" y="110">Paper clip</text></svg></div>
-</div>
-<div class="card"><h3>Sort them (already done for you)</h3>
-<table><tr><th>Force</th><th>Touching?</th><th>Type</th><th>Example</th></tr>
-<tr><td><span class="tag t-app">Applied</span></td><td class="fill">Yes</td><td class="fill">Contact</td><td class="fill">Pushing a shopping trolley</td></tr>
-<tr><td><span class="tag t-nor">Normal</span></td><td class="fill">Yes</td><td class="fill">Contact</td><td class="fill">A table holding up a book</td></tr>
-<tr><td><span class="tag t-fri">Friction</span></td><td class="fill">Yes</td><td class="fill">Contact</td><td class="fill">Shoes gripping the floor</td></tr>
-<tr><td><span class="tag t-mag">Magnetic</span></td><td class="fill">No</td><td class="fill">Non-contact</td><td class="fill">A magnet pulling a paper clip</td></tr>
-<tr><td><span class="tag t-grv">Gravity</span></td><td class="fill">No</td><td class="fill">Non-contact</td><td class="fill">An apple falling from a tree</td></tr></table></div>
-</section>
-
-<section id="applied">
-<h2>Applied force</h2>
-<div class="key k-app">An applied force is a push or pull that a person or object puts on another object by touching it.</div>
-<div class="grid">
-<div class="card"><svg viewBox="0 0 300 150"><rect y="120" width="300" height="30" fill="#8d6e63"/><rect x="120" y="70" width="60" height="50" rx="5" fill="#d9a05b" stroke="#14213d" stroke-width="3"/><line x1="20" y1="95" x2="115" y2="95" stroke="#fb8500" stroke-width="8" marker-end="url(#mO)"/><text x="20" y="80" style="fill:#fb8500">PUSH</text><text x="120" y="25">Pushing: force goes away from you</text></svg></div>
-<div class="card"><svg viewBox="0 0 300 150"><rect y="120" width="300" height="30" fill="#8d6e63"/><rect x="40" y="70" width="60" height="50" rx="5" fill="#d9a05b" stroke="#14213d" stroke-width="3"/><line x1="100" y1="95" x2="12" y2="95" stroke="#fb8500" stroke-width="0"/><line x1="100" y1="95" x2="215" y2="95" stroke="#14213d" stroke-width="3" stroke-dasharray="5 4"/><circle cx="230" cy="95" r="14" fill="#f1c27d" stroke="#14213d" stroke-width="3"/><line x1="105" y1="82" x2="20" y2="82" stroke="#fb8500" stroke-width="0"/><line x1="150" y1="60" x2="60" y2="60" stroke="#fb8500" stroke-width="8" marker-end="url(#mO)"/><text x="60" y="48" style="fill:#fb8500">PULL</text><text x="40" y="25">Pulling: force comes towards you</text></svg></div>
-</div>
-<ul><li><b>Bigger applied force</b> means a bigger change in motion.</li><li>The <b>arrow points the way</b> the force acts, and a longer arrow is a stronger force.</li><li>Examples: kicking, throwing, lifting, pulling a wagon, opening a drawer.</li></ul>
-</section>
-
-<section id="normal">
-<h2>Normal force</h2>
-<div class="key k-nor">The normal force is the push of a surface back on an object resting on it. It always acts <b>at 90° (perpendicular)</b> to the surface.</div>
-<p>Gravity pulls the book down. The table pushes back up with the same amount of force, so the book doesn't fall through. The two forces are balanced.</p>
-<div class="grid">
-<div class="card"><svg viewBox="0 0 400 240"><rect x="30" y="150" width="340" height="26" fill="#8d6e63"/><rect x="150" y="100" width="100" height="50" rx="4" fill="#4cc9f0" stroke="#14213d" stroke-width="3"/><text x="178" y="130">Book 5 N</text>
-<line x1="225" y1="150" x2="225" y2="55" stroke="#118ab2" stroke-width="8" marker-end="url(#mN)"/><text x="235" y="70" style="fill:#118ab2">Normal 5 N</text>
-<line x1="175" y1="125" x2="175" y2="225" stroke="#06a77d" stroke-width="8" marker-end="url(#mG)"/><text x="40" y="215" style="fill:#06a77d">Gravity (weight) 5 N</text></svg>
-<div class="cap">Equal and opposite arrows: balanced forces.</div></div>
-<div class="card"><svg viewBox="0 0 400 240"><polygon points="20,200 380,200 380,70" fill="#8d6e63"/>
-<g transform="translate(200,141) rotate(-20)"><rect x="-32" y="-36" width="64" height="36" rx="3" fill="#4cc9f0" stroke="#14213d" stroke-width="3"/><line x1="0" y1="-18" x2="0" y2="-95" stroke="#118ab2" stroke-width="7" marker-end="url(#mN)"/></g>
-<line x1="200" y1="123" x2="200" y2="205" stroke="#06a77d" stroke-width="7" marker-end="url(#mG)"/>
-<text x="30" y="40" style="fill:#118ab2">Normal force pushes straight out of the ramp</text><text x="30" y="60" style="fill:#06a77d">Gravity always pulls straight down</text></svg>
-<div class="cap">On a ramp the normal force tilts with the surface, but it is always at 90° to it.</div></div>
-</div>
-<ul><li>The normal force is a <b>reaction</b>: the harder you press on a surface, the harder it pushes back.</li><li>Examples: the floor under your feet, a chair under you, the ground under a car.</li></ul>
-</section>
-
-<section id="friction">
-<h2>Friction</h2>
-<div class="key k-fri">Friction is a force that opposes (works against) motion when two surfaces rub or try to slide past each other.</div>
-<div class="grid">
-<div class="card"><h3>Up close, surfaces are bumpy</h3>
-<svg viewBox="0 0 400 200"><polyline id="z1" fill="#d9a05b" stroke="#14213d" stroke-width="3"/><polyline id="z2" fill="#8d6e63" stroke="#14213d" stroke-width="3"/>
-<line x1="330" y1="60" x2="380" y2="60" stroke="#fb8500" stroke-width="7" marker-end="url(#mO)"/><line x1="70" y1="60" x2="20" y2="60" stroke="#ef476f" stroke-width="7" marker-end="url(#mF)"/><text x="260" y="40" style="fill:#fb8500">Motion</text><text x="20" y="40" style="fill:#ef476f">Friction</text></svg>
-<div class="cap">Even smooth surfaces have tiny bumps that catch on each other. Rougher surface means more friction.</div></div>
-<div class="card"><h3>Three kinds of friction</h3>
-<table><tr><th>Type</th><th>What happens</th></tr>
-<tr><td><b>Static</b></td><td>Object is not moving yet, like a heavy sofa that won't budge</td></tr>
-<tr><td><b>Sliding</b></td><td>Object slides across a surface, like a sled on snow</td></tr>
-<tr><td><b>Rolling</b></td><td>Wheel or ball rolls, which is much weaker than sliding</td></tr></table></div>
-</div>
-<div class="grid">
-<div class="card"><h3>Useful friction</h3><ul><li>Shoe soles gripping the ground</li><li>Brakes stopping a bike</li><li>Rubbing hands to make heat</li><li>Matches lighting</li></ul></div>
-<div class="card"><h3>Unwanted friction</h3><ul><li>Machine parts wearing out</li><li>Heat lost in engines</li><li>Made smaller with oil, wheels, smooth surfaces</li></ul></div>
-</div>
-<div class="card"><h3>Friction by surface (the same box, pulled with the same force)</h3>
-<table><tr><th>Surface</th><th>Bumpiness</th><th>Friction</th></tr>
-<tr><td>Ice</td><td class="fill">Very smooth</td><td class="fill">Very low</td></tr>
-<tr><td>Polished wood</td><td class="fill">Smooth</td><td class="fill">Low</td></tr>
-<tr><td>Carpet</td><td class="fill">Rough</td><td class="fill">High</td></tr>
-<tr><td>Sandpaper</td><td class="fill">Very rough</td><td class="fill">Very high</td></tr></table></div>
-</section>
-
-<section id="magnet">
-<h2>Magnetism</h2>
-<div class="key k-mag">Magnetism is a non-contact force. A magnet can attract (pull) or repel (push) without touching.</div>
-<div class="grid">
-<div class="card"><svg viewBox="0 0 400 220"><rect x="110" y="90" width="90" height="40" fill="#ef476f"/><rect x="200" y="90" width="90" height="40" fill="#118ab2"/><text x="148" y="116" style="fill:#fff">N</text><text x="240" y="116" style="fill:#fff">S</text>
-<g fill="none" stroke="#7b2cbf" stroke-width="3" marker-end="url(#mM)"><path d="M115 90C115 30 285 30 285 88"/><path d="M105 95C60 -10 340 -10 295 95" opacity=".6"/><path d="M115 130C115 190 285 190 285 132"/><path d="M105 125C60 230 340 230 295 125" opacity=".6"/></g></svg>
-<div class="cap">The magnetic field: lines leave the North pole and curve back into the South pole. It is strongest at the poles.</div></div>
-<div class="card"><svg viewBox="0 0 400 220">
-<text x="10" y="20">Opposite poles attract</text>
-<rect x="60" y="40" width="50" height="30" fill="#ef476f"/><rect x="110" y="40" width="50" height="30" fill="#118ab2"/><rect x="240" y="40" width="50" height="30" fill="#ef476f"/><rect x="290" y="40" width="50" height="30" fill="#118ab2"/>
-<line x1="165" y1="55" x2="200" y2="55" stroke="#7b2cbf" stroke-width="5" marker-end="url(#mM)"/><line x1="235" y1="55" x2="205" y2="55" stroke="#7b2cbf" stroke-width="5" marker-end="url(#mM)"/>
-<text x="10" y="120">Same poles repel</text>
-<rect x="60" y="140" width="50" height="30" fill="#118ab2"/><rect x="110" y="140" width="50" height="30" fill="#ef476f"/><rect x="240" y="140" width="50" height="30" fill="#ef476f"/><rect x="290" y="140" width="50" height="30" fill="#118ab2"/>
-<line x1="170" y1="155" x2="140" y2="155" stroke="#7b2cbf" stroke-width="0"/><line x1="170" y1="155" x2="195" y2="155" stroke="#7b2cbf" stroke-width="0"/>
-<line x1="205" y1="155" x2="165" y2="155" stroke="#7b2cbf" stroke-width="5" marker-end="url(#mM)"/><line x1="235" y1="155" x2="275" y2="155" stroke="#7b2cbf" stroke-width="5" marker-end="url(#mM)"/>
-<text x="60" y="205">Red = North, Blue = South. N and S attract, N and N repel.</text></svg></div>
-</div>
-<div class="grid">
-<div class="card"><h3>Attracted to magnets</h3><p class="fill">Iron, steel, nickel, cobalt: nails, paper clips, steel cans, fridge doors.</p></div>
-<div class="card"><h3>Not attracted</h3><p class="fill">Wood, plastic, glass, paper, rubber, aluminium foil, copper coins.</p></div>
-</div>
-</section>
-
-<section id="lab">
-<h2>Force lab: balance the forces</h2>
-<p>A 5 kg box rests on the floor (its weight is about 50 N). Choose a surface, then slide the applied force. Watch what friction does.</p>
+<div id="play" class="hide">
+<div class="top"><span id="qn">Question 1 of 50</span><span id="sc">Score 0</span></div>
+<div class="bar" role="progressbar" aria-label="Progress"><div id="pb"></div></div>
 <div class="card">
-<label for="surf">Surface:</label>
-<select id="surf"><option value="5">Ice</option><option value="20" selected>Wood</option><option value="35">Carpet</option><option value="50">Sandpaper</option></select>
-<label for="fa" style="display:block;margin-top:10px">Applied force: <span id="fav">0</span> N</label>
-<input id="fa" type="range" min="0" max="100" value="0">
-<svg viewBox="0 0 400 200" id="sim"><rect y="150" width="400" height="50" fill="#8d6e63"/>
-<g id="bx"><rect x="150" y="90" width="60" height="60" rx="5" fill="#d9a05b" stroke="#14213d" stroke-width="3"/>
-<line id="aa" x1="150" y1="115" x2="150" y2="115" stroke="#fb8500" stroke-width="7" marker-end="url(#mO)"/>
-<line id="ff" x1="210" y1="135" x2="210" y2="135" stroke="#ef476f" stroke-width="7" marker-end="url(#mF)"/>
-<line x1="165" y1="150" x2="165" y2="100" stroke="#118ab2" stroke-width="0"/></g>
-<text x="10" y="30">Orange: applied force</text><text x="10" y="50" style="fill:#ef476f">Red: friction</text><text x="10" y="70" id="net">Net force: 0 N</text></svg>
-<div class="fb" id="simfb"></div></div>
-<div class="grid">
-<div class="card"><h3>Balanced forces</h3><p>Equal forces in opposite directions. Net force is 0 N, so a still object stays still and a moving one keeps going at the same speed.</p></div>
-<div class="card"><h3>Unbalanced forces</h3><p>One force is bigger. Net force is more than 0 N, so the object speeds up, slows down or changes direction.</p></div>
+<h2 id="qt"></h2><div id="ops"></div><div class="fb" id="fb" aria-live="polite"></div>
+<button class="go hide" id="nx">Next</button>
 </div>
-</section>
-
-<section id="worked">
-<h2>Worked examples (filled in for you)</h2>
-<div class="card">
-<p>1. A force is a <span class="fill">push</span> or a <span class="fill">pull</span>, measured in <span class="fill">newtons</span>.</p>
-<p>2. A girl kicks a ball. The kick is an <span class="fill">applied</span> force, and it is a <span class="fill">contact</span> force because her foot <span class="fill">touches</span> the ball.</p>
-<p>3. A cup sits on a table. Gravity pulls it <span class="fill">down</span>, and the table pushes it <span class="fill">up</span> with the <span class="fill">normal</span> force. These forces are <span class="fill">balanced</span>.</p>
-<p>4. A sled slides across snow and slows down. The force that slows it is <span class="fill">friction</span>, and it acts in the <span class="fill">opposite</span> direction to the motion.</p>
-<p>5. A magnet picks up a paper clip across a small gap. This is a <span class="fill">non-contact</span> force called <span class="fill">magnetism</span>.</p>
-<p>6. Two magnets with the same poles facing each other <span class="fill">repel</span>. Opposite poles <span class="fill">attract</span>.</p>
-<p>7. A box has a 30 N applied force to the right and 12 N of friction to the left. Net force = 30 − 12 = <span class="fill">18 N</span> to the <span class="fill">right</span>. The forces are <span class="fill">unbalanced</span>.</p>
 </div>
-</section>
 
-<section id="quiz">
-<h2>Final quiz: 30 questions</h2>
-<p>Pick an answer for each question. You get feedback straight away, and your score updates at the bottom.</p>
-<div id="qz"></div>
-<div class="card"><b id="score">Score: 0 / 30</b> <button id="again" style="margin-left:12px">Try again</button></div>
-</section>
+<div id="end" class="card hide">
+<h2>Quiz complete</h2>
+<p class="big" id="fin"></p><p id="msg"></p>
+<div id="missed"></div>
+<button class="go" id="again">Try all 50 again</button>
+<button id="redo" class="hide">Retry missed only</button>
+</div>
 
-<div class="dl">Tip: save this page and it works without internet (fonts aside).</div>
-</main>
-
+</div>
 <script>
-// zigzag surfaces
-function zig(id,y,up,dx){var p=[],i,x=0,n=0;for(x=0;x<=400;x+=dx){p.push(x+","+(n%2?y+up:y));n++}p.push("400,"+(y>100?200:0),"0,"+(y>100?200:0));document.getElementById(id).setAttribute("points",p.join(" "))}
-(function(){var a=[],x,n=0;for(x=0;x<=400;x+=20){a.push(x+","+(n%2?112:96));n++}a.push("400,40","0,40");document.getElementById("z1").setAttribute("points",a.join(" "));
-var b=[];n=0;for(x=0;x<=400;x+=20){b.push(x+","+(n%2?96:112));n++}b.push("400,190","0,190");document.getElementById("z2").setAttribute("points",b.join(" "))})();
-// simulator
-var fa=document.getElementById("fa"),sf=document.getElementById("surf"),bx=document.getElementById("bx"),pos=0,v=0,moving=false;
-function upd(){var F=+fa.value,mx=+sf.value,fr,net;document.getElementById("fav").textContent=F;
-if(F<=mx){fr=F;net=0;moving=false;pos=0;bx.setAttribute("transform","")}else{fr=Math.round(mx*.8);net=F-fr;moving=true}
-var aa=document.getElementById("aa"),ff=document.getElementById("ff");
-aa.setAttribute("x1",150-F*1.4);aa.setAttribute("x2",150);ff.setAttribute("x1",210+fr*1.4);ff.setAttribute("x2",210);
-if(F==0)aa.setAttribute("x1",150);if(fr==0)ff.setAttribute("x1",210);
-document.getElementById("net").textContent="Net force: "+net+" N";
-document.getElementById("simfb").textContent=net==0?(F==0?"No push, so nothing happens.":"Friction ("+fr+" N) matches your push, so forces are balanced and the box stays still."):"Your push beats friction by "+net+" N. Forces are unbalanced, so the box speeds up."}
-fa.oninput=sf.onchange=upd;upd();
-(function loop(){if(moving){v=Math.min(6,(+fa.value-Math.round(+sf.value*.8))/10);pos+=v;if(pos>230)pos=-200;bx.setAttribute("transform","translate("+pos+",0)")}requestAnimationFrame(loop)})();
-// quiz
-var Q=[["A force is a…",["Type of energy","Push or a pull","Kind of light","Speed"],1,"Forces are pushes and pulls."],
-["What unit do we use to measure force?",["Metres","Kilograms","Newtons","Seconds"],2,"Force is measured in newtons (N)."],
-["Which of these is a CONTACT force?",["Friction","Magnetism","Gravity","None of them"],0,"Friction needs two surfaces touching."],
-["Which pair are BOTH non-contact forces?",["Friction and normal","Gravity and magnetism","Applied and friction","Normal and applied"],1,"Gravity and magnetism work across a gap."],
-["Pushing a shopping trolley is an example of…",["Applied force","Magnetism","Gravity","Normal force"],0,"You touch the trolley and push it: an applied force."],
-["The normal force acts…",["Along the surface","Downwards only","At 90° to the surface","In any direction"],2,"Normal means perpendicular to the surface."],
-["A 5 N book rests on a table. The normal force on it is…",["0 N","10 N","2.5 N","5 N upwards"],3,"Balanced forces: 5 N up cancels 5 N down."],
-["Friction always acts…",["Opposite to motion","With the motion","Straight up","Only on ice"],0,"It resists sliding."],
-["Which surface gives the MOST friction?",["Ice","Polished wood","Oil","Sandpaper"],3,"Rougher surfaces catch more."],
-["Which surface gives the LEAST friction?",["Carpet","Sandpaper","Ice","Grass"],2,"Ice is very smooth."],
-["Which type of friction is usually the weakest?",["Static","Sliding","Rolling","They are all equal"],2,"That is why wheels make moving things easier."],
-["Which is an example of USEFUL friction?",["Bike brakes stopping the wheel","Engine parts wearing out","Heat lost in machines","A sled slowing down on a flat road"],0,"Brakes use friction to stop you."],
-["Which can reduce friction?",["Sandpaper","Oil","Rough carpet","Rubber grips"],1,"Oil makes surfaces slide past each other more easily."],
-["Applied force 30 N right, friction 12 N left. Net force?",["42 N right","18 N left","0 N","18 N right"],3,"30 − 12 = 18 N to the right."],
-["When forces are balanced, the net force is…",["Zero","Very large","Always 10 N","Always upwards"],0,"Equal and opposite forces cancel."],
-["Two north poles are brought together. What happens?",["They attract","They repel","Nothing","They merge"],1,"Same poles repel."],
-["A north pole and a south pole are brought together. What happens?",["They repel","Nothing","They attract","They spin"],2,"Opposite poles attract."],
-["A magnet would pick up which object?",["Wooden spoon","Plastic ruler","Glass marble","Steel paper clip"],3,"Iron, steel, nickel and cobalt are attracted."],
-["Where is a magnet's force strongest?",["At the poles","In the middle","Everywhere equally","Far away"],0,"The field lines bunch up at the poles."],
-["A box is still and the forces on it are balanced. What happens next?",["It speeds up","It stays still","It flies off","It turns around"],1,"Balanced forces do not change motion."],
-["Gravity pulls objects towards…",["The Sun only","The centre of the Earth","The sky","The nearest wall"],1,"On Earth, gravity pulls everything down towards the Earth's centre."],
-["In a force diagram, a longer arrow means…",["A stronger force","A weaker force","A slower object","A heavier surface"],0,"Arrow length shows how big the force is."],
-["Which of these is a PULL?",["Kicking a ball","Pressing a doorbell","Pulling open a drawer","Pushing a swing"],2,"A pull moves an object towards you."],
-["You rub your hands together and they get warm. Why?",["Magnetism","Friction","Gravity","Normal force"],1,"Friction turns movement energy into heat."],
-["Which pole do magnetic field lines leave from?",["South pole","The middle","Both poles","North pole"],3,"Lines leave the North pole and enter the South pole."],
-["You stand on the floor. Which force pushes you up?",["Normal force","Friction","Magnetism","Applied force"],0,"The floor pushes back up on you with the normal force."],
-["Which is NOT something a force can do?",["Start an object moving","Change an object's shape","Make an object stop existing","Change an object's direction"],2,"Forces change motion or shape, but they don't make things vanish."],
-["20 N pushes right and 20 N pushes left on a box. What is true?",["The box speeds up right","The forces are balanced","The box speeds up left","Net force is 40 N"],1,"20 − 20 = 0 N, so the forces are balanced."],
-["An apple falls from a tree. This force is…",["Contact, because it touches the air","Friction","Non-contact gravity","Applied force"],2,"Gravity pulls without touching, so it is a non-contact force."],
-["A toy car slows down on carpet and stops. What mainly stops it?",["Magnetism","Friction","A stronger normal force","Gravity pushing sideways"],1,"The rough carpet creates friction that opposes the motion."]];
-var sc=0,done=0,N=Q.length,qz=document.getElementById("qz"),scEl=document.getElementById("score");
-function build(){sc=0;done=0;qz.innerHTML="";scEl.textContent="Score: 0 / "+N;
-Q.forEach(function(q,i){var d=document.createElement("div");d.className="card";d.innerHTML="<b>"+(i+1)+". "+q[0]+"</b>";
-var fb=document.createElement("div");fb.className="fb";
-q[1].forEach(function(o,j){var b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=function(){
-if(d.dataset.d)return;d.dataset.d=1;done++;var bs=d.querySelectorAll("button");
-if(j==q[2]){b.classList.add("ok");sc++;fb.textContent="Correct! "+q[3]}else{b.classList.add("no");bs[q[2]].classList.add("ok");fb.textContent="Not quite. "+q[3]}
-scEl.textContent="Score: "+sc+" / "+N+(done==N?(sc==N?" Perfect, you are a force master!":sc>=N*.7?" Great work!":" Good try, read the lessons again and retry."):"")};d.appendChild(b)});
-d.appendChild(fb);qz.appendChild(d)})}
-document.getElementById("again").onclick=function(){build();qz.scrollIntoView()};build();
+// format: question|correct answer|wrong 1|wrong 2|wrong 3|explanation
+var RAW=[
+"A force is a…|push or a pull|type of light|kind of food|speed|Forces are pushes and pulls.",
+"Which unit measures force?|Newton (N)|Metre (m)|Kilogram (kg)|Second (s)|Force is measured in newtons.",
+"Which is NOT an effect of a force?|Making an object stop existing|Starting an object moving|Changing an object's shape|Changing an object's direction|Forces change motion or shape. They do not make things disappear.",
+"Which tool measures force?|Newton meter (spring balance)|Thermometer|Ruler|Stopwatch|A newton meter stretches a spring to show the force in newtons.",
+"Which makes a football speed up?|A kick|Its colour|Its name|Its shadow|A kick is a force, and forces can start or speed up movement.",
+"In a force diagram, a longer arrow means…|a stronger force|a weaker force|a slower object|a heavier surface|Arrow length shows how big the force is.",
+"In a force diagram, the arrow points…|the way the force acts|towards the north|at the biggest object|upwards always|The arrow shows the direction of the force.",
+"On Earth, gravity pulls objects towards…|the centre of the Earth|the clouds|the Moon|the north|Gravity pulls everything down towards the Earth's centre.",
+"A contact force…|needs the objects to touch|acts across a gap|only works in space|only works with magnets|Contact forces need the two objects to touch.",
+"A non-contact force…|acts across a gap without touching|needs the objects to touch|only works on ice|only works underwater|Non-contact forces work across a distance.",
+"Which is a contact force?|Friction|Gravity|Magnetism|Light|Friction needs two surfaces touching.",
+"Which is a non-contact force?|Magnetism|Friction|Applied force|Normal force|Magnets work across a gap.",
+"Which pair are BOTH non-contact forces?|Gravity and magnetism|Friction and gravity|Normal and applied|Applied and friction|Gravity and magnetism both act without touching.",
+"A magnet pulls a paper clip across a small gap. This is a…|non-contact force|contact force|friction force|normal force|There is no touching, so it is non-contact.",
+"A girl kicks a ball. The kick is a contact force because…|her foot touches the ball|gravity is involved|a magnet is nearby|the ball is round|The foot touches the ball, so it is a contact force.",
+"An applied force is…|a push or pull from something touching the object|the surface pushing back|the force of rubbing|the pull of the Earth|Applied forces come from a person or object pushing or pulling.",
+"Pulling a wagon with a rope is an example of…|applied force|normal force|magnetism|gravity|You apply a pulling force through the rope.",
+"Which of these is a PULL?|Opening a drawer by its handle|Kicking a ball|Pressing a doorbell|Pushing a trolley|A pull moves an object towards you.",
+"If you push a trolley harder, it…|speeds up more|slows down|does not change|stops|A bigger applied force makes a bigger change in motion.",
+"Lifting a bag off the floor uses…|an upward applied force|friction only|magnetism|no force|You must apply a force upwards to overcome gravity.",
+"Which of these is a PUSH?|Pressing a doorbell|Tugging a rope|Dragging a sack|Pulling a drawer|A push moves an object away from you.",
+"The normal force acts…|at 90° to the surface|along the surface|only downwards|in any direction|Normal means perpendicular to the surface.",
+"A cup sits on a table. The normal force on the cup…|pushes it up|pulls it down|pushes it sideways|is zero|The table pushes up on the cup.",
+"The normal force is exerted by…|the surface|the object on top|a magnet|the air only|The surface pushes back on the object resting on it.",
+"A 5 N book rests on a table. The normal force is…|5 N upwards|0 N|10 N|5 N downwards|It balances the 5 N weight, pushing up.",
+"Why doesn't a book fall through a table?|The table pushes up with the normal force|There is no gravity|Friction holds it|A magnet holds it|The normal force balances gravity.",
+"On a ramp, the normal force acts…|at 90° to the ramp|straight up|along the ramp|straight down|It is always perpendicular to the surface.",
+"A book rests on a table. Gravity and the normal force are…|equal and opposite|both zero|gravity bigger|normal bigger|They are balanced, so the book stays still.",
+"A box has 20 N pushing right and 20 N pushing left. The forces are…|balanced|unbalanced|zero each|both 40 N|20 − 20 = 0 N net force, so they are balanced.",
+"Friction acts…|opposite to the motion|in the same direction as the motion|straight up|in no direction|Friction opposes sliding.",
+"Friction happens when…|two surfaces rub or try to slide|two magnets meet|objects are in space|an object is in the air|Friction needs two surfaces in contact.",
+"Which surface has the MOST friction?|Sandpaper|Ice|Oil|Glass|Rough surfaces catch more.",
+"Which surface has the LEAST friction?|Ice|Carpet|Gravel|Rubber|Ice is very smooth.",
+"Which type of friction is usually weakest?|Rolling friction|Static friction|Sliding friction|They are all equal|Wheels make moving much easier.",
+"Static friction acts on…|an object that is not moving yet|a rolling ball|a sliding sled|a flying plane|It stops still objects from starting to slide.",
+"Which is USEFUL friction?|Bike brakes stopping a wheel|Engine parts wearing out|Heat lost from machines|A slippery floor|Brakes use friction to stop you.",
+"Which can reduce friction?|Oil|Sandpaper|Rough carpet|Rubber grips|Oil helps surfaces slide past each other.",
+"You rub your hands together and they get warm because of…|friction|magnetism|gravity|normal force|Friction turns movement into heat.",
+"A rougher surface gives…|more friction|less friction|no friction|the same friction|Rougher surfaces have bigger bumps that catch.",
+"Why do shoes have grooves on the soles?|To increase grip (friction)|To reduce friction|To make them heavier|To change their colour|Grooves help grip the ground.",
+"A sled slows down on snow mainly because of…|friction|magnetism|an applied force|the normal force|Friction opposes the sled's motion.",
+"Magnets attract objects made of…|iron or steel|wood|plastic|glass|Iron, steel, nickel and cobalt are magnetic.",
+"A north pole and a south pole…|attract|repel|do nothing|spin|Opposite poles attract.",
+"Two north poles…|repel|attract|stick together|disappear|Same poles repel.",
+"A magnet's force is strongest at…|the poles|the middle|everywhere equally|far away|Field lines bunch up at the poles.",
+"Magnetic field lines leave the…|north pole|south pole|middle|nowhere|They leave north and enter south.",
+"A magnetic field is…|the area around a magnet where its force acts|the inside of a magnet|a kind of metal|a surface|The field is the space where the magnetic force can be felt.",
+"Which would a magnet NOT pick up?|A wooden spoon|A steel nail|Iron filings|A steel paper clip|Wood is not magnetic.",
+"A compass needle points north because of…|Earth's magnetic field|gravity|friction|wind|The Earth acts like a giant magnet.",
+"A box has 30 N applied to the right and 12 N friction to the left. The net force is…|18 N right|42 N right|18 N left|0 N|30 − 12 = 18 N to the right."
+];
+var Q=RAW.map(function(r){var p=r.split("|");return{q:p[0],a:p[1],o:[p[1],p[2],p[3],p[4]],e:p[5]}});
+var $=function(i){return document.getElementById(i)};
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var set,idx,score,miss,locked;
+function show(id){["start","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!=id)})}
+function begin(list){set=shuf(list);idx=0;score=0;miss=[];show("play");ask()}
+function ask(){var q=set[idx];locked=false;
+$("qn").textContent="Question "+(idx+1)+" of "+set.length;$("sc").textContent="Score "+score;$("pb").style.width=(idx/set.length*100)+"%";
+$("qt").textContent=q.q;$("fb").textContent="";$("nx").classList.add("hide");$("ops").innerHTML="";
+shuf(q.o).forEach(function(t){var b=document.createElement("button");b.className="opt";b.textContent=t;
+b.onclick=function(){if(locked)return;locked=true;var all=$("ops").children;
+for(var i=0;i<all.length;i++){if(all[i].textContent==q.a)all[i].classList.add("ok")}
+if(t==q.a){score++;$("fb").textContent="Correct! "+q.e}else{b.classList.add("no");miss.push(q);$("fb").textContent="Not quite. "+q.e}
+$("sc").textContent="Score "+score;$("nx").textContent=idx==set.length-1?"See results":"Next";$("nx").classList.remove("hide");$("nx").focus()};
+$("ops").appendChild(b)})}
+$("nx").onclick=function(){idx++;idx<set.length?ask():finish()};
+function finish(){$("pb").style.width="100%";show("end");var n=set.length;
+$("fin").textContent=score+" / "+n;
+var p=score/n;$("msg").textContent=p==1?"Perfect! You are a force master!":p>=.8?"Excellent work!":p>=.6?"Good job. A little more practice and you will have it.":"Keep going. Read the lessons again and retry.";
+var m=$("missed");m.innerHTML="";
+if(miss.length){var h=document.createElement("h3");h.textContent="Questions to review ("+miss.length+")";m.appendChild(h);
+miss.forEach(function(q){var d=document.createElement("div");d.className="miss";d.innerHTML="<b></b><br><span></span>";d.firstChild.textContent=q.q;d.lastChild.textContent="Answer: "+q.a+". "+q.e;m.appendChild(d)})}
+$("redo").classList.toggle("hide",!miss.length)}
+$("begin").onclick=$("again").onclick=function(){begin(Q)};
+$("redo").onclick=function(){begin(miss.slice())};
 </script>
 </body>
 </html>
