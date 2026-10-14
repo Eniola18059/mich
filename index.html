@@ -1,143 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forces Quiz: 50 Questions</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grade 3 Maths Word Problems Quiz</title>
 <style>
-:root{--ink:#14213d;--bg:#e9f1fa;--card:#fff;--line:#c9d8e6;--app:#fb8500;--nor:#118ab2;--fri:#ef476f;--grv:#06a77d;--mag:#7b2cbf}
-@media (prefers-color-scheme:dark){:root{--ink:#e8eef6;--bg:#0f1a2b;--card:#182740;--line:#2f4466}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 "Trebuchet MS",Verdana,sans-serif;min-height:100vh}
-.wrap{max-width:720px;margin:auto;padding:20px 16px 50px}
-h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin:.2em 0}
-h2{margin:.2em 0}
-.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:22px;margin:16px 0}
-.dots{display:flex;gap:8px;margin:10px 0}.dots i{width:22px;height:22px;border-radius:50%}
-button{font:inherit;font-weight:700;cursor:pointer;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:11px 16px}
-button:hover:not(:disabled),button:focus-visible{border-color:var(--app);outline:none}
-.opt{display:block;width:100%;text-align:left;margin:8px 0}
-.go{background:var(--app);color:#14213d;border-color:var(--app);padding:13px 26px;font-size:1.1rem}
-.ok{background:#c8f3e3!important;color:#14213d;border-color:var(--grv)!important}
-.no{background:#ffd3dc!important;color:#14213d;border-color:var(--fri)!important}
-.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
-.bar div{height:100%;width:0;background:var(--app);transition:width .3s}
-.top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
-.fb{margin:12px 0 0;font-weight:700;min-height:1.6em}
-.big{font-size:3.2rem;font-weight:700;margin:0}
-.miss{border-left:6px solid var(--fri);padding:6px 14px;margin:10px 0;background:var(--bg);border-radius:0 10px 10px 0}
-.hide{display:none}
-@media (prefers-reduced-motion:reduce){.bar div{transition:none}}
+body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:linear-gradient(160deg,#e0f2fe,#fef9c3);min-height:100vh;color:#1e293b;display:flex;justify-content:center;padding:16px}
+.app{width:100%;max-width:680px}
+.card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+h1{margin:0 0 6px;font-size:1.7rem;color:#0369a1}
+.sub{color:#475569;margin-bottom:18px}
+.btn{background:#0ea5e9;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-size:1.05rem;font-weight:600;cursor:pointer}
+.btn:hover{background:#0284c7}
+.btn.alt{background:#f59e0b}.btn.alt:hover{background:#d97706}
+.top{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px;color:#0369a1}
+.bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden;margin-bottom:18px}
+.bar>div{height:100%;background:#22c55e;transition:width .3s}
+.q{font-size:1.25rem;line-height:1.5;margin-bottom:16px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;background:#f1f5f9;border:2px solid #e2e8f0;border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:1.1rem;cursor:pointer}
+.opt:hover:not(:disabled){border-color:#0ea5e9;background:#e0f2fe}
+.opt.right{background:#dcfce7;border-color:#22c55e}
+.opt.wrong{background:#fee2e2;border-color:#ef4444}
+.fb{margin:12px 0;padding:12px 14px;border-radius:12px;background:#fef9c3;display:none}
+.big{font-size:3rem;text-align:center}
+.score{font-size:2.2rem;text-align:center;font-weight:700;color:#0369a1}
+.rev{max-height:300px;overflow:auto;margin-top:14px;font-size:.95rem}
+.rev div{padding:8px 0;border-bottom:1px solid #e2e8f0}
+.center{text-align:center}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<div id="start" class="card">
-<div class="dots" aria-hidden="true"><i style="background:var(--app)"></i><i style="background:var(--nor)"></i><i style="background:var(--fri)"></i><i style="background:var(--mag)"></i><i style="background:var(--grv)"></i></div>
-<h1>Forces Quiz</h1>
-<p>50 questions on forces, contact and non-contact forces, applied force, normal force, friction and magnetism.</p>
-<p>Pick an answer, read the explanation, then tap Next. Questions come in a new order every time.</p>
-<button class="go" id="begin">Start quiz</button>
-</div>
-
-<div id="play" class="hide">
-<div class="top"><span id="qn">Question 1 of 50</span><span id="sc">Score 0</span></div>
-<div class="bar" role="progressbar" aria-label="Progress"><div id="pb"></div></div>
-<div class="card">
-<h2 id="qt"></h2><div id="ops"></div><div class="fb" id="fb" aria-live="polite"></div>
-<button class="go hide" id="nx">Next</button>
-</div>
-</div>
-
-<div id="end" class="card hide">
-<h2>Quiz complete</h2>
-<p class="big" id="fin"></p><p id="msg"></p>
-<div id="missed"></div>
-<button class="go" id="again">Try all 50 again</button>
-<button id="redo" class="hide">Retry missed only</button>
-</div>
-
-</div>
+<div class="app"><div class="card" id="c"></div></div>
 <script>
-// format: question|correct answer|wrong 1|wrong 2|wrong 3|explanation
-var RAW=[
-"A force is a…|push or a pull|type of light|kind of food|speed|Forces are pushes and pulls.",
-"Which unit measures force?|Newton (N)|Metre (m)|Kilogram (kg)|Second (s)|Force is measured in newtons.",
-"Which is NOT an effect of a force?|Making an object stop existing|Starting an object moving|Changing an object's shape|Changing an object's direction|Forces change motion or shape. They do not make things disappear.",
-"Which tool measures force?|Newton meter (spring balance)|Thermometer|Ruler|Stopwatch|A newton meter stretches a spring to show the force in newtons.",
-"Which makes a football speed up?|A kick|Its colour|Its name|Its shadow|A kick is a force, and forces can start or speed up movement.",
-"In a force diagram, a longer arrow means…|a stronger force|a weaker force|a slower object|a heavier surface|Arrow length shows how big the force is.",
-"In a force diagram, the arrow points…|the way the force acts|towards the north|at the biggest object|upwards always|The arrow shows the direction of the force.",
-"On Earth, gravity pulls objects towards…|the centre of the Earth|the clouds|the Moon|the north|Gravity pulls everything down towards the Earth's centre.",
-"A contact force…|needs the objects to touch|acts across a gap|only works in space|only works with magnets|Contact forces need the two objects to touch.",
-"A non-contact force…|acts across a gap without touching|needs the objects to touch|only works on ice|only works underwater|Non-contact forces work across a distance.",
-"Which is a contact force?|Friction|Gravity|Magnetism|Light|Friction needs two surfaces touching.",
-"Which is a non-contact force?|Magnetism|Friction|Applied force|Normal force|Magnets work across a gap.",
-"Which pair are BOTH non-contact forces?|Gravity and magnetism|Friction and gravity|Normal and applied|Applied and friction|Gravity and magnetism both act without touching.",
-"A magnet pulls a paper clip across a small gap. This is a…|non-contact force|contact force|friction force|normal force|There is no touching, so it is non-contact.",
-"A girl kicks a ball. The kick is a contact force because…|her foot touches the ball|gravity is involved|a magnet is nearby|the ball is round|The foot touches the ball, so it is a contact force.",
-"An applied force is…|a push or pull from something touching the object|the surface pushing back|the force of rubbing|the pull of the Earth|Applied forces come from a person or object pushing or pulling.",
-"Pulling a wagon with a rope is an example of…|applied force|normal force|magnetism|gravity|You apply a pulling force through the rope.",
-"Which of these is a PULL?|Opening a drawer by its handle|Kicking a ball|Pressing a doorbell|Pushing a trolley|A pull moves an object towards you.",
-"If you push a trolley harder, it…|speeds up more|slows down|does not change|stops|A bigger applied force makes a bigger change in motion.",
-"Lifting a bag off the floor uses…|an upward applied force|friction only|magnetism|no force|You must apply a force upwards to overcome gravity.",
-"Which of these is a PUSH?|Pressing a doorbell|Tugging a rope|Dragging a sack|Pulling a drawer|A push moves an object away from you.",
-"The normal force acts…|at 90° to the surface|along the surface|only downwards|in any direction|Normal means perpendicular to the surface.",
-"A cup sits on a table. The normal force on the cup…|pushes it up|pulls it down|pushes it sideways|is zero|The table pushes up on the cup.",
-"The normal force is exerted by…|the surface|the object on top|a magnet|the air only|The surface pushes back on the object resting on it.",
-"A 5 N book rests on a table. The normal force is…|5 N upwards|0 N|10 N|5 N downwards|It balances the 5 N weight, pushing up.",
-"Why doesn't a book fall through a table?|The table pushes up with the normal force|There is no gravity|Friction holds it|A magnet holds it|The normal force balances gravity.",
-"On a ramp, the normal force acts…|at 90° to the ramp|straight up|along the ramp|straight down|It is always perpendicular to the surface.",
-"A book rests on a table. Gravity and the normal force are…|equal and opposite|both zero|gravity bigger|normal bigger|They are balanced, so the book stays still.",
-"A box has 20 N pushing right and 20 N pushing left. The forces are…|balanced|unbalanced|zero each|both 40 N|20 − 20 = 0 N net force, so they are balanced.",
-"Friction acts…|opposite to the motion|in the same direction as the motion|straight up|in no direction|Friction opposes sliding.",
-"Friction happens when…|two surfaces rub or try to slide|two magnets meet|objects are in space|an object is in the air|Friction needs two surfaces in contact.",
-"Which surface has the MOST friction?|Sandpaper|Ice|Oil|Glass|Rough surfaces catch more.",
-"Which surface has the LEAST friction?|Ice|Carpet|Gravel|Rubber|Ice is very smooth.",
-"Which type of friction is usually weakest?|Rolling friction|Static friction|Sliding friction|They are all equal|Wheels make moving much easier.",
-"Static friction acts on…|an object that is not moving yet|a rolling ball|a sliding sled|a flying plane|It stops still objects from starting to slide.",
-"Which is USEFUL friction?|Bike brakes stopping a wheel|Engine parts wearing out|Heat lost from machines|A slippery floor|Brakes use friction to stop you.",
-"Which can reduce friction?|Oil|Sandpaper|Rough carpet|Rubber grips|Oil helps surfaces slide past each other.",
-"You rub your hands together and they get warm because of…|friction|magnetism|gravity|normal force|Friction turns movement into heat.",
-"A rougher surface gives…|more friction|less friction|no friction|the same friction|Rougher surfaces have bigger bumps that catch.",
-"Why do shoes have grooves on the soles?|To increase grip (friction)|To reduce friction|To make them heavier|To change their colour|Grooves help grip the ground.",
-"A sled slows down on snow mainly because of…|friction|magnetism|an applied force|the normal force|Friction opposes the sled's motion.",
-"Magnets attract objects made of…|iron or steel|wood|plastic|glass|Iron, steel, nickel and cobalt are magnetic.",
-"A north pole and a south pole…|attract|repel|do nothing|spin|Opposite poles attract.",
-"Two north poles…|repel|attract|stick together|disappear|Same poles repel.",
-"A magnet's force is strongest at…|the poles|the middle|everywhere equally|far away|Field lines bunch up at the poles.",
-"Magnetic field lines leave the…|north pole|south pole|middle|nowhere|They leave north and enter south.",
-"A magnetic field is…|the area around a magnet where its force acts|the inside of a magnet|a kind of metal|a surface|The field is the space where the magnetic force can be felt.",
-"Which would a magnet NOT pick up?|A wooden spoon|A steel nail|Iron filings|A steel paper clip|Wood is not magnetic.",
-"A compass needle points north because of…|Earth's magnetic field|gravity|friction|wind|The Earth acts like a giant magnet.",
-"A box has 30 N applied to the right and 12 N friction to the left. The net force is…|18 N right|42 N right|18 N left|0 N|30 − 12 = 18 N to the right."
+// [question, correct answer, [3 wrong answers], explanation]
+const Q=[
+["Ade has 245 stickers. Bola gives him 128 more. How many stickers does Ade have now?","373",["363","383","117"],"245 + 128 = 373"],
+["A school library had 512 books. 187 were borrowed. How many books are left?","325",["335","699","425"],"512 − 187 = 325"],
+["There are 6 boxes with 8 pencils in each box. How many pencils are there altogether?","48",["14","42","56"],"6 × 8 = 48"],
+["36 cookies are shared equally among 4 children. How many cookies does each child get?","9",["8","32","12"],"36 ÷ 4 = 9"],
+["A farmer plants 7 rows of trees with 9 trees in each row. How many trees are there?","63",["54","56","16"],"7 × 9 = 63"],
+["Tom has ₦150. He buys a pen for ₦45. How much money does he have left?","₦105",["₦195","₦115","₦95"],"150 − 45 = 105"],
+["There are 28 pupils in a class. 15 are girls. How many are boys?","13",["43","12","14"],"28 − 15 = 13"],
+["72 apples are packed 8 to a bag. How many bags are needed?","9",["8","64","10"],"72 ÷ 8 = 9"],
+["A bus carries 45 passengers in the morning and 38 in the afternoon. How many passengers is that in all?","83",["73","93","7"],"45 + 38 = 83"],
+["One ticket costs ₦20. How much do 5 tickets cost?","₦100",["₦25","₦80","₦120"],"5 × 20 = 100"],
+["3 friends each have 12 marbles. How many marbles do they have altogether?","36",["15","24","39"],"3 × 12 = 36"],
+["There are 64 chairs arranged in 8 equal rows. How many chairs are in each row?","8",["7","9","56"],"64 ÷ 8 = 8"],
+["A film starts at 3:00 and lasts 2 hours. What time does it end?","5:00",["1:00","4:00","6:00"],"3:00 + 2 hours = 5:00"],
+["A rope is 100 cm long. Mia cuts off 35 cm. How long is the rope now?","65 cm",["75 cm","135 cm","55 cm"],"100 − 35 = 65"],
+["Mum buys 4 packs of balloons with 6 balloons in each pack. 5 balloons burst. How many balloons are left?","19",["29","15","20"],"4 × 6 = 24, then 24 − 5 = 19"],
+["Sara reads 15 pages each day for 6 days. How many pages does she read?","90",["21","80","75"],"15 × 6 = 90"],
+["Ngozi has 18 sweets. She gives away half of them. How many sweets does she give away?","9",["36","8","6"],"Half of 18 is 18 ÷ 2 = 9"],
+["A pizza is cut into 8 equal slices. Kemi eats 3 slices. What fraction of the pizza did she eat?","3/8",["3/5","5/8","8/3"],"3 slices out of 8 equal slices = 3/8"],
+["A baker makes 120 rolls in the morning and 85 in the afternoon. He sells 150 rolls. How many are left?","55",["355","65","45"],"120 + 85 = 205, then 205 − 150 = 55"],
+["A water bottle holds 2 litres. How many litres do 5 bottles hold?","10 litres",["7 litres","12 litres","8 litres"],"5 × 2 = 10"],
+["One box has a mass of 350 g and another has a mass of 275 g. What is their total mass?","625 g",["525 g","635 g","75 g"],"350 + 275 = 625"],
+["A rectangular garden is 9 m long and 5 m wide. What is its perimeter?","28 m",["14 m","45 m","24 m"],"9 + 5 + 9 + 5 = 28"],
+["A square has sides of 6 cm. What is its perimeter?","24 cm",["12 cm","36 cm","18 cm"],"4 × 6 = 24"],
+["5 girls each have 7 beads. How many beads do they have altogether?","35",["12","30","42"],"5 × 7 = 35"],
+["48 stickers are shared equally among 6 children. How many stickers does each child get?","8",["7","9","42"],"48 ÷ 6 = 8"],
+["Mum buys 3 books that cost ₦200 each. How much does she spend?","₦600",["₦203","₦500","₦300"],"3 × 200 = 600"],
+["A shop has 346 red balloons and 289 blue balloons. How many balloons are there altogether?","635",["625","545","735"],"346 + 289 = 635"],
+["A train has 600 seats. 275 seats are taken. How many seats are empty?","325",["425","375","875"],"600 − 275 = 325"],
+["John is 8 years old. His father is 4 times as old as John. How old is his father?","32",["12","24","36"],"4 × 8 = 32"],
+["A jug holds 1000 ml of juice. Each cup takes 250 ml. How many cups can be filled?","4",["3","5","6"],"1000 ÷ 250 = 4"],
+["A lesson starts at 9:15 and lasts 45 minutes. What time does it end?","10:00",["9:45","10:15","10:30"],"9:15 + 45 minutes = 10:00"],
+["Lisa sleeps 9 hours every night for 7 nights. How many hours does she sleep in all?","63",["56","16","54"],"9 × 7 = 63"],
+["A notebook costs ₦120 and a pencil costs ₦30. How much do 2 notebooks and 1 pencil cost?","₦270",["₦150","₦240","₦300"],"2 × 120 = 240, then 240 + 30 = 270"],
+["4 children each get 3 sweets and there are 2 sweets left over. How many sweets were there at the start?","14",["12","10","18"],"4 × 3 = 12, then 12 + 2 = 14"],
+["A garden has 56 flowers. 17 are red, 20 are yellow and the rest are white. How many are white?","19",["37","39","93"],"17 + 20 = 37, then 56 − 37 = 19"],
+["A box holds 10 pencils. How many boxes are needed to pack 95 pencils?","10 boxes",["9 boxes","95 boxes","11 boxes"],"95 ÷ 10 = 9 remainder 5, so the 5 extra pencils need one more box: 10 boxes"],
+["2 pizzas each have 8 slices. 5 children each eat 3 slices. How many slices are left?","1",["3","8","11"],"2 × 8 = 16 slices, 5 × 3 = 15 eaten, 16 − 15 = 1"],
+["Mr Obi plants 4 rows of beans with 12 seeds in each row. How many seeds does he plant?","48",["16","36","44"],"4 × 12 = 48"],
+["A tank holds 500 litres. 175 litres are used in the morning and 125 litres in the evening. How many litres are left?","200 litres",["325 litres","375 litres","300 litres"],"175 + 125 = 300, then 500 − 300 = 200"],
+["A snail climbs 3 cm every minute. How far does it climb in 9 minutes?","27 cm",["12 cm","24 cm","30 cm"],"3 × 9 = 27"],
+["Kofi has ₦500. He buys 2 toys that cost ₦150 each. How much money does he have left?","₦200",["₦350","₦250","₦300"],"2 × 150 = 300, then 500 − 300 = 200"],
+["Ben has twice as many marbles as Dan. Dan has 14 marbles. How many marbles does Ben have?","28",["16","7","24"],"2 × 14 = 28"],
+["30 pencils are shared equally among 5 pupils. Then each pupil loses 2 pencils. How many pencils does each pupil have now?","4",["6","8","3"],"30 ÷ 5 = 6, then 6 − 2 = 4"],
+["A film is 90 minutes long. How long is that in hours and minutes?","1 hour 30 minutes",["1 hour 10 minutes","9 hours","2 hours"],"60 minutes = 1 hour, so 90 minutes = 1 hour 30 minutes"],
+["A ribbon is 3 m long. It is cut into pieces that are each 50 cm long. How many pieces are there?","6",["5","3","8"],"3 m = 300 cm, and 300 ÷ 50 = 6"],
+["A basket has 20 mangoes. One quarter of them are rotten. How many mangoes are rotten?","5",["4","10","15"],"20 ÷ 4 = 5"],
+["A library has 8 shelves with 25 books on each shelf. How many books are there?","200",["33","160","225"],"8 × 25 = 200"],
+["A concert starts at 6:30 p.m. and ends at 9:00 p.m. How long does it last?","2 hours 30 minutes",["3 hours 30 minutes","2 hours","3 hours"],"From 6:30 to 9:00 is 2 hours 30 minutes"],
+["Amina saves ₦50 every week for 8 weeks. How much does she save?","₦400",["₦58","₦350","₦450"],"50 × 8 = 400"],
+["There are 150 pupils in 5 equal classes. Two classes go on a trip. How many pupils go on the trip?","60",["30","90","120"],"150 ÷ 5 = 30 pupils per class, then 2 × 30 = 60"]
 ];
-var Q=RAW.map(function(r){var p=r.split("|");return{q:p[0],a:p[1],o:[p[1],p[2],p[3],p[4]],e:p[5]}});
-var $=function(i){return document.getElementById(i)};
-function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
-var set,idx,score,miss,locked;
-function show(id){["start","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!=id)})}
-function begin(list){set=shuf(list);idx=0;score=0;miss=[];show("play");ask()}
-function ask(){var q=set[idx];locked=false;
-$("qn").textContent="Question "+(idx+1)+" of "+set.length;$("sc").textContent="Score "+score;$("pb").style.width=(idx/set.length*100)+"%";
-$("qt").textContent=q.q;$("fb").textContent="";$("nx").classList.add("hide");$("ops").innerHTML="";
-shuf(q.o).forEach(function(t){var b=document.createElement("button");b.className="opt";b.textContent=t;
-b.onclick=function(){if(locked)return;locked=true;var all=$("ops").children;
-for(var i=0;i<all.length;i++){if(all[i].textContent==q.a)all[i].classList.add("ok")}
-if(t==q.a){score++;$("fb").textContent="Correct! "+q.e}else{b.classList.add("no");miss.push(q);$("fb").textContent="Not quite. "+q.e}
-$("sc").textContent="Score "+score;$("nx").textContent=idx==set.length-1?"See results":"Next";$("nx").classList.remove("hide");$("nx").focus()};
-$("ops").appendChild(b)})}
-$("nx").onclick=function(){idx++;idx<set.length?ask():finish()};
-function finish(){$("pb").style.width="100%";show("end");var n=set.length;
-$("fin").textContent=score+" / "+n;
-var p=score/n;$("msg").textContent=p==1?"Perfect! You are a force master!":p>=.8?"Excellent work!":p>=.6?"Good job. A little more practice and you will have it.":"Keep going. Read the lessons again and retry.";
-var m=$("missed");m.innerHTML="";
-if(miss.length){var h=document.createElement("h3");h.textContent="Questions to review ("+miss.length+")";m.appendChild(h);
-miss.forEach(function(q){var d=document.createElement("div");d.className="miss";d.innerHTML="<b></b><br><span></span>";d.firstChild.textContent=q.q;d.lastChild.textContent="Answer: "+q.a+". "+q.e;m.appendChild(d)})}
-$("redo").classList.toggle("hide",!miss.length)}
-$("begin").onclick=$("again").onclick=function(){begin(Q)};
-$("redo").onclick=function(){begin(miss.slice())};
+const c=document.getElementById('c');
+let list,i,score,answers,locked;
+const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+let best=null;try{best=localStorage.getItem('g3wp_best')}catch(e){}
+function home(){
+ c.innerHTML=`<div class="big">🧮</div><h1 class="center">Maths Word Problems</h1>
+ <p class="sub center">50 questions · pick the right answer · see the working after each one</p>
+ ${best?`<p class="center">🏆 Best score: <b>${best}/50</b></p>`:''}
+ <div class="center"><button class="btn" onclick="start()">Start Quiz</button></div>`;
+}
+function start(){
+ list=shuffle(Q).map(q=>({q:q[0],a:q[1],o:shuffle([q[1],...q[2]]),e:q[3]}));
+ i=0;score=0;answers=[];show();
+}
+function show(){
+ const x=list[i];locked=false;
+ c.innerHTML=`<div class="top"><span>Question ${i+1} of 50</span><span>⭐ ${score}</span></div>
+ <div class="bar"><div style="width:${i/50*100}%"></div></div>
+ <div class="q">${x.q}</div>
+ ${x.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${o}</button>`).join('')}
+ <div class="fb" id="fb"></div>
+ <div class="center"><button class="btn" id="nx" style="display:none" onclick="next()">${i==49?'See Results':'Next →'}</button></div>`;
+}
+function pick(k){
+ if(locked)return;locked=true;
+ const x=list[i],ok=x.o[k]===x.a;
+ if(ok)score++;
+ answers.push({q:x.q,a:x.a,ok});
+ document.querySelectorAll('.opt').forEach((b,n)=>{b.disabled=true;if(x.o[n]===x.a)b.classList.add('right');else if(n===k)b.classList.add('wrong')});
+ const f=document.getElementById('fb');f.style.display='block';
+ f.innerHTML=(ok?'🎉 <b>Correct!</b> ':'❌ <b>Not quite.</b> The answer is <b>'+x.a+'</b>. ')+'<br>'+x.e;
+ document.getElementById('nx').style.display='inline-block';
+}
+function next(){i++;i<50?show():finish()}
+function finish(){
+ try{if(best===null||score>+best){best=score;localStorage.setItem('g3wp_best',score)}}catch(e){}
+ const m=score>=45?'🏆 Maths superstar!':score>=35?'🌟 Great job!':score>=25?'👍 Good effort, keep practising!':'💪 Keep going, you will get better!';
+ const wrong=answers.filter(a=>!a.ok);
+ c.innerHTML=`<div class="big">🎊</div><div class="score">${score} / 50</div><p class="center"><b>${m}</b></p>
+ ${wrong.length?`<p><b>Questions to review (${wrong.length}):</b></p><div class="rev">${wrong.map(w=>`<div>${w.q}<br><b>Answer: ${w.a}</b></div>`).join('')}</div>`:'<p class="center">Perfect score, nothing to review!</p>'}
+ <div class="center" style="margin-top:16px"><button class="btn alt" onclick="start()">Play Again</button></div>`;
+}
+home();
 </script>
 </body>
 </html>
