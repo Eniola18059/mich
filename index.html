@@ -2,131 +2,139 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Grade 3 Maths Word Problems Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tens & Ones Quiz – Grade 1 Place Value</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:linear-gradient(160deg,#e0f2fe,#fef9c3);min-height:100vh;color:#1e293b;display:flex;justify-content:center;padding:16px}
-.app{width:100%;max-width:680px}
-.card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
-h1{margin:0 0 6px;font-size:1.7rem;color:#0369a1}
-.sub{color:#475569;margin-bottom:18px}
-.btn{background:#0ea5e9;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-size:1.05rem;font-weight:600;cursor:pointer}
-.btn:hover{background:#0284c7}
-.btn.alt{background:#f59e0b}.btn.alt:hover{background:#d97706}
-.top{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px;color:#0369a1}
-.bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden;margin-bottom:18px}
-.bar>div{height:100%;background:#22c55e;transition:width .3s}
-.q{font-size:1.25rem;line-height:1.5;margin-bottom:16px;font-weight:600}
-.opt{display:block;width:100%;text-align:left;background:#f1f5f9;border:2px solid #e2e8f0;border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:1.1rem;cursor:pointer}
-.opt:hover:not(:disabled){border-color:#0ea5e9;background:#e0f2fe}
-.opt.right{background:#dcfce7;border-color:#22c55e}
-.opt.wrong{background:#fee2e2;border-color:#ef4444}
-.fb{margin:12px 0;padding:12px 14px;border-radius:12px;background:#fef9c3;display:none}
-.big{font-size:3rem;text-align:center}
-.score{font-size:2.2rem;text-align:center;font-weight:700;color:#0369a1}
-.rev{max-height:300px;overflow:auto;margin-top:14px;font-size:.95rem}
-.rev div{padding:8px 0;border-bottom:1px solid #e2e8f0}
+:root{--sky:#bfe8ff;--grass:#7ed957;--card:#ffffff;--ink:#2b2a4c;--muted:#5d5c80;--line:#ffd86b;--ten:#1e6fe8;--one:#ff8a00;--c1:#e53935;--c2:#1e88e5;--c3:#2e9d4a;--c4:#ffca28;--c4ink:#3a2a00;--okbg:#d9f8dc;--ok:#1c7a34;--badbg:#ffe0e0;--bad:#b3261e;--btn:#8e44ec;--bub:#fff3b8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#1d1b4b;--grass:#2f8f4e;--card:#2b2960;--ink:#fff8e1;--muted:#c9c6f2;--line:#ffd86b;--ten:#6aa9ff;--one:#ffb347;--okbg:#17432a;--ok:#7dff9b;--badbg:#4a1f26;--bad:#ff9a9a;--bub:#4a4390}}
+:root[data-theme="dark"]{--sky:#1d1b4b;--grass:#2f8f4e;--card:#2b2960;--ink:#fff8e1;--muted:#c9c6f2;--line:#ffd86b;--ten:#6aa9ff;--one:#ffb347;--okbg:#17432a;--ok:#7dff9b;--badbg:#4a1f26;--bad:#ff9a9a;--bub:#4a4390}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--sky);color:var(--ink);font-family:'Fredoka','Comic Sans MS','Trebuchet MS',sans-serif;font-size:19px;line-height:1.4;overflow-x:hidden}
+body::after{content:"";position:fixed;left:-5%;right:-5%;bottom:0;height:44px;background:var(--grass);border-radius:60% 60% 0 0/100% 100% 0 0;pointer-events:none;z-index:0}
+.cloud{position:fixed;font-size:64px;opacity:.9;pointer-events:none;z-index:0;animation:drift 60s linear infinite}
+.cloud.b{top:22%;font-size:46px;animation-duration:85s;animation-delay:-30s}
+.cloud.a{top:6%}
+@keyframes drift{from{left:-90px}to{left:105%}}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:14px 14px 80px}
+h1{font-size:2.4rem;line-height:1.1;margin:0 0 8px;text-align:center}
+h1 .t{color:var(--ten)}h1 .o{color:var(--one)}
+h2{font-size:1.65rem;line-height:1.25;margin:4px 0 14px}
+.card{background:var(--card);border:5px solid var(--line);border-radius:32px;padding:22px;box-shadow:0 8px 0 rgba(0,0,0,.12)}
+.owl{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.owl .face{font-size:3.4rem;line-height:1;animation:bob 2.4s ease-in-out infinite}
+.owl .face.cheer{animation:hop .5s 2}
+.bub{position:relative;background:var(--bub);color:var(--ink);border-radius:20px;padding:10px 16px;font-weight:600;flex:1}
+.bub::before{content:"";position:absolute;left:-12px;top:50%;margin-top:-10px;border:10px solid transparent;border-right-color:var(--bub);border-left:0}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes hop{50%{transform:translateY(-18px) rotate(-8deg)}}
+.lead{font-size:1.25rem;color:var(--muted);margin:0 0 16px;text-align:center}
+.legend{display:flex;gap:30px;align-items:flex-end;justify-content:center;margin:0 0 20px}
+.legend p{margin:6px 0 0;font-weight:700;text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin:2px 4px 6px;background:var(--card);border-radius:20px;padding:6px 14px;border:3px solid var(--line)}
+.mute{font:inherit;background:none;border:0;font-size:1.4rem;cursor:pointer;padding:0 4px}
+.track{position:relative;height:18px;background:var(--card);border:3px solid var(--line);border-radius:12px;margin:12px 4px 22px}
+.fill{height:100%;background:var(--one);border-radius:9px;transition:width .4s}
+.rk{position:absolute;top:-17px;font-size:1.9rem;transition:left .4s;transform:rotate(45deg)}
+.sec{margin:0 0 6px;color:var(--muted);font-weight:700}
+.blocks{display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap;margin:6px 0 14px;min-height:30px}
+.ten{display:block;width:22px;height:112px;border-radius:7px;background:repeating-linear-gradient(to bottom,var(--ten) 0 9px,var(--card) 9px 11px);box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.ones{display:grid;grid-template-columns:repeat(3,22px);gap:3px;align-content:end;margin-left:10px}
+.one{display:block;width:22px;height:22px;border-radius:50%;background:var(--one);box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.big{font-size:4.4rem;font-weight:700;line-height:1;margin:0 0 14px;color:var(--ten)}
+.say{font:inherit;font-weight:700;background:var(--bub);color:var(--ink);border:0;border-radius:18px;padding:8px 16px;cursor:pointer;margin-bottom:16px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt{font:inherit;font-size:1.9rem;font-weight:700;min-height:76px;border-radius:24px;border:0;color:#fff;cursor:pointer;box-shadow:0 7px 0 rgba(0,0,0,.28);transition:transform .08s,box-shadow .08s}
+.opt:nth-child(1){background:var(--c1)}.opt:nth-child(2){background:var(--c2)}.opt:nth-child(3){background:var(--c3)}.opt:nth-child(4){background:var(--c4);color:var(--c4ink)}
+.opt:active:not(:disabled){transform:translateY(5px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
+.opt:disabled{cursor:default}
+.opt.ok{outline:6px solid var(--ok);outline-offset:2px}
+.opt.ok::before{content:"✅ "}
+.opt.bad{animation:shake .4s}.opt.bad::before{content:"❌ "}
+.opt.dim{opacity:.4}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.go{font:inherit;font-size:1.4rem;font-weight:700;background:var(--btn);color:#fff;border:0;border-radius:24px;padding:14px 30px;cursor:pointer;margin-top:8px;box-shadow:0 6px 0 rgba(0,0,0,.28)}
+.go:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
+.go.alt{background:var(--c2);margin-left:6px}
 .center{text-align:center}
+.msg{font-size:1.3rem;font-weight:700;margin:16px 0 4px;padding:10px 14px;border-radius:18px}
+.msg.good{background:var(--okbg);color:var(--ok)}.msg.no{background:var(--badbg);color:var(--bad)}
+.hint{margin:6px 0 4px;color:var(--muted)}
+.best{color:var(--muted);margin:14px 0 0;text-align:center;font-weight:600}
+.trophy{font-size:5rem;line-height:1;text-align:center;animation:hop .7s 3}
+.score{font-size:3.4rem;font-weight:700;margin:4px 0;text-align:center;color:var(--one)}
+.stars5{font-size:2.2rem;letter-spacing:4px;margin:0;text-align:center}
+.fx{position:fixed;top:-40px;font-size:2rem;pointer-events:none;z-index:5;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.9}}
+button:focus-visible{outline:5px solid var(--ink);outline-offset:3px}
+@media (max-width:420px){h1{font-size:1.9rem}.opt{font-size:1.6rem}.card{padding:16px}.big{font-size:3.6rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="app"><div class="card" id="c"></div></div>
+<span class="cloud a" aria-hidden="true">☁️</span><span class="cloud b" aria-hidden="true">☁️</span>
+<main id="app"></main>
 <script>
-// [question, correct answer, [3 wrong answers], explanation]
-const Q=[
-["Ade has 245 stickers. Bola gives him 128 more. How many stickers does Ade have now?","373",["363","383","117"],"245 + 128 = 373"],
-["A school library had 512 books. 187 were borrowed. How many books are left?","325",["335","699","425"],"512 − 187 = 325"],
-["There are 6 boxes with 8 pencils in each box. How many pencils are there altogether?","48",["14","42","56"],"6 × 8 = 48"],
-["36 cookies are shared equally among 4 children. How many cookies does each child get?","9",["8","32","12"],"36 ÷ 4 = 9"],
-["A farmer plants 7 rows of trees with 9 trees in each row. How many trees are there?","63",["54","56","16"],"7 × 9 = 63"],
-["Tom has ₦150. He buys a pen for ₦45. How much money does he have left?","₦105",["₦195","₦115","₦95"],"150 − 45 = 105"],
-["There are 28 pupils in a class. 15 are girls. How many are boys?","13",["43","12","14"],"28 − 15 = 13"],
-["72 apples are packed 8 to a bag. How many bags are needed?","9",["8","64","10"],"72 ÷ 8 = 9"],
-["A bus carries 45 passengers in the morning and 38 in the afternoon. How many passengers is that in all?","83",["73","93","7"],"45 + 38 = 83"],
-["One ticket costs ₦20. How much do 5 tickets cost?","₦100",["₦25","₦80","₦120"],"5 × 20 = 100"],
-["3 friends each have 12 marbles. How many marbles do they have altogether?","36",["15","24","39"],"3 × 12 = 36"],
-["There are 64 chairs arranged in 8 equal rows. How many chairs are in each row?","8",["7","9","56"],"64 ÷ 8 = 8"],
-["A film starts at 3:00 and lasts 2 hours. What time does it end?","5:00",["1:00","4:00","6:00"],"3:00 + 2 hours = 5:00"],
-["A rope is 100 cm long. Mia cuts off 35 cm. How long is the rope now?","65 cm",["75 cm","135 cm","55 cm"],"100 − 35 = 65"],
-["Mum buys 4 packs of balloons with 6 balloons in each pack. 5 balloons burst. How many balloons are left?","19",["29","15","20"],"4 × 6 = 24, then 24 − 5 = 19"],
-["Sara reads 15 pages each day for 6 days. How many pages does she read?","90",["21","80","75"],"15 × 6 = 90"],
-["Ngozi has 18 sweets. She gives away half of them. How many sweets does she give away?","9",["36","8","6"],"Half of 18 is 18 ÷ 2 = 9"],
-["A pizza is cut into 8 equal slices. Kemi eats 3 slices. What fraction of the pizza did she eat?","3/8",["3/5","5/8","8/3"],"3 slices out of 8 equal slices = 3/8"],
-["A baker makes 120 rolls in the morning and 85 in the afternoon. He sells 150 rolls. How many are left?","55",["355","65","45"],"120 + 85 = 205, then 205 − 150 = 55"],
-["A water bottle holds 2 litres. How many litres do 5 bottles hold?","10 litres",["7 litres","12 litres","8 litres"],"5 × 2 = 10"],
-["One box has a mass of 350 g and another has a mass of 275 g. What is their total mass?","625 g",["525 g","635 g","75 g"],"350 + 275 = 625"],
-["A rectangular garden is 9 m long and 5 m wide. What is its perimeter?","28 m",["14 m","45 m","24 m"],"9 + 5 + 9 + 5 = 28"],
-["A square has sides of 6 cm. What is its perimeter?","24 cm",["12 cm","36 cm","18 cm"],"4 × 6 = 24"],
-["5 girls each have 7 beads. How many beads do they have altogether?","35",["12","30","42"],"5 × 7 = 35"],
-["48 stickers are shared equally among 6 children. How many stickers does each child get?","8",["7","9","42"],"48 ÷ 6 = 8"],
-["Mum buys 3 books that cost ₦200 each. How much does she spend?","₦600",["₦203","₦500","₦300"],"3 × 200 = 600"],
-["A shop has 346 red balloons and 289 blue balloons. How many balloons are there altogether?","635",["625","545","735"],"346 + 289 = 635"],
-["A train has 600 seats. 275 seats are taken. How many seats are empty?","325",["425","375","875"],"600 − 275 = 325"],
-["John is 8 years old. His father is 4 times as old as John. How old is his father?","32",["12","24","36"],"4 × 8 = 32"],
-["A jug holds 1000 ml of juice. Each cup takes 250 ml. How many cups can be filled?","4",["3","5","6"],"1000 ÷ 250 = 4"],
-["A lesson starts at 9:15 and lasts 45 minutes. What time does it end?","10:00",["9:45","10:15","10:30"],"9:15 + 45 minutes = 10:00"],
-["Lisa sleeps 9 hours every night for 7 nights. How many hours does she sleep in all?","63",["56","16","54"],"9 × 7 = 63"],
-["A notebook costs ₦120 and a pencil costs ₦30. How much do 2 notebooks and 1 pencil cost?","₦270",["₦150","₦240","₦300"],"2 × 120 = 240, then 240 + 30 = 270"],
-["4 children each get 3 sweets and there are 2 sweets left over. How many sweets were there at the start?","14",["12","10","18"],"4 × 3 = 12, then 12 + 2 = 14"],
-["A garden has 56 flowers. 17 are red, 20 are yellow and the rest are white. How many are white?","19",["37","39","93"],"17 + 20 = 37, then 56 − 37 = 19"],
-["A box holds 10 pencils. How many boxes are needed to pack 95 pencils?","10 boxes",["9 boxes","95 boxes","11 boxes"],"95 ÷ 10 = 9 remainder 5, so the 5 extra pencils need one more box: 10 boxes"],
-["2 pizzas each have 8 slices. 5 children each eat 3 slices. How many slices are left?","1",["3","8","11"],"2 × 8 = 16 slices, 5 × 3 = 15 eaten, 16 − 15 = 1"],
-["Mr Obi plants 4 rows of beans with 12 seeds in each row. How many seeds does he plant?","48",["16","36","44"],"4 × 12 = 48"],
-["A tank holds 500 litres. 175 litres are used in the morning and 125 litres in the evening. How many litres are left?","200 litres",["325 litres","375 litres","300 litres"],"175 + 125 = 300, then 500 − 300 = 200"],
-["A snail climbs 3 cm every minute. How far does it climb in 9 minutes?","27 cm",["12 cm","24 cm","30 cm"],"3 × 9 = 27"],
-["Kofi has ₦500. He buys 2 toys that cost ₦150 each. How much money does he have left?","₦200",["₦350","₦250","₦300"],"2 × 150 = 300, then 500 − 300 = 200"],
-["Ben has twice as many marbles as Dan. Dan has 14 marbles. How many marbles does Ben have?","28",["16","7","24"],"2 × 14 = 28"],
-["30 pencils are shared equally among 5 pupils. Then each pupil loses 2 pencils. How many pencils does each pupil have now?","4",["6","8","3"],"30 ÷ 5 = 6, then 6 − 2 = 4"],
-["A film is 90 minutes long. How long is that in hours and minutes?","1 hour 30 minutes",["1 hour 10 minutes","9 hours","2 hours"],"60 minutes = 1 hour, so 90 minutes = 1 hour 30 minutes"],
-["A ribbon is 3 m long. It is cut into pieces that are each 50 cm long. How many pieces are there?","6",["5","3","8"],"3 m = 300 cm, and 300 ÷ 50 = 6"],
-["A basket has 20 mangoes. One quarter of them are rotten. How many mangoes are rotten?","5",["4","10","15"],"20 ÷ 4 = 5"],
-["A library has 8 shelves with 25 books on each shelf. How many books are there?","200",["33","160","225"],"8 × 25 = 200"],
-["A concert starts at 6:30 p.m. and ends at 9:00 p.m. How long does it last?","2 hours 30 minutes",["3 hours 30 minutes","2 hours","3 hours"],"From 6:30 to 9:00 is 2 hours 30 minutes"],
-["Amina saves ₦50 every week for 8 weeks. How much does she save?","₦400",["₦58","₦350","₦450"],"50 × 8 = 400"],
-["There are 150 pupils in 5 equal classes. Two classes go on a trip. How many pupils go on the trip?","60",["30","90","120"],"150 ÷ 5 = 30 pupils per class, then 2 × 30 = 60"]
-];
-const c=document.getElementById('c');
-let list,i,score,answers,locked;
-const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
-let best=null;try{best=localStorage.getItem('g3wp_best')}catch(e){}
+const $=s=>document.querySelector(s);
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const flip=n=>n<10?n:+(''+n).split('').reverse().join('');
+function opts(ans,lo,hi){const s=[ans];for(const x of sh([ans+1,ans-1,ans+2,ans-2,ans+10,ans-10,flip(ans)])){if(s.length>=4)break;if(x>=lo&&x<=hi&&!s.includes(x))s.push(x)}for(let x=lo;s.length<4;x++)if(!s.includes(x))s.push(x);return s}
+const blk=(t,o)=>`<div class="blocks" role="img" aria-label="${t} tens and ${o} ones">${'<i class="ten"></i>'.repeat(t)}${o?`<span class="ones">${'<i class="one"></i>'.repeat(o)}</span>`:''}</div>`;
+const big=n=>`<div class="big">${n}</div>`;
+const SEC=['🧱 Count the blocks','🔟 Tens and ones','🏗️ Build the number','💎 What is each digit worth?','🎈 Number fun'];
+const INTRO=['Let us count the blocks! Blue sticks are tens.','Time to find the tens and the ones!','Now you build the numbers!','What is each digit worth? Think tens and ones!','Last round! Number fun time!'];
+const HINT=['Blue sticks are tens. Orange balls are ones. Count the tens first.','The left digit is the tens. The right digit is the ones.','Tens come first, then ones. 3 tens is 30.','The left digit is worth tens. The right digit is worth ones.','Take your time and count slowly.'];
+const S=[];
+const add=(sec,text,ans,o,vis,fx)=>S.push({sec,text,ans,o,vis:vis||'',fx});
+[11,14,23,26,32,38,45,51,67,74].forEach(n=>add(0,'How many blocks are there in all?',n,opts(n,1,99),blk(n/10|0,n%10)));
+[30,42,16,57,80,25,63,91,38,70].forEach((n,i)=>{const t=i%2==0,a=t?n/10|0:n%10;add(1,t?`How many tens are in ${n}?`:`How many ones are in ${n}?`,a,opts(a,0,9),big(n))});
+[[2,3],[4,1],[5,6],[3,0],[1,8],[6,2],[7,4],[8,5],[9,0],[4,9]].forEach(([t,o])=>add(2,`${t} ${t==1?'ten':'tens'} and ${o} ${o==1?'one':'ones'} make what number?`,t*10+o,opts(t*10+o,1,99),blk(t,o)));
+[34,59,27,81,46,73,92,65,18,50].forEach((n,i)=>{const t=n/10|0,o=n%10;
+ if(i%2==0){const ten=i%4==0;add(3,`In ${n}, the digit ${ten?t:o} is in the ___ place.`,ten?'Tens':'Ones',['Tens','Ones'],big(n),1)}
+ else{const s=[...new Set([t*10,t,o,n])];for(const x of opts(t*10,0,99))if(s.length<4&&!s.includes(x))s.push(x);add(3,`In ${n}, how much is the ${t} worth?`,t*10,s,big(n))}});
+[['What is 10 more than 23?',33],['What is 10 less than 45?',35],['10 + 6 = ?',16],['Which number is bigger?',72,[27,72]],['Which number is smaller?',48,[48,84]],['What number comes just after 39?',40],['What number comes just before 60?',59],['Count by tens: 10, 20, 30, __',40],['Count by tens: 50, 60, __, 80',70],['Which number has 5 tens and 2 ones?',52,[25,52,50,7]]].forEach(([t,a,o])=>add(4,t,a,o||opts(a,1,99)));
+
+let st={},best=0,muted=false,ac=null;
+try{best=+localStorage.getItem('pv1best')||0}catch(e){}
+const app=$('#app');
+function tone(f,d,t,w){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=w||'sine';o.frequency.value=f;g.gain.setValueAtTime(.18,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+d);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+d)}catch(e){}}
+const snd=ok=>{if(muted)return;if(ok){tone(523,.15,0);tone(659,.15,.12);tone(784,.25,.24)}else{tone(220,.3,0,'triangle')}};
+function confetti(n){for(let i=0;i<n;i++){const s=document.createElement('span');s.className='fx';s.textContent=rnd(['⭐','🎉','🎈','🌟','✨']);s.style.left=Math.random()*95+'vw';s.style.animationDelay=Math.random()*.5+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),2600)}}
+
+function owl(msg){return `<div class="owl"><span class="face" id="face" aria-hidden="true">🦉</span><div class="bub" id="bub" aria-live="polite">${msg}</div></div>`}
 function home(){
- c.innerHTML=`<div class="big">🧮</div><h1 class="center">Maths Word Problems</h1>
- <p class="sub center">50 questions · pick the right answer · see the working after each one</p>
- ${best?`<p class="center">🏆 Best score: <b>${best}/50</b></p>`:''}
- <div class="center"><button class="btn" onclick="start()">Start Quiz</button></div>`;
+ app.innerHTML=`<section class="card"><h1>🔢 <span class="t">Tens</span> &amp; <span class="o">Ones</span> Quiz</h1>${owl('Hi, I am Ollie the Owl! Let us learn about place value together!')}<p class="lead">50 fun questions for Grade 1</p><div class="legend"><div>${blk(1,0)}<p>1 ten = 10</p></div><div>${blk(0,1)}<p>1 one = 1</p></div></div><div class="center"><button class="go" id="go">🚀 Let us start!</button></div>${best?`<p class="best">⭐ Your best score: ${best} out of 50</p>`:''}</section>`;
+ $('#go').onclick=()=>{try{ac=ac||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}start(S,true)};
 }
-function start(){
- list=shuffle(Q).map(q=>({q:q[0],a:q[1],o:shuffle([q[1],...q[2]]),e:q[3]}));
- i=0;score=0;answers=[];show();
-}
-function show(){
- const x=list[i];locked=false;
- c.innerHTML=`<div class="top"><span>Question ${i+1} of 50</span><span>⭐ ${score}</span></div>
- <div class="bar"><div style="width:${i/50*100}%"></div></div>
- <div class="q">${x.q}</div>
- ${x.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${o}</button>`).join('')}
- <div class="fb" id="fb"></div>
- <div class="center"><button class="btn" id="nx" style="display:none" onclick="next()">${i==49?'See Results':'Next →'}</button></div>`;
+function start(l,main){st={l,i:0,sc:0,miss:[],main};ask()}
+function ask(){
+ const q=st.l[st.i],L=q.fx?q.o:sh(q.o);st.cur=L;
+ const first=st.main&&st.i%10==0,pct=st.i/st.l.length*100;
+ app.innerHTML=`<div class="top"><span>Question ${st.i+1} of ${st.l.length}</span><span>⭐ <span id="sc">${st.sc}</span> <button class="mute" id="mute" aria-label="Turn sound on or off">${muted?'🔇':'🔊'}</button></span></div><div class="track"><div class="fill" style="width:${pct}%"></div><span class="rk" style="left:calc(${pct}% - 6px)" aria-hidden="true">🚀</span></div><section class="card">${owl(first?INTRO[q.sec]:rnd(['You can do it!','Take your time!','Think about it!','Look carefully!']))}<p class="sec">${SEC[q.sec]}</p><h2>${q.text}</h2>${q.vis}<button class="say" id="say">🔊 Read to me</button><div class="opts">${L.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="fb" aria-live="polite"></div></section>`;
+ $('#mute').onclick=e=>{muted=!muted;e.target.textContent=muted?'🔇':'🔊'};
+ $('#say').onclick=()=>{try{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(q.text.replace('___','blank').replace(/\+/g,' plus ').replace('= ?','equals what?')))}catch(e){}};
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.k));
 }
 function pick(k){
- if(locked)return;locked=true;
- const x=list[i],ok=x.o[k]===x.a;
- if(ok)score++;
- answers.push({q:x.q,a:x.a,ok});
- document.querySelectorAll('.opt').forEach((b,n)=>{b.disabled=true;if(x.o[n]===x.a)b.classList.add('right');else if(n===k)b.classList.add('wrong')});
- const f=document.getElementById('fb');f.style.display='block';
- f.innerHTML=(ok?'🎉 <b>Correct!</b> ':'❌ <b>Not quite.</b> The answer is <b>'+x.a+'</b>. ')+'<br>'+x.e;
- document.getElementById('nx').style.display='inline-block';
+ const q=st.l[st.i],ok=st.cur[k]===q.ans,last=st.i==st.l.length-1;
+ document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(st.cur[j]===q.ans)b.classList.add('ok');else if(j==k)b.classList.add('bad');else b.classList.add('dim')});
+ if(ok){st.sc++;$('#sc').textContent=st.sc;confetti(14);$('#face').classList.add('cheer')}else st.miss.push(q);
+ snd(ok);
+ $('#bub').textContent=ok?rnd(['Hooray! You got it!','Great job!','Super star!','Wow, you are so smart!','Yay! Well done!']):'Oops! That is okay. Let us learn from it!';
+ $('#fb').innerHTML=`${ok?'':`<p class="msg no">The answer is ${q.ans}.</p><p class="hint">💡 ${HINT[q.sec]}</p>`}<div class="center"><button class="go" id="nx">${last?'🏆 See my score':'Next ➜'}</button></div>`;
+ $('#nx').onclick=()=>{if(last)end();else{st.i++;ask()}};$('#nx').focus();
 }
-function next(){i++;i<50?show():finish()}
-function finish(){
- try{if(best===null||score>+best){best=score;localStorage.setItem('g3wp_best',score)}}catch(e){}
- const m=score>=45?'🏆 Maths superstar!':score>=35?'🌟 Great job!':score>=25?'👍 Good effort, keep practising!':'💪 Keep going, you will get better!';
- const wrong=answers.filter(a=>!a.ok);
- c.innerHTML=`<div class="big">🎊</div><div class="score">${score} / 50</div><p class="center"><b>${m}</b></p>
- ${wrong.length?`<p><b>Questions to review (${wrong.length}):</b></p><div class="rev">${wrong.map(w=>`<div>${w.q}<br><b>Answer: ${w.a}</b></div>`).join('')}</div>`:'<p class="center">Perfect score, nothing to review!</p>'}
- <div class="center" style="margin-top:16px"><button class="btn alt" onclick="start()">Play Again</button></div>`;
+function end(){
+ const n=st.l.length,sc=st.sc,r=sc/n;
+ if(st.main&&sc>best){best=sc;try{localStorage.setItem('pv1best',sc)}catch(e){}}
+ const msg=r>=.9?'You are a place value superstar!':r>=.7?'Great work!':r>=.5?'Good job! Keep practicing!':'Nice start! Try again!';
+ const stars=Math.round(r*5);
+ app.innerHTML=`<section class="card"><div class="trophy" aria-hidden="true">🏆</div><h1>${msg}</h1><p class="score">${sc} out of ${n}</p><p class="stars5" aria-hidden="true">${'⭐'.repeat(stars)}${'☆'.repeat(5-stars)}</p><div class="center" style="margin-top:14px"><button class="go" id="again">🔁 Play again</button>${st.miss.length?`<button class="go alt" id="mm">💪 Practice the ${st.miss.length} I missed</button>`:''}</div></section>`;
+ if(r>=.5){confetti(40);snd(true)}
+ $('#again').onclick=()=>start(S,true);
+ if(st.miss.length)$('#mm').onclick=()=>start(st.miss.slice(),false);
 }
 home();
 </script>
