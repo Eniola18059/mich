@@ -2,139 +2,131 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tens & Ones Quiz – Grade 1 Place Value</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Quiz</title>
 <style>
-:root{--sky:#bfe8ff;--grass:#7ed957;--card:#ffffff;--ink:#2b2a4c;--muted:#5d5c80;--line:#ffd86b;--ten:#1e6fe8;--one:#ff8a00;--c1:#e53935;--c2:#1e88e5;--c3:#2e9d4a;--c4:#ffca28;--c4ink:#3a2a00;--okbg:#d9f8dc;--ok:#1c7a34;--badbg:#ffe0e0;--bad:#b3261e;--btn:#8e44ec;--bub:#fff3b8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#1d1b4b;--grass:#2f8f4e;--card:#2b2960;--ink:#fff8e1;--muted:#c9c6f2;--line:#ffd86b;--ten:#6aa9ff;--one:#ffb347;--okbg:#17432a;--ok:#7dff9b;--badbg:#4a1f26;--bad:#ff9a9a;--bub:#4a4390}}
-:root[data-theme="dark"]{--sky:#1d1b4b;--grass:#2f8f4e;--card:#2b2960;--ink:#fff8e1;--muted:#c9c6f2;--line:#ffd86b;--ten:#6aa9ff;--one:#ffb347;--okbg:#17432a;--ok:#7dff9b;--badbg:#4a1f26;--bad:#ff9a9a;--bub:#4a4390}
-*,*::before,*::after{box-sizing:inherit}
-html{height:100%}
-body{margin:0;min-height:100%;background:var(--sky);color:var(--ink);font-family:'Fredoka','Comic Sans MS','Trebuchet MS',sans-serif;font-size:19px;line-height:1.4;overflow-x:hidden}
-body::after{content:"";position:fixed;left:-5%;right:-5%;bottom:0;height:44px;background:var(--grass);border-radius:60% 60% 0 0/100% 100% 0 0;pointer-events:none;z-index:0}
-.cloud{position:fixed;font-size:64px;opacity:.9;pointer-events:none;z-index:0;animation:drift 60s linear infinite}
-.cloud.b{top:22%;font-size:46px;animation-duration:85s;animation-delay:-30s}
-.cloud.a{top:6%}
-@keyframes drift{from{left:-90px}to{left:105%}}
-main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:14px 14px 80px}
-h1{font-size:2.4rem;line-height:1.1;margin:0 0 8px;text-align:center}
-h1 .t{color:var(--ten)}h1 .o{color:var(--one)}
-h2{font-size:1.65rem;line-height:1.25;margin:4px 0 14px}
-.card{background:var(--card);border:5px solid var(--line);border-radius:32px;padding:22px;box-shadow:0 8px 0 rgba(0,0,0,.12)}
-.owl{display:flex;align-items:center;gap:10px;margin:0 0 12px}
-.owl .face{font-size:3.4rem;line-height:1;animation:bob 2.4s ease-in-out infinite}
-.owl .face.cheer{animation:hop .5s 2}
-.bub{position:relative;background:var(--bub);color:var(--ink);border-radius:20px;padding:10px 16px;font-weight:600;flex:1}
-.bub::before{content:"";position:absolute;left:-12px;top:50%;margin-top:-10px;border:10px solid transparent;border-right-color:var(--bub);border-left:0}
-@keyframes bob{50%{transform:translateY(-6px)}}
-@keyframes hop{50%{transform:translateY(-18px) rotate(-8deg)}}
-.lead{font-size:1.25rem;color:var(--muted);margin:0 0 16px;text-align:center}
-.legend{display:flex;gap:30px;align-items:flex-end;justify-content:center;margin:0 0 20px}
-.legend p{margin:6px 0 0;font-weight:700;text-align:center}
-.top{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin:2px 4px 6px;background:var(--card);border-radius:20px;padding:6px 14px;border:3px solid var(--line)}
-.mute{font:inherit;background:none;border:0;font-size:1.4rem;cursor:pointer;padding:0 4px}
-.track{position:relative;height:18px;background:var(--card);border:3px solid var(--line);border-radius:12px;margin:12px 4px 22px}
-.fill{height:100%;background:var(--one);border-radius:9px;transition:width .4s}
-.rk{position:absolute;top:-17px;font-size:1.9rem;transition:left .4s;transform:rotate(45deg)}
-.sec{margin:0 0 6px;color:var(--muted);font-weight:700}
-.blocks{display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap;margin:6px 0 14px;min-height:30px}
-.ten{display:block;width:22px;height:112px;border-radius:7px;background:repeating-linear-gradient(to bottom,var(--ten) 0 9px,var(--card) 9px 11px);box-shadow:0 3px 0 rgba(0,0,0,.2)}
-.ones{display:grid;grid-template-columns:repeat(3,22px);gap:3px;align-content:end;margin-left:10px}
-.one{display:block;width:22px;height:22px;border-radius:50%;background:var(--one);box-shadow:0 3px 0 rgba(0,0,0,.2)}
-.big{font-size:4.4rem;font-weight:700;line-height:1;margin:0 0 14px;color:var(--ten)}
-.say{font:inherit;font-weight:700;background:var(--bub);color:var(--ink);border:0;border-radius:18px;padding:8px 16px;cursor:pointer;margin-bottom:16px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.opt{font:inherit;font-size:1.9rem;font-weight:700;min-height:76px;border-radius:24px;border:0;color:#fff;cursor:pointer;box-shadow:0 7px 0 rgba(0,0,0,.28);transition:transform .08s,box-shadow .08s}
-.opt:nth-child(1){background:var(--c1)}.opt:nth-child(2){background:var(--c2)}.opt:nth-child(3){background:var(--c3)}.opt:nth-child(4){background:var(--c4);color:var(--c4ink)}
-.opt:active:not(:disabled){transform:translateY(5px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
-.opt:disabled{cursor:default}
-.opt.ok{outline:6px solid var(--ok);outline-offset:2px}
-.opt.ok::before{content:"✅ "}
-.opt.bad{animation:shake .4s}.opt.bad::before{content:"❌ "}
-.opt.dim{opacity:.4}
-@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.go{font:inherit;font-size:1.4rem;font-weight:700;background:var(--btn);color:#fff;border:0;border-radius:24px;padding:14px 30px;cursor:pointer;margin-top:8px;box-shadow:0 6px 0 rgba(0,0,0,.28)}
-.go:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
-.go.alt{background:var(--c2);margin-left:6px}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:linear-gradient(160deg,#e0f2fe,#fef9c3);min-height:100vh;color:#1e293b;display:flex;justify-content:center;padding:16px}
+.app{width:100%;max-width:680px}
+.card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+h1{margin:0 0 6px;font-size:1.7rem;color:#0369a1}
+.sub{color:#475569;margin-bottom:18px}
+.btn{background:#0ea5e9;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-size:1.05rem;font-weight:600;cursor:pointer}
+.btn:hover{background:#0284c7}
+.btn.alt{background:#f59e0b}.btn.alt:hover{background:#d97706}
+.top{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px;color:#0369a1}
+.bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden;margin-bottom:18px}
+.bar>div{height:100%;background:#22c55e;transition:width .3s}
+.q{font-size:1.5rem;line-height:1.5;margin-bottom:18px;font-weight:700;text-align:center}
+.opt{display:block;width:100%;text-align:left;background:#f1f5f9;border:2px solid #e2e8f0;border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:1.15rem;cursor:pointer}
+.opt:hover:not(:disabled){border-color:#0ea5e9;background:#e0f2fe}
+.opt.right{background:#dcfce7;border-color:#22c55e}
+.opt.wrong{background:#fee2e2;border-color:#ef4444}
+.fb{margin:12px 0;padding:12px 14px;border-radius:12px;background:#fef9c3;display:none}
+.big{font-size:3rem;text-align:center}
+.score{font-size:2.2rem;text-align:center;font-weight:700;color:#0369a1}
+.rev{max-height:300px;overflow:auto;margin-top:14px;font-size:.95rem}
+.rev div{padding:8px 0;border-bottom:1px solid #e2e8f0}
 .center{text-align:center}
-.msg{font-size:1.3rem;font-weight:700;margin:16px 0 4px;padding:10px 14px;border-radius:18px}
-.msg.good{background:var(--okbg);color:var(--ok)}.msg.no{background:var(--badbg);color:var(--bad)}
-.hint{margin:6px 0 4px;color:var(--muted)}
-.best{color:var(--muted);margin:14px 0 0;text-align:center;font-weight:600}
-.trophy{font-size:5rem;line-height:1;text-align:center;animation:hop .7s 3}
-.score{font-size:3.4rem;font-weight:700;margin:4px 0;text-align:center;color:var(--one)}
-.stars5{font-size:2.2rem;letter-spacing:4px;margin:0;text-align:center}
-.fx{position:fixed;top:-40px;font-size:2rem;pointer-events:none;z-index:5;animation:fall 1.8s ease-in forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.9}}
-button:focus-visible{outline:5px solid var(--ink);outline-offset:3px}
-@media (max-width:420px){h1{font-size:1.9rem}.opt{font-size:1.6rem}.card{padding:16px}.big{font-size:3.6rem}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<span class="cloud a" aria-hidden="true">☁️</span><span class="cloud b" aria-hidden="true">☁️</span>
-<main id="app"></main>
+<div class="app"><div class="card" id="c"></div></div>
 <script>
-const $=s=>document.querySelector(s);
-const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const rnd=a=>a[Math.floor(Math.random()*a.length)];
-const flip=n=>n<10?n:+(''+n).split('').reverse().join('');
-function opts(ans,lo,hi){const s=[ans];for(const x of sh([ans+1,ans-1,ans+2,ans-2,ans+10,ans-10,flip(ans)])){if(s.length>=4)break;if(x>=lo&&x<=hi&&!s.includes(x))s.push(x)}for(let x=lo;s.length<4;x++)if(!s.includes(x))s.push(x);return s}
-const blk=(t,o)=>`<div class="blocks" role="img" aria-label="${t} tens and ${o} ones">${'<i class="ten"></i>'.repeat(t)}${o?`<span class="ones">${'<i class="one"></i>'.repeat(o)}</span>`:''}</div>`;
-const big=n=>`<div class="big">${n}</div>`;
-const SEC=['🧱 Count the blocks','🔟 Tens and ones','🏗️ Build the number','💎 What is each digit worth?','🎈 Number fun'];
-const INTRO=['Let us count the blocks! Blue sticks are tens.','Time to find the tens and the ones!','Now you build the numbers!','What is each digit worth? Think tens and ones!','Last round! Number fun time!'];
-const HINT=['Blue sticks are tens. Orange balls are ones. Count the tens first.','The left digit is the tens. The right digit is the ones.','Tens come first, then ones. 3 tens is 30.','The left digit is worth tens. The right digit is worth ones.','Take your time and count slowly.'];
-const S=[];
-const add=(sec,text,ans,o,vis,fx)=>S.push({sec,text,ans,o,vis:vis||'',fx});
-[11,14,23,26,32,38,45,51,67,74].forEach(n=>add(0,'How many blocks are there in all?',n,opts(n,1,99),blk(n/10|0,n%10)));
-[30,42,16,57,80,25,63,91,38,70].forEach((n,i)=>{const t=i%2==0,a=t?n/10|0:n%10;add(1,t?`How many tens are in ${n}?`:`How many ones are in ${n}?`,a,opts(a,0,9),big(n))});
-[[2,3],[4,1],[5,6],[3,0],[1,8],[6,2],[7,4],[8,5],[9,0],[4,9]].forEach(([t,o])=>add(2,`${t} ${t==1?'ten':'tens'} and ${o} ${o==1?'one':'ones'} make what number?`,t*10+o,opts(t*10+o,1,99),blk(t,o)));
-[34,59,27,81,46,73,92,65,18,50].forEach((n,i)=>{const t=n/10|0,o=n%10;
- if(i%2==0){const ten=i%4==0;add(3,`In ${n}, the digit ${ten?t:o} is in the ___ place.`,ten?'Tens':'Ones',['Tens','Ones'],big(n),1)}
- else{const s=[...new Set([t*10,t,o,n])];for(const x of opts(t*10,0,99))if(s.length<4&&!s.includes(x))s.push(x);add(3,`In ${n}, how much is the ${t} worth?`,t*10,s,big(n))}});
-[['What is 10 more than 23?',33],['What is 10 less than 45?',35],['10 + 6 = ?',16],['Which number is bigger?',72,[27,72]],['Which number is smaller?',48,[48,84]],['What number comes just after 39?',40],['What number comes just before 60?',59],['Count by tens: 10, 20, 30, __',40],['Count by tens: 50, 60, __, 80',70],['Which number has 5 tens and 2 ones?',52,[25,52,50,7]]].forEach(([t,a,o])=>add(4,t,a,o||opts(a,1,99)));
-
-let st={},best=0,muted=false,ac=null;
-try{best=+localStorage.getItem('pv1best')||0}catch(e){}
-const app=$('#app');
-function tone(f,d,t,w){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=w||'sine';o.frequency.value=f;g.gain.setValueAtTime(.18,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+d);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+d)}catch(e){}}
-const snd=ok=>{if(muted)return;if(ok){tone(523,.15,0);tone(659,.15,.12);tone(784,.25,.24)}else{tone(220,.3,0,'triangle')}};
-function confetti(n){for(let i=0;i<n;i++){const s=document.createElement('span');s.className='fx';s.textContent=rnd(['⭐','🎉','🎈','🌟','✨']);s.style.left=Math.random()*95+'vw';s.style.animationDelay=Math.random()*.5+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),2600)}}
-
-function owl(msg){return `<div class="owl"><span class="face" id="face" aria-hidden="true">🦉</span><div class="bub" id="bub" aria-live="polite">${msg}</div></div>`}
+// [question, correct answer, [3 wrong answers], explanation]
+const Q=[
+["245 + 128 = ?","373",["363","383","117"],"245 + 128 = 373"],
+["512 − 187 = ?","325",["335","699","425"],"512 − 187 = 325"],
+["6 × 8 = ?","48",["14","42","56"],"6 × 8 = 48"],
+["36 ÷ 4 = ?","9",["8","32","12"],"4 × 9 = 36, so 36 ÷ 4 = 9"],
+["7 × 9 = ?","63",["54","56","16"],"7 × 9 = 63"],
+["150 − 45 = ?","105",["195","115","95"],"150 − 45 = 105"],
+["28 − 15 = ?","13",["43","12","14"],"28 − 15 = 13"],
+["72 ÷ 8 = ?","9",["8","64","10"],"8 × 9 = 72, so 72 ÷ 8 = 9"],
+["45 + 38 = ?","83",["73","93","7"],"45 + 38 = 83"],
+["5 × 20 = ?","100",["25","80","120"],"5 × 2 = 10, so 5 × 20 = 100"],
+["3 × 12 = ?","36",["15","24","39"],"3 × 10 = 30 and 3 × 2 = 6, so 30 + 6 = 36"],
+["64 ÷ 8 = ?","8",["7","9","56"],"8 × 8 = 64, so 64 ÷ 8 = 8"],
+["346 + 289 = ?","635",["625","545","735"],"346 + 289 = 635"],
+["600 − 275 = ?","325",["425","375","875"],"600 − 275 = 325"],
+["15 × 6 = ?","90",["21","80","75"],"10 × 6 = 60 and 5 × 6 = 30, so 60 + 30 = 90"],
+["5 × 7 = ?","35",["12","30","42"],"5 × 7 = 35"],
+["48 ÷ 6 = ?","8",["7","9","42"],"6 × 8 = 48, so 48 ÷ 6 = 8"],
+["8 × 25 = ?","200",["33","160","225"],"8 × 25 = 200"],
+["120 + 85 = ?","205",["195","215","35"],"120 + 85 = 205"],
+["1000 − 450 = ?","550",["650","450","560"],"1000 − 450 = 550"],
+["4 × 12 = ?","48",["16","36","44"],"4 × 12 = 48"],
+["9 × 9 = ?","81",["72","18","90"],"9 × 9 = 81"],
+["56 ÷ 7 = ?","8",["7","9","49"],"7 × 8 = 56, so 56 ÷ 7 = 8"],
+["300 + 475 = ?","775",["675","765","875"],"300 + 475 = 775"],
+["What is half of 18?","9",["36","8","6"],"Half of 18 is 18 ÷ 2 = 9"],
+["What is one quarter (1/4) of 20?","5",["4","10","15"],"20 ÷ 4 = 5"],
+["Which fraction is the greatest?","3/4",["1/4","2/4","1/2"],"All the parts are the same size, and 3 out of 4 is the most"],
+["What is the value of the digit 7 in 372?","70",["7","700","17"],"7 is in the tens place, so it is worth 70"],
+["What is the value of the digit 5 in 5,284?","5,000",["500","50","5"],"5 is in the thousands place, so it is worth 5,000"],
+["Round 76 to the nearest ten.","80",["70","76","90"],"6 is 5 or more, so round up to 80"],
+["Round 349 to the nearest hundred.","300",["400","350","340"],"4 tens is less than 5, so round down to 300"],
+["Which number is the greatest?","4,502",["4,052","4,205","4,025"],"All have 4 thousands. 4,502 has 5 hundreds, the most"],
+["7 × ? = 42","6",["5","7","35"],"7 × 6 = 42"],
+["? ÷ 5 = 6","30",["11","25","35"],"5 × 6 = 30, so 30 ÷ 5 = 6"],
+["18 + ? = 31","13",["12","14","49"],"31 − 18 = 13"],
+["? − 24 = 50","74",["26","64","84"],"50 + 24 = 74"],
+["Which of these is an even number?","148",["147","149","151"],"Even numbers end in 0, 2, 4, 6 or 8"],
+["What comes next? 5, 10, 15, 20, ?","25",["30","24","35"],"The pattern adds 5 each time, so 20 + 5 = 25"],
+["What comes next? 100, 90, 80, 70, ?","60",["50","65","75"],"The pattern subtracts 10 each time, so 70 − 10 = 60"],
+["90 minutes = ?","1 hour 30 minutes",["1 hour 10 minutes","9 hours","2 hours"],"60 minutes = 1 hour, so 90 minutes = 1 hour 30 minutes"],
+["How many centimetres (cm) are in 3 metres (m)?","300 cm",["30 cm","3000 cm","33 cm"],"1 m = 100 cm, so 3 m = 300 cm"],
+["How many millilitres (ml) are in 2 litres?","2000 ml",["200 ml","20 ml","2200 ml"],"1 litre = 1000 ml, so 2 litres = 2000 ml"],
+["How many minutes are in 2 hours?","120",["100","200","60"],"60 + 60 = 120"],
+["What is the perimeter of a rectangle that is 9 m long and 5 m wide?","28 m",["14 m","45 m","24 m"],"9 + 5 + 9 + 5 = 28"],
+["What is the perimeter of a square with sides of 6 cm?","24 cm",["12 cm","36 cm","18 cm"],"4 × 6 = 24"],
+["3 × 5 + 4 = ?","19",["27","35","12"],"3 × 5 = 15, then 15 + 4 = 19"],
+["2 × 8 − 6 = ?","10",["4","20","12"],"2 × 8 = 16, then 16 − 6 = 10"],
+["0 × 9 = ?","0",["9","1","90"],"Anything times 0 is 0"],
+["2 × 3 × 4 = ?","24",["9","14","12"],"2 × 3 = 6, then 6 × 4 = 24"],
+["96 ÷ 4 = ?","24",["22","26","23"],"4 × 24 = 96, so 96 ÷ 4 = 24"]
+];
+const c=document.getElementById('c');
+let list,i,score,answers,locked;
+const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+let best=null;try{best=localStorage.getItem('mq_best')}catch(e){}
 function home(){
- app.innerHTML=`<section class="card"><h1>🔢 <span class="t">Tens</span> &amp; <span class="o">Ones</span> Quiz</h1>${owl('Hi, I am Ollie the Owl! Let us learn about place value together!')}<p class="lead">50 fun questions for Grade 1</p><div class="legend"><div>${blk(1,0)}<p>1 ten = 10</p></div><div>${blk(0,1)}<p>1 one = 1</p></div></div><div class="center"><button class="go" id="go">🚀 Let us start!</button></div>${best?`<p class="best">⭐ Your best score: ${best} out of 50</p>`:''}</section>`;
- $('#go').onclick=()=>{try{ac=ac||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}start(S,true)};
+ c.innerHTML=`<div class="big">🧮</div><h1 class="center">Maths Quiz</h1>
+ <p class="sub center">50 questions · pick the right answer · see the working after each one</p>
+ ${best?`<p class="center">🏆 Best score: <b>${best}/50</b></p>`:''}
+ <div class="center"><button class="btn" onclick="start()">Start Quiz</button></div>`;
 }
-function start(l,main){st={l,i:0,sc:0,miss:[],main};ask()}
-function ask(){
- const q=st.l[st.i],L=q.fx?q.o:sh(q.o);st.cur=L;
- const first=st.main&&st.i%10==0,pct=st.i/st.l.length*100;
- app.innerHTML=`<div class="top"><span>Question ${st.i+1} of ${st.l.length}</span><span>⭐ <span id="sc">${st.sc}</span> <button class="mute" id="mute" aria-label="Turn sound on or off">${muted?'🔇':'🔊'}</button></span></div><div class="track"><div class="fill" style="width:${pct}%"></div><span class="rk" style="left:calc(${pct}% - 6px)" aria-hidden="true">🚀</span></div><section class="card">${owl(first?INTRO[q.sec]:rnd(['You can do it!','Take your time!','Think about it!','Look carefully!']))}<p class="sec">${SEC[q.sec]}</p><h2>${q.text}</h2>${q.vis}<button class="say" id="say">🔊 Read to me</button><div class="opts">${L.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="fb" aria-live="polite"></div></section>`;
- $('#mute').onclick=e=>{muted=!muted;e.target.textContent=muted?'🔇':'🔊'};
- $('#say').onclick=()=>{try{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(q.text.replace('___','blank').replace(/\+/g,' plus ').replace('= ?','equals what?')))}catch(e){}};
- document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+function start(){
+ list=shuffle(Q).map(q=>({q:q[0],a:q[1],o:shuffle([q[1],...q[2]]),e:q[3]}));
+ i=0;score=0;answers=[];show();
+}
+function show(){
+ const x=list[i];locked=false;
+ c.innerHTML=`<div class="top"><span>Question ${i+1} of 50</span><span>⭐ ${score}</span></div>
+ <div class="bar"><div style="width:${i/50*100}%"></div></div>
+ <div class="q">${x.q}</div>
+ ${x.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${o}</button>`).join('')}
+ <div class="fb" id="fb"></div>
+ <div class="center"><button class="btn" id="nx" style="display:none" onclick="next()">${i==49?'See Results':'Next →'}</button></div>`;
 }
 function pick(k){
- const q=st.l[st.i],ok=st.cur[k]===q.ans,last=st.i==st.l.length-1;
- document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(st.cur[j]===q.ans)b.classList.add('ok');else if(j==k)b.classList.add('bad');else b.classList.add('dim')});
- if(ok){st.sc++;$('#sc').textContent=st.sc;confetti(14);$('#face').classList.add('cheer')}else st.miss.push(q);
- snd(ok);
- $('#bub').textContent=ok?rnd(['Hooray! You got it!','Great job!','Super star!','Wow, you are so smart!','Yay! Well done!']):'Oops! That is okay. Let us learn from it!';
- $('#fb').innerHTML=`${ok?'':`<p class="msg no">The answer is ${q.ans}.</p><p class="hint">💡 ${HINT[q.sec]}</p>`}<div class="center"><button class="go" id="nx">${last?'🏆 See my score':'Next ➜'}</button></div>`;
- $('#nx').onclick=()=>{if(last)end();else{st.i++;ask()}};$('#nx').focus();
+ if(locked)return;locked=true;
+ const x=list[i],ok=x.o[k]===x.a;
+ if(ok)score++;
+ answers.push({q:x.q,a:x.a,ok});
+ document.querySelectorAll('.opt').forEach((b,n)=>{b.disabled=true;if(x.o[n]===x.a)b.classList.add('right');else if(n===k)b.classList.add('wrong')});
+ const f=document.getElementById('fb');f.style.display='block';
+ f.innerHTML=(ok?'🎉 <b>Correct!</b> ':'❌ <b>Not quite.</b> The answer is <b>'+x.a+'</b>. ')+'<br>'+x.e;
+ document.getElementById('nx').style.display='inline-block';
 }
-function end(){
- const n=st.l.length,sc=st.sc,r=sc/n;
- if(st.main&&sc>best){best=sc;try{localStorage.setItem('pv1best',sc)}catch(e){}}
- const msg=r>=.9?'You are a place value superstar!':r>=.7?'Great work!':r>=.5?'Good job! Keep practicing!':'Nice start! Try again!';
- const stars=Math.round(r*5);
- app.innerHTML=`<section class="card"><div class="trophy" aria-hidden="true">🏆</div><h1>${msg}</h1><p class="score">${sc} out of ${n}</p><p class="stars5" aria-hidden="true">${'⭐'.repeat(stars)}${'☆'.repeat(5-stars)}</p><div class="center" style="margin-top:14px"><button class="go" id="again">🔁 Play again</button>${st.miss.length?`<button class="go alt" id="mm">💪 Practice the ${st.miss.length} I missed</button>`:''}</div></section>`;
- if(r>=.5){confetti(40);snd(true)}
- $('#again').onclick=()=>start(S,true);
- if(st.miss.length)$('#mm').onclick=()=>start(st.miss.slice(),false);
+function next(){i++;i<50?show():finish()}
+function finish(){
+ try{if(best===null||score>+best){best=score;localStorage.setItem('mq_best',score)}}catch(e){}
+ const m=score>=45?'🏆 Maths superstar!':score>=35?'🌟 Great job!':score>=25?'👍 Good effort, keep practising!':'💪 Keep going, you will get better!';
+ const wrong=answers.filter(a=>!a.ok);
+ c.innerHTML=`<div class="big">🎊</div><div class="score">${score} / 50</div><p class="center"><b>${m}</b></p>
+ ${wrong.length?`<p><b>Questions to review (${wrong.length}):</b></p><div class="rev">${wrong.map(w=>`<div>${w.q}<br><b>Answer: ${w.a}</b></div>`).join('')}</div>`:'<p class="center">Perfect score, nothing to review!</p>'}
+ <div class="center" style="margin-top:16px"><button class="btn alt" onclick="start()">Play Again</button></div>`;
 }
 home();
 </script>
