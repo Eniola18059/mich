@@ -2,133 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Grade 3 Maths Word Problems Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 8 Synonyms & Antonyms Quiz</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:linear-gradient(160deg,#e0f2fe,#fef9c3);min-height:100vh;color:#1e293b;display:flex;justify-content:center;padding:16px}
-.app{width:100%;max-width:680px}
-.card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
-h1{margin:0 0 6px;font-size:1.7rem;color:#0369a1}
-.sub{color:#475569;margin-bottom:18px}
-.btn{background:#0ea5e9;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-size:1.05rem;font-weight:600;cursor:pointer}
-.btn:hover{background:#0284c7}
-.btn.alt{background:#f59e0b}.btn.alt:hover{background:#d97706}
-.top{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px;color:#0369a1}
-.bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden;margin-bottom:18px}
-.bar>div{height:100%;background:#22c55e;transition:width .3s}
-.q{font-size:1.25rem;line-height:1.5;margin-bottom:16px;font-weight:600}
-.opt{display:block;width:100%;text-align:left;background:#f1f5f9;border:2px solid #e2e8f0;border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:1.1rem;cursor:pointer}
-.opt:hover:not(:disabled){border-color:#0ea5e9;background:#e0f2fe}
-.opt.right{background:#dcfce7;border-color:#22c55e}
-.opt.wrong{background:#fee2e2;border-color:#ef4444}
-.fb{margin:12px 0;padding:12px 14px;border-radius:12px;background:#fef9c3;display:none}
-.big{font-size:3rem;text-align:center}
-.score{font-size:2.2rem;text-align:center;font-weight:700;color:#0369a1}
-.rev{max-height:300px;overflow:auto;margin-top:14px;font-size:.95rem}
-.rev div{padding:8px 0;border-bottom:1px solid #e2e8f0}
-.center{text-align:center}
+  *{box-sizing:border-box}
+  body{font-family:Arial,Helvetica,sans-serif;background:#eef2ff;margin:0;padding:16px;color:#1e1e2f}
+  .wrap{max-width:640px;margin:auto}
+  h1{text-align:center;color:#3b3bb3;margin:8px 0 2px;font-size:26px}
+  .sub{text-align:center;color:#555;margin-bottom:14px;font-size:15px}
+  .bar{height:12px;background:#d9defa;border-radius:8px;overflow:hidden;margin:10px 0}
+  .bar div{height:100%;background:#4c6ef5;width:0;transition:width .3s}
+  .meta{display:flex;justify-content:space-between;font-size:15px;color:#444}
+  .card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 3px 10px rgba(0,0,0,.1);margin-top:12px}
+  .tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:bold;color:#fff}
+  .syn{background:#2f9e44}.ant{background:#e8590c}
+  .inst{margin:12px 0 4px;font-size:16px;color:#444}
+  .word{font-size:34px;font-weight:bold;color:#3b3bb3;margin:4px 0 6px}
+  .dict{font-size:14px}
+  .dict a{color:#1c7ed6}
+  .gate{background:#fff9db;border:2px dashed #f59f00;border-radius:12px;padding:12px;margin:14px 0;font-size:15px}
+  .gate label{cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+  .gate input{width:22px;height:22px;margin-top:1px}
+  .opt{display:block;width:100%;text-align:left;font-size:19px;padding:13px 16px;margin:9px 0;border:2px solid #cfd6fa;border-radius:12px;background:#f8f9ff;cursor:pointer}
+  .opt:hover:not(:disabled){background:#e7ebff}
+  .opt:disabled{opacity:.55;cursor:not-allowed}
+  .opt.right{background:#d3f9d8;border-color:#2f9e44;opacity:1;font-weight:bold}
+  .opt.wrong{background:#ffe3e3;border-color:#e03131;opacity:1}
+  .fb{margin-top:12px;padding:12px;border-radius:12px;font-size:16px}
+  .fb.ok{background:#d3f9d8}.fb.no{background:#ffe3e3}
+  button.main{margin-top:14px;font-size:18px;padding:12px 24px;border:none;border-radius:12px;background:#4c6ef5;color:#fff;cursor:pointer}
+  .big{font-size:48px;text-align:center;font-weight:bold;color:#3b3bb3}
+  .miss{border-top:1px solid #ddd;padding:10px 0;font-size:15px}
+  .hide{display:none}
 </style>
 </head>
 <body>
-<div class="app"><div class="card" id="c"></div></div>
+<div class="wrap">
+  <h1>📘 Synonyms & Antonyms Quiz</h1>
+  <div class="sub">Grade 8 • 50 questions • Use your dictionary!</div>
+
+  <div id="start" class="card">
+    <h3>Before you start</h3>
+    <p><b>Synonym</b> = a word with the <b>same</b> meaning.<br><b>Antonym</b> = a word with the <b>opposite</b> meaning.</p>
+    <p><b>Dictionary rule:</b> For every question, look up the main word <u>and all four options</u> in your dictionary. You must tick the box before the options unlock.</p>
+    <p>Questions 1–25 are synonyms. Questions 26–50 are antonyms.</p>
+    <button class="main" onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+  <div id="quiz" class="hide">
+    <div class="meta"><span id="qn"></span><span id="sc"></span></div>
+    <div class="bar"><div id="pb"></div></div>
+    <div class="card">
+      <span id="tag" class="tag"></span>
+      <div class="inst" id="inst"></div>
+      <div class="word" id="word"></div>
+      <div class="dict" id="dict"></div>
+      <div class="gate"><label><input type="checkbox" id="chk" onchange="gate()"><span>📖 I have checked the dictionary for the word <b>and all four options</b>.</span></label></div>
+      <div id="opts"></div>
+      <div id="fb"></div>
+      <button class="main hide" id="next" onclick="next()">Next ➜</button>
+    </div>
+  </div>
+
+  <div id="end" class="card hide"></div>
+</div>
+
 <script>
-// [question, correct answer, [3 wrong answers], explanation]
-const Q=[
-["Ade has 245 stickers. Bola gives him 128 more. How many stickers does Ade have now?","373",["363","383","117"],"245 + 128 = 373"],
-["A school library had 512 books. 187 were borrowed. How many books are left?","325",["335","699","425"],"512 − 187 = 325"],
-["There are 6 boxes with 8 pencils in each box. How many pencils are there altogether?","48",["14","42","56"],"6 × 8 = 48"],
-["36 cookies are shared equally among 4 children. How many cookies does each child get?","9",["8","32","12"],"36 ÷ 4 = 9"],
-["A farmer plants 7 rows of trees with 9 trees in each row. How many trees are there?","63",["54","56","16"],"7 × 9 = 63"],
-["Tom has ₦150. He buys a pen for ₦45. How much money does he have left?","₦105",["₦195","₦115","₦95"],"150 − 45 = 105"],
-["There are 28 pupils in a class. 15 are girls. How many are boys?","13",["43","12","14"],"28 − 15 = 13"],
-["72 apples are packed 8 to a bag. How many bags are needed?","9",["8","64","10"],"72 ÷ 8 = 9"],
-["A bus carries 45 passengers in the morning and 38 in the afternoon. How many passengers is that in all?","83",["73","93","7"],"45 + 38 = 83"],
-["One ticket costs ₦20. How much do 5 tickets cost?","₦100",["₦25","₦80","₦120"],"5 × 20 = 100"],
-["3 friends each have 12 marbles. How many marbles do they have altogether?","36",["15","24","39"],"3 × 12 = 36"],
-["There are 64 chairs arranged in 8 equal rows. How many chairs are in each row?","8",["7","9","56"],"64 ÷ 8 = 8"],
-["A film starts at 3:00 and lasts 2 hours. What time does it end?","5:00",["1:00","4:00","6:00"],"3:00 + 2 hours = 5:00"],
-["A rope is 100 cm long. Mia cuts off 35 cm. How long is the rope now?","65 cm",["75 cm","135 cm","55 cm"],"100 − 35 = 65"],
-["Mum buys 4 packs of balloons with 6 balloons in each pack. 5 balloons burst. How many balloons are left?","19",["29","15","20"],"4 × 6 = 24, then 24 − 5 = 19"],
-["Sara reads 15 pages each day for 6 days. How many pages does she read?","90",["21","80","75"],"15 × 6 = 90"],
-["Ngozi has 18 sweets. She gives away half of them. How many sweets does she give away?","9",["36","8","6"],"Half of 18 is 18 ÷ 2 = 9"],
-["A pizza is cut into 8 equal slices. Kemi eats 3 slices. What fraction of the pizza did she eat?","3/8",["3/5","5/8","8/3"],"3 slices out of 8 equal slices = 3/8"],
-["A baker makes 120 rolls in the morning and 85 in the afternoon. He sells 150 rolls. How many are left?","55",["355","65","45"],"120 + 85 = 205, then 205 − 150 = 55"],
-["A water bottle holds 2 litres. How many litres do 5 bottles hold?","10 litres",["7 litres","12 litres","8 litres"],"5 × 2 = 10"],
-["One box has a mass of 350 g and another has a mass of 275 g. What is their total mass?","625 g",["525 g","635 g","75 g"],"350 + 275 = 625"],
-["A rectangular garden is 9 m long and 5 m wide. What is its perimeter?","28 m",["14 m","45 m","24 m"],"9 + 5 + 9 + 5 = 28"],
-["A square has sides of 6 cm. What is its perimeter?","24 cm",["12 cm","36 cm","18 cm"],"4 × 6 = 24"],
-["5 girls each have 7 beads. How many beads do they have altogether?","35",["12","30","42"],"5 × 7 = 35"],
-["48 stickers are shared equally among 6 children. How many stickers does each child get?","8",["7","9","42"],"48 ÷ 6 = 8"],
-["Mum buys 3 books that cost ₦200 each. How much does she spend?","₦600",["₦203","₦500","₦300"],"3 × 200 = 600"],
-["A shop has 346 red balloons and 289 blue balloons. How many balloons are there altogether?","635",["625","545","735"],"346 + 289 = 635"],
-["A train has 600 seats. 275 seats are taken. How many seats are empty?","325",["425","375","875"],"600 − 275 = 325"],
-["John is 8 years old. His father is 4 times as old as John. How old is his father?","32",["12","24","36"],"4 × 8 = 32"],
-["A jug holds 1000 ml of juice. Each cup takes 250 ml. How many cups can be filled?","4",["3","5","6"],"1000 ÷ 250 = 4"],
-["A lesson starts at 9:15 and lasts 45 minutes. What time does it end?","10:00",["9:45","10:15","10:30"],"9:15 + 45 minutes = 10:00"],
-["Lisa sleeps 9 hours every night for 7 nights. How many hours does she sleep in all?","63",["56","16","54"],"9 × 7 = 63"],
-["A notebook costs ₦120 and a pencil costs ₦30. How much do 2 notebooks and 1 pencil cost?","₦270",["₦150","₦240","₦300"],"2 × 120 = 240, then 240 + 30 = 270"],
-["4 children each get 3 sweets and there are 2 sweets left over. How many sweets were there at the start?","14",["12","10","18"],"4 × 3 = 12, then 12 + 2 = 14"],
-["A garden has 56 flowers. 17 are red, 20 are yellow and the rest are white. How many are white?","19",["37","39","93"],"17 + 20 = 37, then 56 − 37 = 19"],
-["A box holds 10 pencils. How many boxes are needed to pack 95 pencils?","10 boxes",["9 boxes","95 boxes","11 boxes"],"95 ÷ 10 = 9 remainder 5, so the 5 extra pencils need one more box: 10 boxes"],
-["2 pizzas each have 8 slices. 5 children each eat 3 slices. How many slices are left?","1",["3","8","11"],"2 × 8 = 16 slices, 5 × 3 = 15 eaten, 16 − 15 = 1"],
-["Mr Obi plants 4 rows of beans with 12 seeds in each row. How many seeds does he plant?","48",["16","36","44"],"4 × 12 = 48"],
-["A tank holds 500 litres. 175 litres are used in the morning and 125 litres in the evening. How many litres are left?","200 litres",["325 litres","375 litres","300 litres"],"175 + 125 = 300, then 500 − 300 = 200"],
-["A snail climbs 3 cm every minute. How far does it climb in 9 minutes?","27 cm",["12 cm","24 cm","30 cm"],"3 × 9 = 27"],
-["Kofi has ₦500. He buys 2 toys that cost ₦150 each. How much money does he have left?","₦200",["₦350","₦250","₦300"],"2 × 150 = 300, then 500 − 300 = 200"],
-["Ben has twice as many marbles as Dan. Dan has 14 marbles. How many marbles does Ben have?","28",["16","7","24"],"2 × 14 = 28"],
-["30 pencils are shared equally among 5 pupils. Then each pupil loses 2 pencils. How many pencils does each pupil have now?","4",["6","8","3"],"30 ÷ 5 = 6, then 6 − 2 = 4"],
-["A film is 90 minutes long. How long is that in hours and minutes?","1 hour 30 minutes",["1 hour 10 minutes","9 hours","2 hours"],"60 minutes = 1 hour, so 90 minutes = 1 hour 30 minutes"],
-["A ribbon is 3 m long. It is cut into pieces that are each 50 cm long. How many pieces are there?","6",["5","3","8"],"3 m = 300 cm, and 300 ÷ 50 = 6"],
-["A basket has 20 mangoes. One quarter of them are rotten. How many mangoes are rotten?","5",["4","10","15"],"20 ÷ 4 = 5"],
-["A library has 8 shelves with 25 books on each shelf. How many books are there?","200",["33","160","225"],"8 × 25 = 200"],
-["A concert starts at 6:30 p.m. and ends at 9:00 p.m. How long does it last?","2 hours 30 minutes",["3 hours 30 minutes","2 hours","3 hours"],"From 6:30 to 9:00 is 2 hours 30 minutes"],
-["Amina saves ₦50 every week for 8 weeks. How much does she save?","₦400",["₦58","₦350","₦450"],"50 × 8 = 400"],
-["There are 150 pupils in 5 equal classes. Two classes go on a trip. How many pupils go on the trip?","60",["30","90","120"],"150 ÷ 5 = 30 pupils per class, then 2 × 30 = 60"]
+// [type, word, correct answer, wrong1, wrong2, wrong3, meaning note]
+const D=[
+["S","benevolent","kind","hostile","careless","anxious","benevolent = kind and well-meaning"],
+["S","meticulous","careful","lazy","noisy","hasty","meticulous = very careful about small details"],
+["S","reluctant","unwilling","eager","certain","calm","reluctant = unwilling, not keen to do something"],
+["S","abundant","plentiful","scarce","ordinary","fragile","abundant = existing in large quantities"],
+["S","candid","honest","secretive","polite","rude","candid = truthful and straightforward"],
+["S","diligent","hardworking","forgetful","clever","gentle","diligent = careful and hardworking"],
+["S","frugal","thrifty","generous","wasteful","wealthy","frugal = careful with money, not wasteful"],
+["S","obstinate","stubborn","flexible","timid","cheerful","obstinate = stubbornly refusing to change"],
+["S","conceal","hide","reveal","protect","collect","conceal = to hide something from view"],
+["S","fragile","delicate","sturdy","heavy","ancient","fragile = easily broken or damaged"],
+["S","tranquil","peaceful","stormy","crowded","bright","tranquil = calm and quiet"],
+["S","eloquent","fluent","awkward","hesitant","blunt","eloquent = fluent and persuasive in speaking or writing"],
+["S","hinder","obstruct","assist","encourage","allow","hinder = to get in the way of, make difficult"],
+["S","vital","essential","optional","minor","harmful","vital = absolutely necessary"],
+["S","scarce","rare","plentiful","cheap","heavy","scarce = not enough, hard to find"],
+["S","dwell","reside","wander","argue","leave","dwell = to live in a place"],
+["S","rigid","inflexible","soft","loose","elastic","rigid = stiff, not able to bend or change"],
+["S","ponder","contemplate","ignore","forget","announce","ponder = to think about something carefully"],
+["S","exhausted","drained","energetic","refreshed","eager","exhausted = extremely tired"],
+["S","peculiar","strange","familiar","common","ordinary","peculiar = odd or unusual"],
+["S","prosper","thrive","decline","struggle","retreat","prosper = to succeed and do very well"],
+["S","commence","begin","finish","delay","cancel","commence = to start"],
+["S","vast","immense","tiny","narrow","shallow","vast = extremely large"],
+["S","ambiguous","unclear","obvious","certain","precise","ambiguous = having more than one possible meaning; unclear"],
+["S","adversary","opponent","ally","friend","partner","adversary = an enemy or opponent"],
+["A","generous","stingy","kind","rich","honest","generous ↔ stingy: giving freely vs. unwilling to give"],
+["A","ancient","modern","old","historic","fragile","ancient ↔ modern: very old vs. of the present time"],
+["A","victory","defeat","triumph","success","battle","victory ↔ defeat: winning vs. losing"],
+["A","expand","shrink","grow","stretch","spread","expand ↔ shrink: to get bigger vs. to get smaller"],
+["A","transparent","opaque","clear","thin","glassy","transparent ↔ opaque: see-through vs. not see-through"],
+["A","optimistic","pessimistic","hopeful","cheerful","confident","optimistic ↔ pessimistic: expecting good vs. expecting bad"],
+["A","permanent","temporary","lasting","fixed","solid","permanent ↔ temporary: lasting forever vs. lasting a short time"],
+["A","arrogant","humble","proud","bold","confident","arrogant ↔ humble: too proud vs. modest"],
+["A","accept","reject","receive","agree","allow","accept ↔ reject: to take or agree vs. to refuse"],
+["A","brave","cowardly","fearless","strong","daring","brave ↔ cowardly: showing courage vs. lacking courage"],
+["A","increase","decrease","rise","expand","gather","increase ↔ decrease: to go up vs. to go down"],
+["A","complex","simple","difficult","detailed","mixed","complex ↔ simple: complicated vs. easy to understand"],
+["A","ascend","descend","climb","rise","lift","ascend ↔ descend: to go up vs. to go down"],
+["A","rare","common","precious","unusual","valuable","rare ↔ common: not often found vs. found everywhere"],
+["A","mature","immature","grown","wise","ripe","mature ↔ immature: fully developed vs. not fully developed"],
+["A","cautious","reckless","careful","wary","nervous","cautious ↔ reckless: careful vs. careless about danger"],
+["A","enemy","ally","foe","rival","stranger","enemy ↔ ally: an opponent vs. a supporter or partner"],
+["A","vague","precise","unclear","hazy","general","vague ↔ precise: unclear vs. exact and clear"],
+["A","lenient","strict","gentle","patient","kind","lenient ↔ strict: not harsh vs. firm about rules"],
+["A","fertile","barren","rich","productive","green","fertile ↔ barren: able to grow crops vs. unable to produce anything"],
+["A","praise","criticise","admire","applaud","thank","praise ↔ criticise: to say good things vs. to point out faults"],
+["A","voluntary","compulsory","willing","free","optional","voluntary ↔ compulsory: by choice vs. required by rule"],
+["A","shallow","deep","narrow","wide","low","shallow ↔ deep: not far down vs. far down"],
+["A","inferior","superior","lesser","poor","weak","inferior ↔ superior: lower in quality vs. higher in quality"],
+["A","guilty","innocent","ashamed","sorry","wrong","guilty ↔ innocent: having done wrong vs. not having done wrong"]
 ];
-const c=document.getElementById('c');
-let list,i,score,answers,locked;
-const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
-let best=null;try{best=localStorage.getItem('g3wp_best')}catch(e){}
-function home(){
- c.innerHTML=`<div class="big">🧮</div><h1 class="center">Maths Word Problems</h1>
- <p class="sub center">50 questions · pick the right answer · see the working after each one</p>
- ${best?`<p class="center">🏆 Best score: <b>${best}/50</b></p>`:''}
- <div class="center"><button class="btn" onclick="start()">Start Quiz</button></div>`;
-}
-function start(){
- list=shuffle(Q).map(q=>({q:q[0],a:q[1],o:shuffle([q[1],...q[2]]),e:q[3]}));
- i=0;score=0;answers=[];show();
+let Q,i,score,missed,answered;
+const $=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+function startQuiz(){
+  Q=D.map(d=>({t:d[0],w:d[1],c:d[2],o:shuffle([d[2],d[3],d[4],d[5]]),n:d[6]}));
+  i=0;score=0;missed=[];
+  $('start').classList.add('hide');$('end').classList.add('hide');$('quiz').classList.remove('hide');
+  show();
 }
 function show(){
- const x=list[i];locked=false;
- c.innerHTML=`<div class="top"><span>Question ${i+1} of 50</span><span>⭐ ${score}</span></div>
- <div class="bar"><div style="width:${i/50*100}%"></div></div>
- <div class="q">${x.q}</div>
- ${x.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${o}</button>`).join('')}
- <div class="fb" id="fb"></div>
- <div class="center"><button class="btn" id="nx" style="display:none" onclick="next()">${i==49?'See Results':'Next →'}</button></div>`;
+  const q=Q[i];answered=false;
+  $('qn').textContent='Question '+(i+1)+' of '+Q.length;
+  $('sc').textContent='Score: '+score;
+  $('pb').style.width=(i/Q.length*100)+'%';
+  const syn=q.t==='S';
+  $('tag').textContent=syn?'SYNONYM':'ANTONYM';
+  $('tag').className='tag '+(syn?'syn':'ant');
+  $('inst').textContent=syn?'Choose the word that is closest in meaning to:':'Choose the word that is opposite in meaning to:';
+  $('word').textContent=q.w;
+  $('dict').innerHTML='<a target="_blank" rel="noopener" href="https://www.merriam-webster.com/dictionary/'+q.w+'">Open online dictionary for "'+q.w+'"</a> (or use your own dictionary)';
+  $('chk').checked=false;
+  $('fb').innerHTML='';$('next').classList.add('hide');
+  $('opts').innerHTML=q.o.map((o,k)=>'<button class="opt" disabled onclick="pick('+k+')">'+String.fromCharCode(65+k)+'. '+o+'</button>').join('');
+}
+function gate(){
+  if(answered)return;
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=!$('chk').checked);
 }
 function pick(k){
- if(locked)return;locked=true;
- const x=list[i],ok=x.o[k]===x.a;
- if(ok)score++;
- answers.push({q:x.q,a:x.a,ok});
- document.querySelectorAll('.opt').forEach((b,n)=>{b.disabled=true;if(x.o[n]===x.a)b.classList.add('right');else if(n===k)b.classList.add('wrong')});
- const f=document.getElementById('fb');f.style.display='block';
- f.innerHTML=(ok?'🎉 <b>Correct!</b> ':'❌ <b>Not quite.</b> The answer is <b>'+x.a+'</b>. ')+'<br>'+x.e;
- document.getElementById('nx').style.display='inline-block';
+  if(answered)return;answered=true;
+  const q=Q[i],btns=document.querySelectorAll('.opt');
+  btns.forEach((b,j)=>{b.disabled=true;if(q.o[j]===q.c)b.classList.add('right')});
+  const ok=q.o[k]===q.c;
+  if(ok){score++}else{btns[k].classList.add('wrong');missed.push(q)}
+  $('fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'">'+(ok?'✅ Correct! ':'❌ Not quite. The answer is <b>'+q.c+'</b>. ')+'<br>'+q.n+'</div>';
+  $('sc').textContent='Score: '+score;
+  $('next').textContent=i===Q.length-1?'See my results ➜':'Next ➜';
+  $('next').classList.remove('hide');
 }
-function next(){i++;i<50?show():finish()}
+function next(){
+  i++;
+  if(i>=Q.length){finish()}else{show();window.scrollTo(0,0)}
+}
 function finish(){
- try{if(best===null||score>+best){best=score;localStorage.setItem('g3wp_best',score)}}catch(e){}
- const m=score>=45?'🏆 Maths superstar!':score>=35?'🌟 Great job!':score>=25?'👍 Good effort, keep practising!':'💪 Keep going, you will get better!';
- const wrong=answers.filter(a=>!a.ok);
- c.innerHTML=`<div class="big">🎊</div><div class="score">${score} / 50</div><p class="center"><b>${m}</b></p>
- ${wrong.length?`<p><b>Questions to review (${wrong.length}):</b></p><div class="rev">${wrong.map(w=>`<div>${w.q}<br><b>Answer: ${w.a}</b></div>`).join('')}</div>`:'<p class="center">Perfect score, nothing to review!</p>'}
- <div class="center" style="margin-top:16px"><button class="btn alt" onclick="start()">Play Again</button></div>`;
+  $('quiz').classList.add('hide');$('end').classList.remove('hide');
+  const p=Math.round(score/Q.length*100);
+  const msg=p>=90?'Outstanding! 🌟':p>=70?'Great job! 👏':p>=50?'Good effort. Keep practising! 💪':'Keep going. Review the words below and try again! 📚';
+  $('end').innerHTML='<div class="big">'+score+' / '+Q.length+'</div><p style="text-align:center;font-size:20px">'+p+'% — '+msg+'</p>'+
+    (missed.length?'<h3>Words to review</h3>'+missed.map(q=>'<div class="miss"><b>'+q.w+'</b> ('+(q.t==='S'?'synonym':'antonym')+') → <b>'+q.c+'</b><br><span style="color:#666">'+q.n+'</span></div>').join(''):'<p style="text-align:center">Perfect score. No mistakes!</p>')+
+    '<div style="text-align:center"><button class="main" onclick="startQuiz()">Try again</button></div>';
+  window.scrollTo(0,0);
 }
-home();
 </script>
 </body>
 </html>
