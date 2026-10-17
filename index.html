@@ -1,134 +1,210 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Grade 3 Maths Word Problems Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negatives Quiz</title>
 <style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
 *{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:linear-gradient(160deg,#e0f2fe,#fef9c3);min-height:100vh;color:#1e293b;display:flex;justify-content:center;padding:16px}
-.app{width:100%;max-width:680px}
-.card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
-h1{margin:0 0 6px;font-size:1.7rem;color:#0369a1}
-.sub{color:#475569;margin-bottom:18px}
-.btn{background:#0ea5e9;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-size:1.05rem;font-weight:600;cursor:pointer}
-.btn:hover{background:#0284c7}
-.btn.alt{background:#f59e0b}.btn.alt:hover{background:#d97706}
-.top{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px;color:#0369a1}
-.bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden;margin-bottom:18px}
-.bar>div{height:100%;background:#22c55e;transition:width .3s}
-.q{font-size:1.25rem;line-height:1.5;margin-bottom:16px;font-weight:600}
-.opt{display:block;width:100%;text-align:left;background:#f1f5f9;border:2px solid #e2e8f0;border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:1.1rem;cursor:pointer}
-.opt:hover:not(:disabled){border-color:#0ea5e9;background:#e0f2fe}
-.opt.right{background:#dcfce7;border-color:#22c55e}
-.opt.wrong{background:#fee2e2;border-color:#ef4444}
-.fb{margin:12px 0;padding:12px 14px;border-radius:12px;background:#fef9c3;display:none}
-.big{font-size:3rem;text-align:center}
-.score{font-size:2.2rem;text-align:center;font-weight:700;color:#0369a1}
-.rev{max-height:300px;overflow:auto;margin-top:14px;font-size:.95rem}
-.rev div{padding:8px 0;border-bottom:1px solid #e2e8f0}
-.center{text-align:center}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px}
+.wrap{width:100%;max-width:640px}
+.card{background:var(--card);border-radius:18px;box-shadow:0 6px 24px rgba(30,60,110,.09);padding:28px}
+h1{margin:0 0 6px;font-size:1.7rem}
+.sub{color:var(--muted);margin:0 0 20px}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:13px 22px;font-size:1rem;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt-row{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.bar>div{height:100%;background:var(--brand);width:0;transition:width .25s}
+.sec{display:inline-block;background:#eaf1ff;color:var(--brand-d);font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:12px}
+.q{font-size:1.5rem;font-weight:700;margin:4px 0 18px;line-height:1.35}
+.q.small{font-size:1.2rem}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:center;color:var(--ink)}
+.ans:hover:not(:disabled){border-color:var(--brand)}
+.ans.right{background:var(--okbg);border-color:var(--ok)}
+.ans.wrong{background:var(--badbg);border-color:var(--bad)}
+.ans:disabled{cursor:default}
+.fb{margin-top:18px;padding:14px;border-radius:12px;display:none;line-height:1.5}
+.fb.ok{display:block;background:var(--okbg)}
+.fb.no{display:block;background:var(--badbg)}
+.nav{margin-top:18px;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(3,56px);gap:4px;margin:0 0 18px}
+.grid div{height:50px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border-radius:6px}
+.grid .qm{background:#fff4c9;border-color:#d4a300}
+.grid .blank{background:#f0f3f8;border-color:var(--line);color:var(--muted)}
+.score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
+.review{margin-top:18px;max-height:340px;overflow:auto;border-top:1px solid var(--line)}
+.review div{padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.review b{color:var(--bad)}
+.hidden{display:none}
+@media(max-width:480px){.answers{grid-template-columns:1fr}.q{font-size:1.3rem}.card{padding:20px}}
 </style>
 </head>
 <body>
-<div class="app"><div class="card" id="c"></div></div>
+<div class="wrap">
+  <div class="card" id="start">
+    <h1>Negatives Quiz</h1>
+    <p class="sub">Adding and subtracting negative numbers. 100 questions, one at a time.</p>
+    <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
+    <button class="btn" id="go">Start quiz</button>
+  </div>
+
+  <div class="card hidden" id="play">
+    <div class="top"><span id="count"></span><span id="scoreLive"></span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <span class="sec" id="sec"></span>
+    <div id="grid"></div>
+    <div class="q" id="qtext"></div>
+    <div class="answers" id="answers"></div>
+    <div class="fb" id="fb"></div>
+    <div class="nav"><button class="btn" id="next" disabled>Next</button></div>
+  </div>
+
+  <div class="card hidden" id="end">
+    <h1>Quiz complete</h1>
+    <div class="score" id="final"></div>
+    <p class="sub" id="msg"></p>
+    <button class="btn" id="again">Try again</button>
+    <div class="review" id="review"></div>
+  </div>
+</div>
+
 <script>
-// [question, correct answer, [3 wrong answers], explanation]
-const Q=[
-["Ade has 245 stickers. Bola gives him 128 more. How many stickers does Ade have now?","373",["363","383","117"],"245 + 128 = 373"],
-["A school library had 512 books. 187 were borrowed. How many books are left?","325",["335","699","425"],"512 − 187 = 325"],
-["There are 6 boxes with 8 pencils in each box. How many pencils are there altogether?","48",["14","42","56"],"6 × 8 = 48"],
-["36 cookies are shared equally among 4 children. How many cookies does each child get?","9",["8","32","12"],"36 ÷ 4 = 9"],
-["A farmer plants 7 rows of trees with 9 trees in each row. How many trees are there?","63",["54","56","16"],"7 × 9 = 63"],
-["Tom has ₦150. He buys a pen for ₦45. How much money does he have left?","₦105",["₦195","₦115","₦95"],"150 − 45 = 105"],
-["There are 28 pupils in a class. 15 are girls. How many are boys?","13",["43","12","14"],"28 − 15 = 13"],
-["72 apples are packed 8 to a bag. How many bags are needed?","9",["8","64","10"],"72 ÷ 8 = 9"],
-["A bus carries 45 passengers in the morning and 38 in the afternoon. How many passengers is that in all?","83",["73","93","7"],"45 + 38 = 83"],
-["One ticket costs ₦20. How much do 5 tickets cost?","₦100",["₦25","₦80","₦120"],"5 × 20 = 100"],
-["3 friends each have 12 marbles. How many marbles do they have altogether?","36",["15","24","39"],"3 × 12 = 36"],
-["There are 64 chairs arranged in 8 equal rows. How many chairs are in each row?","8",["7","9","56"],"64 ÷ 8 = 8"],
-["A film starts at 3:00 and lasts 2 hours. What time does it end?","5:00",["1:00","4:00","6:00"],"3:00 + 2 hours = 5:00"],
-["A rope is 100 cm long. Mia cuts off 35 cm. How long is the rope now?","65 cm",["75 cm","135 cm","55 cm"],"100 − 35 = 65"],
-["Mum buys 4 packs of balloons with 6 balloons in each pack. 5 balloons burst. How many balloons are left?","19",["29","15","20"],"4 × 6 = 24, then 24 − 5 = 19"],
-["Sara reads 15 pages each day for 6 days. How many pages does she read?","90",["21","80","75"],"15 × 6 = 90"],
-["Ngozi has 18 sweets. She gives away half of them. How many sweets does she give away?","9",["36","8","6"],"Half of 18 is 18 ÷ 2 = 9"],
-["A pizza is cut into 8 equal slices. Kemi eats 3 slices. What fraction of the pizza did she eat?","3/8",["3/5","5/8","8/3"],"3 slices out of 8 equal slices = 3/8"],
-["A baker makes 120 rolls in the morning and 85 in the afternoon. He sells 150 rolls. How many are left?","55",["355","65","45"],"120 + 85 = 205, then 205 − 150 = 55"],
-["A water bottle holds 2 litres. How many litres do 5 bottles hold?","10 litres",["7 litres","12 litres","8 litres"],"5 × 2 = 10"],
-["One box has a mass of 350 g and another has a mass of 275 g. What is their total mass?","625 g",["525 g","635 g","75 g"],"350 + 275 = 625"],
-["A rectangular garden is 9 m long and 5 m wide. What is its perimeter?","28 m",["14 m","45 m","24 m"],"9 + 5 + 9 + 5 = 28"],
-["A square has sides of 6 cm. What is its perimeter?","24 cm",["12 cm","36 cm","18 cm"],"4 × 6 = 24"],
-["5 girls each have 7 beads. How many beads do they have altogether?","35",["12","30","42"],"5 × 7 = 35"],
-["48 stickers are shared equally among 6 children. How many stickers does each child get?","8",["7","9","42"],"48 ÷ 6 = 8"],
-["Mum buys 3 books that cost ₦200 each. How much does she spend?","₦600",["₦203","₦500","₦300"],"3 × 200 = 600"],
-["A shop has 346 red balloons and 289 blue balloons. How many balloons are there altogether?","635",["625","545","735"],"346 + 289 = 635"],
-["A train has 600 seats. 275 seats are taken. How many seats are empty?","325",["425","375","875"],"600 − 275 = 325"],
-["John is 8 years old. His father is 4 times as old as John. How old is his father?","32",["12","24","36"],"4 × 8 = 32"],
-["A jug holds 1000 ml of juice. Each cup takes 250 ml. How many cups can be filled?","4",["3","5","6"],"1000 ÷ 250 = 4"],
-["A lesson starts at 9:15 and lasts 45 minutes. What time does it end?","10:00",["9:45","10:15","10:30"],"9:15 + 45 minutes = 10:00"],
-["Lisa sleeps 9 hours every night for 7 nights. How many hours does she sleep in all?","63",["56","16","54"],"9 × 7 = 63"],
-["A notebook costs ₦120 and a pencil costs ₦30. How much do 2 notebooks and 1 pencil cost?","₦270",["₦150","₦240","₦300"],"2 × 120 = 240, then 240 + 30 = 270"],
-["4 children each get 3 sweets and there are 2 sweets left over. How many sweets were there at the start?","14",["12","10","18"],"4 × 3 = 12, then 12 + 2 = 14"],
-["A garden has 56 flowers. 17 are red, 20 are yellow and the rest are white. How many are white?","19",["37","39","93"],"17 + 20 = 37, then 56 − 37 = 19"],
-["A box holds 10 pencils. How many boxes are needed to pack 95 pencils?","10 boxes",["9 boxes","95 boxes","11 boxes"],"95 ÷ 10 = 9 remainder 5, so the 5 extra pencils need one more box: 10 boxes"],
-["2 pizzas each have 8 slices. 5 children each eat 3 slices. How many slices are left?","1",["3","8","11"],"2 × 8 = 16 slices, 5 × 3 = 15 eaten, 16 − 15 = 1"],
-["Mr Obi plants 4 rows of beans with 12 seeds in each row. How many seeds does he plant?","48",["16","36","44"],"4 × 12 = 48"],
-["A tank holds 500 litres. 175 litres are used in the morning and 125 litres in the evening. How many litres are left?","200 litres",["325 litres","375 litres","300 litres"],"175 + 125 = 300, then 500 − 300 = 200"],
-["A snail climbs 3 cm every minute. How far does it climb in 9 minutes?","27 cm",["12 cm","24 cm","30 cm"],"3 × 9 = 27"],
-["Kofi has ₦500. He buys 2 toys that cost ₦150 each. How much money does he have left?","₦200",["₦350","₦250","₦300"],"2 × 150 = 300, then 500 − 300 = 200"],
-["Ben has twice as many marbles as Dan. Dan has 14 marbles. How many marbles does Ben have?","28",["16","7","24"],"2 × 14 = 28"],
-["30 pencils are shared equally among 5 pupils. Then each pupil loses 2 pencils. How many pencils does each pupil have now?","4",["6","8","3"],"30 ÷ 5 = 6, then 6 − 2 = 4"],
-["A film is 90 minutes long. How long is that in hours and minutes?","1 hour 30 minutes",["1 hour 10 minutes","9 hours","2 hours"],"60 minutes = 1 hour, so 90 minutes = 1 hour 30 minutes"],
-["A ribbon is 3 m long. It is cut into pieces that are each 50 cm long. How many pieces are there?","6",["5","3","8"],"3 m = 300 cm, and 300 ÷ 50 = 6"],
-["A basket has 20 mangoes. One quarter of them are rotten. How many mangoes are rotten?","5",["4","10","15"],"20 ÷ 4 = 5"],
-["A library has 8 shelves with 25 books on each shelf. How many books are there?","200",["33","160","225"],"8 × 25 = 200"],
-["A concert starts at 6:30 p.m. and ends at 9:00 p.m. How long does it last?","2 hours 30 minutes",["3 hours 30 minutes","2 hours","3 hours"],"From 6:30 to 9:00 is 2 hours 30 minutes"],
-["Amina saves ₦50 every week for 8 weeks. How much does she save?","₦400",["₦58","₦350","₦450"],"50 × 8 = 400"],
-["There are 150 pupils in 5 equal classes. Two classes go on a trip. How many pupils go on the trip?","60",["30","90","120"],"150 ÷ 5 = 30 pupils per class, then 2 × 30 = 60"]
-];
-const c=document.getElementById('c');
-let list,i,score,answers,locked;
-const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
-let best=null;try{best=localStorage.getItem('g3wp_best')}catch(e){}
-function home(){
- c.innerHTML=`<div class="big">🧮</div><h1 class="center">Maths Word Problems</h1>
- <p class="sub center">50 questions · pick the right answer · see the working after each one</p>
- ${best?`<p class="center">🏆 Best score: <b>${best}/50</b></p>`:''}
- <div class="center"><button class="btn" onclick="start()">Start Quiz</button></div>`;
+const ev = e => Function('return ' + e)();
+const fmt = n => String(n).replace('-', '\u2212');
+const show = e => e.replace(/([+\-]) ([+\-])(\d+)/g, '$1 ($2$3)').replace(/-/g, '\u2212');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+const TIPS = {
+  basic: 'Use a number line. Taking away more than you have goes below zero. Adding to a negative moves you to the right.',
+  chain: 'Work from left to right, one step at a time.',
+  addneg: 'Adding a negative is the same as subtracting. For example, 4 + (\u22121) = 4 \u2212 1.',
+  subpos: 'Subtracting a positive number is just ordinary subtraction. For example, 6 \u2212 (+1) = 6 \u2212 1.',
+  subneg: 'Subtracting a negative is the same as adding. For example, 1 \u2212 (\u22122) = 1 + 2.',
+  mixed: 'Rewrite double signs first: + \u2212 becomes \u2212, and \u2212 \u2212 becomes +.',
+  missing: 'Put your answer back into the box and check that the sum works.',
+  magic: 'Find a complete row, column or diagonal to get the magic total, then work out the missing number.',
+  real: 'Draw a quick number line to see the change.',
+  cards: 'Try each pair and work out the answer before choosing.'
+};
+
+const Q = [];
+function numOpts(a, unit) {
+  const c = [...new Set([-a, a + 1, a - 1, a + 2, a - 2, a + 3, a - 3].filter(x => x !== a))];
+  const first = c[0] === -a ? [c.shift()] : [];
+  const picks = first.concat(shuffle(c).slice(0, 3 - first.length));
+  const f = x => (unit === '\u00a3' ? (x < 0 ? '\u2212\u00a3' + Math.abs(x) : '\u00a3' + x) : fmt(x) + (unit || ''));
+  return { opts: shuffle([a, ...picks]).map(f), correct: f(a) };
 }
-function start(){
- list=shuffle(Q).map(q=>({q:q[0],a:q[1],o:shuffle([q[1],...q[2]]),e:q[3]}));
- i=0;score=0;answers=[];show();
+function addExpr(sec, list) {
+  list.forEach(e => {
+    const a = ev(e), o = numOpts(a);
+    Q.push({ sec, tip: TIPS[sec.key], text: show(e) + ' = ?', opts: o.opts, correct: o.correct, expl: show(e) + ' = ' + fmt(a) });
+  });
 }
-function show(){
- const x=list[i];locked=false;
- c.innerHTML=`<div class="top"><span>Question ${i+1} of 50</span><span>⭐ ${score}</span></div>
- <div class="bar"><div style="width:${i/50*100}%"></div></div>
- <div class="q">${x.q}</div>
- ${x.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${o}</button>`).join('')}
- <div class="fb" id="fb"></div>
- <div class="center"><button class="btn" id="nx" style="display:none" onclick="next()">${i==49?'See Results':'Next →'}</button></div>`;
+
+const S = {
+  basic: { key: 'basic', name: 'Basic negatives' },
+  chain: { key: 'chain', name: 'Chains of + and \u2212' },
+  addneg: { key: 'addneg', name: 'Adding negatives' },
+  subpos: { key: 'subpos', name: 'Subtracting positives' },
+  subneg: { key: 'subneg', name: 'Subtracting negatives' },
+  mixed: { key: 'mixed', name: 'Mixed practice' },
+  missing: { key: 'missing', name: 'Missing numbers' },
+  magic: { key: 'magic', name: 'Magic squares' },
+  real: { key: 'real', name: 'Real-life problems' },
+  cards: { key: 'cards', name: 'Cards and reasoning' }
+};
+
+addExpr(S.basic, ['2 - 3','3 - 5','4 - 9','1 - 5','5 - 7','8 - 11','2 - 10','-2 + 4','-3 + 9','-7 + 10','-6 + 1','-5 + 8','-9 + 7','-20 + 11','-12 + 18','-3 - 2','-4 - 1','-6 - 3','-7 - 3','-15 - 13']);
+addExpr(S.chain, ['3 + 5 - 4','2 + 1 - 6','5 - 8 - 1','7 - 10 + 1','8 + 3 - 15','5 - 6 - 4','-3 + 6 + 1','-8 + 2 + 3','-10 + 4 - 6','-9 - 3 - 1','-2 - 7 + 4','-20 + 11 - 6','-5 + 14 - 8','-30 - 80 + 40']);
+addExpr(S.addneg, ['4 + -1','6 + -2','8 + -7','3 + -5','1 + -7','3 + -10','-2 + -1','-5 + -5','-10 + -11','-8 + -4']);
+addExpr(S.subpos, ['6 - +1','3 - +2','8 - +4','2 - +5','1 - +9','-2 - +5','-10 - +3','5 - +11','-20 - +13','15 - +25']);
+addExpr(S.subneg, ['1 - -2','3 - -1','3 - -5','6 - -4','9 - -2','-1 - -4','-2 - -1','-8 - -3','-15 - -8','-12 - -30']);
+addExpr(S.mixed, ['11 - 15','-9 + 5','-4 - 8','-4 + -3','-9 - +4','10 - -3','7 - 20','-2 - -5','12 + -7','6 - -11','-7 - +7','-6 - 5','-20 + -3','-9 - -15','-8 + 25','31 - 50','-30 - -16','-41 - 14','-52 + 90']);
+
+// Missing numbers
+[['\u25a1 + 3 = 1', -2, '-2 + 3 = 1'], ['0 \u2212 \u25a1 = 8', -8, '0 \u2212 (\u22128) = 8'], ['\u22126 + \u25a1 = \u22121', 5, '\u22126 + 5 = \u22121'],
+ ['\u25a1 \u2212 5 = \u221213', -8, '\u22128 \u2212 5 = \u221213'], ['9 \u2212 \u25a1 = 15', -6, '9 \u2212 (\u22126) = 15'], ['\u22122 \u2212 \u25a1 = 5', -7, '\u22122 \u2212 (\u22127) = 5']]
+.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t.replace('-2 + 3', '\u22122 + 3'), opts: o.opts, correct: o.correct, expl: x.replace('-2 + 3', '\u22122 + 3') }); });
+Q[Q.length - 6].text = 'Find the missing number: \u25a1 + 3 = 1';
+Q[Q.length - 6].expl = '\u22122 + 3 = 1';
+
+// Magic squares
+const magicA = [-4, -9, -2, null, null, null, -8, null, -6];
+const magicB = [-3, null, -1, 2, null, null, 1, null, null];
+[[magicA, 4, -5, 'Every row, column and diagonal adds to \u221215. The centre must be \u22125.', 'the centre'],
+ [magicA, 7, -1, 'Every row, column and diagonal adds to \u221215. The bottom middle is \u22129 + \u22125 + \u22121 = \u221215, so it is \u22121.', 'the bottom middle'],
+ [magicB, 1, 4, 'Every row, column and diagonal adds to 0. The top row is \u22123 + 4 + \u22121 = 0, so it is 4.', 'the top middle'],
+ [magicB, 8, 3, 'Every row, column and diagonal adds to 0. The bottom right is 3 because \u22121 + \u22122 + 3 = 0.', 'the bottom right']]
+.forEach(([g, idx, a, ex, where]) => { const o = numOpts(a); Q.push({ sec: S.magic, tip: TIPS.magic, grid: g, qi: idx, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
+
+// Real life
+(() => {
+  let o = numOpts(7, '\u00b0C');
+  Q.push({ sec: S.real, tip: TIPS.real, text: 'At midnight the temperature was \u22122\u00b0C. At 9am it was 5\u00b0C. By how many degrees did the temperature rise?', small: 1, opts: o.opts, correct: o.correct, expl: 'From \u22122 up to 0 is 2, then up to 5 is 5 more. The rise is 7\u00b0C.' });
+  o = numOpts(20, '\u00a3');
+  Q.push({ sec: S.real, tip: TIPS.real, text: 'Mr Jones has \u2212\u00a350 in his bank account. He pays \u00a370 into the bank. How much will he now have?', small: 1, opts: o.opts, correct: o.correct, expl: '\u2212\u00a350 + \u00a370 = \u00a320.' });
+})();
+
+// Cards
+const cardNote = 'Cards: \u22123, \u22124, 6, 2, 4, \u22127, 1. ';
+const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
+pairQ('Which two cards add to make 2?', '6 and \u22124', ['4 and 2', '\u22123 and 1', '\u22127 and 6'], '6 + (\u22124) = 2.');
+pairQ('Which two cards, added together, give the smallest possible answer?', '\u22127 and \u22124', ['\u22127 and \u22123', '\u22123 and \u22124', '\u22127 and 1'], '\u22127 + (\u22124) = \u221211, which is the lowest total.');
+pairQ('Which two cards add to make zero?', '\u22124 and 4', ['\u22123 and 2', '\u22127 and 6', '1 and \u22124'], '\u22124 + 4 = 0.');
+pairQ('Which subtraction gives the greatest possible answer?', '6 \u2212 (\u22127)', ['6 \u2212 (\u22124)', '4 \u2212 (\u22127)', '6 \u2212 1'], '6 \u2212 (\u22127) = 6 + 7 = 13.');
+Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: 'Which of these subtractions has an answer of 2?', opts: shuffle(['\u22123 \u2212 (\u22125)', '\u22123 \u2212 5', '\u22125 \u2212 (\u22123)', '3 \u2212 (\u22125)']), correct: '\u22123 \u2212 (\u22125)', expl: '\u22123 \u2212 (\u22125) = \u22123 + 5 = 2.' });
+
+// App logic
+let order = [], i = 0, score = 0, missed = [], locked = false;
+const $ = id => document.getElementById(id);
+function renderGrid(q) {
+  if (!q.grid) return '';
+  return '<div class="grid">' + q.grid.map((v, k) => k === q.qi ? '<div class="qm">?</div>' : v === null ? '<div class="blank"></div>' : '<div>' + fmt(v) + '</div>').join('') + '</div>';
 }
-function pick(k){
- if(locked)return;locked=true;
- const x=list[i],ok=x.o[k]===x.a;
- if(ok)score++;
- answers.push({q:x.q,a:x.a,ok});
- document.querySelectorAll('.opt').forEach((b,n)=>{b.disabled=true;if(x.o[n]===x.a)b.classList.add('right');else if(n===k)b.classList.add('wrong')});
- const f=document.getElementById('fb');f.style.display='block';
- f.innerHTML=(ok?'🎉 <b>Correct!</b> ':'❌ <b>Not quite.</b> The answer is <b>'+x.a+'</b>. ')+'<br>'+x.e;
- document.getElementById('nx').style.display='inline-block';
+function load() {
+  const q = order[i]; locked = false;
+  $('count').textContent = 'Question ' + (i + 1) + ' of ' + order.length;
+  $('scoreLive').textContent = 'Score: ' + score;
+  $('prog').style.width = (i / order.length * 100) + '%';
+  $('sec').textContent = q.sec.name;
+  $('grid').innerHTML = renderGrid(q);
+  const t = $('qtext'); t.textContent = q.text; t.className = 'q' + (q.small || q.grid ? ' small' : '');
+  const box = $('answers'); box.innerHTML = '';
+  q.opts.forEach(o => { const b = document.createElement('button'); b.className = 'ans'; b.textContent = o; b.onclick = () => pick(b, o); box.appendChild(b); });
+  $('fb').className = 'fb'; $('fb').innerHTML = '';
+  $('next').disabled = true; $('next').textContent = i === order.length - 1 ? 'See results' : 'Next';
 }
-function next(){i++;i<50?show():finish()}
-function finish(){
- try{if(best===null||score>+best){best=score;localStorage.setItem('g3wp_best',score)}}catch(e){}
- const m=score>=45?'🏆 Maths superstar!':score>=35?'🌟 Great job!':score>=25?'👍 Good effort, keep practising!':'💪 Keep going, you will get better!';
- const wrong=answers.filter(a=>!a.ok);
- c.innerHTML=`<div class="big">🎊</div><div class="score">${score} / 50</div><p class="center"><b>${m}</b></p>
- ${wrong.length?`<p><b>Questions to review (${wrong.length}):</b></p><div class="rev">${wrong.map(w=>`<div>${w.q}<br><b>Answer: ${w.a}</b></div>`).join('')}</div>`:'<p class="center">Perfect score, nothing to review!</p>'}
- <div class="center" style="margin-top:16px"><button class="btn alt" onclick="start()">Play Again</button></div>`;
+function pick(btn, val) {
+  if (locked) return; locked = true;
+  const q = order[i], ok = val === q.correct;
+  document.querySelectorAll('.ans').forEach(b => { b.disabled = true; if (b.textContent === q.correct) b.classList.add('right'); });
+  if (ok) { score++; } else { btn.classList.add('wrong'); missed.push(q); }
+  const fb = $('fb'); fb.className = 'fb ' + (ok ? 'ok' : 'no');
+  fb.innerHTML = '<b>' + (ok ? 'Correct!' : 'Not quite.') + '</b> ' + q.expl + (ok ? '' : '<br><small>Tip: ' + q.tip + '</small>');
+  $('scoreLive').textContent = 'Score: ' + score;
+  $('next').disabled = false;
 }
-home();
+function finish() {
+  $('play').classList.add('hidden'); $('end').classList.remove('hidden');
+  const pct = Math.round(score / order.length * 100);
+  $('final').textContent = score + ' / ' + order.length + ' (' + pct + '%)';
+  $('msg').textContent = pct >= 90 ? 'Excellent work. You really know your negatives.' : pct >= 70 ? 'Good job. Review the ones you missed below.' : pct >= 50 ? 'A fair start. Read the tips and try again.' : 'Keep practising. Use a number line and try again.';
+  $('review').innerHTML = missed.length ? '<h3>Questions to review</h3>' + missed.map(q => '<div><b>' + q.text + '</b><br>Answer: ' + q.correct + ' &mdash; ' + q.expl + '</div>').join('') : '<h3>No mistakes. Perfect score!</h3>';
+}
+function start() {
+  order = $('shuf').checked ? shuffle(Q) : Q.slice(); i = 0; score = 0; missed = [];
+  $('start').classList.add('hidden'); $('end').classList.add('hidden'); $('play').classList.remove('hidden'); load();
+}
+$('go').onclick = start;
+$('again').onclick = () => { $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
+$('next').onclick = () => { i++; if (i >= order.length) { $('prog').style.width = '100%'; finish(); } else load(); };
 </script>
 </body>
 </html>
