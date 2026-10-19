@@ -1,370 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>English Quiz</title>
+<title>Maths Jungle Adventure</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#fff8ec; --card:#ffffff; --ink:#2b2d42; --muted:#6b6f85;
-    --blue:#3a86ff; --blue-d:#2467d6; --green:#2fb36d; --green-bg:#e3f7ec;
-    --red:#e5484d; --red-bg:#fde8e8; --yellow:#ffbe0b; --purple:#8338ec; --line:#e8e2d4;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
-  header.top{text-align:center;padding:14px 0 6px}
-  header.top h1{margin:0;font-size:clamp(1.7rem,5vw,2.4rem);color:var(--purple)}
-  header.top p{margin:4px 0 0;color:var(--muted)}
-  .card{background:var(--card);border-radius:20px;padding:22px;box-shadow:0 6px 0 var(--line);border:2px solid var(--line);margin-top:18px}
-  .hidden{display:none!important}
-  button{font:inherit;cursor:pointer}
-  .btn{background:var(--blue);color:#fff;border:0;border-radius:14px;padding:12px 22px;font-weight:700;font-size:1.05rem;box-shadow:0 4px 0 var(--blue-d)}
-  .btn:hover{filter:brightness(1.06)}
-  .btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--blue-d)}
-  .btn.alt{background:#fff;color:var(--blue-d);border:2px solid var(--blue);box-shadow:0 4px 0 #cfdcf7}
-  .btn.big{padding:16px 30px;font-size:1.2rem}
-  .btn:focus-visible,.opt:focus-visible,.cat:focus-visible{outline:3px solid var(--purple);outline-offset:2px}
-  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-  .center{text-align:center}
-  label.shuf{display:inline-flex;gap:8px;align-items:center;color:var(--muted);font-size:.95rem}
-  h2{margin:0 0 8px;font-size:1.3rem}
-  .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px}
-  .cat{background:#f7f3ff;border:2px solid #dcd0fb;border-radius:14px;padding:10px 12px;text-align:left;color:var(--ink)}
-  .cat b{display:block;color:var(--purple)}
-  .cat span{font-size:.88rem;color:var(--muted)}
-  .cat:hover{background:#efe8ff}
-  .best{margin-top:12px;color:var(--muted);font-size:.95rem}
-  .bar{height:14px;background:#eee7d6;border-radius:99px;overflow:hidden}
-  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),var(--green));transition:width .3s}
-  .meta{display:flex;justify-content:space-between;gap:10px;font-weight:700;margin:8px 0 14px;font-size:.95rem;flex-wrap:wrap}
-  .tag{display:inline-block;background:#fff0c2;color:#8a5a00;border-radius:99px;padding:2px 12px;font-size:.85rem;font-weight:700}
-  .passage{background:#f1f7ff;border-left:6px solid var(--blue);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:1.02rem}
-  .passage strong{display:block;margin-bottom:4px;color:var(--blue-d)}
-  .qtext{font-size:1.25rem;font-weight:700;margin:12px 0 14px}
-  .opts{display:grid;gap:10px}
-  .opt{display:flex;gap:12px;align-items:center;text-align:left;width:100%;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-size:1.1rem;color:var(--ink);box-shadow:0 3px 0 var(--line)}
-  .opt:hover:not(:disabled){border-color:var(--blue);background:#f4f8ff}
-  .opt .l{flex:none;width:32px;height:32px;border-radius:50%;background:#eef2ff;color:var(--blue-d);display:grid;place-items:center;font-weight:800}
-  .opt.right{background:var(--green-bg);border-color:var(--green)}
-  .opt.right .l{background:var(--green);color:#fff}
-  .opt.wrong{background:var(--red-bg);border-color:var(--red)}
-  .opt.wrong .l{background:var(--red);color:#fff}
-  .opt:disabled{cursor:default}
-  .fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:1.02rem}
-  .fb.good{background:var(--green-bg);border:2px solid var(--green)}
-  .fb.bad{background:var(--red-bg);border:2px solid var(--red)}
-  .fb b{display:block;margin-bottom:2px}
-  .nextrow{margin-top:16px;text-align:right}
-  .score-big{font-size:3rem;font-weight:800;color:var(--purple);margin:4px 0}
-  .stars{font-size:2rem;letter-spacing:4px}
-  .brk{margin-top:14px;display:grid;gap:10px}
-  .brk .r{display:grid;grid-template-columns:minmax(150px,1.2fr) 2fr auto;gap:10px;align-items:center;font-size:.95rem}
-  .brk .bar{height:12px}
-  .missed{margin-top:16px;display:grid;gap:10px}
-  .m{border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fffdf8}
-  .m .q{font-weight:700}
-  .m .y{color:var(--red);font-size:.95rem}
-  .m .c{color:#1d8a52;font-size:.95rem;font-weight:700}
-  .m .e{color:var(--muted);font-size:.9rem}
-  @media (max-width:520px){.brk .r{grid-template-columns:1fr;gap:4px}.qtext{font-size:1.12rem}.card{padding:16px}}
-  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:'Fredoka','Trebuchet MS','Comic Sans MS',system-ui,sans-serif;background:linear-gradient(180deg,#7fd8ff 0%,#c8f0ff 55%,#b6f08a 55%,#78d65c 100%);background-attachment:fixed;color:#3b2a6b;overflow-x:hidden}
+.cloud{position:fixed;font-size:64px;opacity:.9;animation:drift 40s linear infinite;pointer-events:none;z-index:0}
+.cloud:nth-child(1){top:6%;left:-10%}
+.cloud:nth-child(2){top:18%;left:-30%;animation-duration:55s;font-size:48px}
+@keyframes drift{to{transform:translateX(140vw)}}
+#app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:14px 14px 40px}
+.screen{display:none}.screen.active{display:block;animation:pop .45s ease}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.card{background:#fff;border-radius:32px;border:5px solid #ffd23f;box-shadow:0 10px 0 #f4a300,0 18px 30px rgba(0,0,0,.18);padding:22px;text-align:center}
+h1{font-size:clamp(34px,8vw,56px);margin:6px 0;color:#ff4f9a;text-shadow:3px 3px 0 #ffe0f0;line-height:1.05}
+h2{margin:6px 0;color:#7a3cff}
+.mascot{font-size:96px;display:inline-block;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px) rotate(4deg)}}
+.big-btn{font-family:inherit;font-weight:700;font-size:28px;border:none;border-radius:999px;padding:16px 40px;margin-top:14px;color:#fff;background:linear-gradient(#ff7a3d,#ff4f2b);box-shadow:0 8px 0 #c9381a;cursor:pointer;transition:transform .1s}
+.big-btn:active{transform:translateY(6px);box-shadow:0 2px 0 #c9381a}
+.big-btn.green{background:linear-gradient(#4cd964,#22b341);box-shadow:0 8px 0 #167a2c}
+.big-btn.green:active{box-shadow:0 2px 0 #167a2c}
+.hud{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pill{background:#fff;border-radius:999px;padding:6px 14px;font-weight:700;border:4px solid #ffd23f;white-space:nowrap}
+.track{flex:1;height:26px;background:#fff;border-radius:999px;border:4px solid #7a3cff;overflow:hidden;position:relative}
+.fill{height:100%;width:0;background:repeating-linear-gradient(45deg,#ff4f9a,#ff4f9a 12px,#ff86bd 12px,#ff86bd 24px);transition:width .5s;border-radius:999px}
+.icon-btn{font-size:24px;background:#fff;border:4px solid #ffd23f;border-radius:50%;width:46px;height:46px;cursor:pointer;font-family:inherit}
+.world{display:inline-block;background:#7a3cff;color:#fff;padding:4px 16px;border-radius:999px;font-weight:700;font-size:16px;margin-bottom:8px}
+.qtext{font-size:clamp(24px,5.5vw,34px);font-weight:700;margin:8px 0}
+.visual{font-size:clamp(34px,8vw,52px);letter-spacing:2px;line-height:1.3;min-height:60px;background:#fff8dc;border-radius:22px;padding:10px;margin:10px 0 16px;word-break:break-all}
+.visual.small{font-size:clamp(28px,6vw,40px)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt{font-family:inherit;font-weight:700;font-size:clamp(24px,6vw,34px);padding:18px 8px;border:none;border-radius:24px;color:#fff;cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.25);transition:transform .1s}
+.opt:nth-child(1){background:#ff5c8a}.opt:nth-child(2){background:#3db4ff}.opt:nth-child(3){background:#ffa31a}.opt:nth-child(4){background:#8a5cff}
+.opt:active{transform:translateY(6px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.opt.right{background:#22c55e!important;animation:jump .6s}
+.opt.wrong{background:#9ca3af!important;animation:shake .45s}
+.opt:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+@keyframes jump{40%{transform:scale(1.12) rotate(-3deg)}}
+.bubble{background:#fff;border:4px solid #7a3cff;border-radius:22px;padding:10px 16px;font-weight:600;font-size:20px;margin:14px auto 0;max-width:520px;min-height:48px;position:relative}
+.helper{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px}
+.helper .m{font-size:56px}
+.stars-row{font-size:34px;margin:8px 0}
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.badge{font-size:36px;background:#fff8dc;border:3px solid #ffd23f;border-radius:16px;padding:4px 8px}
+.badge.locked{filter:grayscale(1);opacity:.35}
+.score-big{font-size:64px;font-weight:700;color:#ff4f9a}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.small-note{font-size:15px;opacity:.7;margin-top:12px}
+@media(max-width:420px){.opts{gap:10px}.card{padding:14px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <h1>&#128218; English Quiz</h1>
-    <p>100 questions &middot; Grammar, Spelling, Vocabulary &amp; Reading</p>
-  </header>
+<div class="cloud">☁️</div><div class="cloud">☁️</div>
+<canvas id="confetti"></canvas>
+<div id="app">
 
-  <!-- HOME -->
-  <section id="home" class="card">
-    <h2>Ready to play?</h2>
-    <p>Pick an answer for each question. You will see right away if you got it right, and why. Take your time!</p>
-    <div class="row">
-      <button class="btn big" id="startAll">Start all 100 questions</button>
-      <label class="shuf"><input type="checkbox" id="shuffleQ"> Mix up the question order</label>
-    </div>
-    <p class="best" id="best"></p>
-    <h2 style="margin-top:22px">Or practice one skill</h2>
-    <div class="cats" id="cats"></div>
-  </section>
+<!-- START -->
+<div id="start" class="screen active">
+  <div class="card">
+    <div class="mascot">🦁</div>
+    <h1>Maths Jungle<br>Adventure!</h1>
+    <p style="font-size:22px;font-weight:600">Help Leo the Lion cross 10 jungle worlds!<br>Answer the questions, win ⭐ stars and collect all the badges!</p>
+    <div class="badges" id="startBadges"></div>
+    <button class="big-btn" id="playBtn">▶ Let's Play!</button>
+    <div class="small-note" id="bestNote"></div>
+  </div>
+</div>
 
-  <!-- QUIZ -->
-  <section id="quiz" class="card hidden" aria-live="polite">
-    <div class="bar" aria-hidden="true"><i id="prog"></i></div>
-    <div class="meta"><span id="qnum"></span><span id="scoreNow"></span></div>
-    <span class="tag" id="qcat"></span>
-    <div id="passage" class="passage hidden"></div>
-    <div class="qtext" id="qtext"></div>
+<!-- QUIZ -->
+<div id="quiz" class="screen">
+  <div class="hud">
+    <div class="pill">⭐ <span id="starCount">0</span></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="pill" id="qNum">1/50</div>
+    <button class="icon-btn" id="muteBtn" title="Sound">🔊</button>
+  </div>
+  <div class="card">
+    <div class="world" id="worldName"></div>
+    <div class="qtext" id="qText"></div>
+    <div class="visual" id="visual"></div>
+    <button class="icon-btn" id="readBtn" title="Read to me" style="margin-bottom:10px">🗣️</button>
     <div class="opts" id="opts"></div>
-    <div id="fb" class="fb hidden" role="status"></div>
-    <div class="nextrow"><button class="btn hidden" id="next">Next &rarr;</button></div>
-  </section>
+    <div class="helper"><div class="m" id="mascotSmall">🦁</div><div class="bubble" id="bubble">Pick the right answer!</div></div>
+    <button class="big-btn green" id="nextBtn" style="display:none">Next ➜</button>
+  </div>
+</div>
 
-  <!-- RESULTS -->
-  <section id="results" class="card hidden">
-    <div class="center">
-      <div class="stars" id="stars"></div>
-      <div class="score-big" id="finalScore"></div>
-      <p id="msg"></p>
-    </div>
-    <h2>How you did by skill</h2>
-    <div class="brk" id="brk"></div>
-    <div class="row" style="margin-top:18px">
-      <button class="btn" id="retryMissed">Practice the ones I missed</button>
-      <button class="btn alt" id="again">Back to start</button>
-    </div>
-    <div id="missedWrap" class="hidden">
-      <h2 style="margin-top:22px">Questions to review</h2>
-      <div class="missed" id="missed"></div>
-    </div>
-  </section>
+<!-- WORLD DONE -->
+<div id="worldDone" class="screen">
+  <div class="card">
+    <div class="mascot">🎉</div>
+    <h1 id="wdTitle">World complete!</h1>
+    <div class="badges"><div class="badge" id="wdBadge" style="font-size:80px"></div></div>
+    <div class="stars-row" id="wdStars"></div>
+    <p style="font-size:22px;font-weight:600" id="wdMsg"></p>
+    <button class="big-btn green" id="wdNext">Next World ➜</button>
+  </div>
+</div>
+
+<!-- END -->
+<div id="end" class="screen">
+  <div class="card">
+    <div class="mascot">🏆</div>
+    <h1>You did it!</h1>
+    <div class="score-big"><span id="finalStars">0</span> / 50 ⭐</div>
+    <h2 id="rank"></h2>
+    <div class="badges" id="endBadges"></div>
+    <p style="font-size:20px;font-weight:600" id="endMsg"></p>
+    <button class="big-btn" id="againBtn">🔄 Play Again</button>
+  </div>
+</div>
+
 </div>
 
 <script>
-/* ===== DATA START ===== */
-const Q=(c,q,a,w,e,p)=>({c,q,o:[a,...w],e,p});  // first option is the correct one; options are shuffled when shown
-const P={
- maya:["Maya's Bake Sale","Maya woke up early on Saturday. Today was the day of the school bake sale. She put on her apron and mixed flour, sugar, and eggs in a big bowl. Soon the kitchen smelled sweet. Maya baked twelve cupcakes and covered each one with pink frosting. She packed them in a box and carried them to school. By noon, every cupcake was sold, and Maya had a big smile on her face."],
- bees:["Honeybees","Honeybees live together in a hive. Each bee has a job. Worker bees collect nectar from flowers and make honey. The queen bee lays eggs. When a bee finds a good patch of flowers, it does a special dance to tell the other bees where to go. Bees are important because they help flowers grow by carrying pollen from plant to plant."],
- ben:["The Big Jump","Ben stood at the edge of the pool. His hands were shaking, and his heart was pounding. The water looked very deep. \"You can do it,\" called his coach. Ben took a deep breath, closed his eyes, and jumped. Splash! When he came up, he laughed. \"Let's do it again!\" he shouted."],
- rec:["Why We Recycle","Recycling is a great way to help our planet. First, you sort paper, plastic, and glass into different bins. Next, a truck takes the items to a recycling center. Then, workers turn the old items into new things. Everyone should recycle because it keeps trash out of the ocean."]
-};
-const CATS=["Nouns & Pronouns","Verbs & Tenses","Adjectives & Adverbs","Sentences & Grammar","Capitals & Punctuation","Spelling & Word Study","Vocabulary","Reading Comprehension"];
-const [N,V,A,G,C,SPL,W,R]=CATS;
-const QS=[
-// ---- Nouns & Pronouns (12)
-Q(N,`Which word is a noun? "The dog ran across the yard."`,`dog`,[`ran`,`across`,`the`],`A noun names a person, place, or thing. "Dog" is a thing (an animal).`),
-Q(N,`Which word is a proper noun?`,`Chicago`,[`city`,`river`,`street`],`A proper noun names one special person, place, or thing, and it starts with a capital letter.`),
-Q(N,`What is the plural of "box"?`,`boxes`,[`boxs`,`boxies`,`boxen`],`Words that end in x, s, sh, ch, or z usually add -es to make a plural.`),
-Q(N,`What is the plural of "child"?`,`children`,[`childs`,`childrens`,`childes`],`"Child" is an irregular noun. Its plural is "children."`),
-Q(N,`What is the plural of "baby"?`,`babies`,[`babys`,`babyes`,`babis`],`When a word ends in a consonant plus y, change the y to i and add -es.`),
-Q(N,`What is the plural of "mouse"?`,`mice`,[`mouses`,`mices`,`meese`],`"Mouse" is irregular. More than one mouse is "mice."`),
-Q(N,`Which pronoun completes the sentence? "Maria and I went to the park. ___ played on the swings."`,`We`,[`They`,`Us`,`Them`],`"Maria and I" is the speaker plus a friend, so the pronoun is "we."`),
-Q(N,`Which word completes the sentence? "Please give the book to Sam and ___."`,`me`,[`I`,`he`,`we`],`After the word "to," use "me." You would say "give the book to me."`),
-Q(N,`Which word shows who owns the toy? "The ___ toy is red." (The toy belongs to one cat.)`,`cat's`,[`cats`,`cats'`,`cat`],`Add an apostrophe and s ('s) to a singular noun to show ownership.`),
-Q(N,`Several dogs each have a bone. Which phrase is correct?`,`the dogs' bones`,[`the dog's bones`,`the dogs bones`,`the dogs's bone`],`For a plural noun that ends in s, add just an apostrophe after the s.`),
-Q(N,`Which noun names a group of people?`,`team`,[`table`,`pencil`,`apple`],`A collective noun names a group. A team is a group of players.`),
-Q(N,`Which noun names something you cannot touch?`,`kindness`,[`rock`,`table`,`dog`],`"Kindness" is a feeling or idea. You can show it, but you cannot hold it.`),
-// ---- Verbs & Tenses (14)
-Q(V,`Which word is the verb? "Birds sing in the morning."`,`sing`,[`Birds`,`morning`,`in`],`A verb tells what someone or something does. Birds "sing."`),
-Q(V,`What is the past tense of "run"?`,`ran`,[`runned`,`runs`,`running`],`"Run" is irregular. Today I run. Yesterday I ran.`),
-Q(V,`What is the past tense of "go"?`,`went`,[`goed`,`goes`,`going`],`"Go" is irregular. Yesterday we went to the store.`),
-Q(V,`What is the past tense of "eat"?`,`ate`,[`eated`,`eating`,`eats`],`"Eat" is irregular. Today I eat. Yesterday I ate.`),
-Q(V,`Which word completes the sentence? "Tomorrow, we ___ to the zoo."`,`will go`,[`went`,`goes`,`gone`],`"Tomorrow" tells us the action has not happened yet, so use the future tense: "will go."`),
-Q(V,`Which verb is correct? "The cat ___ on the sofa."`,`sleeps`,[`sleep`,`sleeping`,`sleepen`],`One cat is a singular subject, so the verb ends in s: "sleeps."`),
-Q(V,`Which word completes the sentence? "The children ___ playing outside."`,`are`,[`is`,`am`,`be`],`"Children" means more than one, so use "are."`),
-Q(V,`Which word completes the sentence? "She ___ her homework yesterday."`,`finished`,[`finishes`,`finish`,`will finish`],`"Yesterday" means the past, so add -ed: "finished."`),
-Q(V,`Which choice is correct? "I ___ a book right now."`,`am reading`,[`will read`,`readed`,`reads`],`"Right now" means the action is happening at this moment. "Am reading" fits with "I."`),
-Q(V,`Which sentence is in the present tense?`,`The bird builds a nest.`,[`The bird built a nest.`,`The bird will build a nest.`,`The bird had built a nest.`],`Present tense tells what is happening now. "Builds" is present tense.`),
-Q(V,`What is the past tense of "bring"?`,`brought`,[`bringed`,`brang`,`brung`],`"Bring" is irregular. Today I bring my lunch. Yesterday I brought my lunch.`),
-Q(V,`What is the past tense of "swim"?`,`swam`,[`swimmed`,`swimed`,`swims`],`"Swim" is irregular. Last summer, we swam in the lake.`),
-Q(V,`Which word is the helping verb? "She has finished her lunch."`,`has`,[`finished`,`her`,`lunch`],`A helping verb comes before the main verb. "Has" helps the main verb "finished."`),
-Q(V,`Which word completes the sentence? "Yesterday, the team ___ the game."`,`won`,[`win`,`wins`,`winning`],`"Won" is the past tense of "win."`),
-// ---- Adjectives & Adverbs (10)
-Q(A,`Which word is an adjective? "The fluffy cloud floated by."`,`fluffy`,[`cloud`,`floated`,`by`],`An adjective describes a noun. "Fluffy" describes the cloud.`),
-Q(A,`Which word is an adverb? "The turtle moved slowly."`,`slowly`,[`turtle`,`moved`,`The`],`An adverb tells how, when, or where. "Slowly" tells how the turtle moved.`),
-Q(A,`What kind of word describes a noun?`,`adjective`,[`adverb`,`verb`,`pronoun`],`Adjectives describe nouns, such as "a tall tree" or "a red ball."`),
-Q(A,`Which word completes the sentence? "She sang ___."`,`beautifully`,[`beautiful`,`beauty`,`beautify`],`The word describes how she sang, so you need an adverb. Many adverbs end in -ly.`),
-Q(A,`Which word completes the sentence? "My backpack is ___ than yours."`,`heavier`,[`heaviest`,`heavyer`,`most heavy`],`Use -er to compare two things. Change the y to i first: heavy becomes heavier.`),
-Q(A,`Which word completes the sentence? "That is the ___ mountain in the world."`,`tallest`,[`taller`,`tall`,`more tall`],`Use -est to compare three or more things. The mountain is compared to all the others.`),
-Q(A,`Which word completes the sentence? "She plays soccer ___."`,`well`,[`good`,`goodly`,`gooder`],`"Well" is an adverb that tells how she plays. "Good" is an adjective.`),
-Q(A,`Which word tells how many? "Three puppies played in the yard."`,`Three`,[`puppies`,`played`,`yard`],`Number words such as "three" are adjectives that tell how many.`),
-Q(A,`Which word is an adverb? "We will eat later."`,`later`,[`We`,`eat`,`will`],`"Later" tells when we will eat, so it is an adverb.`),
-Q(A,`Which two words are adjectives?`,`red, soft`,[`run, jump`,`quickly, softly`,`dog, cat`],`"Red" and "soft" describe things. "Run" and "jump" are verbs, and "dog" and "cat" are nouns.`),
-// ---- Sentences & Grammar (12)
-Q(G,`Which is a complete sentence?`,`The boy kicked the ball.`,[`Kicked the ball.`,`The boy in the red.`,`Over the fence.`],`A complete sentence has a subject (who) and a predicate (what they did) and tells a whole idea.`),
-Q(G,`Which is a sentence fragment (not a whole sentence)?`,`Under the big tree.`,[`The dog barked.`,`We ate lunch.`,`Mom drove home.`],`"Under the big tree" does not say who or what did something.`),
-Q(G,`What kind of sentence is this? "What time is lunch?"`,`a question`,[`a command`,`a statement`,`an exclamation`],`It asks something and ends with a question mark.`),
-Q(G,`What kind of sentence is this? "Close the door, please."`,`a command`,[`a question`,`a statement`,`an exclamation`],`A command tells someone to do something.`),
-Q(G,`What kind of sentence is this? "Wow, that was amazing!"`,`an exclamation`,[`a question`,`a command`,`a statement`],`An exclamation shows strong feeling and ends with an exclamation point.`),
-Q(G,`Which one is a run-on sentence?`,`I like pizza my brother likes tacos.`,[`I like pizza, and my brother likes tacos.`,`I like pizza. My brother likes tacos.`,`I like pizza, but my brother likes tacos.`],`A run-on pushes two complete ideas together with no punctuation or joining word.`),
-Q(G,`Which sentence best combines these? "I have a dog. I have a cat."`,`I have a dog and a cat.`,[`I have a dog I have a cat.`,`I have a dog, a cat I have.`,`Dog and cat I have a.`],`Join the two ideas with "and" to make one smooth sentence.`),
-Q(G,`What is the subject? "The tall girl won the race."`,`The tall girl`,[`won`,`the race`,`race`],`The subject tells who or what the sentence is about.`),
-Q(G,`What is the predicate? "My friends play soccer."`,`play soccer`,[`My friends`,`friends`,`My`],`The predicate tells what the subject does.`),
-Q(G,`Which word completes the sentence? "I wanted to play outside, ___ it was raining."`,`but`,[`or`,`so`,`also`],`"But" shows a different idea: I wanted to play, yet it was raining.`),
-Q(G,`Which word is a conjunction (a joining word)?`,`and`,[`happy`,`jump`,`quickly`],`Conjunctions such as and, but, and or join words or parts of sentences.`),
-Q(G,`Which word is a preposition? "The cat hid under the bed."`,`under`,[`cat`,`hid`,`bed`],`A preposition shows where something is. "Under" tells where the cat hid.`),
-// ---- Capitals & Punctuation (14)
-Q(C,`Which sentence is capitalized correctly?`,`On Monday, we visited Grandma in Texas.`,[`on monday, we visited grandma in texas.`,`On monday, we visited Grandma in Texas.`,`On Monday, we visited Grandma in texas.`],`Capitalize the first word, days of the week, names, and places.`),
-Q(C,`Which end mark goes at the end? "Where did you put my shoes"`,`?`,[`.`,`!`,`,`],`It is an asking sentence, so it ends with a question mark.`),
-Q(C,`Which end mark goes at the end? "Watch out"`,`!`,[`.`,`?`,`,`],`An exclamation point shows strong feeling or a warning.`),
-Q(C,`Which sentence uses commas in a list correctly?`,`We bought apples, bananas, and grapes.`,[`We bought, apples bananas and grapes.`,`We bought apples bananas, and, grapes.`,`We, bought apples, bananas and grapes,`],`Put a comma after each item in a list, except the last item.`),
-Q(C,`Which date is written correctly?`,`July 4, 1776`,[`July, 4 1776`,`July 4 1776,`,`July4, 1776`],`Put a comma between the day and the year.`),
-Q(C,`Which greeting is written correctly in a letter?`,`Dear Grandma,`,[`dear Grandma,`,`Dear grandma`,`Dear, Grandma.`],`Capitalize "Dear" and the name, and end the greeting with a comma.`),
-Q(C,`What is the contraction for "do not"?`,`don't`,[`do'nt`,`dont`,`d'not`],`The apostrophe takes the place of the missing letter o.`),
-Q(C,`What is the contraction for "she is"?`,`she's`,[`shes`,`she'is`,`sh'e`],`The apostrophe takes the place of the letter i.`),
-Q(C,`What is the contraction for "will not"?`,`won't`,[`willn't`,`wo'nt`,`will'nt`],`"Won't" is a special contraction. It does not follow the usual pattern.`),
-Q(C,`Which phrase shows that the bike belongs to Jake?`,`Jake's bike`,[`Jakes bike`,`Jakes' bike`,`Jake bike's`],`Add an apostrophe and s to show who owns something.`),
-Q(C,`Which sentence uses quotation marks correctly?`,`Mia said, "I love to read."`,[`Mia said, I love to read."`,`Mia said "I love to read".`,`"Mia said, I love to read."`],`Quotation marks go around the speaker's exact words. The end mark stays inside them.`),
-Q(C,`Which title is capitalized correctly?`,`The Cat in the Hat`,[`the cat in the hat`,`The cat in the hat`,`The Cat In The Hat`],`Capitalize the first word and the important words in a title. Small words like "in" and "the" stay lowercase in the middle.`),
-Q(C,`Which word needs a capital letter? "My friend and i went to the store."`,`i`,[`friend`,`store`,`went`],`The word "I" is always capitalized.`),
-Q(C,`Which sentence has the comma in the right place?`,`We wanted to swim, but the pool was closed.`,[`We wanted, to swim but the pool was closed.`,`We wanted to swim but, the pool was closed.`,`We wanted to swim but the pool, was closed.`],`Put a comma before a joining word like "but" when it connects two whole ideas.`),
-// ---- Spelling & Word Study (12)
-Q(SPL,`Which word is spelled correctly?`,`beautiful`,[`beutiful`,`beautifull`,`butiful`],`Remember: be-au-ti-ful. It ends with one l.`),
-Q(SPL,`Which word is spelled correctly?`,`because`,[`becuase`,`becaus`,`becose`],`Say it slowly: be-cause.`),
-Q(SPL,`Which word is spelled correctly?`,`friend`,[`freind`,`frend`,`fiend`],`A friend is there until the end. The word has "ie" in it.`),
-Q(SPL,`The prefix "un-" means "not." What does "unhappy" mean?`,`not happy`,[`very happy`,`happy again`,`full of happy`],`Un- + happy = not happy.`),
-Q(SPL,`The prefix "re-" means "again." What does "rewrite" mean?`,`write again`,[`not write`,`write before`,`without writing`],`Re- + write = write again.`),
-Q(SPL,`The suffix "-less" means "without." What does "careless" mean?`,`without care`,[`full of care`,`care again`,`very careful`],`Care + -less = without care.`),
-Q(SPL,`The suffix "-ful" means "full of." What does "helpful" mean?`,`full of help`,[`without help`,`help again`,`not help`],`Help + -ful = full of help.`),
-Q(SPL,`Which two small words make the compound word "rainbow"?`,`rain + bow`,[`ran + bow`,`rain + bowl`,`rin + boat`],`A compound word is two words joined together to make a new word.`),
-Q(SPL,`Which word completes the sentence? "___ going to the park after school."`,`They're`,[`Their`,`There`,`Thare`],`"They're" is short for "they are." That is what the sentence needs.`),
-Q(SPL,`Which word completes the sentence? "I ate ___ cookies."`,`two`,[`to`,`too`,`tu`],`"Two" is the number 2. "To" and "too" mean something different.`),
-Q(SPL,`How many syllables are in the word "elephant"?`,`3`,[`1`,`2`,`4`],`Clap it out: el-e-phant. That is 3 beats.`),
-Q(SPL,`What is the root word in "jumping"?`,`jump`,[`jumpi`,`jumpin`,`ing`],`The root word is the main word before an ending is added.`),
-// ---- Vocabulary (14)
-Q(W,`Which word means almost the same as "big"?`,`large`,[`tiny`,`thin`,`slow`],`Synonyms are words that mean almost the same thing.`),
-Q(W,`Which word means almost the same as "happy"?`,`joyful`,[`gloomy`,`angry`,`sleepy`],`"Joyful" and "happy" are synonyms.`),
-Q(W,`Which word means almost the same as "begin"?`,`start`,[`finish`,`stop`,`end`],`To begin and to start mean the same thing.`),
-Q(W,`Which word means the opposite of "hot"?`,`cold`,[`warm`,`spicy`,`sunny`],`Antonyms are words with opposite meanings.`),
-Q(W,`Which word means the opposite of "brave"?`,`afraid`,[`bold`,`strong`,`proud`],`Someone brave is not afraid, so "afraid" is the opposite.`),
-Q(W,`Which word means the opposite of "ancient"?`,`new`,[`old`,`very old`,`dusty`],`Ancient means very old, so the opposite is new.`),
-Q(W,`Which meaning of "bark" fits this sentence? "The tree's bark was rough."`,`the outer covering of a tree`,[`the sound a dog makes`,`to shout`,`a type of boat`],`Some words have more than one meaning. Use the other words in the sentence to decide.`),
-Q(W,`Which meaning of "spring" fits this sentence? "Flowers bloom in the spring."`,`a season of the year`,[`a metal coil`,`to jump quickly`,`water from the ground`],`Blooming flowers tell you it is the season.`),
-Q(W,`Which sentence is a simile (it compares using "like" or "as")?`,`The snow was as soft as a blanket.`,[`The snow was a blanket.`,`The snow fell all night.`,`I love the snow.`],`A simile compares two different things using "like" or "as."`),
-Q(W,`What does the saying "It's raining cats and dogs" mean?`,`It is raining very hard.`,[`Pets are falling from the sky.`,`It is raining a little.`,`The rain has stopped.`],`An idiom does not mean exactly what the words say.`),
-Q(W,`What does the saying "a piece of cake" mean?`,`very easy`,[`very sweet`,`very hard`,`very old`],`If a job is "a piece of cake," it is simple to do.`),
-Q(W,`What does "enormous" mean? "The enormous elephant was so huge it could not fit through the door."`,`very big`,[`very small`,`very loud`,`very fast`],`The clue "so huge it could not fit" helps you figure it out.`),
-Q(W,`Which list is in alphabetical (ABC) order?`,`apple, banana, cherry`,[`banana, apple, cherry`,`cherry, banana, apple`,`apple, cherry, banana`],`Put words in order by their first letters: a, then b, then c.`),
-Q(W,`Which word would you find between the guide words "cat" and "dog" in a dictionary?`,`cow`,[`ant`,`fish`,`zoo`],`"Cow" comes after "cat" and before "dog" in ABC order.`),
-// ---- Reading Comprehension (12)
-Q(R,`What was Maya making for the bake sale?`,`cupcakes`,[`cookies`,`bread`,`pies`],`The story says Maya "baked twelve cupcakes."`,`maya`),
-Q(R,`Why did Maya have a big smile at the end of the story?`,`She sold every cupcake.`,[`She lost her apron.`,`She went to the park.`,`She ate all the frosting.`],`The story says that by noon every cupcake was sold.`,`maya`),
-Q(R,`Which word best describes Maya?`,`hardworking`,[`lazy`,`rude`,`sleepy`],`She got up early, baked twelve cupcakes, and carried them to school. That shows she works hard.`,`maya`),
-Q(R,`What is the main idea of this passage?`,`Honeybees work together and each has a job.`,[`Bees only live in cold places.`,`Flowers are always red.`,`The queen bee collects nectar.`],`The main idea is what the whole passage is mostly about.`,`bees`),
-Q(R,`What does the queen bee do?`,`She lays eggs.`,[`She makes honey.`,`She finds flowers.`,`She does a dance.`],`The passage says "The queen bee lays eggs."`,`bees`),
-Q(R,`Why are bees important?`,`They help flowers grow by carrying pollen.`,[`They are very big.`,`They live in a hive.`,`They are yellow and black.`],`The last sentence tells us bees carry pollen from plant to plant.`,`bees`),
-Q(R,`How did Ben feel at first?`,`nervous`,[`bored`,`angry`,`sleepy`],`His hands were shaking and his heart was pounding. Those are signs of feeling nervous.`,`ben`),
-Q(R,`Which detail shows that Ben was nervous?`,`His hands were shaking.`,[`He laughed.`,`He shouted.`,`He heard his coach.`],`Shaking hands show how he felt on the inside.`,`ben`),
-Q(R,`How did Ben feel at the end of the story?`,`happy and excited`,[`scared of the water`,`sad`,`angry at his coach`],`He laughed and shouted, "Let's do it again!"`,`ben`),
-Q(R,`What happens right after you sort the items?`,`A truck takes them to a recycling center.`,[`Workers make new things.`,`The items go into the ocean.`,`You throw them away.`],`The word "Next" tells us what comes after sorting.`,`rec`),
-Q(R,`Which sentence is an opinion (what someone thinks, not a fact)?`,`Everyone should recycle because it keeps trash out of the ocean.`,[`A truck takes the items to a recycling center.`,`Workers turn old items into new things.`,`You sort paper, plastic, and glass into different bins.`],`"Should" tells us what the author thinks. The other sentences are facts you could check.`,`rec`),
-Q(R,`Why did the author most likely write this passage?`,`to encourage readers to recycle`,[`to tell a funny story`,`to describe a trip to the ocean`,`to teach how to bake`],`The author explains the steps and then says everyone should recycle.`,`rec`)
+const R=(e,n)=>e.repeat(n);
+const WORLDS=[
+ {name:"Counting Cove",badge:"🐢"},{name:"Compare Canyon",badge:"🦜"},{name:"Number Bond Bridge",badge:"🐒"},
+ {name:"Add-It-Up Hills",badge:"🐘"},{name:"Take-Away Trail",badge:"🦒"},{name:"Position Peak",badge:"🦓"},
+ {name:"Teen Number Treetops",badge:"🐯"},{name:"Big Sum Swamp",badge:"🐊"},{name:"Shape & Length Land",badge:"🦋"},
+ {name:"Tens, Time & Graphs",badge:"👑"}
 ];
-/* ===== DATA END ===== */
+// [question, visual, answer, [3 wrong], hint, smallVisual?]
+const Q=[
+// World 1 - counting to 10
+["How many apples are there?",R("🍎",6),"6",["4","5","7"],"Touch each apple and count: 1, 2, 3..."],
+["How many fish can you count?",R("🐟",8),"8",["6","7","9"],"Count slowly, one fish at a time!"],
+["How many stars are shining?",R("⭐",9),"9",["7","8","10"],"Count in rows to keep track!"],
+["What number comes right after 7?","7 ➜ ❓","8",["6","9","10"],"After 7 we say 8!"],
+["What number comes right before 5?","❓ ➜ 5","4",["3","6","2"],"Count up: 1, 2, 3, 4, 5. Which one is just before 5?"],
+// World 2 - compare
+["Which number is greater?","7  or  4","7",["4","3","5"],"Greater means bigger. Which has more?"],
+["Which number is smaller?","9  or  6","6",["9","8","10"],"Smaller means less."],
+["Which group has more?",R("🍓",3)+"   vs   "+R("🍓",5),"The second group",["The first group","They are the same","Neither"],"Count each group, then compare.",true],
+["Which is the biggest number?","2    8    5","8",["2","5","3"],"Find the number that is furthest along when you count."],
+["Which number is between 3 and 5?","3  ❓  5","4",["2","6","1"],"Count: 3, ❓, 5"],
+// World 3 - number bonds
+["3 and what make 5?",R("🟢",3)+R("⚪",2),"2",["1","3","4"],"Count how many more you need to get to 5."],
+["4 and 4 make...?",R("🔵",4)+R("🔵",4),"8",["6","7","9"],"Count all the blue dots together."],
+["6 and what make 10?",R("🟡",6)+R("⚪",4),"4",["3","5","6"],"How many more to reach 10?"],
+["7 is made of 5 and ...?","7 = 5 + ❓","2",["1","3","12"],"5, 6, 7 — how many steps?"],
+["10 is made of 3 and ...?","10 = 3 + ❓","7",["6","8","13"],"Count on from 3 to 10."],
+// World 4 - addition
+["3 + 2 = ?",R("🐥",3)+" ➕ "+R("🐥",2),"5",["4","6","7"],"Count all the chicks together."],
+["4 + 5 = ?",R("🍪",4)+" ➕ "+R("🍪",5),"9",["8","10","7"],"Start at 5 and count on 4 more!"],
+["6 + 2 = ?",R("🚗",6)+" ➕ "+R("🚗",2),"8",["7","9","4"],"Start at 6, count on 2."],
+["5 + 5 = ?",R("✋",1)+" ➕ "+R("✋",1),"10",["5","9","15"],"Two hands, 5 fingers each!"],
+["3 + 4 = ?",R("🌸",3)+" ➕ "+R("🌸",4),"7",["6","8","12"],"Count all the flowers."],
+// World 5 - subtraction
+["5 − 2 = ?",R("🎈",5)+"  pop 2! 💥","3",["2","4","7"],"Take away 2 balloons. How many are left?"],
+["8 − 3 = ?",R("🍩",8)+"  eat 3!","5",["4","6","11"],"Count back 3 from 8."],
+["9 − 6 = ?",R("🍌",9)+"  eat 6!","3",["2","4","15"],"9 minus 6 — what is left?"],
+["10 − 4 = ?",R("⚽",10)+"  lose 4!","6",["5","7","14"],"Count back from 10."],
+["7 − 7 = ?",R("🐞",7)+"  all fly away!","0",["1","7","14"],"If all of them go, how many are left?"],
+// World 6 - ordinal
+["Which animal is 3rd from the left?","🐱🐶🐰🐸🐵","🐰",["🐶","🐸","🐱"],"1st 🐱, 2nd 🐶, 3rd ...?"],
+["Which animal is 5th?","🐱🐶🐰🐸🐵","🐵",["🐸","🐰","🐱"],"Count to the 5th one."],
+["Which is 4th from the left?","🚗🚌🚲🚀✈️","🚀",["🚲","✈️","🚌"],"Count: 1st, 2nd, 3rd, 4th."],
+["Which animal is LAST?","🐱🐶🐰🐸🐵","🐵",["🐱","🐰","🐶"],"Last means at the very end."],
+["What comes just after 2nd?","1st → 2nd → ❓","3rd",["1st","4th","5th"],"1st, 2nd, ..."],
+// World 7 - numbers to 20
+["10 and 4 make...?","🔟 ➕ 4","14",["13","15","104"],"Ten and four ones — say it: fourteen!"],
+["What number comes after 19?","19 ➜ ❓","20",["18","21","10"],"After 19 comes twenty!"],
+["Which number is greater?","12  or  18","18",["12","11","10"],"Count up: 12 comes before 18."],
+["15 is 1 ten and how many ones?","15 = 10 + ❓","5",["1","10","15"],"What is left after the ten?"],
+["What number is 1 ten and 8 ones?","🔟 + 8","18",["81","19","17"],"10 and 8 make..."],
+// World 8 - add/sub within 20
+["10 + 6 = ?","10 ➕ 6","16",["15","17","60"],"Ten and six ones."],
+["8 + 7 = ?","8 ➕ 7","15",["14","16","13"],"Make 10 first: 8 + 2 = 10, then 5 more."],
+["9 + 5 = ?","9 ➕ 5","14",["13","15","12"],"9 + 1 = 10, then add 4 more."],
+["17 − 3 = ?","17 ➖ 3","14",["13","15","20"],"Count back 3 from 17."],
+["13 − 4 = ?","13 ➖ 4","9",["8","10","17"],"13 − 3 = 10, then 1 more."],
+// World 9 - shapes & length
+["Which shape is round like a coin?","🪙","Circle",["Square","Triangle","Rectangle"],"No corners, perfectly round!"],
+["How many sides does a triangle have?","🔺","3",["2","4","5"],"Trace around it with your finger."],
+["How many sides does a square have?","🟦","4",["3","5","6"],"A square has 4 equal sides."],
+["Which is longer?","🚌   or   🚗","The bus",["The car","They are the same","I don't know"],"Look at which one stretches further."],
+["Which is shorter?","🌳   or   🌷","The flower",["The tree","They are the same","Neither"],"Shorter means not as tall."],
+// World 10 - tens and ones, time, graph
+["How many tens and ones are in 23?","23","2 tens 3 ones",["3 tens 2 ones","2 tens 2 ones","1 ten 3 ones"],"The first digit is tens, the second is ones."],
+["What number is 3 tens and 5 ones?","🔟🔟🔟 + 5","35",["53","8","30"],"Three tens = 30, then 5 more."],
+["What number comes after 29?","29 ➜ ❓","30",["28","20","39"],"After 29 comes thirty!"],
+["Which fruit has the MOST?","🍎🍎🍎🍎\n🍌🍌\n🍇🍇🍇","🍎",["🍌","🍇","They are all the same"],"Count each row. Which row is longest?"],
+["The short hand points to 3 and the long hand points to 12. What time is it?","🕒","3 o'clock",["12 o'clock","6 o'clock","3:30"],"Short hand tells the hour."]
+];
 
-/* ===== APP ===== */
 const $=id=>document.getElementById(id);
-const el=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n};
-const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const LS="g3-english-quiz-best";
-const store={get(){try{return JSON.parse(localStorage.getItem(LS))}catch(e){return null}},set(v){try{localStorage.setItem(LS,JSON.stringify(v))}catch(e){}}};
+let idx=0,stars=0,tries=0,locked=false,worldStars=0,perWorld=[],muted=false;
+const PRAISE=["Super job! 🌟","Wow, you're a maths star! 🤩","Roar-some! 🦁","Brilliant! 🎉","You got it! 🙌","Fantastic! 🚀","Amazing! 🏅"];
+const OOPS=["Oops! Try again, you can do it! 💪","Almost! Have another go! 🌈","Not quite — think again! 🤔"];
 
-let S={list:[],i:0,score:0,res:[],locked:false,full:false,cur:null};
-
-function show(id){["home","quiz","results"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0)}
-
-function buildHome(){
-  const box=$("cats");box.innerHTML="";
-  CATS.forEach(c=>{
-    const n=QS.filter(q=>q.c===c).length;
-    const b=el("button","cat");b.type="button";
-    b.appendChild(el("b",null,c));b.appendChild(el("span",null,n+" questions"));
-    b.onclick=()=>begin(QS.map((q,i)=>i).filter(i=>QS[i].c===c),false);
-    box.appendChild(b);
-  });
-  const best=store.get();
-  $("best").textContent=best?("Your best full quiz score: "+best.score+" out of "+best.total):"";
+// ---------- sound ----------
+let ac;
+function tone(f,d,type='sine',delay=0,vol=.18){
+  if(muted)return;
+  try{
+    ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    const o=ac.createOscillator(),g=ac.createGain();
+    o.type=type;o.frequency.value=f;o.connect(g);g.connect(ac.destination);
+    const t=ac.currentTime+delay;
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);
+    o.start(t);o.stop(t+d);
+  }catch(e){}
 }
-
-function begin(indices,full){
-  let list=indices.slice();
-  if(full&&$("shuffleQ").checked)list=shuffle(list);
-  S={list,i:0,score:0,res:[],locked:false,full,cur:null};
-  show("quiz");render();
-}
-
-function render(){
-  const idx=S.list[S.i],q=QS[idx];S.locked=false;
-  $("prog").style.width=(S.i/S.list.length*100)+"%";
-  $("qnum").textContent="Question "+(S.i+1)+" of "+S.list.length;
-  $("scoreNow").textContent="Score: "+S.score;
-  $("qcat").textContent=q.c;
-  const pb=$("passage");
-  if(q.p){pb.innerHTML="";pb.appendChild(el("strong",null,"Read this: "+P[q.p][0]));pb.appendChild(el("span",null,P[q.p][1]));pb.classList.remove("hidden")}
-  else pb.classList.add("hidden");
-  $("qtext").textContent=q.q;
-  const opts=shuffle(q.o.map((t,k)=>({t,ok:k===0})));
-  S.cur={idx,opts};
-  const box=$("opts");box.innerHTML="";
-  opts.forEach((o,k)=>{
-    const b=el("button","opt");b.type="button";
-    b.appendChild(el("span","l","ABCD"[k]));b.appendChild(el("span",null,o.t));
-    b.onclick=()=>choose(k,b);
-    box.appendChild(b);
-  });
-  $("fb").classList.add("hidden");
-  $("next").classList.add("hidden");
-  $("next").textContent=(S.i===S.list.length-1)?"See my results \u2192":"Next \u2192";
-}
-
-function choose(k,btn){
-  if(S.locked)return;S.locked=true;
-  const {idx,opts}=S.cur,q=QS[idx],ok=opts[k].ok;
-  const btns=[...document.querySelectorAll("#opts .opt")];
-  btns.forEach((b,j)=>{b.disabled=true;if(opts[j].ok)b.classList.add("right")});
-  if(!ok)btn.classList.add("wrong");
-  if(ok)S.score++;
-  S.res.push({idx,ok,picked:opts[k].t});
-  const fb=$("fb");fb.className="fb "+(ok?"good":"bad");fb.innerHTML="";
-  fb.appendChild(el("b",null,ok?"\u2705 Great job! That's right.":"\u274C Not quite. The answer is: "+q.o[0]));
-  fb.appendChild(el("span",null,q.e));
-  $("scoreNow").textContent="Score: "+S.score;
-  $("next").classList.remove("hidden");$("next").focus();
-}
-
-$("next").onclick=()=>{
-  if(!S.locked)return;
-  if(S.i<S.list.length-1){S.i++;render()}else finish();
+const sfx={
+  right(){[523,659,784,1047].forEach((f,i)=>tone(f,.25,'triangle',i*.09))},
+  wrong(){tone(220,.3,'sawtooth',0,.1);tone(180,.35,'sawtooth',.15,.1)},
+  win(){[523,659,784,659,784,1047,1319].forEach((f,i)=>tone(f,.3,'triangle',i*.12))},
+  click(){tone(660,.08,'square',0,.08)}
 };
 
-function finish(){
-  const total=S.list.length,pct=Math.round(S.score/total*100);
-  $("stars").textContent=pct>=90?"\u2B50\u2B50\u2B50":pct>=70?"\u2B50\u2B50":pct>=50?"\u2B50":"\uD83C\uDF31";
-  $("finalScore").textContent=S.score+" / "+total+" ("+pct+"%)";
-  $("msg").textContent=pct>=90?"Amazing! You are an English superstar!":pct>=70?"Great work! You know a lot already.":pct>=50?"Good effort! Review the missed ones and try again.":"Keep practicing. Every try makes you stronger!";
-  if(S.full){const b=store.get();if(!b||S.score>b.score)store.set({score:S.score,total})}
-  // breakdown
-  const by={};S.res.forEach(r=>{const c=QS[r.idx].c;by[c]=by[c]||{ok:0,n:0};by[c].n++;if(r.ok)by[c].ok++});
-  const brk=$("brk");brk.innerHTML="";
-  CATS.filter(c=>by[c]).forEach(c=>{
-    const row=el("div","r");row.appendChild(el("span",null,c));
-    const bar=el("div","bar");const i=document.createElement("i");i.style.width=(by[c].ok/by[c].n*100)+"%";bar.appendChild(i);row.appendChild(bar);
-    row.appendChild(el("b",null,by[c].ok+"/"+by[c].n));brk.appendChild(row);
-  });
-  // missed
-  const missed=S.res.filter(r=>!r.ok);
-  const mw=$("missedWrap"),ml=$("missed");ml.innerHTML="";
-  mw.classList.toggle("hidden",!missed.length);
-  $("retryMissed").classList.toggle("hidden",!missed.length);
-  missed.forEach(r=>{
-    const q=QS[r.idx],d=el("div","m");
-    if(q.p)d.appendChild(el("div","e","(Reading: "+P[q.p][0]+")"));
-    d.appendChild(el("div","q",q.q));
-    d.appendChild(el("div","y","You picked: "+r.picked));
-    d.appendChild(el("div","c","Correct answer: "+q.o[0]));
-    d.appendChild(el("div","e",q.e));
-    ml.appendChild(d);
-  });
-  $("prog").style.width="100%";
-  show("results");
+// ---------- confetti ----------
+const cv=$('confetti'),cx=cv.getContext('2d');let parts=[],anim=false;
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+function boom(n=120){
+  const cols=['#ff4f9a','#ffd23f','#3db4ff','#22c55e','#8a5cff','#ff7a3d'];
+  for(let i=0;i<n;i++)parts.push({x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*16,vy:Math.random()*-14-3,s:Math.random()*10+5,c:cols[i%cols.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:100+Math.random()*50});
+  if(!anim){anim=true;loop()}
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.vr;p.life--;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore()});
+  parts=parts.filter(p=>p.life>0&&p.y<cv.height+20);
+  if(parts.length)requestAnimationFrame(loop);else{anim=false;cx.clearRect(0,0,cv.width,cv.height)}
 }
 
-$("startAll").onclick=()=>begin(QS.map((q,i)=>i),true);
-$("retryMissed").onclick=()=>begin(S.res.filter(r=>!r.ok).map(r=>r.idx),false);
-$("again").onclick=()=>{buildHome();show("home")};
+// ---------- speech ----------
+function speak(t){
+  if(muted||!('speechSynthesis' in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[➕➖➜❓🔟]/g,m=>({'➕':' plus ','➖':' minus ','➜':' then ','❓':' what ','🔟':' ten '}[m])));u.rate=.85;u.pitch=1.2;speechSynthesis.speak(u)}catch(e){}
+}
 
-document.addEventListener("keydown",e=>{
-  if($("quiz").classList.contains("hidden"))return;
-  if(!S.locked&&"1234".includes(e.key)&&e.key.length===1){
-    const b=document.querySelectorAll("#opts .opt")[+e.key-1];if(b)b.click();
-  }else if(S.locked&&e.key==="Enter"&&document.activeElement!==$("next")){$("next").click()}
-});
+// ---------- helpers ----------
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');scrollTo(0,0)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function renderBadges(el,done){
+  el.innerHTML=WORLDS.map((w,i)=>`<div class="badge ${i<done?'':'locked'}" title="${w.name}">${w.badge}</div>`).join('');
+}
+function best(){try{return +localStorage.getItem('g1maths_best')||0}catch(e){return 0}}
+function saveBest(v){try{if(v>best())localStorage.setItem('g1maths_best',v)}catch(e){}}
 
-buildHome();
+// ---------- game ----------
+function start(){
+  idx=0;stars=0;perWorld=[];$('starCount').textContent=0;
+  loadQ();show('quiz');
+}
+function loadQ(){
+  const q=Q[idx],w=Math.floor(idx/5);
+  tries=0;locked=false;
+  $('worldName').textContent=`World ${w+1}: ${WORLDS[w].name}`;
+  $('qText').textContent=q[0];
+  const v=$('visual');v.innerHTML=q[1].replace(/\n/g,'<br>');
+  v.classList.toggle('small',q[1].length>24);
+  $('qNum').textContent=`${idx+1}/50`;
+  $('fill').style.width=(idx/50*100)+'%';
+  $('mascotSmall').textContent=WORLDS[w].badge;
+  $('bubble').textContent="Pick the right answer!";
+  $('nextBtn').style.display='none';
+  const box=$('opts');box.innerHTML='';
+  shuffle([q[2],...q[3]]).forEach(o=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.onclick=()=>choose(b,o);box.appendChild(b);
+  });
+  setTimeout(()=>speak(q[0]),300);
+}
+function choose(btn,val){
+  if(locked)return;
+  const q=Q[idx];sfx.click();
+  if(val===q[2]){
+    locked=true;btn.classList.add('right');
+    let earned=tries===0?1:0;
+    if(earned){stars++;worldStars++}
+    $('starCount').textContent=stars;
+    $('bubble').textContent=PRAISE[Math.floor(Math.random()*PRAISE.length)]+(earned?" +1 ⭐":"");
+    sfx.right();boom(earned?90:40);
+    document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+    $('nextBtn').style.display='inline-block';
+    $('nextBtn').textContent=(idx%5===4)?'Finish World 🎉':'Next ➜';
+  }else{
+    tries++;btn.classList.add('wrong');btn.disabled=true;sfx.wrong();
+    if(tries>=2){
+      $('bubble').textContent="Hint: "+q[4];
+    }else{
+      $('bubble').textContent=OOPS[Math.floor(Math.random()*OOPS.length)];
+    }
+    if(tries>=3){
+      locked=true;
+      document.querySelectorAll('.opt').forEach(b=>{b.disabled=true;if(b.textContent===q[2])b.classList.add('right')});
+      $('bubble').textContent="The answer is "+q[2]+". You'll get the next one! 💛";
+      $('nextBtn').style.display='inline-block';
+      $('nextBtn').textContent=(idx%5===4)?'Finish World 🎉':'Next ➜';
+    }
+  }
+}
+function next(){
+  sfx.click();
+  if(idx%5===4){worldComplete();return}
+  idx++;loadQ();
+}
+function worldComplete(){
+  const w=Math.floor(idx/5);
+  perWorld.push(worldStars);
+  $('wdTitle').textContent=`${WORLDS[w].name} complete!`;
+  $('wdBadge').textContent=WORLDS[w].badge;
+  $('wdStars').textContent='⭐'.repeat(worldStars)+'☆'.repeat(5-worldStars);
+  $('wdMsg').textContent=worldStars===5?"PERFECT! You earned the "+WORLDS[w].badge+" badge!":worldStars>=3?"Great work! You earned the "+WORLDS[w].badge+" badge!":"Nice try! You earned the "+WORLDS[w].badge+" badge. Keep going!";
+  $('wdNext').textContent=w===9?'See my trophy 🏆':'Next World ➜';
+  worldStars=0;
+  sfx.win();boom(160);show('worldDone');
+}
+function afterWorld(){
+  sfx.click();
+  if(idx>=49){finish();return}
+  idx++;loadQ();show('quiz');
+}
+function finish(){
+  $('fill').style.width='100%';
+  saveBest(stars);
+  $('finalStars').textContent=stars;
+  const r=stars>=45?"🌟 Maths Superstar!":stars>=35?"🦁 Jungle Champion!":stars>=25?"🐒 Clever Explorer!":"🐢 Brave Adventurer!";
+  $('rank').textContent=r;
+  renderBadges($('endBadges'),10);
+  $('endMsg').textContent=stars>=45?"Incredible! Leo the Lion is so proud of you!":stars>=30?"Wonderful work! Play again to win even more stars!":"Great effort! Practise again and you'll collect more stars!";
+  sfx.win();boom(220);setTimeout(()=>boom(140),700);
+  show('end');
+}
+
+// ---------- wire up ----------
+renderBadges($('startBadges'),0);
+const b=best();$('bestNote').textContent=b?`Your best score: ${b} / 50 ⭐`:'';
+$('playBtn').onclick=()=>{sfx.click();start()};
+$('nextBtn').onclick=next;
+$('wdNext').onclick=afterWorld;
+$('againBtn').onclick=()=>{sfx.click();$('bestNote').textContent=`Your best score: ${best()} / 50 ⭐`;renderBadges($('startBadges'),0);show('start')};
+$('muteBtn').onclick=()=>{muted=!muted;$('muteBtn').textContent=muted?'🔇':'🔊';if(muted&&'speechSynthesis' in window)speechSynthesis.cancel()};
+$('readBtn').onclick=()=>{const was=muted;muted=false;speak(Q[idx][0]+'. '+Q[idx][1].replace(/[^\w\s+\-−]/g,' '));muted=was};
 </script>
 </body>
 </html>
