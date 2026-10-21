@@ -1,1368 +1,203 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Think Like a Scientist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negatives Quiz 2</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px}
+.wrap{width:100%;max-width:640px}
+.card{background:var(--card);border-radius:18px;box-shadow:0 6px 24px rgba(30,60,110,.09);padding:28px}
+h1{margin:0 0 6px;font-size:1.7rem}
+.sub{color:var(--muted);margin:0 0 20px}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:13px 22px;font-size:1rem;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt-row{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.bar>div{height:100%;background:var(--brand);width:0;transition:width .25s}
+.sec{display:inline-block;background:#eaf1ff;color:var(--brand-d);font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:12px}
+.q{font-size:1.5rem;font-weight:700;margin:4px 0 18px;line-height:1.35}
+.q.small{font-size:1.2rem}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:center;color:var(--ink)}
+.ans:hover:not(:disabled){border-color:var(--brand)}
+.ans.right{background:var(--okbg);border-color:var(--ok)}
+.ans.wrong{background:var(--badbg);border-color:var(--bad)}
+.ans:disabled{cursor:default}
+.fb{margin-top:18px;padding:14px;border-radius:12px;display:none;line-height:1.5}
+.fb.ok{display:block;background:var(--okbg)}
+.fb.no{display:block;background:var(--badbg)}
+.nav{margin-top:18px;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(3,56px);gap:4px;margin:0 0 18px}
+.grid div{height:50px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border-radius:6px}
+.grid .qm{background:#fff4c9;border-color:#d4a300}
+.grid .blank{background:#f0f3f8;border-color:var(--line);color:var(--muted)}
+.score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
+.review{margin-top:18px;max-height:340px;overflow:auto;border-top:1px solid var(--line)}
+.review div{padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.review b{color:var(--bad)}
+.hidden{display:none}
+@media(max-width:480px){.answers{grid-template-columns:1fr}.q{font-size:1.3rem}.card{padding:20px}}
+</style>
 </head>
 <body>
-<title>Think Like a Scientist</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: a lab notebook on graph paper. One reading column, a sticky lesson strip, sticker-style cards with hard shadows. The boldness lives in the display type and the highlighter-yellow answers that are already filled in. */
-:root{
-  --paper:#F3F7FC;--paper-2:#E4EDF8;--card:#FFFFFF;--ink:#0F2238;--ink-2:#43586F;--line:#C3D3E5;
-  --accent:#2350E2;--on-accent:#FFFFFF;--signal:#D9510B;--good:#0F7A56;--bad:#BE3326;
-  --good-bg:#DDF3EA;--bad-bg:#FBE3DF;--hi:#FFE680;--on-hi:#2A2300;--grid:rgba(35,80,226,.07);
-  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
-  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
-  --mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --paper:#0B1626;--paper-2:#112238;--card:#132A44;--ink:#E7EFF9;--ink-2:#A3B6CB;--line:#27425F;
-  --accent:#7A9BFF;--on-accent:#0B1626;--signal:#FF9158;--good:#43D9A4;--bad:#FF8577;
-  --good-bg:#12392E;--bad-bg:#44201C;--hi:#6A5A10;--on-hi:#FFF3B8;--grid:rgba(122,155,255,.08);color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#0B1626;--paper-2:#112238;--card:#132A44;--ink:#E7EFF9;--ink-2:#A3B6CB;--line:#27425F;
-  --accent:#7A9BFF;--on-accent:#0B1626;--signal:#FF9158;--good:#43D9A4;--bad:#FF8577;
-  --good-bg:#12392E;--bad-bg:#44201C;--hi:#6A5A10;--on-hi:#FFF3B8;--grid:rgba(122,155,255,.08);color-scheme:dark}
-
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:120px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{margin:0;padding-block:0 72px;font-family:var(--body);font-size:17px;line-height:1.65;color:var(--ink);
-  background-color:var(--paper);
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:28px 28px}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-h1,h2,h3{font-family:var(--display);text-wrap:balance}
-h3{font-size:1.28rem;font-weight:800;margin:1.6em 0 .4em;line-height:1.2}
-p{margin:.7em 0}
-b{font-weight:700}
-.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-
-/* sticky lesson strip */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:2px solid var(--ink)}
-.top-in{max-width:980px;margin:0 auto;padding-block:9px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:12px;align-items:center}
-.brand{font-family:var(--display);font-weight:800;font-size:1.02rem;white-space:nowrap;text-decoration:none;color:var(--ink)}
-.chips{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;padding:3px 2px;scrollbar-width:thin}
-.chip{flex:none;min-width:34px;height:34px;padding:0 9px;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:500 .8rem var(--mono);text-decoration:none}
-.chip.done{background:var(--good);border-color:var(--good);color:var(--paper)}
-.chip.on{outline:2.5px solid var(--accent);outline-offset:1px}
-.chip.q{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:500}
-.prog{font:500 .76rem var(--mono);color:var(--ink-2);white-space:nowrap}
-@media (max-width:560px){.brand{display:none}}
-
-/* hero */
-.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center;padding-block:34px 18px}
-.hero>*{min-width:0}
-@media (max-width:760px){.hero{grid-template-columns:1fr}}
-.kicker{font:500 .76rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
-.hero h1{font-weight:800;font-size:clamp(2.5rem,8vw,4.3rem);line-height:.96;letter-spacing:-.025em;margin:.25em 0 .3em}
-.hero h1 em{font-style:normal;background:linear-gradient(transparent 60%,var(--hi) 60%);padding:0 .06em}
-.lead{font-size:1.12rem;color:var(--ink-2);max-width:34em}
-.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
-.btn{display:inline-flex;gap:8px;align-items:center;padding:12px 20px;border-radius:12px;border:2px solid var(--ink);background:var(--accent);color:var(--on-accent);font:700 1rem var(--body);cursor:pointer;text-decoration:none;box-shadow:3px 3px 0 var(--ink);transition:transform .12s,box-shadow .12s}
-.btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.btn.alt{background:var(--card);color:var(--ink)}
-.btn[disabled]{opacity:.55;cursor:default}
-.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-block:18px 6px}
-.how div{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font-size:.96rem}
-.how b{display:block;font-family:var(--display);font-size:1.05rem}
-
-/* figures */
-.fig{margin:22px 0;background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:14px 14px 10px}
-.fig figcaption{font-size:.9rem;color:var(--ink-2);padding:8px 4px 2px}
-.fig2{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;margin:22px 0}
-.fig2>*{min-width:0}
-@media (max-width:700px){.fig2{grid-template-columns:1fr}}
-.fig2 .fig{margin:0}
-svg.il{width:100%;height:auto;display:block;max-height:340px}
-.il .ln{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.il .sh{stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.il .fa{fill:var(--accent)}.il .fs{fill:var(--signal)}.il .fg{fill:var(--good)}.il .fh{fill:var(--hi)}
-.il .fp{fill:var(--paper-2)}.il .fc{fill:var(--card)}.il .fi{fill:var(--ink)}.il .fb{fill:var(--bad)}.il .fn{fill:none}
-.il .grid{stroke:var(--line);stroke-width:1;fill:none}
-.il text{font-family:var(--body);fill:var(--ink);font-size:14px}
-.il .tm{font-family:var(--mono);font-size:12px}
-.il .tb{font-weight:700}
-.il .tw{fill:var(--on-accent)}
-.il .tl{font-family:var(--display);font-weight:800}
-
-/* lessons */
-.lesson{padding-top:40px;margin-top:44px;border-top:2.5px dashed var(--line)}
-.lh{display:flex;gap:16px;align-items:flex-start}
-.lh>div{min-width:0}
-.lnum{font:800 clamp(3rem,11vw,5.2rem)/.82 var(--display);color:transparent;-webkit-text-stroke:2px var(--accent);flex:none;letter-spacing:-.03em}
-.lh h2{font-weight:800;font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.04;margin:.1em 0 0;letter-spacing:-.015em}
-.std{font:500 .72rem var(--mono);color:var(--ink-2);letter-spacing:.05em;margin:0;text-transform:uppercase}
-.big{background:var(--hi);color:var(--on-hi);border-radius:14px;padding:14px 18px;margin-block:20px;font-weight:700;font-size:1.06rem}
-.big .lab,.lab{display:block;font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin-bottom:4px}
-.words{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:14px 0}
-.words div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 13px;min-width:0}
-.words dt{font-weight:700;color:var(--accent)}
-.words dd{margin:2px 0 0;font-size:.95rem}
-.ex{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:16px 18px 14px;margin-block:22px;box-shadow:5px 5px 0 var(--accent)}
-.ex>.lab{color:var(--accent);opacity:1;font-weight:500}
-.ex h4{font-family:var(--display);font-size:1.12rem;margin:.1em 0 .4em}
-.fill{background:var(--hi);color:var(--on-hi);padding:0 .3em;border-radius:4px;font-weight:700}
-.rem{border-left:6px solid var(--signal);padding:6px 0 6px 16px;margin-block:20px}
-.rem .lab{color:var(--signal);opacity:1}
-.tw{overflow-x:auto;margin-block:14px;border-radius:10px}
-table{border-collapse:collapse;width:100%;min-width:470px;background:var(--card);font-size:.95rem}
-th,td{border:1.5px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
-th{background:var(--paper-2);font-family:var(--display);font-weight:700}
-td.mono,.mono{font-family:var(--mono);font-size:.9rem}
-.flow{list-style:none;display:flex;flex-wrap:wrap;gap:12px 30px;padding:0;margin:16px 0}
-.flow li{position:relative;background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:7px 14px;font-weight:700}
-.flow li+li::before{content:"\2192";position:absolute;left:-24px;top:50%;transform:translateY(-52%);color:var(--ink-2);font-weight:700}
-.flow.eng li{border-color:var(--signal)}
-.flow.sci li{border-color:var(--accent)}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-block:14px}
-.cols>*{min-width:0}
-.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:13px 16px}
-.card h4{font-family:var(--display);font-size:1.08rem;margin:0 0 4px}
-.card.do{border-color:var(--good)}.card.dont{border-color:var(--bad)}
-.card ul{margin:.3em 0 0;padding-left:1.15em}
-.card li{margin:.25em 0}
-.yes,.no{list-style:none;padding-left:0!important}
-.yes li::before{content:"\2713\00a0";color:var(--good);font-weight:700}
-.no li::before{content:"\2717\00a0";color:var(--bad);font-weight:700}
-.tag{display:inline-block;font:500 .7rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--paper-2);color:var(--ink-2);border:1px solid var(--line)}
-.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px;margin-block:14px}
-.tools>div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 13px;min-width:0}
-.tools b{display:block}
-.tools .mono{color:var(--accent)}
-.tools p{margin:.25em 0 0;font-size:.93rem;line-height:1.45}
-.calc{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-block:10px}
-.calc input,.calc select{font:500 1rem var(--mono);padding:9px 10px;border:2px solid var(--ink);border-radius:10px;background:var(--paper);color:var(--ink);min-width:0}
-.calc input{width:5.6em}
-.calc output{font:700 1.1rem var(--mono);color:var(--accent)}
-.donebar{display:flex;justify-content:flex-end;margin-top:26px}
-.donebtn{font:700 .95rem var(--body);padding:10px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer}
-.donebtn[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:var(--paper)}
-
-/* quiz */
-.quiz{margin-top:56px;padding-top:40px;border-top:2.5px dashed var(--line)}
-.qcard{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:20px;box-shadow:6px 6px 0 var(--accent)}
-.qmeta{display:flex;justify-content:space-between;gap:10px;font:500 .78rem var(--mono);color:var(--ink-2);flex-wrap:wrap}
-.bar{height:10px;background:var(--paper-2);border-radius:99px;overflow:hidden;margin:10px 0 16px;border:1.5px solid var(--line)}
-.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
-.qtext{font:700 1.2rem/1.35 var(--display);margin:0 0 14px}
-.opts{display:grid;gap:10px}
-.opt{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font:400 1rem/1.45 var(--body);cursor:pointer}
-.opt:hover:not([disabled]){border-color:var(--accent)}
-.opt .k{display:inline-block;width:1.7em;font:500 .85rem var(--mono);color:var(--ink-2)}
-.opt.right{background:var(--good-bg);border-color:var(--good)}
-.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
-.opt[disabled]{cursor:default}
-.fb{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--paper-2);border:1.5px solid var(--line)}
-.fb.ok{border-color:var(--good)}.fb.bad{border-color:var(--bad)}
-.fb b.v{font-family:var(--display)}
-.fb .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.score{font:800 clamp(3rem,12vw,5rem)/1 var(--display);color:var(--accent);margin:.1em 0}
-.miss{display:grid;gap:10px;margin-block:14px}
-.miss .card p{margin:.3em 0}
-.bylesson{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-block:14px}
-.bylesson div{border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;font:500 .82rem var(--mono);background:var(--paper)}
-.bylesson .full{border-color:var(--good);background:var(--good-bg)}
-.foot{margin-top:56px;padding-top:20px;border-top:2.5px dashed var(--line);color:var(--ink-2);font-size:.92rem}
-</style>
-
-<header class="top">
-  <div class="top-in">
-    <a class="brand" href="#top" data-go="top">Think Like a Scientist</a>
-    <nav class="chips" aria-label="Lessons">
-      <a class="chip" href="#l1" data-go="l1" data-c="1">1</a><a class="chip" href="#l2" data-go="l2" data-c="2">2</a><a class="chip" href="#l3" data-go="l3" data-c="3">3</a><a class="chip" href="#l4" data-go="l4" data-c="4">4</a><a class="chip" href="#l5" data-go="l5" data-c="5">5</a><a class="chip" href="#l6" data-go="l6" data-c="6">6</a><a class="chip" href="#l7" data-go="l7" data-c="7">7</a><a class="chip" href="#l8" data-go="l8" data-c="8">8</a><a class="chip" href="#l9" data-go="l9" data-c="9">9</a><a class="chip" href="#l10" data-go="l10" data-c="10">10</a><a class="chip" href="#l11" data-go="l11" data-c="11">11</a><a class="chip" href="#l12" data-go="l12" data-c="12">12</a><a class="chip" href="#l13" data-go="l13" data-c="13">13</a><a class="chip" href="#l14" data-go="l14" data-c="14">14</a><a class="chip q" href="#quiz" data-go="quiz">Quiz</a>
-    </nav>
-    <span class="prog" id="prog">0/14 learned</span>
+<div class="wrap">
+  <div class="card" id="start">
+    <h1>Negatives Quiz 2</h1>
+    <p class="sub">Adding and subtracting negative numbers. 50 new questions, one at a time.</p>
+    <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
+    <button class="btn" id="go">Start quiz</button>
   </div>
-</header>
 
-<main class="wrap" id="top">
-
-<section class="hero">
-  <div>
-    <p class="kicker">Grade 6 Science &middot; Part 1</p>
-    <h1>Think like a <em>scientist</em>.</h1>
-    <p class="lead">Scientific and Engineering Practices, explained one small step at a time. Every lesson has pictures, plain words and worked examples that are already filled in for you. At the end, a 50-question quiz checks what you know.</p>
-    <div class="btns">
-      <a class="btn" href="#l1" data-go="l1">Start Lesson 1</a>
-      <a class="btn alt" href="#quiz" data-go="quiz">Jump to the quiz</a>
-    </div>
+  <div class="card hidden" id="play">
+    <div class="top"><span id="count"></span><span id="scoreLive"></span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <span class="sec" id="sec"></span>
+    <div id="grid"></div>
+    <div class="q" id="qtext"></div>
+    <div class="answers" id="answers"></div>
+    <div class="fb" id="fb"></div>
+    <div class="nav"><button class="btn" id="next" disabled>Next</button></div>
   </div>
-  <figure class="fig" style="margin:0">
-    <svg class="il" viewBox="0 0 520 300" role="img" aria-label="A lab bench with a flask, a magnifying glass looking at a leaf, a notebook with a graph, and a gear">
-      <rect class="fi" x="20" y="252" width="480" height="10" rx="3"/>
-      <rect class="sh fc" x="36" y="130" width="116" height="122" rx="8"/>
-      <path class="ln" d="M52 156H136M52 174H136M52 192H112"/>
-      <polyline class="ln" points="56,238 78,224 98,232 118,208 138,216" style="stroke:var(--accent);stroke-width:3.5"/>
-      <path class="sh fc" d="M200 84H244V136L292 226Q300 250 276 250H168Q144 250 152 226L200 136Z"/>
-      <path class="fa" d="M164 206H280L292 226Q300 248 276 248H168Q144 248 152 226Z"/>
-      <path class="ln" d="M200 84H244V136L292 226Q300 250 276 250H168Q144 250 152 226L200 136Z"/>
-      <rect class="sh fc" x="194" y="78" width="56" height="10" rx="4"/>
-      <circle class="fc" cx="196" cy="230" r="6"/><circle class="fc" cx="222" cy="216" r="4"/><circle class="fc" cx="246" cy="234" r="5"/>
-      <circle class="sh fc" cx="392" cy="146" r="52"/>
-      <circle class="ln" cx="392" cy="146" r="43" style="stroke:var(--accent);stroke-width:1.5"/>
-      <path class="fg" d="M372 170Q374 130 414 122Q412 160 372 170Z"/>
-      <path class="ln" d="M372 170Q386 152 402 136" style="stroke-width:2"/>
-      <path class="ln" d="M430 184L478 234" style="stroke-width:14"/>
-      <circle class="fs" cx="440" cy="52" r="20"/>
-      <circle class="ln" cx="440" cy="52" r="24.5" style="stroke:var(--signal);stroke-width:8;stroke-dasharray:7 5.2"/>
-      <circle class="fc" cx="440" cy="52" r="8"/>
-      <text x="96" y="104" font-size="52" class="tl" style="fill:var(--accent)">?</text>
-      <path class="ln" d="M300 52v18M291 61h18" style="stroke:var(--signal)"/>
-      <path class="ln" d="M60 60v14M53 67h14" style="stroke:var(--accent)"/>
-    </svg>
-  </figure>
-</section>
 
-<div class="how">
-  <div><b>1. Read</b>Each lesson starts with one big idea in a yellow box.</div>
-  <div><b>2. Study the highlights</b>Answers that are <span class="fill">highlighted like this</span> are already filled in for you.</div>
-  <div><b>3. Mark it learned</b>Press the button at the end of a lesson. Your progress is saved.</div>
-  <div><b>4. Take the quiz</b>50 questions. Every answer comes with a clear explanation.</div>
+  <div class="card hidden" id="end">
+    <h1>Quiz complete</h1>
+    <div class="score" id="final"></div>
+    <p class="sub" id="msg"></p>
+    <button class="btn" id="again">Try again</button>
+    <div class="review" id="review"></div>
+  </div>
 </div>
 
-<!-- ============ LESSON 1 ============ -->
-<section class="lesson" id="l1">
-  <header class="lh"><div class="lnum" aria-hidden="true">01</div><div>
-    <p class="std">Standard (a)(1)(A)</p><h2>What Is Scientific Inquiry?</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Scientific inquiry is the <u>planned</u> and <u>deliberate</u> investigation of the <u>natural world</u>, using scientific and engineering practices.</div>
-  <p>That sentence has a lot of big words, so let's take it apart piece by piece.</p>
-  <dl class="words">
-    <div><dt>Inquiry</dt><dd>Asking questions and searching for answers.</dd></div>
-    <div><dt>Planned</dt><dd>You decide the steps <i>before</i> you start. You do not just poke around.</dd></div>
-    <div><dt>Deliberate</dt><dd>You do it on purpose, with a goal, not by accident.</dd></div>
-    <div><dt>Natural world</dt><dd>Everything in nature: weather, plants, animals, rocks, your body, light, forces.</dd></div>
-    <div><dt>Phenomenon</dt><dd>Something you can observe happening, like a rainbow or a ball rolling to a stop.</dd></div>
-    <div><dt>Practices</dt><dd>The things scientists and engineers actually <i>do</i>: ask, plan, test, measure, explain, design.</dd></div>
-  </dl>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 240" role="img" aria-label="A potted plant next to a ruler, a magnifying glass over a leaf, and a notebook with an observation log">
-      <rect class="sh fh" x="24" y="70" width="24" height="150" rx="3"/>
-      <path class="ln" d="M24 85h10M24 100h15M24 115h10M24 130h15M24 145h10M24 160h15M24 175h10M24 190h15M24 205h10" style="stroke-width:1.8"/>
-      <path class="sh fs" d="M80 170H140L132 224H88Z"/>
-      <path class="ln" d="M110 170V104"/>
-      <ellipse class="sh fg" cx="92" cy="128" rx="17" ry="8" transform="rotate(-28 92 128)"/>
-      <ellipse class="sh fg" cx="130" cy="118" rx="17" ry="8" transform="rotate(28 130 118)"/>
-      <circle class="sh fg" cx="110" cy="98" r="8"/>
-      <circle class="sh fc" cx="222" cy="120" r="42"/>
-      <path class="fg" d="M200 138Q202 100 238 96Q236 130 200 138Z"/>
-      <path class="ln" d="M200 138Q214 120 230 106" style="stroke-width:2"/>
-      <path class="ln" d="M252 151L278 182" style="stroke-width:13"/>
-      <rect class="sh fc" x="320" y="26" width="180" height="194" rx="10"/>
-      <circle class="fi" cx="320" cy="52" r="3.5"/><circle class="fi" cx="320" cy="90" r="3.5"/><circle class="fi" cx="320" cy="128" r="3.5"/><circle class="fi" cx="320" cy="166" r="3.5"/><circle class="fi" cx="320" cy="204" r="3.5"/>
-      <rect class="fh" x="336" y="48" width="132" height="8"/>
-      <text x="336" y="56" class="tb">Observation log</text>
-      <text x="336" y="90" class="tm">Day 1, 8:00 a.m.</text>
-      <text x="336" y="114" class="tm">height: 4 cm</text>
-      <text x="336" y="138" class="tm">leaves: 2, green</text>
-      <text x="336" y="162" class="tm">soil: damp</text>
-      <text x="336" y="198" class="tm" style="fill:var(--accent)">Question: will it grow?</text>
-    </svg>
-    <figcaption>A scientist looks closely, measures with a tool, and writes everything down.</figcaption>
-  </figure>
-  <h3>The inquiry loop</h3>
-  <p>Inquiry is not a straight line. It is a loop, because every answer usually leads to a brand-new question.</p>
-  <ol class="flow sci"><li>Observe</li><li>Ask a question</li><li>Plan</li><li>Investigate</li><li>Explain</li><li>New question</li></ol>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Complete the sentence</h4>
-    <p>Scientific inquiry is the <span class="fill">planned</span> and <span class="fill">deliberate</span> investigation of the <span class="fill">natural world</span> using scientific and <span class="fill">engineering</span> practices.</p>
-    <p>Is each of these scientific inquiry? <b>Yes</b> if it is planned, on purpose, and about nature.</p>
-    <ul>
-      <li>Measuring how fast ice melts in sun and in shade: <span class="fill">Yes</span>. It is planned and about nature.</li>
-      <li>Rolling a ball down a ramp and recording how far it goes: <span class="fill">Yes</span>. It is planned, with measurements.</li>
-      <li>Guessing the answer and never checking it: <span class="fill">No</span>. There is no plan and no evidence.</li>
-    </ul>
-  </div>
-  <h3>The four methods of investigation</h3>
-  <p>The method scientists use depends on the question they are asking. The four methods are <b>descriptive</b>, <b>correlative</b>, <b>comparative</b> and <b>experimental</b>. You will meet each one in Lesson 2. The right method should match both the <b>question</b> and your <b>grade level</b>.</p>
-  <div class="rem"><span class="lab">Remember</span>Inquiry is planned, deliberate, and about the natural world. Evidence is what makes it science.</div>
-  <div class="donebar"><button class="donebtn" data-learn="1" aria-pressed="false">Mark Lesson 1 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 2 ============ -->
-<section class="lesson" id="l2">
-  <header class="lh"><div class="lnum" aria-hidden="true">02</div><div>
-    <p class="std">Standard (a)(1)(A) &middot; (b)(1)(B)</p><h2>Four Ways to Investigate</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Different questions need different kinds of investigation. Two quick questions tell you which one to use: <u>Do I have a hypothesis?</u> and <u>Will I compare a treatment with a control?</u></div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 570 214" role="img" aria-label="Three panels: an eye for descriptive investigations, two plants of different heights for comparative investigations, and a control plant beside a treated plant for experimental investigations">
-      <rect class="sh fp" x="2" y="2" width="178" height="208" rx="14"/>
-      <rect class="sh fp" x="196" y="2" width="178" height="208" rx="14"/>
-      <rect class="sh fp" x="390" y="2" width="178" height="208" rx="14"/>
-      <text x="91" y="30" text-anchor="middle" class="tb">Descriptive</text>
-      <ellipse class="sh fc" cx="91" cy="90" rx="44" ry="25"/><circle class="fa" cx="91" cy="90" r="16"/><circle class="fi" cx="91" cy="90" r="6"/>
-      <text x="91" y="150" text-anchor="middle">observe and record</text>
-      <text x="91" y="176" text-anchor="middle" class="tm">no hypothesis</text>
-      <text x="91" y="194" text-anchor="middle" class="tm">no comparing</text>
-      <text x="285" y="26" text-anchor="middle" class="tb">Correlative &amp;</text>
-      <text x="285" y="44" text-anchor="middle" class="tb">Comparative</text>
-      <path class="sh fs" d="M238 138H264L261 158H241Z"/><path class="ln" d="M251 138V118"/><circle class="sh fg" cx="251" cy="112" r="8"/>
-      <path class="sh fs" d="M306 138H332L329 158H309Z"/><path class="ln" d="M319 138V92"/><circle class="sh fg" cx="319" cy="84" r="10"/><ellipse class="sh fg" cx="305" cy="108" rx="11" ry="5" transform="rotate(-25 305 108)"/>
-      <text x="285" y="124" text-anchor="middle" class="tm">vs</text>
-      <text x="285" y="182" text-anchor="middle" class="tm">hypothesis predicts</text>
-      <text x="285" y="198" text-anchor="middle" class="tm">a relationship</text>
-      <text x="479" y="30" text-anchor="middle" class="tb">Experimental</text>
-      <path class="sh fs" d="M430 138H456L453 158H433Z"/><path class="ln" d="M443 138V120"/><circle class="sh fg" cx="443" cy="114" r="7"/>
-      <path class="sh fs" d="M502 138H528L525 158H505Z"/><path class="ln" d="M515 138V94"/><circle class="sh fg" cx="515" cy="86" r="10"/><ellipse class="sh fg" cx="501" cy="110" rx="11" ry="5" transform="rotate(-25 501 110)"/>
-      <path class="fa" d="M494 56q7 11 0 16q-7-5 0-16z"/><path class="fa" d="M536 62q7 11 0 16q-7-5 0-16z"/>
-      <text x="443" y="174" text-anchor="middle" class="tb" style="font-size:12px">Control</text>
-      <text x="515" y="174" text-anchor="middle" class="tb" style="font-size:12px">Treatment</text>
-      <text x="479" y="198" text-anchor="middle" class="tm">treatment vs control</text>
-    </svg>
-    <figcaption>Three pictures for four methods: correlative and comparative investigations share a panel because both look for a relationship.</figcaption>
-  </figure>
-  <div class="tw"><table>
-    <tr><th>Method</th><th>Hypothesis?</th><th>What you do</th><th>Example</th></tr>
-    <tr><td><b>Descriptive</b></td><td>No</td><td>Collect data and record observations. You do not compare.</td><td>Record the weather in your town every day for two weeks.</td></tr>
-    <tr><td><b>Correlative</b></td><td>Yes</td><td>Measure two things as they naturally happen and look for a relationship.</td><td>Do taller students have longer feet?</td></tr>
-    <tr><td><b>Comparative</b></td><td>Yes</td><td>Measure variables, change a condition between setups, and compare the results.</td><td>Which of three paper towel brands soaks up the most water?</td></tr>
-    <tr><td><b>Experimental</b></td><td>Yes</td><td>Test the hypothesis by comparing a <b>treatment</b> group with a <b>control</b> group.</td><td>Does fertilizer make bean plants grow taller than plants with no fertilizer?</td></tr>
-  </table></div>
-  <h3>Which one do I use?</h3>
-  <ol class="flow sci" style="gap:12px 30px">
-    <li>Do I have a hypothesis?</li><li>No &rarr; <b>Descriptive</b></li>
-  </ol>
-  <ol class="flow sci" style="margin-top:-4px">
-    <li>Do I have a hypothesis?</li><li>Yes: treatment vs control? Yes &rarr; <b>Experimental</b></li>
-  </ol>
-  <ol class="flow sci" style="margin-top:-4px">
-    <li>Do I have a hypothesis?</li><li>Yes: treatment vs control? No &rarr; <b>Correlative or Comparative</b></li>
-  </ol>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Sort these four investigations</h4>
-    <div class="tw"><table>
-      <tr><th>What happened</th><th>Type</th><th>Why</th></tr>
-      <tr><td>Mia records the temperature, wind and clouds at noon every day for 14 days.</td><td><span class="fill">Descriptive</span></td><td>She only collects observations. There is no hypothesis and no comparison.</td></tr>
-      <tr><td>Ken predicts that taller classmates have bigger feet. He measures the height and foot length of 20 classmates.</td><td><span class="fill">Correlative</span></td><td>His hypothesis predicts a relationship between two measured things.</td></tr>
-      <tr><td>Ava soaks up water with 3 brands of paper towel and compares how much each holds.</td><td><span class="fill">Comparative</span></td><td>She compares results across conditions. No group is left untreated.</td></tr>
-      <tr><td>Leo thinks salt makes ice melt faster. He salts 5 ice cubes and leaves 5 ice cubes plain.</td><td><span class="fill">Experimental</span></td><td>He tests a hypothesis by comparing a treatment (salt) with a control (no salt).</td></tr>
-    </table></div>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>Different books sometimes use slightly different names. Do not worry about that. Ask the two questions: <b>hypothesis?</b> and <b>treatment vs control?</b></div>
-  <div class="donebar"><button class="donebtn" data-learn="2" aria-pressed="false">Mark Lesson 2 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 3 ============ -->
-<section class="lesson" id="l3">
-  <header class="lh"><div class="lnum" aria-hidden="true">03</div><div>
-    <p class="std">Standard (a)(1)(A)(i)&ndash;(ii) &middot; (b)(1)</p><h2>Scientists and Engineers</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Scientists ask <u>why</u> and explain the world. Engineers ask <u>how</u> and design solutions to problems. Both use tools and models.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 196" role="img" aria-label="A blue circle saying WHY for scientists and an orange circle saying HOW for engineers, joined by tools and models">
-      <line class="ln" x1="172" y1="80" x2="204" y2="80"/><line class="ln" x1="316" y1="80" x2="348" y2="80"/>
-      <circle class="sh fa" cx="120" cy="80" r="52"/><text x="120" y="92" text-anchor="middle" class="tl tw" style="font-size:32px">WHY?</text>
-      <circle class="sh fs" cx="400" cy="80" r="52"/><text x="400" y="92" text-anchor="middle" class="tl tw" style="font-size:32px">HOW?</text>
-      <rect class="sh fh" x="204" y="56" width="112" height="48" rx="24"/><text x="260" y="76" text-anchor="middle" style="font-size:13px;fill:var(--on-hi);font-weight:700">tools +</text><text x="260" y="92" text-anchor="middle" style="font-size:13px;fill:var(--on-hi);font-weight:700">models</text>
-      <text x="120" y="164" text-anchor="middle" class="tb">Scientist</text><text x="120" y="184" text-anchor="middle" class="tm">explains the world</text>
-      <text x="400" y="164" text-anchor="middle" class="tb">Engineer</text><text x="400" y="184" text-anchor="middle" class="tm">solves a problem</text>
-    </svg>
-  </figure>
-  <div class="cols">
-    <div class="card"><h4>Scientific practices</h4><p>Students <b>ask questions</b>, <b>plan and conduct investigations</b> to answer them, and <b>explain phenomena</b> using appropriate tools and models.</p></div>
-    <div class="card"><h4>Engineering practices</h4><p>Students <b>identify problems</b> and <b>design solutions</b> using appropriate tools and models.</p></div>
-  </div>
-  <h3>Two loops</h3>
-  <p>The science loop:</p>
-  <ol class="flow sci"><li>Observe</li><li>Ask a question</li><li>Plan and investigate</li><li>Collect data</li><li>Explain</li></ol>
-  <p>The engineering loop:</p>
-  <ol class="flow eng"><li>Define the problem</li><li>Imagine and design</li><li>Build a model</li><li>Test</li><li>Improve</li></ol>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Same topic, two different jobs: paper airplanes</h4>
-    <div class="tw"><table>
-      <tr><th></th><th>Scientist</th><th>Engineer</th></tr>
-      <tr><td><b>Starts with</b></td><td>a question</td><td>a problem</td></tr>
-      <tr><td><b>Asks</b></td><td><span class="fill">Does the length of the wings change how far a paper airplane flies?</span></td><td><span class="fill">Can we design a paper airplane that flies at least 5 m and carries one paperclip?</span></td></tr>
-      <tr><td><b>Does</b></td><td>Flies planes with different wing lengths and measures the distances.</td><td>Builds a model, tests it, and improves it until it works.</td></tr>
-      <tr><td><b>Ends with</b></td><td>an <b>explanation</b> supported by data</td><td>a <b>solution</b> that meets the requirements</td></tr>
-    </table></div>
-    <p><b>Criteria</b> are what the solution must do: <span class="fill">fly 5 m or more</span> and <span class="fill">carry one paperclip</span>. <b>Constraints</b> are the limits: <span class="fill">one sheet of paper</span>, <span class="fill">20 minutes</span> and <span class="fill">10 cm of tape</span>.</p>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>For <b>at least 40%</b> of your class time you should be doing real science: asking questions, finding problems, and safely carrying out investigations in the classroom, lab or outdoors. Science is something you <i>do</i>.</div>
-  <div class="donebar"><button class="donebtn" data-learn="3" aria-pressed="false">Mark Lesson 3 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 4 ============ -->
-<section class="lesson" id="l4">
-  <header class="lh"><div class="lnum" aria-hidden="true">04</div><div>
-    <p class="std">Standard (b)(1)(A)</p><h2>Asking Questions and Defining Problems</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Science starts with a <u>testable question</u>. Engineering starts with a <u>clearly defined problem</u>. Both begin with something you notice.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 212" role="img" aria-label="Ice cubes melting in the sun beside ice cubes staying frozen in the shade, with the question: how does sunlight affect melting?">
-      <circle class="fs" cx="96" cy="46" r="22"/>
-      <path class="ln" d="M96 10v10M96 72v10M60 46h10M122 46h10M70 20l7 7M115 65l7 7M122 20l-7 7M77 65l-7 7" style="stroke:var(--signal)"/>
-      <ellipse cx="96" cy="176" rx="56" ry="10" style="fill:var(--accent);opacity:.45"/>
-      <rect class="sh fc" x="86" y="158" width="20" height="20" rx="3"/>
-      <text x="96" y="204" text-anchor="middle" class="tb">In the sun</text>
-      <path class="sh fp" d="M356 78Q338 78 342 62Q346 50 360 52Q364 34 384 38Q398 24 416 38Q438 34 440 56Q456 58 452 72Q450 78 440 78Z"/>
-      <rect class="sh fc" x="368" y="136" width="34" height="34" rx="4"/><rect class="sh fc" x="410" y="142" width="28" height="28" rx="4"/>
-      <path class="ln" d="M350 172H456" style="stroke-width:2"/>
-      <text x="404" y="204" text-anchor="middle" class="tb">In the shade</text>
-      <rect class="sh fh" x="188" y="22" width="144" height="64" rx="16"/>
-      <text x="260" y="48" text-anchor="middle" style="fill:var(--on-hi);font-weight:700;font-size:14px">How does sunlight</text>
-      <text x="260" y="68" text-anchor="middle" style="fill:var(--on-hi);font-weight:700;font-size:14px">affect melting?</text>
-    </svg>
-    <figcaption>Notice something, wonder about it, then turn the wondering into a question you can test.</figcaption>
-  </figure>
-  <h3>Where do questions come from?</h3>
-  <p>Good questions can come from <b>observations</b> or information in a <b>text</b>, a <b>phenomenon</b>, a <b>model</b>, or an earlier <b>investigation</b>. Any time you think &ldquo;huh, why did that happen?&rdquo;, you have found a question.</p>
-  <h3>What makes a question testable?</h3>
-  <p>A testable question can be answered by <b>measuring or observing</b>. A handy pattern: <b>&ldquo;How does ___ affect ___?&rdquo;</b></p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Testable or not?</h4>
-    <div class="tw"><table>
-      <tr><th>Question</th><th>Testable?</th><th>Why</th></tr>
-      <tr><td>How does the amount of sunlight change how tall a bean plant grows?</td><td><span class="fill">Yes</span></td><td>You can give plants different light and measure their height.</td></tr>
-      <tr><td>Which flower colour is the prettiest?</td><td><span class="fill">No</span></td><td>It is an opinion. You cannot measure &ldquo;pretty&rdquo;.</td></tr>
-      <tr><td>Does the temperature of water change how fast sugar dissolves?</td><td><span class="fill">Yes</span></td><td>You can measure the water temperature and the time to dissolve.</td></tr>
-      <tr><td>Should people be allowed to keep pet snakes?</td><td><span class="fill">No</span></td><td>It depends on values and opinions. That is a social or ethical decision, not a science test.</td></tr>
-    </table></div>
-  </div>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>From observation to question</h4>
-    <p><b>Observation:</b> <span class="fill">Ice cubes in a cup in the sun melted faster than ice cubes in a cup in the shade.</span></p>
-    <p><b>I wonder:</b> <span class="fill">Is it the sunlight that makes the ice melt faster?</span></p>
-    <p><b>Testable question:</b> <span class="fill">How does sunlight affect how fast ice melts?</span></p>
-  </div>
-  <h3>Defining an engineering problem</h3>
-  <p>A well-defined problem says what is wrong, who it affects, what the solution <b>must do</b> (criteria) and what <b>limits</b> you have (constraints).</p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>The flooding school garden</h4>
-    <p><b>Problem:</b> <span class="fill">After heavy rain the school garden floods and the seedlings drown.</span></p>
-    <p><b>Who is affected:</b> <span class="fill">the students and teachers who grow vegetables there</span></p>
-    <p><b>Criteria (must do):</b> <span class="fill">drain the water within 1 hour</span> and <span class="fill">keep seedlings in place</span></p>
-    <p><b>Constraints (limits):</b> <span class="fill">a budget of 50 dollars</span>, <span class="fill">built by students in 2 weeks</span>, <span class="fill">recycled materials</span></p>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>Testable = you can measure it. Opinion questions are not testable by science.</div>
-  <div class="donebar"><button class="donebtn" data-learn="4" aria-pressed="false">Mark Lesson 4 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 5 ============ -->
-<section class="lesson" id="l5">
-  <header class="lh"><div class="lnum" aria-hidden="true">05</div><div>
-    <p class="std">Standard (b)(1)(B)</p><h2>Planning a Fair Test</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>In a fair test you change <u>only one thing</u>, measure its effect, and keep everything else the <u>same</u>.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 252" role="img" aria-label="A control bean plant without fertilizer next to a taller treated plant, both in the same light, with the independent and dependent variables labelled">
-      <circle class="fs" cx="42" cy="32" r="14"/>
-      <path class="ln" d="M42 6v7M42 51v7M16 32h7M61 32h7" style="stroke:var(--signal)"/>
-      <text x="68" y="37" class="tm">same light, soil and water</text>
-      <rect class="sh fh" x="34" y="150" width="16" height="88" rx="2"/>
-      <path class="ln" d="M34 164h7M34 178h10M34 192h7M34 206h10M34 220h7" style="stroke-width:1.6"/>
-      <text x="130" y="116" text-anchor="middle" class="tb">Control</text><text x="130" y="134" text-anchor="middle" class="tm">no fertilizer</text>
-      <path class="sh fs" d="M100 192H160L152 240H108Z"/><path class="ln" d="M130 192V152"/>
-      <ellipse class="sh fg" cx="116" cy="164" rx="15" ry="7" transform="rotate(-28 116 164)"/><ellipse class="sh fg" cx="144" cy="156" rx="15" ry="7" transform="rotate(28 144 156)"/>
-      <rect class="sh fh" x="426" y="110" width="16" height="128" rx="2"/>
-      <path class="ln" d="M426 124h7M426 138h10M426 152h7M426 166h10M426 180h7M426 194h10M426 208h7M426 222h10" style="stroke-width:1.6"/>
-      <text x="380" y="68" text-anchor="middle" class="tb">Treatment</text><text x="380" y="86" text-anchor="middle" class="tm">fertilizer added</text>
-      <path class="sh fs" d="M350 192H410L402 240H358Z"/><path class="ln" d="M380 192V118"/>
-      <ellipse class="sh fg" cx="364" cy="136" rx="16" ry="7" transform="rotate(-28 364 136)"/><ellipse class="sh fg" cx="396" cy="126" rx="16" ry="7" transform="rotate(28 396 126)"/><ellipse class="sh fg" cx="368" cy="162" rx="14" ry="6" transform="rotate(-20 368 162)"/>
-      <path class="fa" d="M350 48q6 10 0 14q-6-4 0-14z"/><path class="fa" d="M412 52q6 10 0 14q-6-4 0-14z"/>
-      <text x="255" y="164" text-anchor="middle" class="tb" style="font-size:13px">Independent variable</text>
-      <text x="255" y="182" text-anchor="middle" class="tm">fertilizer: yes or no</text>
-      <text x="255" y="212" text-anchor="middle" class="tb" style="font-size:13px">Dependent variable</text>
-      <text x="255" y="230" text-anchor="middle" class="tm">plant height (cm)</text>
-    </svg>
-  </figure>
-  <dl class="words">
-    <div><dt>Independent variable</dt><dd>The one thing <b>you change</b> on purpose. (Fertilizer or no fertilizer.)</dd></div>
-    <div><dt>Dependent variable</dt><dd>What you <b>measure</b> to see the effect. It <i>depends</i> on the change. (Plant height.)</dd></div>
-    <div><dt>Controlled variables</dt><dd>Everything you <b>keep the same</b> so the test is fair. (Soil, light, water, pot size, bean type.)</dd></div>
-    <div><dt>Control group</dt><dd>The group that gets <b>no treatment</b>. You compare against it.</dd></div>
-    <div><dt>Treatment group</dt><dd>The group that gets the thing you are testing.</dd></div>
-    <div><dt>Hypothesis</dt><dd>A tentative, <b>testable</b> prediction, written as &ldquo;If&hellip; then&hellip; because&hellip;&rdquo;.</dd></div>
-  </dl>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>A complete investigation plan</h4>
-    <div class="tw"><table>
-      <tr><th style="width:34%">Part of the plan</th><th>Filled in</th></tr>
-      <tr><td><b>Question</b></td><td><span class="fill">How does fertilizer affect the height of bean plants?</span></td></tr>
-      <tr><td><b>Hypothesis</b></td><td><span class="fill">If bean plants are given fertilizer, then they will grow taller than plants without it, because fertilizer adds nutrients that help plants grow.</span></td></tr>
-      <tr><td><b>Independent variable</b></td><td><span class="fill">Fertilizer (with or without)</span></td></tr>
-      <tr><td><b>Dependent variable</b></td><td><span class="fill">Plant height in centimetres after 14 days</span></td></tr>
-      <tr><td><b>Controlled variables</b></td><td><span class="fill">Same type of bean, same soil, same pot size, same amount of water, same sunlight, same temperature</span></td></tr>
-      <tr><td><b>Control group</b></td><td><span class="fill">3 pots with no fertilizer</span></td></tr>
-      <tr><td><b>Treatment group</b></td><td><span class="fill">3 pots with fertilizer</span></td></tr>
-      <tr><td><b>Trials</b></td><td><span class="fill">3 plants in each group, so we can find a mean</span></td></tr>
-      <tr><td><b>Safety</b></td><td><span class="fill">Wear gloves with fertilizer, do not touch your face, wash hands afterwards</span></td></tr>
-    </table></div>
-  </div>
-  <h3>Why change only one thing?</h3>
-  <p>If one group got fertilizer <i>and</i> more sunlight, and it grew taller, you could not tell whether the fertilizer or the sunlight did it. Changing one variable at a time is what makes a test <b>fair</b>.</p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Spot the unfair test</h4>
-    <p>Mia puts some bean pots on a sunny window with 100 mL of water and others in a dark cupboard with 50 mL of water. Is this a fair test?</p>
-    <p><span class="fill">No.</span> She changed <span class="fill">two</span> variables (light and water). To make it fair she should change only <span class="fill">one</span>, for example the light, and give every pot the <span class="fill">same</span> amount of water.</p>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>Hypothesis recipe: <b>If</b> (the change), <b>then</b> (what will happen), <b>because</b> (the science reason).</div>
-  <div class="donebar"><button class="donebtn" data-learn="5" aria-pressed="false">Mark Lesson 5 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 6 ============ -->
-<section class="lesson" id="l6">
-  <header class="lh"><div class="lnum" aria-hidden="true">06</div><div>
-    <p class="std">Standard (b)(1)(C)</p><h2>Lab Safety</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Safety comes <u>before</u> science. Good scientists plan for safety every single time, in the classroom, the lab and outdoors.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 600 196" role="img" aria-label="Safety goggles, a lab coat, gloves, a closed shoe, an eyewash sign and a fire extinguisher">
-      <circle class="sh fc" cx="34" cy="70" r="16"/><circle class="sh fc" cx="66" cy="70" r="16"/>
-      <circle class="fa" cx="34" cy="70" r="11" style="opacity:.35"/><circle class="fa" cx="66" cy="70" r="11" style="opacity:.35"/>
-      <path class="ln" d="M50 68h0M18 66H6M82 66h12"/>
-      <path class="sh fc" d="M122 46L138 34L150 54L162 34L178 46L172 122H128Z"/>
-      <path class="ln" d="M150 54V122M138 34L150 54L162 34"/><circle class="fi" cx="144" cy="74" r="2.5"/><circle class="fi" cx="144" cy="92" r="2.5"/><rect class="sh fp" x="157" y="88" width="14" height="16" rx="2"/>
-      <path class="sh fs" d="M230 122V80Q230 70 237 70Q243 70 243 80V64Q243 55 250 55Q257 55 257 64V62Q257 54 264 54Q271 54 271 62V72Q271 64 277 66Q282 69 280 78L278 104Q276 122 264 126H240Q230 126 230 122Z"/>
-      <rect class="sh fc" x="232" y="124" width="46" height="12" rx="3"/>
-      <path class="sh fc" d="M318 112V78Q318 70 326 70H340Q344 88 358 92L378 98Q388 102 388 112V118H318Z"/>
-      <rect class="sh fi" x="316" y="116" width="74" height="9" rx="4"/><path class="ln" d="M344 90l8-6M352 96l8-6" style="stroke-width:2"/>
-      <rect class="sh fg" x="420" y="42" width="60" height="70" rx="9"/>
-      <path class="fc" d="M440 60q9 15 0 22q-9-7 0-22z"/><path class="fc" d="M462 60q9 15 0 22q-9-7 0-22z"/><path class="ln" d="M432 98q18 10 36 0" style="stroke:var(--card)"/>
-      <rect class="sh fb" x="535" y="54" width="30" height="64" rx="10"/><rect class="sh fi" x="544" y="40" width="12" height="16" rx="2"/>
-      <path class="ln" d="M556 42H574M574 42Q586 58 570 80"/><rect class="sh fc" x="538" y="76" width="24" height="18" rx="2"/>
-      <g class="tb" style="font-size:13px"><text x="50" y="164" text-anchor="middle">Goggles</text><text x="150" y="164" text-anchor="middle">Lab coat</text><text x="250" y="164" text-anchor="middle">Gloves</text><text x="350" y="164" text-anchor="middle">Closed shoes</text><text x="450" y="164" text-anchor="middle">Eyewash</text><text x="550" y="164" text-anchor="middle">Extinguisher</text></g>
-      <g class="tm"><text x="50" y="184" text-anchor="middle">eyes</text><text x="150" y="184" text-anchor="middle">body</text><text x="250" y="184" text-anchor="middle">hands</text><text x="350" y="184" text-anchor="middle">feet</text><text x="450" y="184" text-anchor="middle">splashes</text><text x="550" y="184" text-anchor="middle">fire</text></g>
-    </svg>
-    <figcaption>Know where the eyewash, fire extinguisher, first-aid kit and exits are before you begin.</figcaption>
-  </figure>
-  <p>Your class follows safety standards approved for schools. They all come down to common sense, planning ahead, and listening to your teacher.</p>
-  <div class="cols">
-    <div class="card do"><h4>Always</h4><ul class="yes">
-      <li>Read all the steps and listen to instructions before you start.</li>
-      <li>Wear safety goggles when told to.</li>
-      <li>Tie back long hair and keep loose sleeves out of the way.</li>
-      <li>Wear closed-toe shoes.</li>
-      <li>Tell your teacher at once about spills, breakages and injuries.</li>
-      <li>Treat a hot plate as hot, and use heat-protective gloves or tongs.</li>
-      <li>Wash your hands and clean up when you finish.</li>
-    </ul></div>
-    <div class="card dont"><h4>Never</h4><ul class="no">
-      <li>Eat, drink or chew gum in the lab.</li>
-      <li>Taste chemicals or lab materials.</li>
-      <li>Sniff a substance directly. If told to smell it, gently waft the fumes toward you with your hand.</li>
-      <li>Run or play around.</li>
-      <li>Pick up broken glass with bare hands.</li>
-      <li>Mix materials that are not in the instructions.</li>
-      <li>Leave a hot plate on when you are not using it.</li>
-    </ul></div>
-  </div>
-  <h3>Safety outdoors (field investigations)</h3>
-  <ul>
-    <li>Stay with your group and your teacher.</li>
-    <li>Wear sun protection and sensible shoes, and carry water.</li>
-    <li>Do not touch or taste unknown plants, animals or mushrooms.</li>
-    <li>Watch your footing near water, slopes and roads.</li>
-  </ul>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>What should you do?</h4>
-    <div class="tw"><table>
-      <tr><th>Situation</th><th>What to do</th></tr>
-      <tr><td>A chemical splashes into your eye.</td><td><span class="fill">Go to the eyewash station straight away and tell your teacher.</span></td></tr>
-      <tr><td>A glass beaker breaks.</td><td><span class="fill">Stop, keep others away, and tell your teacher. Do not pick up the glass with bare hands.</span></td></tr>
-      <tr><td>You need to smell a liquid.</td><td><span class="fill">Waft the fumes gently toward your nose with your hand. Never put your nose to the container.</span></td></tr>
-      <tr><td>You have long hair and are using a hot plate.</td><td><span class="fill">Tie your hair back and use heat-protective gloves.</span></td></tr>
-    </table></div>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>If you are not sure whether something is safe, <b>stop and ask</b> your teacher first.</div>
-  <div class="donebar"><button class="donebtn" data-learn="6" aria-pressed="false">Mark Lesson 6 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 7 ============ -->
-<section class="lesson" id="l7">
-  <header class="lh"><div class="lnum" aria-hidden="true">07</div><div>
-    <p class="std">Standard (b)(1)(D)</p><h2>Science Tools</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Choosing the <u>right tool</u> and using it <u>correctly</u> is how scientists get measurements they can trust.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 600 200" role="img" aria-label="Six science tools: graduated cylinder, ruler, balance, thermometer, spring scale and microscope">
-      <g>
-        <rect class="sh fc" x="34" y="26" width="32" height="112" rx="4"/><rect class="fa" x="36" y="78" width="28" height="58"/>
-        <path class="ln" d="M34 46h10M34 62h6M34 78h10M34 94h6M34 110h10M34 126h6" style="stroke-width:1.6"/>
-        <rect class="sh fi" x="26" y="138" width="48" height="9" rx="3"/>
-      </g>
-      <g transform="translate(100 0)">
-        <rect class="sh fh" x="38" y="20" width="26" height="128" rx="3"/>
-        <path class="ln" d="M38 36h10M38 50h15M38 64h10M38 78h15M38 92h10M38 106h15M38 120h10M38 134h15" style="stroke-width:1.6"/>
-      </g>
-      <g transform="translate(200 0)">
-        <circle class="sh fa" cx="50" cy="66" r="12"/><ellipse class="sh fp" cx="50" cy="88" rx="36" ry="7"/>
-        <path class="ln" d="M50 95V108"/><rect class="sh fc" x="14" y="108" width="72" height="40" rx="8"/>
-        <rect class="sh fh" x="28" y="118" width="44" height="18" rx="3"/><text x="50" y="131" text-anchor="middle" class="tm" style="fill:var(--on-hi);font-size:11px">125.0</text>
-      </g>
-      <g transform="translate(300 0)">
-        <rect class="sh fc" x="43" y="18" width="14" height="106" rx="7"/><rect class="fs" x="47" y="54" width="6" height="72"/><circle class="sh fs" cx="50" cy="134" r="14"/>
-        <path class="ln" d="M43 38h-8M43 54h-5M43 70h-8M43 86h-5M43 102h-8" style="stroke-width:1.6"/>
-      </g>
-      <g transform="translate(400 0)">
-        <circle class="ln" cx="50" cy="18" r="6"/><rect class="sh fc" x="40" y="24" width="20" height="90" rx="4"/>
-        <path class="ln" d="M40 42h8M40 56h8M40 70h8M40 84h8" style="stroke-width:1.6"/><rect class="fs" x="38" y="68" width="24" height="4"/>
-        <path class="ln" d="M50 114v12q-8 6 0 12"/><rect class="sh fa" x="36" y="138" width="28" height="12" rx="3"/>
-      </g>
-      <g transform="translate(500 0)">
-        <rect class="sh fi" x="20" y="138" width="62" height="10" rx="3"/>
-        <path class="ln" d="M68 138C96 130 96 74 66 54" style="stroke-width:8"/>
-        <rect class="sh fa" x="38" y="26" width="18" height="54" rx="4" transform="rotate(-18 47 53)"/>
-        <rect class="sh fi" x="28" y="112" width="40" height="6" rx="2"/><rect class="sh fi" x="40" y="86" width="9" height="14" rx="2" transform="rotate(-18 44 93)"/>
-      </g>
-      <g class="tb" style="font-size:13px"><text x="50" y="170" text-anchor="middle">Cylinder</text><text x="150" y="170" text-anchor="middle">Ruler</text><text x="250" y="170" text-anchor="middle">Balance</text><text x="350" y="170" text-anchor="middle">Thermometer</text><text x="450" y="170" text-anchor="middle">Spring scale</text><text x="550" y="170" text-anchor="middle">Microscope</text></g>
-      <g class="tm"><text x="50" y="190" text-anchor="middle">volume (mL)</text><text x="150" y="190" text-anchor="middle">length (cm)</text><text x="250" y="190" text-anchor="middle">mass (g)</text><text x="350" y="190" text-anchor="middle">temp. (&deg;C)</text><text x="450" y="190" text-anchor="middle">force (N)</text><text x="550" y="190" text-anchor="middle">tiny things</text></g>
-    </svg>
-  </figure>
-  <h3>Measuring tools</h3>
-  <div class="tools">
-    <div><b>Graduated cylinder</b><span class="mono">volume of liquid &middot; mL</span><p>Read it at eye level, at the bottom of the curved water surface (the meniscus).</p></div>
-    <div><b>Metric ruler</b><span class="mono">length &middot; cm, mm</span><p>Line the object up with the 0 mark and look straight down at the scale.</p></div>
-    <div><b>Balance</b><span class="mono">mass &middot; g, kg</span><p>Set it to zero first. Put the object in the middle of the pan.</p></div>
-    <div><b>Scale</b><span class="mono">weight or mass of bigger objects</span><p>Make sure it sits on a flat surface and reads zero before you start.</p></div>
-    <div><b>Thermometer / temperature probe</b><span class="mono">temperature &middot; &deg;C</span><p>Wait until the reading stops changing. Never use it to stir.</p></div>
-    <div><b>Timing device</b><span class="mono">time &middot; s</span><p>A stopwatch or timer. Start and stop on a clear signal, and repeat the timing.</p></div>
-    <div><b>Spring scale / force sensor</b><span class="mono">force &middot; N (newtons)</span><p>Hold it straight up and down and read it when it stops moving.</p></div>
-  </div>
-  <h3>Tools for looking closer and testing</h3>
-  <div class="tools">
-    <div><b>Hand lens</b><p>Magnifies small details of rocks, insects, leaves.</p></div>
-    <div><b>Microscope and slides</b><p>Shows cells and other things too small to see with your eyes.</p></div>
-    <div><b>Petri dish</b><p>A shallow, covered dish for growing or observing tiny organisms.</p></div>
-    <div><b>Dissecting kit</b><p>Used carefully, with your teacher, to examine specimens.</p></div>
-    <div><b>Magnet</b><p>Tests which materials are magnetic and shows magnetic forces.</p></div>
-    <div><b>pH indicator</b><p>Changes colour to show whether a liquid is acidic, neutral or basic.</p></div>
-    <div><b>Hot plate</b><p>Heats materials. Always assume it is hot and wear heat-protective gloves.</p></div>
-    <div><b>Laboratory ware</b><p>Beakers, flasks, test tubes and similar containers for holding, mixing and heating.</p></div>
-    <div><b>Periodic table</b><p>Lists the elements, so you can look up their type and properties.</p></div>
-    <div><b>Models and life science models</b><p>Stand-ins for things that are too big, too small or too hard to study directly.</p></div>
-    <div><b>Satellite images</b><p>Show Earth from space: weather, land, oceans and ice.</p></div>
-    <div><b>Tools that model wave behaviour</b><p>A slinky or rope shows how waves move and carry energy.</p></div>
-    <div><b>Lab notebook or journal</b><p>Where you record plans, observations, data and ideas as they happen.</p></div>
-  </div>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Pick the right tool</h4>
-    <div class="tw"><table>
-      <tr><th>Job</th><th>Best tool</th></tr>
-      <tr><td>Measure how much juice is in a cup.</td><td><span class="fill">Graduated cylinder (mL)</span></td></tr>
-      <tr><td>Measure the length of a leaf.</td><td><span class="fill">Metric ruler (cm)</span></td></tr>
-      <tr><td>Find the mass of a rock.</td><td><span class="fill">Balance (g)</span></td></tr>
-      <tr><td>Check the temperature of warm water.</td><td><span class="fill">Thermometer (&deg;C)</span></td></tr>
-      <tr><td>Time how long a ball takes to roll down a ramp.</td><td><span class="fill">Timing device (s)</span></td></tr>
-      <tr><td>Measure the pull of gravity on a hanging weight.</td><td><span class="fill">Spring scale (N)</span></td></tr>
-      <tr><td>Look at the cells in an onion skin.</td><td><span class="fill">Microscope and slide</span></td></tr>
-      <tr><td>Find out if lemon juice is acidic.</td><td><span class="fill">pH indicator</span></td></tr>
-    </table></div>
-    <p><b>Reading a graduated cylinder:</b> if the bottom of the curved surface sits exactly on the 35 mL line when your eyes are level with it, the volume is <span class="fill">35 mL</span>.</p>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>Match the tool to the quantity: <b>volume &rarr; cylinder, length &rarr; ruler, mass &rarr; balance, temperature &rarr; thermometer, time &rarr; timer, force &rarr; spring scale</b>.</div>
-  <div class="donebar"><button class="donebtn" data-learn="7" aria-pressed="false">Mark Lesson 7 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 8 ============ -->
-<section class="lesson" id="l8">
-  <header class="lh"><div class="lnum" aria-hidden="true">08</div><div>
-    <p class="std">Standard (b)(1)(E)</p><h2>Collecting Data with SI Units</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Scientists all over the world measure with the same units, the <u>International System of Units (SI)</u>, so everyone can understand and compare results.</div>
-  <p><b>Data</b> are the pieces of information you collect as <b>evidence</b>. There are two kinds. <b>Quantitative</b> data are measurements with numbers and units. <b>Qualitative</b> data describe what you notice with your senses.</p>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 150" role="img" aria-label="A centimetre ruler with a bar measuring 7.3 centimetres, which equals 73 millimetres">
-      <defs><pattern id="mmTicks" width="40" height="30" patternUnits="userSpaceOnUse">
-        <path class="ln" d="M0 0V30M20 0V20M4 0V10M8 0V10M12 0V10M16 0V10M24 0V10M28 0V10M32 0V10M36 0V10" style="stroke-width:1.5"/></pattern></defs>
-      <text x="20" y="16" class="tm">small line = 1 mm &middot; number = 1 cm</text>
-      <rect class="sh fh" x="20" y="24" width="480" height="62" rx="4"/>
-      <rect x="20" y="24" width="480" height="30" fill="url(#mmTicks)"/>
-      <g class="tm" text-anchor="middle"><text x="20" y="78">0</text><text x="60" y="78">1</text><text x="100" y="78">2</text><text x="140" y="78">3</text><text x="180" y="78">4</text><text x="220" y="78">5</text><text x="260" y="78">6</text><text x="300" y="78">7</text><text x="340" y="78">8</text><text x="380" y="78">9</text><text x="420" y="78">10</text><text x="460" y="78">11</text><text x="500" y="78">12</text></g>
-      <rect class="sh fa" x="20" y="102" width="292" height="16" rx="8"/>
-      <path class="ln" d="M312 92V128" style="stroke:var(--signal);stroke-width:3"/>
-      <text x="326" y="116" class="tb">7.3 cm = 73 mm</text>
-    </svg>
-    <figcaption>1 cm is 10 mm, so 7.3 cm is 73 mm.</figcaption>
-  </figure>
-  <h3>SI units to know</h3>
-  <div class="tw"><table>
-    <tr><th>What you measure</th><th>SI unit</th><th>Symbol</th></tr>
-    <tr><td>Length</td><td>metre</td><td class="mono">m</td></tr>
-    <tr><td>Mass</td><td>kilogram (grams for small things)</td><td class="mono">kg, g</td></tr>
-    <tr><td>Volume of a liquid</td><td>litre (millilitres for small amounts)</td><td class="mono">L, mL</td></tr>
-    <tr><td>Temperature</td><td>kelvin. In class we usually use degrees Celsius.</td><td class="mono">K, &deg;C</td></tr>
-    <tr><td>Time</td><td>second</td><td class="mono">s</td></tr>
-    <tr><td>Force</td><td>newton</td><td class="mono">N</td></tr>
-  </table></div>
-  <h3>Prefixes make units bigger or smaller</h3>
-  <div class="tw"><table>
-    <tr><th>Prefix</th><th>Means</th><th>Example</th></tr>
-    <tr><td><b>kilo-</b> (k)</td><td>1000 times bigger</td><td class="mono">1 km = 1000 m &middot; 1 kg = 1000 g</td></tr>
-    <tr><td><b>centi-</b> (c)</td><td>100 times smaller</td><td class="mono">1 m = 100 cm</td></tr>
-    <tr><td><b>milli-</b> (m)</td><td>1000 times smaller</td><td class="mono">1 m = 1000 mm &middot; 1 L = 1000 mL &middot; 1 cm = 10 mm</td></tr>
-  </table></div>
-  <div class="rem"><span class="lab">Remember</span>Changing to a <b>smaller</b> unit? <b>Multiply</b>, because you need more of them. Changing to a <b>bigger</b> unit? <b>Divide</b>, because you need fewer.</div>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Conversions, solved</h4>
-    <div class="tw"><table>
-      <tr><th>Convert</th><th>Rule</th><th>Answer</th></tr>
-      <tr><td class="mono">2.5 m to cm</td><td>m to cm: &times; 100</td><td><span class="fill">250 cm</span></td></tr>
-      <tr><td class="mono">3000 g to kg</td><td>g to kg: &divide; 1000</td><td><span class="fill">3 kg</span></td></tr>
-      <tr><td class="mono">750 mL to L</td><td>mL to L: &divide; 1000</td><td><span class="fill">0.75 L</span></td></tr>
-      <tr><td class="mono">45 mm to cm</td><td>mm to cm: &divide; 10</td><td><span class="fill">4.5 cm</span></td></tr>
-      <tr><td class="mono">1.2 km to m</td><td>km to m: &times; 1000</td><td><span class="fill">1200 m</span></td></tr>
-    </table></div>
-    <h4>Quantitative or qualitative?</h4>
-    <div class="tw"><table>
-      <tr><th>Quantitative (numbers and units)</th><th>Qualitative (descriptions)</th></tr>
-      <tr><td><span class="fill">The water is 4 &deg;C.</span></td><td><span class="fill">The water feels cold.</span></td></tr>
-      <tr><td><span class="fill">The rock has a mass of 250 g.</span></td><td><span class="fill">The rock is rough and grey.</span></td></tr>
-      <tr><td><span class="fill">The leaf is 6.5 cm long.</span></td><td><span class="fill">The leaf is shiny and green.</span></td></tr>
-    </table></div>
-  </div>
-  <h3>Try the converter</h3>
-  <p>Pick a conversion, type a number, and see the answer. It starts on the first filled-in example above.</p>
-  <div class="calc">
-    <input id="cvIn" type="number" value="2.5" step="any" aria-label="Number to convert">
-    <select id="cvSel" aria-label="Conversion">
-      <option value="100">m &rarr; cm</option><option value="0.01">cm &rarr; m</option>
-      <option value="10">cm &rarr; mm</option><option value="0.1">mm &rarr; cm</option>
-      <option value="1000">km &rarr; m</option><option value="0.001">m &rarr; km</option>
-      <option value="1000">kg &rarr; g</option><option value="0.001">g &rarr; kg</option>
-      <option value="1000">L &rarr; mL</option><option value="0.001">mL &rarr; L</option>
-    </select>
-    <span>=</span><output id="cvOut" for="cvIn cvSel">250</output>
-  </div>
-  <div class="donebar"><button class="donebtn" data-learn="8" aria-pressed="false">Mark Lesson 8 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 9 ============ -->
-<section class="lesson" id="l9">
-  <header class="lh"><div class="lnum" aria-hidden="true">09</div><div>
-    <p class="std">Standard (b)(1)(F)</p><h2>Tables, Graphs and Repeated Trials</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Repeat your test several times and find the <u>mean</u>. Then organise the results in <u>tables, graphs, maps and charts</u> so the pattern is easy to see.</div>
-  <h3>Why repeat trials?</h3>
-  <p>One measurement can be off because of a small slip: a shaky hand, a late stopwatch click. When you repeat the test (each repeat is a <b>trial</b>) and take the <b>mean</b> (the average), those little mistakes even out and your result is more reliable.</p>
-  <p><b>Mean</b> = (add up all the values) &divide; (how many values there are).</p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Bean plant heights after 14 days (cm)</h4>
-    <div class="tw"><table>
-      <tr><th>Group</th><th>Trial 1</th><th>Trial 2</th><th>Trial 3</th><th>Total</th><th>Mean (total &divide; 3)</th></tr>
-      <tr><td>Control (no fertilizer)</td><td class="mono">9</td><td class="mono">10</td><td class="mono">11</td><td class="mono"><span class="fill">30</span></td><td class="mono"><span class="fill">10 cm</span></td></tr>
-      <tr><td>Treatment (fertilizer)</td><td class="mono">12</td><td class="mono">14</td><td class="mono">13</td><td class="mono"><span class="fill">39</span></td><td class="mono"><span class="fill">13 cm</span></td></tr>
-    </table></div>
-    <p>Check: 12 + 14 + 13 = 39, and 39 &divide; 3 = 13.</p>
-  </div>
-  <h3>Mean calculator</h3>
-  <p>Change the numbers to try your own. It starts with the treatment trials above.</p>
-  <div class="calc">
-    <input id="t1" type="number" value="12" step="any" aria-label="Trial 1"><span>+</span>
-    <input id="t2" type="number" value="14" step="any" aria-label="Trial 2"><span>+</span>
-    <input id="t3" type="number" value="13" step="any" aria-label="Trial 3"><span>&divide; 3 =</span>
-    <output id="meanOut" for="t1 t2 t3">13</output>
-  </div>
-  <h3>Which display is best?</h3>
-  <div class="tw"><table>
-    <tr><th>Display</th><th>Best for</th></tr>
-    <tr><td><b>Table</b></td><td>Organising numbers in rows and columns, especially trials and means.</td></tr>
-    <tr><td><b>Line graph</b></td><td>Showing how something <b>changes over time</b>.</td></tr>
-    <tr><td><b>Bar graph</b></td><td>Comparing <b>separate groups</b> side by side.</td></tr>
-    <tr><td><b>Pie chart</b></td><td>Showing <b>parts of a whole</b>.</td></tr>
-    <tr><td><b>Map</b></td><td>Showing <b>where</b> something happens, like rainfall across a region.</td></tr>
-    <tr><td><b>Flow chart</b></td><td>Showing the <b>steps</b> of a process.</td></tr>
-  </table></div>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Mean height over time (cm)</h4>
-    <div class="tw"><table>
-      <tr><th>Day</th><th>0</th><th>3</th><th>7</th><th>10</th><th>14</th></tr>
-      <tr><td>Control (no fertilizer)</td><td class="mono">0</td><td class="mono">1.5</td><td class="mono">4</td><td class="mono">6.5</td><td class="mono">10</td></tr>
-      <tr><td>Treatment (fertilizer)</td><td class="mono">0</td><td class="mono">2</td><td class="mono">6</td><td class="mono">9</td><td class="mono">13</td></tr>
-    </table></div>
-  </div>
-  <div class="fig2">
-    <figure class="fig">
-      <svg class="il" viewBox="0 0 520 306" role="img" aria-label="Line graph of mean plant height over 14 days. The fertilizer line ends at 13 centimetres and the no fertilizer line ends at 10 centimetres.">
-        <g class="grid"><path d="M60 218.6H490M60 187.1H490M60 155.7H490M60 124.3H490M60 92.9H490M60 61.4H490M60 30H490"/></g>
-        <path class="ln" d="M60 30V250H490"/>
-        <g class="tm" text-anchor="end"><text x="52" y="254">0</text><text x="52" y="222.6">2</text><text x="52" y="191.1">4</text><text x="52" y="159.7">6</text><text x="52" y="128.3">8</text><text x="52" y="96.9">10</text><text x="52" y="65.4">12</text><text x="52" y="34">14</text></g>
-        <g class="tm" text-anchor="middle"><text x="60" y="268">0</text><text x="121.4" y="268">2</text><text x="182.9" y="268">4</text><text x="244.3" y="268">6</text><text x="305.7" y="268">8</text><text x="367.1" y="268">10</text><text x="428.6" y="268">12</text><text x="490" y="268">14</text></g>
-        <text x="275" y="292" text-anchor="middle" class="tb" style="font-size:13px">Time (days)</text>
-        <text x="14" y="140" text-anchor="middle" class="tb" style="font-size:13px" transform="rotate(-90 14 140)">Mean plant height (cm)</text>
-        <polyline class="ln" points="60,250 152.1,226.4 275,187.1 367.1,147.9 490,92.9" style="stroke:var(--signal);stroke-width:3.5"/>
-        <polyline class="ln" points="60,250 152.1,218.6 275,155.7 367.1,108.6 490,45.7" style="stroke:var(--accent);stroke-width:3.5"/>
-        <g class="fs"><circle cx="152.1" cy="226.4" r="5"/><circle cx="275" cy="187.1" r="5"/><circle cx="367.1" cy="147.9" r="5"/><circle cx="490" cy="92.9" r="5"/></g>
-        <g class="fa"><circle cx="152.1" cy="218.6" r="5"/><circle cx="275" cy="155.7" r="5"/><circle cx="367.1" cy="108.6" r="5"/><circle cx="490" cy="45.7" r="5"/></g>
-        <path class="ln" d="M70 14H96" style="stroke:var(--accent);stroke-width:3.5"/><text x="102" y="18" class="tm">Fertilizer</text>
-        <path class="ln" d="M190 14H216" style="stroke:var(--signal);stroke-width:3.5"/><text x="222" y="18" class="tm">No fertilizer</text>
-      </svg>
-      <figcaption>Line graph: change over time. The independent variable (time) is on the horizontal axis.</figcaption>
-    </figure>
-    <figure class="fig">
-      <svg class="il" viewBox="0 0 300 306" role="img" aria-label="Bar graph of mean plant height after 14 days: 10 centimetres with no fertilizer and 13 centimetres with fertilizer.">
-        <g class="grid"><path d="M50 176.7H280M50 103.3H280M50 30H280"/></g>
-        <path class="ln" d="M50 30V250H280"/>
-        <g class="tm" text-anchor="end"><text x="42" y="254">0</text><text x="42" y="180.7">5</text><text x="42" y="107.3">10</text><text x="42" y="34">15</text></g>
-        <rect class="sh fs" x="80" y="103.3" width="60" height="146.7"/><rect class="sh fa" x="180" y="59.3" width="60" height="190.7"/>
-        <text x="110" y="96" text-anchor="middle" class="tb">10</text><text x="210" y="52" text-anchor="middle" class="tb">13</text>
-        <text x="110" y="270" text-anchor="middle" class="tm">No fertilizer</text><text x="210" y="270" text-anchor="middle" class="tm">Fertilizer</text>
-        <text x="165" y="296" text-anchor="middle" class="tb" style="font-size:13px">Group</text>
-        <text x="12" y="140" text-anchor="middle" class="tb" style="font-size:13px" transform="rotate(-90 12 140)">Mean height at day 14 (cm)</text>
-      </svg>
-      <figcaption>Bar graph: compare groups.</figcaption>
-    </figure>
-  </div>
-  <h3>A good graph has</h3>
-  <ul>
-    <li>A <b>title</b> that says what it shows.</li>
-    <li><b>Labelled axes with units</b>, like &ldquo;Time (days)&rdquo; and &ldquo;Height (cm)&rdquo;.</li>
-    <li>The <b>independent variable on the horizontal (x) axis</b> and the <b>dependent variable on the vertical (y) axis</b>.</li>
-    <li>An <b>even scale</b>: equal steps, starting at zero where it makes sense.</li>
-    <li>A <b>key</b> when there is more than one line or colour.</li>
-  </ul>
-  <div class="rem"><span class="lab">Remember</span>Line graph = change over time. Bar graph = compare groups. Mean = add them up, divide by how many.</div>
-  <div class="donebar"><button class="donebtn" data-learn="9" aria-pressed="false">Mark Lesson 9 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 10 ============ -->
-<section class="lesson" id="l10">
-  <header class="lh"><div class="lnum" aria-hidden="true">10</div><div>
-    <p class="std">Standard (b)(1)(G) &middot; (b)(2)(A)</p><h2>Models</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>A model is a <u>stand-in</u> for something real. Every model helps in some ways and has <u>limits</u> in others.</div>
-  <p>Scientists and engineers <b>develop and use models</b> to represent <b>phenomena</b> (things that happen), <b>systems</b> (parts working together), <b>processes</b> (steps over time) and <b>solutions</b> to engineering problems.</p>
-  <h3>Why use a model?</h3>
-  <div class="cols">
-    <div class="card"><h4>Too big</h4><p>The solar system, or the whole Earth.</p></div>
-    <div class="card"><h4>Too small</h4><p>Atoms and cells.</p></div>
-    <div class="card"><h4>Too slow or too fast</h4><p>The rock cycle takes millions of years. A chemical reaction can take a split second.</p></div>
-    <div class="card"><h4>Too dangerous or costly</h4><p>A volcano, or a real bridge you have not tested yet.</p></div>
-  </div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 210" role="img" aria-label="A globe, 30 centimetres wide, as a model of Earth, with the scale 1 centimetre equals about 425 kilometres">
-      <circle class="sh fa" cx="110" cy="92" r="62"/>
-      <path class="sh fg" d="M78 66Q98 48 114 62Q124 78 108 92Q92 102 80 88Z"/>
-      <path class="sh fg" d="M122 106Q144 102 154 120Q150 142 128 146Q114 132 122 106Z"/>
-      <ellipse class="ln" cx="110" cy="92" rx="62" ry="18" style="stroke-width:1.5;opacity:.6"/>
-      <path class="ln" d="M110 154V170M78 178H142"/>
-      <text x="110" y="200" text-anchor="middle" class="tm">model: globe, 30 cm wide</text>
-      <rect class="sh fh" x="232" y="36" width="270" height="124" rx="16"/>
-      <text x="367" y="68" text-anchor="middle" class="tb" style="fill:var(--on-hi)">Scale of this model</text>
-      <text x="367" y="108" text-anchor="middle" class="tl" style="font-size:28px;fill:var(--on-hi)">1 cm = about 425 km</text>
-      <text x="367" y="140" text-anchor="middle" class="tm" style="fill:var(--on-hi)">30 cm globe vs 12,742 km Earth</text>
-    </svg>
-    <figcaption>12,742 km &divide; 30 cm is about 425 km for every centimetre on the globe.</figcaption>
-  </figure>
-  <h3>Advantages and limitations</h3>
-  <p>When you judge a model, ask about its <b>size</b>, <b>scale</b>, <b>properties</b> and <b>materials</b>. How is it different from the real thing?</p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Judging four models</h4>
-    <div class="tw"><table>
-      <tr><th>Model</th><th>Advantage (what it shows well)</th><th>Limitation (how it differs)</th></tr>
-      <tr><td><b>Globe</b></td><td><span class="fill">Shows the shapes and positions of continents and oceans.</span></td><td><span class="fill">Far smaller than Earth, made of plastic, and cannot show weather or moving plates.</span></td></tr>
-      <tr><td><b>Clay model of a cell</b></td><td><span class="fill">Shows the parts of a cell and where they sit.</span></td><td><span class="fill">Much bigger than a real cell, not alive, and clay is not what cells are made of.</span></td></tr>
-      <tr><td><b>Popsicle-stick bridge</b></td><td><span class="fill">Lets engineers test a design before building the real one.</span></td><td><span class="fill">Wood sticks are not steel, and a small bridge carries weight differently from a huge one.</span></td></tr>
-      <tr><td><b>Water cycle diagram</b></td><td><span class="fill">Shows the order of the steps.</span></td><td><span class="fill">It is flat and still. It does not show amounts or real time.</span></td></tr>
-    </table></div>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>No model is perfect. A good scientist uses a model for what it does well, and always names its limits.</div>
-  <div class="donebar"><button class="donebtn" data-learn="10" aria-pressed="false">Mark Lesson 10 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 11 ============ -->
-<section class="lesson" id="l11">
-  <header class="lh"><div class="lnum" aria-hidden="true">11</div><div>
-    <p class="std">Standard (a)(3) &middot; (b)(1)(H)</p><h2>Hypothesis, Theory and Law</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Scientists use five different words on purpose: <u>observation</u>, <u>inference</u>, <u>hypothesis</u>, <u>theory</u> and <u>law</u>. Each one has its own job.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 178" role="img" aria-label="Three boxes: a hypothesis is a testable idea, a theory explains why, and a law describes what happens">
-      <rect class="sh fa" x="6" y="14" width="148" height="104" rx="14"/>
-      <text x="80" y="46" text-anchor="middle" class="tl tw" style="font-size:22px">Hypothesis</text>
-      <text x="80" y="74" text-anchor="middle" class="tw">a testable idea</text>
-      <text x="80" y="96" text-anchor="middle" class="tm tw">If&hellip; then&hellip; because&hellip;</text>
-      <path class="ln" d="M158 66H182M174 58L182 66L174 74"/>
-      <rect class="sh fg" x="186" y="14" width="148" height="104" rx="14"/>
-      <text x="260" y="46" text-anchor="middle" class="tl tw" style="font-size:22px">Theory</text>
-      <text x="260" y="74" text-anchor="middle" class="tw">explains WHY</text>
-      <text x="260" y="96" text-anchor="middle" class="tm tw">very well tested</text>
-      <rect class="sh fs" x="366" y="14" width="148" height="104" rx="14"/>
-      <text x="440" y="46" text-anchor="middle" class="tl tw" style="font-size:22px">Law</text>
-      <text x="440" y="74" text-anchor="middle" class="tw">describes WHAT</text>
-      <text x="440" y="96" text-anchor="middle" class="tm tw">a pattern in nature</text>
-      <text x="260" y="152" text-anchor="middle" class="tm">A hypothesis that survives testing in many conditions can become part of a theory.</text>
-      <text x="260" y="170" text-anchor="middle" class="tm">A theory never &ldquo;graduates&rdquo; into a law. They do different jobs.</text>
-    </svg>
-  </figure>
-  <dl class="words">
-    <div><dt>Observation</dt><dd>Using your senses (or tools) to gather information from a primary source. It can be <b>qualitative</b> (descriptions) or <b>quantitative</b> (numbers).</dd></div>
-    <div><dt>Inference</dt><dd>A conclusion you reach from observations plus reasoning that is supported by evidence.</dd></div>
-    <div><dt>Hypothesis</dt><dd>A tentative, <b>testable</b> statement. Evidence can support it or not support it.</dd></div>
-    <div><dt>Theory</dt><dd>A well-established, highly reliable explanation of natural phenomena. It can be tested by many independent researchers, and it may change when new evidence or technology arrives.</dd></div>
-    <div><dt>Law</dt><dd>A statement that describes a pattern in nature, often as a mathematical relationship. It tells <i>what</i> happens, not <i>why</i>.</dd></div>
-  </dl>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Name that statement</h4>
-    <div class="tw"><table>
-      <tr><th>Statement</th><th>Which one?</th><th>Why</th></tr>
-      <tr><td>The puddle was 30 cm wide at 8 a.m. and gone by 2 p.m.</td><td><span class="fill">Observation</span></td><td>It reports what was measured and seen.</td></tr>
-      <tr><td>The puddle disappeared because the water evaporated.</td><td><span class="fill">Inference</span></td><td>It is a conclusion based on the observation plus reasoning.</td></tr>
-      <tr><td>I think plants near the window will grow taller because they get more light.</td><td><span class="fill">Hypothesis</span></td><td>It is tentative and can be tested.</td></tr>
-      <tr><td>All living things are made of cells, and cells come from pre-existing cells.</td><td><span class="fill">Theory (cell theory)</span></td><td>It is a well-tested explanation backed by huge amounts of evidence.</td></tr>
-      <tr><td>Energy cannot be created or destroyed, only changed from one form to another.</td><td><span class="fill">Law</span></td><td>It describes what always happens.</td></tr>
-    </table></div>
-  </div>
-  <div class="cols">
-    <div class="card dont"><h4>Myth</h4><p>&ldquo;A theory is just a guess.&rdquo;</p></div>
-    <div class="card do"><h4>Fact</h4><p>The guess is the <b>hypothesis</b>. A <b>theory</b> is a strong explanation supported by a great deal of evidence.</p></div>
-  </div>
-  <h3>Not every question belongs to science</h3>
-  <p>Science works with questions it can test. &ldquo;Which music is best?&rdquo; cannot be tested, so it is outside the realm of science. Science can give <b>evidence</b> about a decision, such as how a new factory affects the air. Whether to build it also depends on values, and that is an ethical and social decision people make together.</p>
-  <div class="rem"><span class="lab">Remember</span>Hypothesis = testable idea. Theory = well-tested explanation (<b>why</b>). Law = describes a pattern (<b>what</b>).</div>
-  <div class="donebar"><button class="donebtn" data-learn="11" aria-pressed="false">Mark Lesson 11 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 12 ============ -->
-<section class="lesson" id="l12">
-  <header class="lh"><div class="lnum" aria-hidden="true">12</div><div>
-    <p class="std">Standard (b)(2)(A)&ndash;(D)</p><h2>Analyzing and Interpreting Data</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Data only become evidence when you <u>look for patterns</u>, <u>do the maths</u>, <u>hunt for errors</u> and <u>judge the design</u>.</div>
-  <h3>Find the pattern</h3>
-  <p>Look at your table or graph. As one thing goes up, does the other go up too? Go down? Show no pattern at all? A pattern that links two things is a <b>relationship</b> or <b>correlation</b>. A correlation shows the two things move together. It does not by itself prove that one causes the other.</p>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 500 282" role="img" aria-label="Scatter graph of plant height against hours of light with an upward trend line and one point far above the others marked as an outlier">
-      <g class="grid"><path d="M50 200H470M50 160H470M50 120H470M50 80H470M50 40H470"/></g>
-      <path class="ln" d="M50 30V240H470"/>
-      <g class="tm" text-anchor="end"><text x="42" y="244">0</text><text x="42" y="204">2</text><text x="42" y="164">4</text><text x="42" y="124">6</text><text x="42" y="84">8</text><text x="42" y="44">10</text></g>
-      <g class="tm" text-anchor="middle"><text x="105" y="258">1</text><text x="160" y="258">2</text><text x="215" y="258">3</text><text x="270" y="258">4</text><text x="325" y="258">5</text><text x="380" y="258">6</text><text x="435" y="258">7</text></g>
-      <text x="260" y="278" text-anchor="middle" class="tb" style="font-size:13px">Hours of light per day</text>
-      <text x="12" y="135" text-anchor="middle" class="tb" style="font-size:13px" transform="rotate(-90 12 135)">Plant height (cm)</text>
-      <path class="ln" d="M77.5 208L462.5 68" style="stroke:var(--accent);stroke-width:2.5;stroke-dasharray:7 5"/>
-      <g class="fa"><circle cx="105" cy="200" r="6"/><circle cx="160" cy="180" r="6"/><circle cx="215" cy="150" r="6"/><circle cx="270" cy="140" r="6"/><circle cx="380" cy="100" r="6"/><circle cx="435" cy="80" r="6"/></g>
-      <circle class="fs" cx="325" cy="40" r="6"/><circle class="ln" cx="325" cy="40" r="13" style="stroke:var(--signal);stroke-width:2.5"/>
-      <text x="306" y="36" text-anchor="end" class="tm">outlier: check for an error</text>
-    </svg>
-    <figcaption>The dashed trend line rises as light increases. The orange point sits far from the pattern, so check whether it was measured or recorded wrongly.</figcaption>
-  </figure>
-  <h3>Describe the data with numbers</h3>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Plant heights (cm): 10, 12, 12, 13, 18</h4>
-    <div class="tw"><table>
-      <tr><th>Measure</th><th>How to find it</th><th>Answer</th></tr>
-      <tr><td><b>Mean</b></td><td>add them up, divide by how many</td><td class="mono"><span class="fill">(10+12+12+13+18) &divide; 5 = 65 &divide; 5 = 13 cm</span></td></tr>
-      <tr><td><b>Median</b></td><td>put them in order, take the middle one</td><td class="mono"><span class="fill">10, 12, <u>12</u>, 13, 18, so 12 cm</span></td></tr>
-      <tr><td><b>Mode</b></td><td>the value that appears most often</td><td class="mono"><span class="fill">12 cm (it appears twice)</span></td></tr>
-      <tr><td><b>Range</b></td><td>biggest minus smallest</td><td class="mono"><span class="fill">18 &minus; 10 = 8 cm</span></td></tr>
-    </table></div>
-    <h4>Use maths to compare</h4>
-    <p>Control mean = 10 cm. Treatment mean = 13 cm. The difference is 13 &minus; 10 = <span class="fill">3 cm</span>. As a percentage of the control: 3 &divide; 10 = 0.30, so the treated plants were <span class="fill">30% taller</span>.</p>
-  </div>
-  <h3>Sources of error</h3>
-  <p>Every investigation has some error. Good scientists look for it and say so.</p>
-  <div class="tw"><table>
-    <tr><th>Source of error</th><th>Example</th><th>How to reduce it</th></tr>
-    <tr><td><b>Measuring</b></td><td>Reading the ruler from an angle.</td><td>Read at eye level and repeat the measurement.</td></tr>
-    <tr><td><b>Equipment</b></td><td>A balance that was not set to zero.</td><td>Check and zero tools first.</td></tr>
-    <tr><td><b>Uncontrolled variable</b></td><td>One pot got extra sunshine.</td><td>Keep every other condition the same.</td></tr>
-    <tr><td><b>Too few trials</b></td><td>Only one plant per group.</td><td>Use more trials and find the mean.</td></tr>
-    <tr><td><b>Recording</b></td><td>Writing 31 instead of 13.</td><td>Record straight away and double-check.</td></tr>
-  </table></div>
-  <p><b>Limitations</b> are different from errors. They are things your investigation <i>cannot</i> tell you. Our fertilizer test used only bean plants for only 14 days, so it cannot tell us about every plant or about a whole growing season.</p>
-  <h3>Evaluate the design</h3>
-  <p>For an experiment ask: Was it a <b>fair test</b> with one changed variable? Was there a <b>control</b>? Were there <b>enough trials</b>? For an engineering design ask: Did it meet the <b>criteria</b> and stay within the <b>constraints</b>? What should we <b>improve</b>?</p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Evaluating the paper airplane</h4>
-    <p>Distances flown: 4.0 m, 4.5 m and 4.1 m. Mean = (4.0 + 4.5 + 4.1) &divide; 3 = 12.6 &divide; 3 = <span class="fill">4.2 m</span>.</p>
-    <p>Criterion 1: fly at least 5 m. <span class="fill">Not met</span>, because 4.2 m is less than 5 m.</p>
-    <p>Criterion 2: carry one paperclip. <span class="fill">Met</span>.</p>
-    <p>Next step: <span class="fill">change one thing, such as the wing size, and test again with three trials.</span></p>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>Mean, median, mode, range. Look for patterns, outliers and errors. A correlation is not the same as a cause.</div>
-  <div class="donebar"><button class="donebtn" data-learn="12" aria-pressed="false">Mark Lesson 12 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 13 ============ -->
-<section class="lesson" id="l13">
-  <header class="lh"><div class="lnum" aria-hidden="true">13</div><div>
-    <p class="std">Standard (b)(3)(A)&ndash;(C)</p><h2>Explaining and Arguing with Evidence</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>A good explanation has a <u>claim</u>, backed by <u>evidence</u> and linked with <u>reasoning</u>. Then you share it clearly and discuss it respectfully.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 200" role="img" aria-label="A claim resting on two pillars: evidence and reasoning">
-      <rect class="sh fh" x="30" y="10" width="460" height="50" rx="12"/>
-      <text x="260" y="31" text-anchor="middle" class="tb" style="fill:var(--on-hi)">CLAIM</text>
-      <text x="260" y="50" text-anchor="middle" style="fill:var(--on-hi);font-size:13px">Fertilizer makes bean plants grow taller.</text>
-      <rect class="sh fa" x="60" y="60" width="190" height="104"/>
-      <text x="155" y="88" text-anchor="middle" class="tb tw">EVIDENCE</text>
-      <text x="155" y="112" text-anchor="middle" class="tm tw">mean height 13 cm</text>
-      <text x="155" y="130" text-anchor="middle" class="tm tw">vs 10 cm for the control</text>
-      <text x="155" y="148" text-anchor="middle" class="tm tw">(3 trials each)</text>
-      <rect class="sh fg" x="270" y="60" width="190" height="104"/>
-      <text x="365" y="88" text-anchor="middle" class="tb tw">REASONING</text>
-      <text x="365" y="112" text-anchor="middle" class="tm tw">fertilizer supplies</text>
-      <text x="365" y="130" text-anchor="middle" class="tm tw">nutrients plants use</text>
-      <text x="365" y="148" text-anchor="middle" class="tm tw">to build new growth</text>
-      <rect class="sh fi" x="30" y="164" width="460" height="14" rx="4"/>
-    </svg>
-  </figure>
-  <h3>Claim, Evidence, Reasoning</h3>
-  <dl class="words">
-    <div><dt>Claim</dt><dd>Your answer to the question, in one sentence.</dd></div>
-    <div><dt>Evidence</dt><dd>The data and observations that support it. Use numbers and units.</dd></div>
-    <div><dt>Reasoning</dt><dd>The science idea that explains <i>why</i> the evidence supports the claim.</dd></div>
-  </dl>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>A complete explanation</h4>
-    <p><b>Question:</b> How does fertilizer affect bean plant height?</p>
-    <p><b>Claim:</b> <span class="fill">Fertilizer makes bean plants grow taller.</span></p>
-    <p><b>Evidence:</b> <span class="fill">After 14 days the plants with fertilizer had a mean height of 13 cm and the plants without fertilizer had a mean height of 10 cm. Each group had 3 plants.</span></p>
-    <p><b>Reasoning:</b> <span class="fill">Plants use nutrients to build new growth. Fertilizer adds nutrients, so the plants with fertilizer could grow more.</span></p>
-    <h4>The same idea for an engineering solution</h4>
-    <p><b>Claim:</b> <span class="fill">Design B should be chosen.</span> <b>Evidence:</b> <span class="fill">It flew 5.2 m, 5.6 m and 6.0 m, a mean of 5.6 m, which beats the 5 m criterion every time.</span> <b>Reasoning:</b> <span class="fill">Its longer wings give it more lift, so it stays up longer.</span></p>
-  </div>
-  <h3>Communicating your findings</h3>
-  <p>You can share explanations and solutions <b>on your own</b> or <b>in a group</b>, in many formats: a written report, a labelled graph, a poster, a model, a talk, or a lab notebook page. Choose the format that makes your evidence clearest to your audience.</p>
-  <h3>Respectful scientific argument</h3>
-  <p>Scientists disagree all the time. The goal is to find out what the evidence says, not to win.</p>
-  <div class="cols">
-    <div class="card do"><h4>Say things like</h4><ul class="yes">
-      <li>&ldquo;What evidence did you use?&rdquo;</li>
-      <li>&ldquo;I see your point, but my data show something different. Can we compare?&rdquo;</li>
-      <li>&ldquo;I changed my mind because the evidence showed&hellip;&rdquo;</li>
-    </ul></div>
-    <div class="card dont"><h4>Avoid</h4><ul class="no">
-      <li>Making it personal or putting people down.</li>
-      <li>Saying &ldquo;I just know&rdquo; with no evidence.</li>
-      <li>Ignoring data that does not fit your idea.</li>
-    </ul></div>
-  </div>
-  <div class="rem"><span class="lab">Remember</span>Disagree with the <b>idea</b>, never the person. Let the evidence decide.</div>
-  <div class="donebar"><button class="donebtn" data-learn="13" aria-pressed="false">Mark Lesson 13 as learned</button></div>
-</section>
-
-<!-- ============ LESSON 14 ============ -->
-<section class="lesson" id="l14">
-  <header class="lh"><div class="lnum" aria-hidden="true">14</div><div>
-    <p class="std">Standard (b)(4)(A)&ndash;(C)</p><h2>Scientists, Society and STEM Careers</h2></div></header>
-  <div class="big"><span class="lab">Big idea</span>Science changes the world, so we weigh <u>costs and benefits</u>, check <u>where information comes from</u>, and learn from <u>many different scientists</u>.</div>
-  <figure class="fig">
-    <svg class="il" viewBox="0 0 520 130" role="img" aria-label="Four tiles spelling STEM: Science, Technology, Engineering and Mathematics">
-      <rect class="sh fa" x="8" y="10" width="116" height="100" rx="16"/><text x="66" y="64" text-anchor="middle" class="tl tw" style="font-size:52px">S</text><text x="66" y="94" text-anchor="middle" class="tw tb" style="font-size:13px">Science</text>
-      <rect class="sh fg" x="138" y="10" width="116" height="100" rx="16"/><text x="196" y="64" text-anchor="middle" class="tl tw" style="font-size:52px">T</text><text x="196" y="94" text-anchor="middle" class="tw tb" style="font-size:13px">Technology</text>
-      <rect class="sh fs" x="268" y="10" width="116" height="100" rx="16"/><text x="326" y="64" text-anchor="middle" class="tl tw" style="font-size:52px">E</text><text x="326" y="94" text-anchor="middle" class="tw tb" style="font-size:13px">Engineering</text>
-      <rect class="sh fh" x="398" y="10" width="114" height="100" rx="16"/><text x="455" y="64" text-anchor="middle" class="tl" style="font-size:52px;fill:var(--on-hi)">M</text><text x="455" y="94" text-anchor="middle" class="tb" style="font-size:13px;fill:var(--on-hi)">Mathematics</text>
-    </svg>
-  </figure>
-  <h3>Research changes society</h3>
-  <p>Past and present research shapes what people know and how people live. Studying germs led to vaccines and clean water systems. Satellites help forecast storms. When you study the <b>process of science</b> and the <b>contributions of many different scientists</b>, you see that anyone can add to what we know.</p>
-  <h3>Cost-benefit analysis</h3>
-  <p>A <b>cost-benefit analysis</b> lists what a decision costs and what it gains, then compares them.</p>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Should our town build a solar farm?</h4>
-    <div class="tw"><table>
-      <tr><th>Benefits</th><th>Costs</th></tr>
-      <tr><td><span class="fill">Clean electricity with no smoke</span><br><span class="fill">Less air pollution</span><br><span class="fill">Lower energy bills over many years</span></td><td><span class="fill">Money to build it</span><br><span class="fill">Land that cannot be used for other things</span><br><span class="fill">Needs a back-up for cloudy days and nights</span></td></tr>
-    </table></div>
-    <p>Science provides the <b>evidence</b> (how much power, how much pollution). People then weigh the costs and benefits and decide, using their values too.</p>
-  </div>
-  <h3>Judging information sources</h3>
-  <p>Before you trust information, check four things:</p>
-  <div class="tools">
-    <div><b>Credibility</b><p>Who wrote it? Do they have expertise? Is the organisation reliable?</p></div>
-    <div><b>Accuracy</b><p>Do other trustworthy sources agree? Is it up to date? Does it show evidence?</p></div>
-    <div><b>Cost-effectiveness</b><p>Is the benefit worth the money and effort it takes?</p></div>
-    <div><b>Methods</b><p>How was it tested? Was it a fair test, with a control and enough trials?</p></div>
-  </div>
-  <div class="ex">
-    <span class="lab">Filled in for you</span>
-    <h4>Strong or weak source?</h4>
-    <div class="tw"><table>
-      <tr><th>Source</th><th>Rating</th><th>Why</th></tr>
-      <tr><td>A study in a science journal by university researchers, with data.</td><td><span class="fill">Strong</span></td><td>Experts, evidence and clear methods.</td></tr>
-      <tr><td>A government health agency web page.</td><td><span class="fill">Strong</span></td><td>Reviewed by experts and backed by evidence.</td></tr>
-      <tr><td>An advert saying a vitamin drink makes you smarter.</td><td><span class="fill">Weak</span></td><td>It is trying to sell something and shows no fair test.</td></tr>
-      <tr><td>An anonymous post with no sources.</td><td><span class="fill">Weak</span></td><td>No author, no evidence, nothing to check.</td></tr>
-    </table></div>
-  </div>
-  <h3>Scientists who changed things</h3>
-  <div class="cols">
-    <div class="card"><h4>Ibn al-Haytham</h4><span class="tag">c. 965&ndash;1040</span><p>Studied light and vision and tested his ideas with experiments, which is why he is often called a pioneer of the experimental method.</p></div>
-    <div class="card"><h4>Marie Curie</h4><span class="tag">1867&ndash;1934</span><p>Researched radioactivity. She won Nobel Prizes in two different sciences: Physics (1903) and Chemistry (1911).</p></div>
-    <div class="card"><h4>Katherine Johnson</h4><span class="tag">1918&ndash;2020</span><p>A NASA mathematician whose calculations helped early American crewed space flights, including John Glenn&rsquo;s orbit in 1962.</p></div>
-    <div class="card"><h4>Mae Jemison</h4><span class="tag">born 1956</span><p>A doctor and engineer who became the first African American woman in space, in 1992.</p></div>
-    <div class="card"><h4>Wangari Maathai</h4><span class="tag">1940&ndash;2011</span><p>A Kenyan environmental scientist who founded the Green Belt Movement, which planted millions of trees. She received the Nobel Peace Prize in 2004.</p></div>
-  </div>
-  <h3>Exploring STEM careers</h3>
-  <p>You can find out about careers in science, technology, engineering and mathematics from many places:</p>
-  <ul>
-    <li><b>Museums and libraries</b> for exhibits, books and events.</li>
-    <li><b>Professional organisations</b> that describe the work and how to train for it.</li>
-    <li><b>Private companies</b> that share what their teams do.</li>
-    <li><b>Online platforms</b> with videos, courses and career guides (check the source, as you learned above).</li>
-    <li><b>Mentors</b> who work in a STEM field. Ask them what a normal day looks like and what they studied.</li>
-  </ul>
-  <div class="rem"><span class="lab">Remember</span>Weigh costs and benefits. Check credibility, accuracy and methods. Many people from many places have added to science, and you can too.</div>
-  <div class="donebar"><button class="donebtn" data-learn="14" aria-pressed="false">Mark Lesson 14 as learned</button></div>
-</section>
-
-<!-- ============ CHEAT SHEET ============ -->
-<section class="lesson" id="cheat" style="margin-top:44px">
-  <header class="lh"><div class="lnum" aria-hidden="true" style="font-size:clamp(2rem,7vw,3.2rem)">ALL</div><div>
-    <p class="std">Quick review</p><h2>One-Page Cheat Sheet</h2></div></header>
-  <div class="tw"><table>
-    <tr><th style="width:36%">Lesson</th><th>The one thing to remember</th></tr>
-    <tr><td>1. Scientific inquiry</td><td>Planned, deliberate investigation of the natural world.</td></tr>
-    <tr><td>2. Four ways to investigate</td><td>Descriptive (no hypothesis), correlative, comparative, experimental (treatment vs control).</td></tr>
-    <tr><td>3. Scientists and engineers</td><td>Scientists ask why. Engineers solve problems. Both use tools and models.</td></tr>
-    <tr><td>4. Questions and problems</td><td>A testable question can be measured. Define criteria and constraints.</td></tr>
-    <tr><td>5. Fair test</td><td>Change one variable, measure one, keep the rest the same. If&hellip; then&hellip; because&hellip;</td></tr>
-    <tr><td>6. Lab safety</td><td>Safety first. Goggles, tied-back hair, closed shoes, never taste, ask when unsure.</td></tr>
-    <tr><td>7. Tools</td><td>Cylinder = volume, ruler = length, balance = mass, thermometer = temperature, timer = time, spring scale = force.</td></tr>
-    <tr><td>8. SI units</td><td>m, kg, L, &deg;C, s, N. kilo = &times;1000, centi = &divide;100, milli = &divide;1000.</td></tr>
-    <tr><td>9. Tables and graphs</td><td>Repeat trials and find the mean. Line graph = change over time. Bar graph = compare groups.</td></tr>
-    <tr><td>10. Models</td><td>Stand-ins for the real thing. Always name the limits.</td></tr>
-    <tr><td>11. Hypothesis, theory, law</td><td>Testable idea. Well-tested explanation (why). Pattern description (what).</td></tr>
-    <tr><td>12. Analyzing data</td><td>Mean, median, mode, range. Spot patterns, outliers and errors.</td></tr>
-    <tr><td>13. Explaining</td><td>Claim, Evidence, Reasoning. Argue with evidence and respect.</td></tr>
-    <tr><td>14. Society and careers</td><td>Weigh costs and benefits. Check your sources. Explore STEM with mentors and museums.</td></tr>
-  </table></div>
-</section>
-
-<!-- ============ QUIZ ============ -->
-<section class="quiz" id="quiz">
-  <header class="lh"><div class="lnum" aria-hidden="true">50</div><div>
-    <p class="std">Covers lessons 1&ndash;14</p><h2>The 50-Question Quiz</h2></div></header>
-  <p>Take your time. Every answer comes with a short explanation, and a link back to the lesson if you need it.</p>
-  <div class="qcard" id="qbox" aria-live="polite"></div>
-</section>
-
-<p class="foot">Built from the Grade 6 standards for Scientific and Engineering Practices. Your lesson progress and best quiz score are saved on this device only.</p>
-</main>
-
 <script>
-(function(){
-"use strict";
-var TITLES=["What Is Scientific Inquiry?","Four Ways to Investigate","Scientists and Engineers","Asking Questions and Defining Problems","Planning a Fair Test","Lab Safety","Science Tools","Collecting Data with SI Units","Tables, Graphs and Repeated Trials","Models","Hypothesis, Theory and Law","Analyzing and Interpreting Data","Explaining and Arguing with Evidence","Scientists, Society and STEM Careers"];
+const ev = e => Function('return ' + e)();
+const fmt = n => String(n).replace('-', '\u2212');
+const show = e => e.replace(/([+\-]) ([+\-])(\d+)/g, '$1 ($2$3)').replace(/-/g, '\u2212');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
-/* Each question: l = lesson number, q = question, o = options (the correct one is FIRST; they are shuffled on screen), e = explanation */
-var Q=[
-{l:1,q:"Scientific inquiry is best described as...",o:["the planned and deliberate investigation of the natural world","a lucky guess about how nature works","memorizing facts from a textbook","building a machine that runs by itself"],e:"Inquiry is planned (you decide the steps first) and deliberate (on purpose), and it is about the natural world."},
-{l:1,q:"Which of these belongs to the natural world?",o:["A thunderstorm","A school timetable","The score in a video game","A rule in a board game"],e:"The natural world means things in nature, like weather, plants, animals and rocks. Timetables and game rules are made by people."},
-{l:1,q:"Which list names the methods of scientific investigation?",o:["Descriptive, correlative, comparative and experimental","Guessing, copying, hoping and waiting","Reading, writing, drawing and singing","Hot, cold, wet and dry"],e:"The four methods are descriptive, correlative, comparative and experimental."},
-{l:2,q:"A descriptive investigation...",o:["has no hypothesis and records observations without making comparisons","always compares a treatment with a control group","always has a hypothesis that predicts a relationship","can only be done by engineers"],e:"A descriptive investigation has no hypothesis. You collect data and record observations without comparing."},
-{l:2,q:"Sara records the temperature and cloud cover in her town every day for two weeks. She does not compare anything. What type of investigation is this?",o:["Descriptive","Experimental","Comparative","Correlative"],e:"She is only collecting and recording observations. There is no hypothesis and no comparison, so it is descriptive."},
-{l:2,q:"Which investigation tests a hypothesis by comparing a treatment group with a control group?",o:["Experimental","Descriptive","Correlative","A simple observation"],e:"Only an experimental investigation compares a treatment group with a control group to test a hypothesis."},
-{l:2,q:"Ava tests three brands of paper towel to see which soaks up the most water. Which method fits best?",o:["Comparative","Descriptive","Experimental","Engineering design"],e:"Ava compares results across different conditions (the brands). No group is left untreated as a control, so it is comparative."},
-{l:3,q:"Engineering practices are about...",o:["identifying problems and designing solutions using tools and models","only memorizing scientific laws","explaining phenomena without ever building anything","avoiding the use of models"],e:"Engineers identify problems and design solutions, using appropriate tools and models."},
-{l:3,q:"Which question would an engineer most likely ask?",o:["How can we design a rain gauge that measures to the nearest millimetre?","Why do magnets attract iron?","Is the Moon older than the Sun?","Which season do people like best?"],e:"Engineers design solutions to problems. Asking why something happens is more a scientist's question."},
-{l:3,q:"For at least what percentage of instructional time should students be asking questions, identifying problems and doing investigations?",o:["40%","10%","25%","75%"],e:"The standards say students spend at least 40% of instructional time doing this kind of hands-on science."},
-{l:3,q:"In engineering, a constraint is...",o:["a limit on the solution, such as cost, time or materials","something the solution must do","the final answer to an experiment","a type of graph"],e:"Criteria are what a solution must do. Constraints are the limits, such as budget, time and materials."},
-{l:4,q:"Which is a testable question?",o:["How does the amount of sunlight affect the height of a bean plant?","Which flower is the prettiest?","Should everyone own a pet?","Is summer better than winter?"],e:"You can test it by giving plants different amounts of light and measuring their height. The others are opinions."},
-{l:4,q:"Questions and problems in science can start from...",o:["observations, texts, phenomena, models or earlier investigations","only the teacher's favourite idea","only things you cannot observe","only guesses with no evidence"],e:"Questions and problems can begin with observations, information in a text, phenomena, models or earlier investigations."},
-{l:4,q:"Observation: ice cubes in the sun melted faster than ice cubes in the shade. Which testable question fits best?",o:["How does sunlight affect how fast ice melts?","Why is ice cold?","Is ice nicer than water?","What colour is a shadow?"],e:"The observation compares sun and shade and the speed of melting, so the question is about how sunlight affects melting."},
-{l:4,q:"A well-defined engineering problem states the need and also the...",o:["criteria and constraints","hypothesis and conclusion","control and treatment","mean and median"],e:"A good problem statement includes the criteria (what the solution must do) and the constraints (the limits)."},
-{l:5,q:"In a fair test, the independent variable is...",o:["the one thing you change on purpose","the thing you measure","everything you keep the same","the final conclusion"],e:"The independent variable is the single thing you change on purpose."},
-{l:5,q:"The dependent variable is...",o:["what you measure to see the effect of the change","the one thing you change","the group that gets no treatment","the safety rule"],e:"The dependent variable is what you measure. It depends on the change you made."},
-{l:5,q:"In an experiment about fertilizer and bean plants, which is a controlled variable (kept the same)?",o:["The amount of sunlight each plant gets","Whether fertilizer is added","The height of the plants","The conclusion"],e:"Sunlight must be the same for every plant so the test is fair. Fertilizer is the independent variable and height is the dependent variable."},
-{l:5,q:"The control group is...",o:["the group that gets no treatment, used for comparison","the group that gets the most treatment","the group that is measured last","the teacher's group"],e:"The control group gets no treatment. You compare the treatment group against it."},
-{l:5,q:"Which is a well-written hypothesis?",o:["If bean plants are given fertilizer, then they will grow taller than plants without it, because fertilizer adds nutrients.","Plants are green.","Do plants like fertilizer?","I will water the plants on Monday."],e:"A good hypothesis is testable and follows the pattern: If..., then..., because..."},
-{l:6,q:"A chemical splashes into your eye. What should you do first?",o:["Go to the eyewash station right away and tell your teacher","Wait until class ends","Rub your eye hard","Ignore it if it does not hurt"],e:"Rinse your eye at the eyewash station right away and tell your teacher. Speed matters."},
-{l:6,q:"If your teacher tells you to smell a substance, how do you do it safely?",o:["Gently waft the fumes toward your nose with your hand","Put your nose right over the container","Taste a tiny bit first","Breathe in deeply from the bottle"],e:"Wafting means gently moving the fumes toward you with your hand. Never put your nose over a container and never taste lab materials."},
-{l:6,q:"A glass beaker breaks on the floor. What should you do?",o:["Tell your teacher and do not pick up the glass with bare hands","Quickly sweep it into your hands","Hide it and keep working","Step over it and carry on"],e:"Broken glass can cut you badly. Tell your teacher and let them deal with it safely."},
-{l:7,q:"Which tool measures the volume of a liquid?",o:["Graduated cylinder","Balance","Spring scale","Metric ruler"],e:"A graduated cylinder measures the volume of a liquid in millilitres (mL)."},
-{l:7,q:"How should you read the volume in a graduated cylinder?",o:["At eye level, at the bottom of the curved surface (the meniscus)","From above, at the top of the liquid","From the side of the cap","From anywhere, it makes no difference"],e:"Read at eye level, at the bottom of the curve. Looking from above or below gives the wrong number."},
-{l:7,q:"Which tool measures force, in newtons?",o:["Spring scale","Thermometer","Balance","Graduated cylinder"],e:"A spring scale or force sensor measures force in newtons (N). A balance measures mass."},
-{l:7,q:"What is a pH indicator used for?",o:["Showing whether a liquid is acidic, neutral or basic","Measuring how long something takes","Finding the mass of a solid","Magnifying tiny cells"],e:"A pH indicator changes colour to show whether a liquid is acidic, neutral or basic."},
-{l:8,q:"What does SI stand for in science?",o:["International System of Units","Scientific Instruments","Standard Investigation","Science Inquiry"],e:"SI is the International System of Units, the measuring system scientists everywhere share."},
-{l:8,q:"Which is an example of quantitative data?",o:["The water is 4 °C.","The water feels cold.","The leaf is shiny.","The rock is rough."],e:"Quantitative data use numbers and units. The other statements describe things with words."},
-{l:8,q:"Convert 2.5 m to centimetres.",o:["250 cm","25 cm","0.025 cm","2500 cm"],e:"1 m = 100 cm, so 2.5 × 100 = 250 cm."},
-{l:9,q:"Why do scientists repeat trials and find a mean?",o:["Small mistakes even out, so the result is more reliable","To make the investigation take longer","So the hypothesis is always right","Because one trial is not allowed"],e:"Repeating trials and finding the mean evens out small mistakes, so your result is more reliable."},
-{l:9,q:"What is the mean of 12, 14 and 13?",o:["13","12","14","39"],e:"12 + 14 + 13 = 39, and 39 ÷ 3 = 13."},
-{l:9,q:"Which display is best for showing how a plant's height changes over 14 days?",o:["Line graph","Pie chart","Map","Flow chart"],e:"A line graph shows how something changes over time."},
-{l:9,q:"On a graph, where does the independent variable usually go?",o:["On the horizontal (x) axis","On the vertical (y) axis","In the title only","Nowhere, it is not graphed"],e:"The independent variable (like time) goes on the horizontal x-axis. The dependent variable goes on the vertical y-axis."},
-{l:10,q:"What is a model in science?",o:["A representation of a phenomenon, system, process or solution","An exact copy that has no limits","A guess with no evidence","A type of safety equipment"],e:"A model represents a phenomenon, system, process or solution. No model is exactly like the real thing."},
-{l:10,q:"A globe is a model of Earth. Which is a limitation of the globe?",o:["It is much smaller than Earth and cannot show real weather","It shows the shapes of the continents","It helps you find places","It can be turned to look at different areas"],e:"A globe is far smaller than Earth and made of different materials, and it cannot show weather. The other choices are advantages."},
-{l:10,q:"Why might an engineer build a small model of a bridge first?",o:["To test the design and fix problems before building the real bridge","Because real bridges never need testing","To avoid using any tools","So nobody can see the design"],e:"A model lets engineers test and improve a design cheaply before building the real thing."},
-{l:11,q:"A hypothesis is...",o:["a tentative statement that can be tested","a well-established fact that never changes","the same thing as a scientific law","an opinion that cannot be tested"],e:"A hypothesis is a tentative statement that can be tested, and evidence can support it or not support it."},
-{l:11,q:"Which best describes a scientific theory?",o:["A well-established explanation supported by lots of evidence and tested by many researchers","A hunch someone had yesterday","A hypothesis that has not been tested","A law that has been proven"],e:"A theory is well established and highly reliable, tested by many independent researchers, though it can still change with new evidence."},
-{l:11,q:"Which statement is an inference?",o:["The puddle is gone because the water evaporated.","The puddle was 30 cm wide at 8 a.m.","The puddle is gone at 2 p.m.","The puddle is on the ground."],e:"An inference is a conclusion based on observations and reasoning. The other statements simply report what was observed."},
-{l:12,q:"What is the median of 10, 12, 12, 13 and 18?",o:["12","13","10","18"],e:"In order: 10, 12, 12, 13, 18. The middle value is 12."},
-{l:12,q:"Which of these is a source of error?",o:["Reading a ruler from an angle instead of straight on","Repeating the trials three times","Using a balance that is set to zero","Writing the units next to the numbers"],e:"Reading a scale from an angle gives a wrong reading. The other choices are good practice."},
-{l:12,q:"Which design flaw makes an experiment unfair?",o:["Changing two variables at the same time","Keeping the other variables the same","Using a control group","Doing repeated trials"],e:"If two variables change together, you cannot tell which one caused the result."},
-{l:13,q:"In the CER model for explanations, what does the E stand for?",o:["Evidence","Energy","Error","Experiment"],e:"CER stands for Claim, Evidence, Reasoning."},
-{l:13,q:"Which is a respectful way to disagree in a scientific argument?",o:["\"I see your point, but my data show something different. Can we compare our evidence?\"","\"You are wrong and you should stop talking.\"","\"I do not need evidence. I just know.\"","\"Whoever speaks the loudest wins.\""],e:"Respectful scientific argument focuses on evidence and ideas, not on putting people down."},
-{l:13,q:"A good scientific explanation is supported by...",o:["data and models, and fits with scientific ideas","opinions only","whatever is most popular","whatever feels right"],e:"Explanations should be supported by data and models and be consistent with scientific ideas, principles and theories."},
-{l:14,q:"Cost-benefit analysis means...",o:["weighing the costs and benefits of a decision to see if it is worth it","counting how many trials were done","measuring the cost of lab equipment only","choosing the cheapest option every time"],e:"A cost-benefit analysis compares what a decision costs with what it gains."},
-{l:14,q:"Which source is most credible for information about a medicine's side effects?",o:["A health agency or a peer-reviewed medical journal","An anonymous social media post","An advertisement for the medicine","A rumour a friend heard"],e:"Credible sources have expertise and use evidence. Adverts, rumours and anonymous posts do not."},
-{l:14,q:"Marie Curie is known for...",o:["her research on radioactivity and Nobel Prizes in two different sciences","inventing the first telescope","discovering gravity","writing the first periodic table"],e:"Marie Curie studied radioactivity and won Nobel Prizes in Physics (1903) and Chemistry (1911)."},
-{l:14,q:"Which is a good way to explore STEM careers?",o:["Talk to a mentor who works in STEM, or visit a museum or library","Wait for a career to find you","Only watch cartoons","Guess without looking at any resources"],e:"Mentors, museums, libraries, professional organisations, companies and online platforms are all good resources."}
-];
+const TIPS = {
+  basic: 'Use a number line. Taking away more than you have goes below zero. Adding to a negative moves you to the right.',
+  chain: 'Work from left to right, one step at a time.',
+  addneg: 'Adding a negative is the same as subtracting. For example, 4 + (\u22121) = 4 \u2212 1.',
+  subpos: 'Subtracting a positive number is just ordinary subtraction. For example, 6 \u2212 (+1) = 6 \u2212 1.',
+  subneg: 'Subtracting a negative is the same as adding. For example, 1 \u2212 (\u22122) = 1 + 2.',
+  mixed: 'Rewrite double signs first: + \u2212 becomes \u2212, and \u2212 \u2212 becomes +.',
+  missing: 'Put your answer back into the box and check that the sum works.',
+  magic: 'Find a complete row, column or diagonal to get the magic total, then work out the missing number.',
+  real: 'Draw a quick number line to see the change.',
+  cards: 'Try each pair and work out the answer before choosing.'
+};
 
-function $(s,r){return (r||document).querySelector(s);}
-function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
-function fmt(n){return isFinite(n)?String(Number(n.toPrecision(10))):"—";}
-
-/* ---------- navigation ---------- */
-function go(id){
-  if(id==="top"){window.scrollTo({top:0,behavior:"smooth"});return;}
-  var el=document.getElementById(id);
-  if(el){el.scrollIntoView({behavior:"smooth",block:"start"});}
+const Q = [];
+function numOpts(a, unit) {
+  const c = [...new Set([-a, a + 1, a - 1, a + 2, a - 2, a + 3, a - 3].filter(x => x !== a))];
+  const first = c[0] === -a ? [c.shift()] : [];
+  const picks = first.concat(shuffle(c).slice(0, 3 - first.length));
+  const f = x => (unit === '\u00a3' ? (x < 0 ? '\u2212\u00a3' + Math.abs(x) : '\u00a3' + x) : fmt(x) + (unit || ''));
+  return { opts: shuffle([a, ...picks]).map(f), correct: f(a) };
 }
-document.addEventListener("click",function(e){
-  var a=e.target.closest("[data-go]");
-  if(a){e.preventDefault();go(a.getAttribute("data-go"));}
-});
-
-/* ---------- lesson progress (saved on this device) ---------- */
-var KEY="sciPractices.learned.v1",learned={};
-try{learned=JSON.parse(localStorage.getItem(KEY)||"{}")||{};}catch(err){learned={};}
-function saveLearned(){try{localStorage.setItem(KEY,JSON.stringify(learned));}catch(err){}}
-function paint(){
-  var n=0;
-  for(var i=1;i<=14;i++){
-    var on=!!learned[i];if(on){n++;}
-    var chip=$('.chip[data-c="'+i+'"]');if(chip){chip.classList.toggle("done",on);}
-    var b=$('[data-learn="'+i+'"]');
-    if(b){b.setAttribute("aria-pressed",on?"true":"false");b.textContent=on?"Lesson "+i+" learned ✓":"Mark Lesson "+i+" as learned";}
-  }
-  $("#prog").textContent=n+"/14 learned";
-}
-document.addEventListener("click",function(e){
-  var b=e.target.closest("[data-learn]");
-  if(b){var i=b.getAttribute("data-learn");learned[i]=!learned[i];saveLearned();paint();}
-});
-paint();
-
-/* ---------- highlight the lesson you are reading ---------- */
-if("IntersectionObserver" in window){
-  var nav=$(".chips");
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(en.isIntersecting){
-        var id=en.target.id,n=id.replace("l","");
-        $$(".chip").forEach(function(c){c.classList.remove("on");});
-        var chip=$('.chip[data-c="'+n+'"]');
-        if(chip){
-          chip.classList.add("on");
-          var left=chip.getBoundingClientRect().left-nav.getBoundingClientRect().left+nav.scrollLeft-60;
-          nav.scrollTo({left:left,behavior:"smooth"});
-        }
-      }
-    });
-  },{rootMargin:"-25% 0px -65% 0px"});
-  $$(".lesson[id^='l']").forEach(function(s){if(/^l\d+$/.test(s.id)){io.observe(s);}});
-}
-
-/* ---------- unit converter and mean calculator ---------- */
-var cvIn=$("#cvIn"),cvSel=$("#cvSel"),cvOut=$("#cvOut");
-function convert(){
-  var v=parseFloat(cvIn.value);
-  var unit=cvSel.options[cvSel.selectedIndex].text.split("→")[1];
-  cvOut.textContent=isNaN(v)?"—":fmt(v*parseFloat(cvSel.value))+" "+(unit||"").trim();
-}
-cvIn.addEventListener("input",convert);cvSel.addEventListener("change",convert);convert();
-
-var tIn=[$("#t1"),$("#t2"),$("#t3")],meanOut=$("#meanOut");
-function mean(){
-  var a=tIn.map(function(x){return parseFloat(x.value);});
-  if(a.some(isNaN)){meanOut.textContent="—";return;}
-  meanOut.textContent=fmt(Number(((a[0]+a[1]+a[2])/3).toFixed(2)));
-}
-tIn.forEach(function(x){x.addEventListener("input",mean);});mean();
-
-/* ---------- the quiz ---------- */
-var box=$("#qbox"),BEST="sciPractices.best.v1";
-var order=[],st={i:0,score:0,missed:[],byL:{}},current=null,answered=false;
-function best(){try{return parseInt(localStorage.getItem(BEST)||"0",10)||0;}catch(err){return 0;}}
-function setBest(n){try{if(n>best()){localStorage.setItem(BEST,String(n));}}catch(err){}}
-function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-
-function intro(){
-  box.innerHTML='<p class="qtext">Ready? '+Q.length+' questions, one lesson at a time.</p>'+
-    '<p>Pick an answer and you will see straight away whether it is right, and why. Questions follow the lessons in order. The answer choices are shuffled every time.</p>'+
-    '<p class="mono">Best score so far: '+best()+' / '+Q.length+'</p>'+
-    '<div class="btns"><button class="btn" id="qStart" type="button">Start the quiz</button></div>';
-  $("#qStart").onclick=function(){begin(Q.map(function(x,i){return i;}),true);};
-}
-function begin(list,fresh){
-  order=list;st={i:0,score:0,missed:[],byL:{}};
-  show(!fresh);
-}
-function show(scroll){
-  var q=Q[order[st.i]];answered=false;
-  current={q:q,opts:shuffle(q.o.map(function(t,k){return {t:t,c:k===0};}))};
-  var pct=Math.round(st.i/order.length*100),h="";
-  h+='<div class="qmeta"><span>Question '+(st.i+1)+' of '+order.length+'</span><span>Lesson '+q.l+': '+esc(TITLES[q.l-1])+'</span></div>';
-  h+='<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div>';
-  h+='<p class="qtext" id="qtext" tabindex="-1">'+esc(q.q)+'</p><div class="opts">';
-  current.opts.forEach(function(o,k){h+='<button class="opt" type="button" data-k="'+k+'"><span class="k">'+"ABCD".charAt(k)+'</span>'+esc(o.t)+'</button>';});
-  h+='</div><div id="qfb"></div>';
-  box.innerHTML=h;
-  var qt=$("#qtext");if(qt){try{qt.focus({preventScroll:true});}catch(err){}}
-  if(scroll){box.scrollIntoView({behavior:"smooth",block:"start"});}
-}
-function answer(k){
-  if(answered){return;}answered=true;
-  var q=current.q,pick=current.opts[k],ok=pick.c;
-  st.byL[q.l]=st.byL[q.l]||{n:0,c:0};st.byL[q.l].n++;
-  if(ok){st.score++;st.byL[q.l].c++;}else{st.missed.push(order[st.i]);}
-  $$(".opt",box).forEach(function(b,i){
-    b.disabled=true;
-    if(current.opts[i].c){b.classList.add("right");}
-    else if(i===k){b.classList.add("wrong");}
+function addExpr(sec, list) {
+  list.forEach(e => {
+    const a = ev(e), o = numOpts(a);
+    Q.push({ sec, tip: TIPS[sec.key], text: show(e) + ' = ?', opts: o.opts, correct: o.correct, expl: show(e) + ' = ' + fmt(a) });
   });
-  var last=st.i===order.length-1;
-  var h='<div class="fb '+(ok?"ok":"bad")+'" role="status"><b class="v">'+(ok?"Correct!":"Not quite.")+'</b> ';
-  if(!ok){h+='The right answer is <b>'+esc(current.opts.filter(function(o){return o.c;})[0].t)+'</b>. ';}
-  h+=esc(q.e)+'<div class="row"><button class="btn" id="qNext" type="button">'+(last?"See my results":"Next question")+'</button>';
-  if(!ok){h+='<button class="btn alt" type="button" data-go="l'+q.l+'">Review Lesson '+q.l+'</button>';}
-  h+='</div></div>';
-  $("#qfb").innerHTML=h;
-  $("#qNext").focus({preventScroll:true});
-  $("#qNext").onclick=function(){st.i++;if(st.i>=order.length){results();}else{show(true);}};
 }
-function results(){
-  var total=order.length,pct=Math.round(st.score/total*100),full=total===Q.length;
-  if(full){setBest(st.score);}
-  var msg=pct>=90?"Outstanding. You think like a scientist!":pct>=75?"Great work. You know this well.":pct>=50?"A good start. Review the lessons below and try again.":"Keep going. Read the lessons again and retake the quiz.";
-  var h='<p class="lab" style="color:var(--accent)">Your result</p><div class="score">'+st.score+' / '+total+'</div><p class="qtext">'+msg+'</p>';
-  if(full){h+='<p class="mono">Best score so far: '+best()+' / '+Q.length+'</p>';}
-  h+='<h3>By lesson</h3><div class="bylesson">';
-  Object.keys(st.byL).sort(function(a,b){return a-b;}).forEach(function(l){
-    var r=st.byL[l];h+='<div class="'+(r.c===r.n?"full":"")+'">L'+l+' &middot; '+r.c+'/'+r.n+'</div>';
-  });
-  h+='</div>';
-  if(st.missed.length){
-    h+='<h3>Questions to review</h3><div class="miss">';
-    st.missed.forEach(function(qi){
-      var q=Q[qi];
-      h+='<div class="card"><p><b>'+esc(q.q)+'</b></p><p>Answer: <span class="fill">'+esc(q.o[0])+'</span></p><p>'+esc(q.e)+'</p><button class="btn alt" type="button" data-go="l'+q.l+'" style="padding:8px 14px;font-size:.9rem">Review Lesson '+q.l+'</button></div>';
-    });
-    h+='</div>';
-  }else{h+='<p>You got every question right. Brilliant!</p>';}
-  h+='<div class="btns">';
-  if(st.missed.length){h+='<button class="btn" id="qRetry" type="button">Retry the '+st.missed.length+' I missed</button>';}
-  h+='<button class="btn alt" id="qAgain" type="button">Start over</button></div>';
-  box.innerHTML=h;
-  var r1=$("#qRetry");if(r1){r1.onclick=function(){begin(st.missed.slice(),false);};}
-  $("#qAgain").onclick=function(){begin(Q.map(function(x,i){return i;}),false);};
-  box.scrollIntoView({behavior:"smooth",block:"start"});
-}
-box.addEventListener("click",function(e){
-  var b=e.target.closest(".opt");
-  if(b&&!b.disabled){answer(parseInt(b.getAttribute("data-k"),10));}
-});
-intro();
+
+const S = {
+  basic: { key: 'basic', name: 'Basic negatives' },
+  chain: { key: 'chain', name: 'Chains of + and \u2212' },
+  addneg: { key: 'addneg', name: 'Adding negatives' },
+  subpos: { key: 'subpos', name: 'Subtracting positives' },
+  subneg: { key: 'subneg', name: 'Subtracting negatives' },
+  mixed: { key: 'mixed', name: 'Mixed practice' },
+  missing: { key: 'missing', name: 'Missing numbers' },
+  magic: { key: 'magic', name: 'Magic squares' },
+  real: { key: 'real', name: 'Real-life problems' },
+  cards: { key: 'cards', name: 'Cards and reasoning' }
+};
+
+addExpr(S.basic, ['3 - 8','6 - 9','10 - 14','-4 + 7','-8 + 3','-11 + 15','-5 - 6','-9 - 2']);
+addExpr(S.chain, ['4 + 6 - 12','9 - 15 + 3','-7 + 2 - 5','-12 + 20 - 11','6 - 9 - 4','-3 - 4 + 10']);
+addExpr(S.addneg, ['9 + -3','5 + -8','2 + -9','-6 + -4','-3 + -12','-7 + -9']);
+addExpr(S.subpos, ['7 - +3','4 - +9','-5 - +6','-8 - +8','12 - +20']);
+addExpr(S.subneg, ['5 - -3','2 - -7','-6 - -2','-10 - -4','-3 - -9','0 - -6']);
+addExpr(S.mixed, ['14 - 21','-13 + 6','8 + -15','-5 - -12','-18 - 7','-25 + 40']);
+
+[['□ + 5 = 2', -3, '−3 + 5 = 2'], ['□ − 4 = −9', -5, '−5 − 4 = −9'],
+ ['−3 − □ = 6', -9, '−3 − (−9) = 6'], ['7 − □ = 12', -5, '7 − (−5) = 12']]
+.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t, opts: o.opts, correct: o.correct, expl: x }); });
+
+const mg = [-4, 1, 0, 3, -1, -5, -2, -3, 2];
+const hole = k => mg.map((v, j) => j === k ? null : v);
+[[4, 'Every row, column and diagonal adds to −3. Middle row: 3 + ? + (−5) = −3, so ? = −1.'],
+ [7, 'Every row, column and diagonal adds to −3. Middle column: 1 + (−1) + ? = −3, so ? = −3.'],
+ [2, 'Every row, column and diagonal adds to −3. Top row: −4 + 1 + ? = −3, so ? = 0.'],
+ [0, 'Every row, column and diagonal adds to −3. Top row: ? + 1 + 0 = −3, so ? = −4.']]
+.forEach(([k, ex]) => { const o = numOpts(mg[k]); Q.push({ sec: S.magic, tip: TIPS.magic, grid: hole(k), qi: k, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
+
+(() => {
+  let o = numOpts(10, '°C');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'At 6am the temperature was −6°C. By noon it was 4°C. By how many degrees did it rise?', opts: o.opts, correct: o.correct, expl: 'From −6 up to 0 is 6, then 4 more. The rise is 10°C.' });
+  o = numOpts(-6, ' m');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'A diver is at −15 m. She swims up 9 m. Where is she now?', opts: o.opts, correct: o.correct, expl: '−15 + 9 = −6, so she is at −6 m.' });
+  o = numOpts(-75, '£');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: "Sam's bank balance is −£30. He spends £45 more. What is his balance now?", opts: o.opts, correct: o.correct, expl: '−£30 − £45 = −£75.' });
 })();
-</script>
 
+const cardNote = 'Cards: −5, −2, 3, 8, −6, 1, 4. ';
+const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
+pairQ('Which two cards add to make −8?', '−6 and −2', ['−5 and −2', '−5 and 3', '−6 and 1'], '−6 + (−2) = −8.');
+pairQ('Which two cards, added together, give the smallest possible answer?', '−6 and −5', ['−6 and −2', '−5 and −2', '−6 and 1'], '−6 + (−5) = −11, which is the lowest total.');
+
+// App logic
+let order = [], i = 0, score = 0, missed = [], locked = false;
+const $ = id => document.getElementById(id);
+function renderGrid(q) {
+  if (!q.grid) return '';
+  return '<div class="grid">' + q.grid.map((v, k) => k === q.qi ? '<div class="qm">?</div>' : v === null ? '<div class="blank"></div>' : '<div>' + fmt(v) + '</div>').join('') + '</div>';
+}
+function load() {
+  const q = order[i]; locked = false;
+  $('count').textContent = 'Question ' + (i + 1) + ' of ' + order.length;
+  $('scoreLive').textContent = 'Score: ' + score;
+  $('prog').style.width = (i / order.length * 100) + '%';
+  $('sec').textContent = q.sec.name;
+  $('grid').innerHTML = renderGrid(q);
+  const t = $('qtext'); t.textContent = q.text; t.className = 'q' + (q.small || q.grid ? ' small' : '');
+  const box = $('answers'); box.innerHTML = '';
+  q.opts.forEach(o => { const b = document.createElement('button'); b.className = 'ans'; b.textContent = o; b.onclick = () => pick(b, o); box.appendChild(b); });
+  $('fb').className = 'fb'; $('fb').innerHTML = '';
+  $('next').disabled = true; $('next').textContent = i === order.length - 1 ? 'See results' : 'Next';
+}
+function pick(btn, val) {
+  if (locked) return; locked = true;
+  const q = order[i], ok = val === q.correct;
+  document.querySelectorAll('.ans').forEach(b => { b.disabled = true; if (b.textContent === q.correct) b.classList.add('right'); });
+  if (ok) { score++; } else { btn.classList.add('wrong'); missed.push(q); }
+  const fb = $('fb'); fb.className = 'fb ' + (ok ? 'ok' : 'no');
+  fb.innerHTML = '<b>' + (ok ? 'Correct!' : 'Not quite.') + '</b> ' + q.expl + (ok ? '' : '<br><small>Tip: ' + q.tip + '</small>');
+  $('scoreLive').textContent = 'Score: ' + score;
+  $('next').disabled = false;
+}
+function finish() {
+  $('play').classList.add('hidden'); $('end').classList.remove('hidden');
+  const pct = Math.round(score / order.length * 100);
+  $('final').textContent = score + ' / ' + order.length + ' (' + pct + '%)';
+  $('msg').textContent = pct >= 90 ? 'Excellent work. You really know your negatives.' : pct >= 70 ? 'Good job. Review the ones you missed below.' : pct >= 50 ? 'A fair start. Read the tips and try again.' : 'Keep practising. Use a number line and try again.';
+  $('review').innerHTML = missed.length ? '<h3>Questions to review</h3>' + missed.map(q => '<div><b>' + q.text + '</b><br>Answer: ' + q.correct + ' &mdash; ' + q.expl + '</div>').join('') : '<h3>No mistakes. Perfect score!</h3>';
+}
+function start() {
+  order = $('shuf').checked ? shuffle(Q) : Q.slice(); i = 0; score = 0; missed = [];
+  $('start').classList.add('hidden'); $('end').classList.add('hidden'); $('play').classList.remove('hidden'); load();
+}
+$('go').onclick = start;
+$('again').onclick = () => { $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
+$('next').onclick = () => { i++; if (i >= order.length) { $('prog').style.width = '100%'; finish(); } else load(); };
+</script>
 </body>
 </html>
