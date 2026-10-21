@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Negatives Quiz 2</title>
+<title>Negatives Quiz 3</title>
 <style>
 :root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
 *{box-sizing:border-box}
@@ -48,8 +48,8 @@ h1{margin:0 0 6px;font-size:1.7rem}
 <body>
 <div class="wrap">
   <div class="card" id="start">
-    <h1>Negatives Quiz 2</h1>
-    <p class="sub">Adding and subtracting negative numbers. 50 new questions, one at a time.</p>
+    <h1>Negatives Quiz 3</h1>
+    <p class="sub">Adding and subtracting negative numbers. 50 more questions, one at a time.</p>
     <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
     <button class="btn" id="go">Start quiz</button>
   </div>
@@ -121,38 +121,38 @@ const S = {
   cards: { key: 'cards', name: 'Cards and reasoning' }
 };
 
-addExpr(S.basic, ['3 - 8','6 - 9','10 - 14','-4 + 7','-8 + 3','-11 + 15','-5 - 6','-9 - 2']);
-addExpr(S.chain, ['4 + 6 - 12','9 - 15 + 3','-7 + 2 - 5','-12 + 20 - 11','6 - 9 - 4','-3 - 4 + 10']);
-addExpr(S.addneg, ['9 + -3','5 + -8','2 + -9','-6 + -4','-3 + -12','-7 + -9']);
-addExpr(S.subpos, ['7 - +3','4 - +9','-5 - +6','-8 - +8','12 - +20']);
-addExpr(S.subneg, ['5 - -3','2 - -7','-6 - -2','-10 - -4','-3 - -9','0 - -6']);
-addExpr(S.mixed, ['14 - 21','-13 + 6','8 + -15','-5 - -12','-18 - 7','-25 + 40']);
+addExpr(S.basic, ['5 - 12','7 - 13','9 - 16','-3 + 8','-10 + 6','-14 + 20','-8 - 5','-12 - 6']);
+addExpr(S.chain, ['8 - 11 + 5','-6 + 9 - 7','3 - 10 - 2','-15 + 10 + 8','12 - 20 + 6','-4 - 5 - 6']);
+addExpr(S.addneg, ['7 + -12','10 + -4','3 + -11','-2 + -9','-14 + -6','-5 + -13']);
+addExpr(S.subpos, ['9 - +15','-3 - +9','-11 - +4','6 - +14','-7 - +13']);
+addExpr(S.subneg, ['4 - -9','8 - -5','-7 - -3','-12 - -5','-4 - -10','-9 - -9']);
+addExpr(S.mixed, ['16 - 25','-17 + 9','11 + -19','-6 - -14','-21 - 9','-30 + 45']);
 
-[['□ + 5 = 2', -3, '−3 + 5 = 2'], ['□ − 4 = −9', -5, '−5 − 4 = −9'],
- ['−3 − □ = 6', -9, '−3 − (−9) = 6'], ['7 − □ = 12', -5, '7 − (−5) = 12']]
+[['□ + 6 = 2', -4, '−4 + 6 = 2'], ['□ − 7 = −12', -5, '−5 − 7 = −12'],
+ ['−4 − □ = 3', -7, '−4 − (−7) = 3'], ['5 − □ = 14', -9, '5 − (−9) = 14']]
 .forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t, opts: o.opts, correct: o.correct, expl: x }); });
 
-const mg = [-4, 1, 0, 3, -1, -5, -2, -3, 2];
+const mg = [-2, 3, 2, 5, 1, -3, 0, -1, 4];
 const hole = k => mg.map((v, j) => j === k ? null : v);
-[[4, 'Every row, column and diagonal adds to −3. Middle row: 3 + ? + (−5) = −3, so ? = −1.'],
- [7, 'Every row, column and diagonal adds to −3. Middle column: 1 + (−1) + ? = −3, so ? = −3.'],
- [2, 'Every row, column and diagonal adds to −3. Top row: −4 + 1 + ? = −3, so ? = 0.'],
- [0, 'Every row, column and diagonal adds to −3. Top row: ? + 1 + 0 = −3, so ? = −4.']]
+[[5, 'Every row, column and diagonal adds to 3. Middle row: 5 + 1 + ? = 3, so ? = −3.'],
+ [6, 'Every row, column and diagonal adds to 3. Left column: −2 + 5 + ? = 3, so ? = 0.'],
+ [8, 'Every row, column and diagonal adds to 3. Diagonal: −2 + 1 + ? = 3, so ? = 4.'],
+ [1, 'Every row, column and diagonal adds to 3. Middle column: ? + 1 + (−1) = 3, so ? = 3.']]
 .forEach(([k, ex]) => { const o = numOpts(mg[k]); Q.push({ sec: S.magic, tip: TIPS.magic, grid: hole(k), qi: k, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
 
 (() => {
-  let o = numOpts(10, '°C');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'At 6am the temperature was −6°C. By noon it was 4°C. By how many degrees did it rise?', opts: o.opts, correct: o.correct, expl: 'From −6 up to 0 is 6, then 4 more. The rise is 10°C.' });
-  o = numOpts(-6, ' m');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'A diver is at −15 m. She swims up 9 m. Where is she now?', opts: o.opts, correct: o.correct, expl: '−15 + 9 = −6, so she is at −6 m.' });
-  o = numOpts(-75, '£');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: "Sam's bank balance is −£30. He spends £45 more. What is his balance now?", opts: o.opts, correct: o.correct, expl: '−£30 − £45 = −£75.' });
+  let o = numOpts(-14, '°C');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'At night the temperature was −9°C. It dropped by 5 more degrees. What is the temperature now?', opts: o.opts, correct: o.correct, expl: '−9 − 5 = −14, so it is −14°C.' });
+  o = numOpts(35, '£');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'Ada has −£20 in her account. She pays in £55. What is her balance now?', opts: o.opts, correct: o.correct, expl: '−£20 + £55 = £35.' });
+  o = numOpts(4);
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'A lift is at floor −3 (a basement level). It goes up 7 floors. Which floor is it at now?', opts: o.opts, correct: o.correct, expl: '−3 + 7 = 4, so it is at floor 4.' });
 })();
 
-const cardNote = 'Cards: −5, −2, 3, 8, −6, 1, 4. ';
+const cardNote = 'Cards: −7, −3, 5, 9, −1, 2, 6. ';
 const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
-pairQ('Which two cards add to make −8?', '−6 and −2', ['−5 and −2', '−5 and 3', '−6 and 1'], '−6 + (−2) = −8.');
-pairQ('Which two cards, added together, give the smallest possible answer?', '−6 and −5', ['−6 and −2', '−5 and −2', '−6 and 1'], '−6 + (−5) = −11, which is the lowest total.');
+pairQ('Which two cards add to make −4?', '−3 and −1', ['−7 and 5', '−7 and 2', '−3 and 2'], '−3 + (−1) = −4.');
+pairQ('Which subtraction gives the smallest possible answer?', '−7 − 9', ['−7 − 6', '−3 − 9', '−7 − 5'], '−7 − 9 = −16, which is the lowest answer.');
 
 // App logic
 let order = [], i = 0, score = 0, missed = [], locked = false;
