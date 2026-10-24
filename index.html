@@ -1,745 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grade 4 English Check</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negatives Quiz 3</title>
 <style>
-/* Layout: one centered column. Passage card sits above the question; answers are large tap targets; results show a skill-by-skill report. */
-:root{
-  --bg:#F1F5FB; --surface:#FFFFFF; --ink:#18233F; --muted:#56637F; --line:#D5DDEC; --tint:#E6EDFB;
-  --accent:#2C59DE; --accent-ink:#FFFFFF; --sun:#FFC43D;
-  --good:#17824F; --good-bg:#E3F4EB; --warn:#9A5B00; --warn-bg:#FFF1D6; --bad:#B93424; --bad-bg:#FBE9E6;
-  --f-display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
-  --f-body:"Nunito","Segoe UI",system-ui,sans-serif;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0F1626; --surface:#18223A; --ink:#E8EDF8; --muted:#9AA8C7; --line:#2B3858; --tint:#1F2D50;
-    --accent:#8AABFF; --accent-ink:#0F1626; --sun:#FFC43D;
-    --good:#58CD93; --good-bg:#17342A; --warn:#F2B654; --warn-bg:#3A2D14; --bad:#FF8F7D; --bad-bg:#3C1E1B;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0F1626; --surface:#18223A; --ink:#E8EDF8; --muted:#9AA8C7; --line:#2B3858; --tint:#1F2D50;
-  --accent:#8AABFF; --accent-ink:#0F1626; --sun:#FFC43D;
-  --good:#58CD93; --good-bg:#17342A; --warn:#F2B654; --warn-bg:#3A2D14; --bad:#FF8F7D; --bad-bg:#3C1E1B;
-  color-scheme:dark;
-}
-[hidden]{display:none!important}
+:root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0; background:var(--bg); color:var(--ink);
-  font-family:var(--f-body); font-size:17px; line-height:1.5;
-  padding-block:24px 48px;
-  padding-left:max(16px, env(safe-area-inset-left, 0px));
-  padding-right:max(16px, env(safe-area-inset-right, 0px));
-}
-.wrap{max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:16px}
-h1,h2,h3{font-family:var(--f-display); font-weight:600; margin:0; text-wrap:balance; line-height:1.2}
-p{margin:0}
-.kicker{font-size:.78rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
-.card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px}
-.btn{
-  font:inherit; font-weight:800; border-radius:12px; border:2px solid var(--accent);
-  padding:12px 22px; min-height:48px; cursor:pointer; background:var(--accent); color:var(--accent-ink);
-}
-.btn.ghost{background:transparent; color:var(--accent)}
-.btn:disabled{opacity:.45; cursor:not-allowed}
-.btn:focus-visible,.opt:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--sun); outline-offset:2px}
-
-/* Start */
-#start h1{font-size:clamp(1.9rem,6vw,2.6rem)}
-.lede{color:var(--muted); margin-top:8px; max-width:56ch}
-.cover{display:flex; flex-direction:column; gap:18px}
-.chips{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:8px; margin:0; padding:0; list-style:none}
-.chips li{display:flex; justify-content:space-between; gap:10px; background:var(--tint); border-radius:10px; padding:9px 12px; font-weight:700; font-size:.92rem}
-.chips b{font-variant-numeric:tabular-nums}
-.field{display:flex; flex-direction:column; gap:6px; max-width:360px}
-.field label{font-weight:800; font-size:.92rem}
-.field input{font:inherit; padding:11px 12px; border-radius:10px; border:2px solid var(--line); background:var(--bg); color:var(--ink)}
-.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-.notes{margin:0; padding-left:1.2em; color:var(--muted); font-size:.95rem}
-
-/* Quiz */
-.topbar{display:flex; flex-direction:column; gap:8px}
-.meta{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center}
-.meta .count{font-family:var(--f-display); font-weight:600; font-size:1.05rem}
-.chip{background:var(--tint); border-radius:999px; padding:3px 12px; font-size:.82rem; font-weight:800}
-.track{height:10px; background:var(--line); border-radius:999px; overflow:hidden}
-.fill{height:100%; width:0; background:var(--sun); border-radius:999px; transition:width .25s ease}
-.sub{display:flex; justify-content:space-between; color:var(--muted); font-size:.85rem; font-weight:700}
-#passage{background:var(--tint); border-color:transparent; display:flex; flex-direction:column; gap:10px}
-#passage h2{font-size:1.3rem}
-#passage p:not(.kicker){font-size:1.05rem; line-height:1.65; max-width:68ch}
-#qtext{font-family:var(--f-display); font-weight:500; font-size:1.3rem; line-height:1.35; white-space:pre-line; margin-bottom:14px}
-#options{display:flex; flex-direction:column; gap:10px}
-.opt{
-  display:flex; align-items:center; gap:12px; width:100%; text-align:left;
-  font:inherit; color:inherit; background:var(--surface);
-  border:2px solid var(--line); border-radius:12px; padding:12px 14px; min-height:56px; cursor:pointer;
-}
-.opt:hover{border-color:var(--accent)}
-.opt .letter{
-  flex:none; width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
-  background:var(--tint); font-family:var(--f-display); font-weight:600;
-}
-.opt .otext{min-width:0; overflow-wrap:anywhere; font-weight:600}
-.opt[aria-checked="true"]{border-color:var(--accent); background:var(--tint)}
-.opt[aria-checked="true"] .letter{background:var(--accent); color:var(--accent-ink)}
-.nav{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
-.warn{background:var(--warn-bg); color:var(--warn); border-color:transparent; display:flex; flex-direction:column; gap:10px}
-.warn p{font-weight:700}
-
-/* Results */
-.score{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
-.score .big{font-family:var(--f-display); font-weight:600; font-size:3.4rem; line-height:1; font-variant-numeric:tabular-nums}
-.score .pct{font-size:1.2rem; font-weight:800; color:var(--muted)}
-.band{border-radius:12px; padding:12px 14px; font-weight:700}
-.band.good{background:var(--good-bg); color:var(--good)}
-.band.warn{background:var(--warn-bg); color:var(--warn)}
-.band.bad{background:var(--bad-bg); color:var(--bad)}
-.secs{display:flex; flex-direction:column; gap:14px; margin-top:6px}
-.sec{display:grid; grid-template-columns:minmax(0,15rem) minmax(0,1fr) auto; gap:6px 14px; align-items:center}
-.sec .name{font-weight:800}
-.sec .meter{height:12px; background:var(--line); border-radius:999px; overflow:hidden}
-.sec .meter i{display:block; height:100%; border-radius:999px}
-.sec .val{font-weight:800; font-variant-numeric:tabular-nums; min-width:6.5rem; text-align:right}
-.sec.good i{background:var(--good)} .sec.warn i{background:var(--warn)} .sec.bad i{background:var(--bad)}
-.miss{display:flex; flex-direction:column; gap:10px; border:1px solid var(--line); border-radius:12px; padding:14px; background:var(--surface)}
-.miss .q{font-weight:800; white-space:pre-line}
-.miss .a{display:flex; gap:8px; flex-wrap:wrap; font-size:.95rem}
-.tag{border-radius:8px; padding:2px 10px; font-weight:800; font-size:.88rem}
-.tag.you{background:var(--bad-bg); color:var(--bad)}
-.tag.right{background:var(--good-bg); color:var(--good)}
-.miss .why{color:var(--muted); font-size:.95rem}
-.misslist{display:flex; flex-direction:column; gap:10px}
-#summary-text{width:100%; min-height:150px; font:inherit; font-size:.92rem; border-radius:10px; border:2px solid var(--line); padding:10px; background:var(--bg); color:var(--ink)}
-@media (max-width:560px){
-  body{font-size:16px}
-  .sec{grid-template-columns:minmax(0,1fr) auto}
-  .sec .meter{grid-column:1 / -1; order:3}
-  .score .big{font-size:2.8rem}
-  .card{padding:16px}
-}
-@media (prefers-reduced-motion: reduce){.fill{transition:none}}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px}
+.wrap{width:100%;max-width:640px}
+.card{background:var(--card);border-radius:18px;box-shadow:0 6px 24px rgba(30,60,110,.09);padding:28px}
+h1{margin:0 0 6px;font-size:1.7rem}
+.sub{color:var(--muted);margin:0 0 20px}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:13px 22px;font-size:1rem;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt-row{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.bar>div{height:100%;background:var(--brand);width:0;transition:width .25s}
+.sec{display:inline-block;background:#eaf1ff;color:var(--brand-d);font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:12px}
+.q{font-size:1.5rem;font-weight:700;margin:4px 0 18px;line-height:1.35}
+.q.small{font-size:1.2rem}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:center;color:var(--ink)}
+.ans:hover:not(:disabled){border-color:var(--brand)}
+.ans.right{background:var(--okbg);border-color:var(--ok)}
+.ans.wrong{background:var(--badbg);border-color:var(--bad)}
+.ans:disabled{cursor:default}
+.fb{margin-top:18px;padding:14px;border-radius:12px;display:none;line-height:1.5}
+.fb.ok{display:block;background:var(--okbg)}
+.fb.no{display:block;background:var(--badbg)}
+.nav{margin-top:18px;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(3,56px);gap:4px;margin:0 0 18px}
+.grid div{height:50px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border-radius:6px}
+.grid .qm{background:#fff4c9;border-color:#d4a300}
+.grid .blank{background:#f0f3f8;border-color:var(--line);color:var(--muted)}
+.score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
+.review{margin-top:18px;max-height:340px;overflow:auto;border-top:1px solid var(--line)}
+.review div{padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.review b{color:var(--bad)}
+.hidden{display:none}
+@media(max-width:480px){.answers{grid-template-columns:1fr}.q{font-size:1.3rem}.card{padding:20px}}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <div class="card" id="start">
+    <h1>Negatives Quiz 3</h1>
+    <p class="sub">Adding and subtracting negative numbers. 50 more questions, one at a time.</p>
+    <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
+    <button class="btn" id="go">Start quiz</button>
+  </div>
 
+  <div class="card hidden" id="play">
+    <div class="top"><span id="count"></span><span id="scoreLive"></span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <span class="sec" id="sec"></span>
+    <div id="grid"></div>
+    <div class="q" id="qtext"></div>
+    <div class="answers" id="answers"></div>
+    <div class="fb" id="fb"></div>
+    <div class="nav"><button class="btn" id="next" disabled>Next</button></div>
+  </div>
 
-<main class="wrap">
-
-  <section id="start" class="card cover">
-    <div>
-      <p class="kicker">Grade 4 starter check</p>
-      <h1>English and Reading</h1>
-      <p class="lede">70 questions on the skills a student should have by the end of Grade 3: reading stories and nonfiction, vocabulary, grammar, punctuation and spelling.</p>
-    </div>
-    <ul class="chips" id="chips"></ul>
-    <ul class="notes">
-      <li>About 45 minutes. Read every passage carefully before answering.</li>
-      <li>Answers are not shown until the end. Students can go back and change an answer.</li>
-      <li>The report at the end shows which skills are strong and which need practice.</li>
-    </ul>
-    <div class="field">
-      <label for="student-name">Student name (optional)</label>
-      <input id="student-name" type="text" autocomplete="off" maxlength="40" placeholder="Type a name">
-    </div>
-    <div class="row">
-      <button class="btn" id="btn-start" type="button">Start the quiz</button>
-      <button class="btn ghost" id="btn-resume" type="button" hidden></button>
-    </div>
-  </section>
-
-  <section id="quiz" hidden>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="meta"><span class="count" id="qcount"></span><span class="chip" id="qsec"></span></div>
-        <div class="track" role="progressbar" aria-label="Questions answered" aria-valuemin="0" aria-valuemax="70" id="track"><div class="fill" id="bar-fill"></div></div>
-        <div class="sub"><span id="answered"></span><span id="remaining"></span></div>
-      </div>
-      <article id="passage" class="card" hidden></article>
-      <div class="card">
-        <h2 id="qtext"></h2>
-        <div id="options" role="radiogroup" aria-labelledby="qtext"></div>
-      </div>
-      <div id="skipwarn" class="card warn" hidden>
-        <p id="skiptext"></p>
-        <div class="row">
-          <button class="btn" id="btn-gofirst" type="button"></button>
-          <button class="btn ghost" id="btn-finish-anyway" type="button">Finish anyway</button>
-        </div>
-      </div>
-      <div class="nav">
-        <button class="btn ghost" id="btn-back" type="button">Back</button>
-        <button class="btn" id="btn-next" type="button">Next</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="result" hidden>
-    <div class="wrap">
-      <div class="card" style="display:flex;flex-direction:column;gap:14px">
-        <p class="kicker" id="r-name"></p>
-        <div class="score"><span class="big" id="r-score"></span><span class="pct" id="r-pct"></span></div>
-        <div class="band" id="r-band"></div>
-        <div class="row">
-          <button class="btn" id="btn-copy" type="button">Copy results</button>
-          <button class="btn ghost" id="btn-retake" type="button">Start a new attempt</button>
-        </div>
-        <textarea id="summary-text" readonly hidden aria-label="Results summary"></textarea>
-      </div>
-      <div class="card">
-        <h2 style="font-size:1.3rem">Skills report</h2>
-        <div class="secs" id="r-secs"></div>
-      </div>
-      <div class="card" style="display:flex;flex-direction:column;gap:12px">
-        <h2 style="font-size:1.3rem" id="r-misshead"></h2>
-        <div class="misslist" id="r-miss"></div>
-      </div>
-    </div>
-  </section>
-
-</main>
+  <div class="card hidden" id="end">
+    <h1>Quiz complete</h1>
+    <div class="score" id="final"></div>
+    <p class="sub" id="msg"></p>
+    <button class="btn" id="again">Try again</button>
+    <div class="review" id="review"></div>
+  </div>
+</div>
 
 <script>
-/*DATA_START*/
-const SECTIONS = {
-  rs: "Reading: Stories",
-  ri: "Reading: Nonfiction",
-  vo: "Vocabulary",
-  gr: "Grammar",
-  pu: "Punctuation and Capitalization",
-  sp: "Spelling and Word Study",
-  sk: "Reading Skills"
+const ev = e => Function('return ' + e)();
+const fmt = n => String(n).replace('-', '\u2212');
+const show = e => e.replace(/([+\-]) ([+\-])(\d+)/g, '$1 ($2$3)').replace(/-/g, '\u2212');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+const TIPS = {
+  basic: 'Use a number line. Taking away more than you have goes below zero. Adding to a negative moves you to the right.',
+  chain: 'Work from left to right, one step at a time.',
+  addneg: 'Adding a negative is the same as subtracting. For example, 4 + (\u22121) = 4 \u2212 1.',
+  subpos: 'Subtracting a positive number is just ordinary subtraction. For example, 6 \u2212 (+1) = 6 \u2212 1.',
+  subneg: 'Subtracting a negative is the same as adding. For example, 1 \u2212 (\u22122) = 1 + 2.',
+  mixed: 'Rewrite double signs first: + \u2212 becomes \u2212, and \u2212 \u2212 becomes +.',
+  missing: 'Put your answer back into the box and check that the sum works.',
+  magic: 'Find a complete row, column or diagonal to get the magic total, then work out the missing number.',
+  real: 'Draw a quick number line to see the change.',
+  cards: 'Try each pair and work out the answer before choosing.'
 };
 
-const PASSAGES = {
-  A: { label: "Passage 1 · Story", title: "Kite Day", text: [
-    `Saturday was windy, and Mara could hardly wait. Her grandfather had promised to take her to the beach to fly the red kite they had built together.`,
-    `At the beach, Mara held the string tightly while Grandpa lifted the kite high. Suddenly, a strong gust yanked the string out of her hands, and the kite sailed up over the waves. Mara's eyes filled with tears. “It's gone!” she cried.`,
-    `Grandpa knelt beside her. “Let's not give up yet,” he said. They ran along the sand until the kite dipped and landed in a shallow tide pool. Mara scooped it up, soggy but whole. “Next time,” she laughed, “I'll wrap the string around my wrist!”`
-  ]},
-  B: { label: "Passage 2 · Nonfiction", title: "Inside a Beehive", text: [
-    `A honeybee hive is a busy place. Thousands of bees live together, and each one has a job.`,
-    `The queen bee lays the eggs. Worker bees, which are all female, do most of the work. Young workers clean the hive and feed the babies, called larvae. Older workers fly out to find flowers. They collect nectar, a sweet liquid, and carry it back to the hive. There, the bees turn the nectar into honey.`,
-    `Male bees, called drones, do not gather food. Their only job is to mate with a new queen. In winter, the bees stay inside and eat the honey they stored. Without it, the colony could not survive the cold months.`
-  ]},
-  C: { label: "Passage 3 · Story", title: "Jo's Lemonade Stand", text: [
-    `On the hottest day of July, Jo set up a lemonade stand in front of her house. She poured lemonade into paper cups and painted a bright sign. An hour passed, but nobody stopped.`,
-    `Then dark clouds rolled in, and rain began to fall. Jo sighed, but she did not give up. She carried the pitcher onto the porch and waited. A moment later, four soaked joggers ran up the steps. “Is that lemonade?” one asked. “We could use something cool to drink!” Jo grinned and poured four cups. By sunset, the pitcher was empty and Jo's jar was full of coins.`
-  ]},
-  D: { label: "Passage 4 · Nonfiction", title: "", text: [
-    `In summer, tree leaves are green because they contain chlorophyll. This green substance helps the tree turn sunlight into food.`,
-    `In fall, the days get shorter and cooler, so the tree makes less chlorophyll. As the green fades, other colors that were hiding in the leaf begin to show. Some leaves turn yellow or orange. Others turn red or brown.`,
-    `Soon the leaves dry out and fall to the ground. This lets the tree rest during the winter. In spring, new green leaves grow, and the cycle begins again.`
-  ]}
+const Q = [];
+function numOpts(a, unit) {
+  const c = [...new Set([-a, a + 1, a - 1, a + 2, a - 2, a + 3, a - 3].filter(x => x !== a))];
+  const first = c[0] === -a ? [c.shift()] : [];
+  const picks = first.concat(shuffle(c).slice(0, 3 - first.length));
+  const f = x => (unit === '\u00a3' ? (x < 0 ? '\u2212\u00a3' + Math.abs(x) : '\u00a3' + x) : fmt(x) + (unit || ''));
+  return { opts: shuffle([a, ...picks]).map(f), correct: f(a) };
+}
+function addExpr(sec, list) {
+  list.forEach(e => {
+    const a = ev(e), o = numOpts(a);
+    Q.push({ sec, tip: TIPS[sec.key], text: show(e) + ' = ?', opts: o.opts, correct: o.correct, expl: show(e) + ' = ' + fmt(a) });
+  });
+}
+
+const S = {
+  basic: { key: 'basic', name: 'Basic negatives' },
+  chain: { key: 'chain', name: 'Chains of + and \u2212' },
+  addneg: { key: 'addneg', name: 'Adding negatives' },
+  subpos: { key: 'subpos', name: 'Subtracting positives' },
+  subneg: { key: 'subneg', name: 'Subtracting negatives' },
+  mixed: { key: 'mixed', name: 'Mixed practice' },
+  missing: { key: 'missing', name: 'Missing numbers' },
+  magic: { key: 'magic', name: 'Magic squares' },
+  real: { key: 'real', name: 'Real-life problems' },
+  cards: { key: 'cards', name: 'Cards and reasoning' }
 };
 
-/* [section, passage, question, correct answer, [3 wrong answers], explanation] */
-const RAW = [
-  /* Passage 1 */
-  ["rs","A",`Why was Mara excited on Saturday?`,
-   `She was going to fly the kite she and Grandpa built.`,
-   [`She was going to buy a new kite from the beach shop.`,`She was going to enter a kite contest with Grandpa.`,`Grandpa was going to teach her how to swim there.`],
-   `The story says they planned to fly the red kite they had built together.`],
-  ["rs","A",`What problem happens in the story?`,
-   `A strong gust pulls the kite out of Mara's hands.`,
-   [`The kite string snaps while Mara is holding it.`,`Mara forgets the kite and leaves it at home.`,`Grandpa lets go of the kite while lifting it.`],
-   `A gust yanked the string out of Mara's hands, so the kite flew away.`],
-  ["rs","A",`How does Mara feel right after the kite flies away?`,
-   `Sad and afraid she will lose the kite`,
-   [`Angry that her grandfather let go of it`,`Excited to watch it sail over the waves`,`Bored because the wind has died down`],
-   `Her eyes filled with tears and she cried, “It's gone!”`],
-  ["rs","A",`What does the phrase “soggy but whole” mean?`,
-   `Wet, but not ripped or broken`,
-   [`Dry, but ripped in two places`,`Muddy, but still flying high`,`Clean, but folded and crushed`],
-   `The kite landed in a tide pool, so it was wet, but Mara scooped it up in one piece.`],
-  ["rs","A",`What lesson does Mara learn?`,
-   `Keep trying and learn from your mistakes.`,
-   [`Windy days are too risky for flying kites.`,`Homemade kites fly better than store-bought ones.`,`Asking for help is better than trying alone.`],
-   `Grandpa says not to give up, and Mara plans to do better next time.`],
+addExpr(S.basic, ['5 - 12','7 - 13','9 - 16','-3 + 8','-10 + 6','-14 + 20','-8 - 5','-12 - 6']);
+addExpr(S.chain, ['8 - 11 + 5','-6 + 9 - 7','3 - 10 - 2','-15 + 10 + 8','12 - 20 + 6','-4 - 5 - 6']);
+addExpr(S.addneg, ['7 + -12','10 + -4','3 + -11','-2 + -9','-14 + -6','-5 + -13']);
+addExpr(S.subpos, ['9 - +15','-3 - +9','-11 - +4','6 - +14','-7 - +13']);
+addExpr(S.subneg, ['4 - -9','8 - -5','-7 - -3','-12 - -5','-4 - -10','-9 - -9']);
+addExpr(S.mixed, ['16 - 25','-17 + 9','11 + -19','-6 - -14','-21 - 9','-30 + 45']);
 
-  /* Passage 2 */
-  ["ri","B",`What is the main idea of this passage?`,
-   `Each bee in a honeybee hive has a special job.`,
-   [`Honeybees only work hard during the summer months.`,`Queen bees are the best at making honey.`,`Honey is the most important food for people.`],
-   `The whole passage explains the different jobs of the queen, workers and drones.`],
-  ["ri","B",`What do older worker bees do?`,
-   `Fly out to find flowers and collect nectar`,
-   [`Lay eggs and take care of the larvae`,`Clean the hive and feed the babies`,`Mate with the new queen bee`],
-   `Young workers clean and feed babies. Older workers fly out for nectar.`],
-  ["ri","B",`What does the word “nectar” mean in this passage?`,
-   `A sweet liquid that bees collect from flowers`,
-   [`A tiny baby bee that cannot fly yet`,`A sticky wax used to build the hive`,`A kind of flower that bees like best`],
-   `The passage calls nectar “a sweet liquid” that bees carry back to the hive.`],
-  ["ri","B",`Why do honeybees store honey?`,
-   `They need it for food when it is cold.`,
-   [`They need it to build new hives in spring.`,`They trade it for pollen with other bees.`,`They give it to the queen to keep her warm.`],
-   `In winter the bees stay inside and eat the honey they stored.`],
-  ["ri","B",`What is the job of a drone?`,
-   `To mate with a new queen bee`,
-   [`To lay eggs for the hive`,`To carry nectar back to the hive`,`To clean the hive and feed larvae`],
-   `The passage says the only job of a drone is to mate with a new queen.`],
+[['□ + 6 = 2', -4, '−4 + 6 = 2'], ['□ − 7 = −12', -5, '−5 − 7 = −12'],
+ ['−4 − □ = 3', -7, '−4 − (−7) = 3'], ['5 − □ = 14', -9, '5 − (−9) = 14']]
+.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t, opts: o.opts, correct: o.correct, expl: x }); });
 
-  /* Passage 3 */
-  ["rs","C",`When does this story take place?`,
-   `On a hot July day that turns rainy`,
-   [`On a rainy day in the middle of April`,`On a sunny July afternoon with no clouds`,`On a cold October evening after school`],
-   `It begins on “the hottest day of July,” and then rain starts to fall.`],
-  ["rs","C",`What problem does Jo have at first?`,
-   `Nobody stops to buy her lemonade.`,
-   [`She runs out of cups before noon.`,`She forgot to make enough lemonade.`,`The rain washes away her painted sign.`],
-   `An hour passed, but nobody stopped at her stand.`],
-  ["rs","C",`Which words best describe Jo?`,
-   `Patient and hopeful`,
-   [`Shy and nervous`,`Impatient and angry`,`Careless and lazy`],
-   `Jo sighed but did not give up. She waited on the porch.`],
-  ["rs","C",`What does Jo do right after the rain begins?`,
-   `She carries the pitcher onto the porch.`,
-   [`She pours lemonade into paper cups.`,`She paints a bright sign for the stand.`,`She sells four cups to some joggers.`],
-   `Pouring the cups and painting the sign happened first. Selling to the joggers came later.`],
-  ["rs","C",`Why does Jo grin when the joggers ask about the lemonade?`,
-   `Someone finally wants her lemonade.`,
-   [`The rain has finally stopped falling.`,`Her friends came to help her sell.`,`Her neighbors are coming to cheer for her.`],
-   `Nobody had stopped for an hour, so she is happy to have customers.`],
+const mg = [-2, 3, 2, 5, 1, -3, 0, -1, 4];
+const hole = k => mg.map((v, j) => j === k ? null : v);
+[[5, 'Every row, column and diagonal adds to 3. Middle row: 5 + 1 + ? = 3, so ? = −3.'],
+ [6, 'Every row, column and diagonal adds to 3. Left column: −2 + 5 + ? = 3, so ? = 0.'],
+ [8, 'Every row, column and diagonal adds to 3. Diagonal: −2 + 1 + ? = 3, so ? = 4.'],
+ [1, 'Every row, column and diagonal adds to 3. Middle column: ? + 1 + (−1) = 3, so ? = 3.']]
+.forEach(([k, ex]) => { const o = numOpts(mg[k]); Q.push({ sec: S.magic, tip: TIPS.magic, grid: hole(k), qi: k, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
 
-  /* Passage 4 */
-  ["ri","D",`Why are leaves green in summer?`,
-   `They contain chlorophyll, a green substance.`,
-   [`They soak up green light from the sun.`,`They are filled with extra summer rain.`,`They are covered in a thin green coating.`],
-   `The first sentence says leaves are green because they contain chlorophyll.`],
-  ["ri","D",`What happens when fall days get shorter and cooler?`,
-   `The tree makes less chlorophyll.`,
-   [`The tree makes more chlorophyll.`,`The tree starts to grow new buds.`,`The leaves soak up more sunlight.`],
-   `Shorter, cooler days mean less chlorophyll, so the green fades.`],
-  ["ri","D",`What does the word “cycle” mean in the last sentence?`,
-   `Something that repeats in the same order`,
-   [`A change that happens only one time`,`A short rest between two seasons`,`A group of trees growing together`],
-   `The leaves grow again in spring and the pattern starts over.`],
-  ["ri","D",`Which would be the best title for this passage?`,
-   `Why Leaves Change Color in Fall`,
-   [`How Trees Drink Water Through Roots`,`Why Winter Days Are So Short`,`The Largest Forests in the World`],
-   `The passage is about why leaves change color in the fall.`],
-  ["ri","D",`What happens in the spring?`,
-   `New green leaves grow on the tree.`,
-   [`The leaves turn yellow and orange.`,`The tree rests and stops growing.`,`The leaves dry out and fall off.`],
-   `The last sentence says new green leaves grow in spring.`],
-
-  /* Vocabulary */
-  ["vo",null,`Which word means almost the same as “enormous”?`,
-   `huge`, [`tiny`,`heavy`,`busy`], `Enormous and huge both mean very big.`],
-  ["vo",null,`Which word is the opposite of “brave”?`,
-   `timid`, [`bold`,`mighty`,`honest`], `A timid person is shy and afraid. Bold means the same as brave.`],
-  ["vo",null,`The prefix “un-” in the word “unhappy” means:`,
-   `not`, [`again`,`before`,`full of`], `Unhappy means not happy.`],
-  ["vo",null,`What does the word “redo” mean?`,
-   `do again`, [`do before`,`do badly`,`never do`], `The prefix “re-” means again.`],
-  ["vo",null,`What does the word “careless” mean?`,
-   `without care`, [`full of care`,`more care`,`care again`], `The suffix “-less” means without.`],
-  ["vo",null,`What does the word “hopeful” mean?`,
-   `full of hope`, [`without hope`,`hoping again`,`less hope`], `The suffix “-ful” means full of.`],
-  ["vo",null,`We sat on the river bank to eat lunch.\nWhat does “bank” mean in this sentence?`,
-   `land at the edge of a river`, [`a place that keeps money safe`,`a long row of seats`,`a small wooden boat`],
-   `Sitting “on the river bank” points to the land beside the water.`],
-  ["vo",null,`The mountain path was treacherous, so the hikers moved slowly and carefully.\nWhat does “treacherous” mean?`,
-   `dangerous`, [`muddy`,`familiar`,`crowded`], `The hikers moved slowly and carefully because the path was dangerous.`],
-  ["vo",null,`Which word shows the strongest feeling?`,
-   `furious`, [`annoyed`,`upset`,`bothered`], `Furious means extremely angry. The others are milder.`],
-  ["vo",null,`“Her smile was as bright as the sun.”\nWhat kind of figurative language is this?`,
-   `a simile`, [`a metaphor`,`an idiom`,`a rhyme`], `A simile compares two things using “like” or “as.”`],
-  ["vo",null,`What does the saying “It's raining cats and dogs” mean?`,
-   `It is raining very hard.`, [`Pets are falling from the sky.`,`It has just started to drizzle.`,`It is raining only at night.`],
-   `It is an idiom. It means a heavy rainfall.`],
-  ["vo",null,`Which word means the same as “rapid”?`,
-   `swift`, [`steady`,`sudden`,`quiet`], `Rapid and swift both mean very fast.`],
-
-  /* Grammar */
-  ["gr",null,`Choose the correct plural.\nOne fox, two ___`,
-   `foxes`, [`foxs`,`foxies`,`foxen`], `Words ending in x add “-es.”`],
-  ["gr",null,`Choose the correct plural.\nOne child, three ___`,
-   `children`, [`childs`,`childes`,`childrens`], `Child is an irregular noun. Its plural is children.`],
-  ["gr",null,`Yesterday, Sam ___ a big fish.`,
-   `caught`, [`catched`,`catches`,`catching`], `The past tense of catch is caught.`],
-  ["gr",null,`Last week, we ___ to the zoo.`,
-   `went`, [`goed`,`gone`,`going`], `The past tense of go is went.`],
-  ["gr",null,`The dogs ___ in the yard every day.`,
-   `play`, [`plays`,`playing`,`to play`], `A plural subject (dogs) needs the plural verb form: play.`],
-  ["gr",null,`My sister ___ to school by bus.`,
-   `rides`, [`ride`,`riding`,`rided`], `A singular subject (sister) needs a verb ending in -s: rides.`],
-  ["gr",null,`Which word is an adjective?\nThe fluffy cat slept on the sofa.`,
-   `fluffy`, [`cat`,`slept`,`sofa`], `Fluffy describes the cat.`],
-  ["gr",null,`Which word is an adverb?\nThe bus arrived early.`,
-   `early`, [`bus`,`arrived`,`The`], `Early tells when the bus arrived.`],
-  ["gr",null,`Dad made pancakes. ___ were delicious.`,
-   `They`, [`It`,`He`,`We`], `Pancakes is plural, so the pronoun is They.`],
-  ["gr",null,`Please give the book to Ben and ___.`,
-   `me`, [`I`,`myself`,`mine`], `After “to,” use the object pronoun me.`],
-  ["gr",null,`I wanted to play outside, ___ it was raining.`,
-   `but`, [`so`,`and`,`because`], `But shows a contrast between wanting to play and the rain.`],
-  ["gr",null,`We took umbrellas ___ the sky looked cloudy.`,
-   `because`, [`but`,`or`,`until`], `Because gives the reason for taking umbrellas.`],
-  ["gr",null,`Which one is a complete sentence?`,
-   `The kids ran to the playground.`,
-   [`Ran to the playground after lunch.`,`Because the bell rang loudly.`,`My best friend from the bus.`],
-   `A complete sentence has a subject and a verb and expresses a complete thought.`],
-  ["gr",null,`Which sentence is in the future tense?`,
-   `We will visit Grandma tomorrow.`,
-   [`We visited Grandma yesterday.`,`We are visiting Grandma now.`,`We visit Grandma on Sundays.`],
-   `Will shows something that has not happened yet.`],
-  ["gr",null,`This box is ___ than that one.\n(heavy)`,
-   `heavier`, [`more heavy`,`heavyer`,`heaviest`], `Change y to i and add “-er” to compare two things.`],
-  ["gr",null,`Mia is the ___ runner on the team.\n(fast)`,
-   `fastest`, [`faster`,`most fast`,`more fast`], `Add “-est” to compare three or more.`],
-
-  /* Punctuation and capitalization */
-  ["pu",null,`Which sentence is written correctly?`,
-   `My birthday is in March.`,
-   [`My birthday is in march.`,`my birthday is in March.`,`My Birthday is in March.`],
-   `Start a sentence with a capital letter, and capitalize months.`],
-  ["pu",null,`Which sentence uses commas correctly?`,
-   `We bought apples, grapes, and pears.`,
-   [`We bought apples grapes, and, pears.`,`We bought, apples, grapes and, pears.`,`We, bought apples, grapes, and pears.`],
-   `Commas go between items in a list.`],
-  ["pu",null,`The ball belongs to one dog.\nWhich phrase is correct?`,
-   `the dog's ball`, [`the dogs ball`,`the dogs' ball`,`the dog ball's`], `For one owner, add apostrophe + s.`],
-  ["pu",null,`Which is the correct contraction of “does not”?`,
-   `doesn't`, [`does'nt`,`dosen't`,`doesnt'`], `The apostrophe replaces the missing letter o.`],
-  ["pu",null,`Which sentence is punctuated correctly?`,
-   `Mom said, “Dinner is ready.”`,
-   [`Mom said “Dinner is ready”.`,`Mom said, Dinner is ready.`,`“Mom said, Dinner is ready.”`],
-   `Use a comma after said, and put the speaker's exact words inside the quotation marks.`],
-  ["pu",null,`Which sentence needs a question mark at the end?`,
-   `Can we go to the park`,
-   [`Tell me where the park is`,`I wonder if we can go to the park`,`We asked whether the park was open`],
-   `Only the first sentence asks a direct question.`],
-  ["pu",null,`Which sentence has correct capitalization?`,
-   `Last Friday, Ms. Lee took us to Lake Tahoe.`,
-   [`last Friday, ms. Lee took us to lake Tahoe.`,`Last friday, Ms. Lee took us to Lake tahoe.`,`Last Friday, ms. lee took us to Lake Tahoe.`],
-   `Capitalize days, titles with names, and the names of places.`],
-  ["pu",null,`Which sentence uses a comma correctly?`,
-   `After lunch, we played tag.`,
-   [`After, lunch we played tag.`,`After lunch we, played tag.`,`After lunch we played, tag.`],
-   `A comma goes after an introductory phrase like “After lunch.”`],
-
-  /* Spelling and word study */
-  ["sp",null,`Choose the correct word.\nI can ___ the birds singing outside.`,
-   `hear`, [`here`,`hair`,`heard`], `Hear is what you do with your ears.`],
-  ["sp",null,`Choose the correct word.\n___ going to the museum on Friday.`,
-   `They're`, [`Their`,`There`,`Theirs`], `They're means they are.`],
-  ["sp",null,`Which word is spelled correctly?`,
-   `friend`, [`freind`,`frend`,`friand`], `Remember: i before e in friend.`],
-  ["sp",null,`Which word is spelled correctly?`,
-   `beautiful`, [`beutiful`,`beautifull`,`butiful`], `Beautiful ends with only one l.`],
-  ["sp",null,`Which word has the same vowel sound as “boat”?`,
-   `snow`, [`town`,`shop`,`cloud`], `Boat and snow both have the long o sound.`],
-  ["sp",null,`How many syllables are in the word “butterfly”?`,
-   `3`, [`2`,`4`,`5`], `but-ter-fly has three syllables.`],
-  ["sp",null,`Which list is in alphabetical order?`,
-   `plum, pond, pool`, [`plum, pool, pond`,`pond, plum, pool`,`pool, pond, plum`], `Look at the third letter: n comes before o.`],
-  ["sp",null,`Which word is a compound word?`,
-   `homework`, [`homeless`,`homely`,`honest`], `Homework is made of two whole words: home + work.`],
-
-  /* Reading skills */
-  ["sk",null,`Which sentence states a fact?`,
-   `A spider has eight legs.`,
-   [`Spiders are the creepiest animals.`,`Spiders are scarier than snakes.`,`Everyone should love spiders.`],
-   `A fact can be proven. The others are opinions.`],
-  ["sk",null,`Which sentence is an opinion?`,
-   `Pizza is the best food ever.`,
-   [`Pizza is often made with cheese.`,`Pizza first became popular in Italy.`,`Many families eat pizza on Fridays.`],
-   `“Best” is a feeling. It cannot be proven.`],
-  ["sk",null,`You want to find every page that mentions the word “tadpole” in a science book.\nWhere should you look?`,
-   `the index`, [`the glossary`,`the title page`,`the table of contents`],
-   `The index lists words and topics with their page numbers.`],
-  ["sk",null,`A short story with talking animals that teaches a lesson is called:`,
-   `a fable`, [`a myth`,`a biography`,`a news article`], `Fables use animals to teach a lesson.`],
-  ["sk",null,`A book called “How to Plant a Garden” has steps and photos.\nWhat is the author's main purpose?`,
-   `to teach readers how to do something`,
-   [`to tell a funny made-up story`,`to convince readers to buy seeds`,`to describe the author's best vacation`],
-   `Steps and photos are used to teach.`],
-  ["sk",null,`“I ran down the hill and tripped over a rock.”\nFrom which point of view is this told?`,
-   `First person, told by a character in the story`,
-   [`Third person, told by an outside narrator`,`Second person, told directly to the reader`,`Third person, told by the book's author`],
-   `The word “I” shows the narrator is a character in the story.`]
-];
-/*DATA_END*/
-
-(function(){
-  var L = ["A","B","C","D"];
-  var KEY = "g4eng-check-v1";
-  function $(id){ return document.getElementById(id); }
-  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
-
-  function shuffle(a){
-    for (var i = a.length - 1; i > 0; i--){
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
-  /* Spread the correct answer evenly over A-D, and never more than two in a row. */
-  function positions(n){
-    var pos = [];
-    for (var t = 0; t < 300; t++){
-      pos = [];
-      for (var i = 0; i < n; i++) pos.push(i % 4);
-      shuffle(pos);
-      var ok = true;
-      for (var k = 2; k < n; k++){ if (pos[k] === pos[k-1] && pos[k] === pos[k-2]){ ok = false; break; } }
-      if (ok) break;
-    }
-    return pos;
-  }
-  function build(){
-    var pos = positions(RAW.length);
-    return RAW.map(function(r, i){
-      var wrong = shuffle(r[4].slice());
-      var opts = wrong.slice();
-      opts.splice(pos[i], 0, r[3]);
-      return { sec: r[0], p: r[1], q: r[2], opts: opts, ans: pos[i], e: r[5] };
-    });
-  }
-
-  var S = { name: "", built: [], answers: [], idx: 0, done: false };
-
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
-  function loadSaved(){
-    try {
-      var r = localStorage.getItem(KEY);
-      if (r){
-        var o = JSON.parse(r);
-        if (o && Array.isArray(o.built) && o.built.length === RAW.length && Array.isArray(o.answers)) return o;
-      }
-    } catch (e) {}
-    return null;
-  }
-  function clearSaved(){ try { localStorage.removeItem(KEY); } catch (e) {} }
-
-  function show(name){
-    ["start","quiz","result"].forEach(function(n){ $(n).hidden = (n !== name); });
-    window.scrollTo(0, 0);
-  }
-
-  /* Start screen */
-  function renderStart(){
-    var counts = {};
-    RAW.forEach(function(r){ counts[r[0]] = (counts[r[0]] || 0) + 1; });
-    $("chips").innerHTML = Object.keys(SECTIONS).map(function(k){
-      return "<li><span>" + esc(SECTIONS[k]) + "</span><b>" + counts[k] + "</b></li>";
-    }).join("");
-    var saved = loadSaved();
-    var rb = $("btn-resume");
-    if (saved){
-      var n = saved.answers.filter(function(a){ return a != null; }).length;
-      rb.hidden = false;
-      rb.textContent = saved.done ? "See saved results" : "Continue (" + n + " of " + RAW.length + " answered)";
-      if (saved.name) $("student-name").value = saved.name;
-    } else { rb.hidden = true; }
-  }
-
-  function startNew(){
-    S = {
-      name: $("student-name").value.trim(),
-      built: build(),
-      answers: RAW.map(function(){ return null; }),
-      idx: 0, done: false
-    };
-    save();
-    show("quiz");
-    renderQuiz();
-  }
-  function resume(){
-    var saved = loadSaved();
-    if (!saved) return startNew();
-    S = saved;
-    if (S.done){ show("result"); renderResult(); }
-    else { show("quiz"); renderQuiz(); }
-  }
-
-  /* Quiz */
-  function answeredCount(){ return S.answers.filter(function(a){ return a != null; }).length; }
-
-  function renderProgress(){
-    var n = S.built.length, a = answeredCount();
-    $("bar-fill").style.width = (a / n * 100) + "%";
-    $("track").setAttribute("aria-valuenow", a);
-    $("track").setAttribute("aria-valuemax", n);
-    $("answered").textContent = a + " answered";
-    $("remaining").textContent = (n - a) + " to go";
-  }
-
-  function renderQuiz(){
-    var n = S.built.length, i = S.idx, Q = S.built[i];
-    $("qcount").textContent = "Question " + (i + 1) + " of " + n;
-    $("qsec").textContent = SECTIONS[Q.sec];
-    var P = Q.p ? PASSAGES[Q.p] : null;
-    var pc = $("passage");
-    pc.hidden = !P;
-    if (P){
-      pc.innerHTML = "<p class=\"kicker\">" + esc(P.label) + "</p>" +
-        (P.title ? "<h2>" + esc(P.title) + "</h2>" : "") +
-        P.text.map(function(t){ return "<p>" + esc(t) + "</p>"; }).join("");
-    }
-    $("qtext").textContent = Q.q;
-    $("options").innerHTML = Q.opts.map(function(o, k){
-      return "<button type=\"button\" class=\"opt\" role=\"radio\" aria-checked=\"" + (S.answers[i] === k) + "\" data-k=\"" + k + "\">" +
-        "<span class=\"letter\">" + L[k] + "</span><span class=\"otext\">" + esc(o) + "</span></button>";
-    }).join("");
-    $("skipwarn").hidden = true;
-    $("btn-back").disabled = (i === 0);
-    $("btn-next").textContent = (i === n - 1) ? "Finish" : "Next";
-    renderProgress();
-    window.scrollTo(0, 0);
-  }
-
-  function choose(k){
-    S.answers[S.idx] = k;
-    var btns = $("options").querySelectorAll(".opt");
-    for (var j = 0; j < btns.length; j++) btns[j].setAttribute("aria-checked", String(j === k));
-    renderProgress();
-    save();
-  }
-
-  function go(d){
-    var ni = S.idx + d;
-    if (ni < 0 || ni >= S.built.length) return;
-    S.idx = ni; save(); renderQuiz();
-  }
-
-  function skipped(){
-    var out = [];
-    S.answers.forEach(function(a, i){ if (a == null) out.push(i); });
-    return out;
-  }
-  function tryFinish(){
-    var sk = skipped();
-    if (sk.length === 0) return finish();
-    var list = sk.slice(0, 12).map(function(i){ return i + 1; }).join(", ") + (sk.length > 12 ? ", and more" : "");
-    $("skiptext").textContent = "You have not answered " + (sk.length === 1 ? "question " : "questions ") + list + ".";
-    $("btn-gofirst").textContent = "Go to question " + (sk[0] + 1);
-    $("btn-gofirst").onclick = function(){ S.idx = sk[0]; save(); renderQuiz(); };
-    $("skipwarn").hidden = false;
-    $("skipwarn").scrollIntoView({ block: "nearest" });
-  }
-  function finish(){
-    S.done = true; save();
-    show("result"); renderResult();
-  }
-
-  /* Results */
-  function bandFor(p){
-    if (p >= 85) return ["good", "Ready for Grade 4. The foundation is strong. Review the few missed questions below."];
-    if (p >= 70) return ["good", "Mostly ready for Grade 4. A few skills need some practice. See the skills report."];
-    if (p >= 50) return ["warn", "Some gaps to close before Grade 4 work gets harder. Practise the weaker skills first."];
-    return ["bad", "Needs extra support. Start with the weakest skills in the report and build up from there."];
-  }
-  function level(p){ return p >= 80 ? "good" : (p >= 60 ? "warn" : "bad"); }
-
-  function compute(){
-    var tot = {}, correct = 0;
-    S.built.forEach(function(Q, i){
-      var s = tot[Q.sec] || (tot[Q.sec] = { c: 0, n: 0 });
-      s.n++;
-      if (S.answers[i] === Q.ans){ s.c++; correct++; }
-    });
-    return { tot: tot, correct: correct };
-  }
-
-  function renderResult(){
-    var n = S.built.length, R = compute();
-    var pct = Math.round(R.correct / n * 100);
-    $("r-name").textContent = S.name ? S.name + " · Grade 4 English Check" : "Grade 4 English Check";
-    $("r-score").textContent = R.correct + " / " + n;
-    $("r-pct").textContent = pct + "%";
-    var b = bandFor(pct);
-    var band = $("r-band"); band.className = "band " + b[0]; band.textContent = b[1];
-
-    $("r-secs").innerHTML = Object.keys(SECTIONS).map(function(k){
-      var s = R.tot[k]; if (!s) return "";
-      var p = Math.round(s.c / s.n * 100);
-      return "<div class=\"sec " + level(p) + "\"><span class=\"name\">" + esc(SECTIONS[k]) + "</span>" +
-        "<span class=\"val\">" + s.c + " / " + s.n + " · " + p + "%</span>" +
-        "<span class=\"meter\"><i style=\"width:" + p + "%\"></i></span></div>";
-    }).join("");
-
-    var missed = [];
-    S.built.forEach(function(Q, i){ if (S.answers[i] !== Q.ans) missed.push(i); });
-    $("r-misshead").textContent = missed.length ? "Questions to review (" + missed.length + ")" : "No missed questions";
-    $("r-miss").innerHTML = missed.length ? missed.map(function(i){
-      var Q = S.built[i], a = S.answers[i];
-      var P = Q.p ? PASSAGES[Q.p] : null;
-      return "<div class=\"miss\"><p class=\"kicker\">Question " + (i + 1) + " · " + esc(SECTIONS[Q.sec]) + (P ? " · " + esc(P.label) : "") + "</p>" +
-        "<p class=\"q\">" + esc(Q.q) + "</p>" +
-        "<div class=\"a\"><span class=\"tag you\">Student: " + (a == null ? "no answer" : esc(L[a] + ". " + Q.opts[a])) + "</span></div>" +
-        "<div class=\"a\"><span class=\"tag right\">Correct: " + esc(L[Q.ans] + ". " + Q.opts[Q.ans]) + "</span></div>" +
-        "<p class=\"why\">" + esc(Q.e) + "</p></div>";
-    }).join("") : "<p>Every answer was correct.</p>";
-    $("summary-text").hidden = true;
-  }
-
-  function summaryText(){
-    var n = S.built.length, R = compute();
-    var lines = [(S.name ? S.name + " – " : "") + "Grade 4 English Check", "Score: " + R.correct + " / " + n + " (" + Math.round(R.correct / n * 100) + "%)", ""];
-    Object.keys(SECTIONS).forEach(function(k){
-      var s = R.tot[k]; if (s) lines.push(SECTIONS[k] + ": " + s.c + " / " + s.n);
-    });
-    return lines.join("\n");
-  }
-  function copyResults(){
-    var t = summaryText(), ta = $("summary-text");
-    ta.value = t;
-    function fallback(){ ta.hidden = false; ta.focus(); ta.select(); }
-    try {
-      navigator.clipboard.writeText(t).then(function(){
-        $("btn-copy").textContent = "Copied";
-        setTimeout(function(){ $("btn-copy").textContent = "Copy results"; }, 1800);
-      }, fallback);
-    } catch (e) { fallback(); }
-  }
-
-  /* Events */
-  $("btn-start").addEventListener("click", startNew);
-  $("btn-resume").addEventListener("click", resume);
-  $("options").addEventListener("click", function(e){
-    var b = e.target.closest(".opt"); if (!b) return;
-    choose(parseInt(b.getAttribute("data-k"), 10));
-  });
-  $("btn-back").addEventListener("click", function(){ go(-1); });
-  $("btn-next").addEventListener("click", function(){
-    if (S.idx === S.built.length - 1) tryFinish(); else go(1);
-  });
-  $("btn-finish-anyway").addEventListener("click", finish);
-  $("btn-copy").addEventListener("click", copyResults);
-  $("btn-retake").addEventListener("click", function(){
-    clearSaved();
-    S = { name: S.name, built: [], answers: [], idx: 0, done: false };
-    renderStart();
-    $("student-name").value = S.name;
-    show("start");
-  });
-  document.addEventListener("keydown", function(e){
-    if ($("quiz").hidden) return;
-    var tag = (e.target && e.target.tagName) || "";
-    if (tag === "INPUT" || tag === "TEXTAREA") return;
-    var key = e.key.toLowerCase(), k = -1;
-    if (key >= "1" && key <= "4") k = parseInt(key, 10) - 1;
-    else if (key === "a" || key === "b" || key === "c" || key === "d") k = key.charCodeAt(0) - 97;
-    if (k >= 0){ choose(k); return; }
-    if (e.key === "ArrowRight" && S.idx < S.built.length - 1) go(1);
-    if (e.key === "ArrowLeft") go(-1);
-  });
-
-  renderStart();
+(() => {
+  let o = numOpts(-14, '°C');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'At night the temperature was −9°C. It dropped by 5 more degrees. What is the temperature now?', opts: o.opts, correct: o.correct, expl: '−9 − 5 = −14, so it is −14°C.' });
+  o = numOpts(35, '£');
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'Ada has −£20 in her account. She pays in £55. What is her balance now?', opts: o.opts, correct: o.correct, expl: '−£20 + £55 = £35.' });
+  o = numOpts(4);
+  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'A lift is at floor −3 (a basement level). It goes up 7 floors. Which floor is it at now?', opts: o.opts, correct: o.correct, expl: '−3 + 7 = 4, so it is at floor 4.' });
 })();
-</script>
 
+const cardNote = 'Cards: −7, −3, 5, 9, −1, 2, 6. ';
+const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
+pairQ('Which two cards add to make −4?', '−3 and −1', ['−7 and 5', '−7 and 2', '−3 and 2'], '−3 + (−1) = −4.');
+pairQ('Which subtraction gives the smallest possible answer?', '−7 − 9', ['−7 − 6', '−3 − 9', '−7 − 5'], '−7 − 9 = −16, which is the lowest answer.');
+
+// Rebuild wrong options from realistic mistakes so the answer cannot be guessed by pattern
+(function rebuild() {
+  const parse = c => { const d = parseInt(c.replace(/[^\d]/g, '')); return /^−/.test(c) ? -d : d; };
+  Q.forEach(q => {
+    if (q.text.startsWith('Cards') || q.text.startsWith('Which of')) return;
+    const a = parse(q.correct);
+    const unit = q.correct.includes('£') ? '£' : q.correct.includes('°C') ? '°C' : q.correct.includes(' m') ? ' m' : '';
+    const f = x => unit === '£' ? (x < 0 ? '−£' + Math.abs(x) : '£' + x) : fmt(x) + unit;
+    let nums = [];
+    if (q.grid) nums = q.grid.filter(v => v !== null);
+    else {
+      const t = q.text.replace(/\d+\s?(am|pm)/g, '');
+      const re = /(−?)(\d+)/g; let m;
+      while ((m = re.exec(t))) nums.push((m[1] ? -1 : 1) * parseInt(m[2]));
+      nums = nums.slice(0, 4);
+    }
+    const pool = new Set();
+    for (let x = 0; x < nums.length; x++) {
+      const p = nums[x]; pool.add(p); pool.add(-p);
+      for (let y = 0; y < nums.length; y++) {
+        if (x === y) continue;
+        const r = nums[y];
+        [p + r, p - r, -(p + r), Math.abs(p) + Math.abs(r), -(Math.abs(p) + Math.abs(r)), Math.abs(p) - Math.abs(r), Math.abs(r) - Math.abs(p)].forEach(v => pool.add(v));
+      }
+    }
+    pool.delete(a);
+    let cand = shuffle([...pool]);
+    // keep wrong answers within a believable range of the real answer
+    const lim = Math.max(12, Math.abs(a) + 12);
+    cand = cand.filter(v => Math.abs(v) <= lim);
+    if (Math.random() < 0.5) { const k = cand.indexOf(-a); if (k > 0) { cand.splice(k, 1); cand.unshift(-a); } }
+    else { const k = cand.indexOf(-a); if (k >= 0) cand.splice(k, 1); }
+    let picks = cand.slice(0, 3);
+    let k = 1;
+    while (picks.length < 3) { const v = a + (Math.random() < 0.5 ? -1 : 1) * (k++ + 2); if (v !== a && !picks.includes(v)) picks.push(v); }
+    q.opts = shuffle([a, ...picks]).map(f);
+    q.correct = f(a);
+  });
+})();
+
+// App logic
+let order = [], i = 0, score = 0, missed = [], locked = false;
+const $ = id => document.getElementById(id);
+function renderGrid(q) {
+  if (!q.grid) return '';
+  return '<div class="grid">' + q.grid.map((v, k) => k === q.qi ? '<div class="qm">?</div>' : v === null ? '<div class="blank"></div>' : '<div>' + fmt(v) + '</div>').join('') + '</div>';
+}
+function load() {
+  const q = order[i]; locked = false;
+  $('count').textContent = 'Question ' + (i + 1) + ' of ' + order.length;
+  $('scoreLive').textContent = 'Score: ' + score;
+  $('prog').style.width = (i / order.length * 100) + '%';
+  $('sec').textContent = q.sec.name;
+  $('grid').innerHTML = renderGrid(q);
+  const t = $('qtext'); t.textContent = q.text; t.className = 'q' + (q.small || q.grid ? ' small' : '');
+  const box = $('answers'); box.innerHTML = '';
+  q.opts.forEach(o => { const b = document.createElement('button'); b.className = 'ans'; b.textContent = o; b.onclick = () => pick(b, o); box.appendChild(b); });
+  $('fb').className = 'fb'; $('fb').innerHTML = '';
+  $('next').disabled = true; $('next').textContent = i === order.length - 1 ? 'See results' : 'Next';
+}
+function pick(btn, val) {
+  if (locked) return; locked = true;
+  const q = order[i], ok = val === q.correct;
+  document.querySelectorAll('.ans').forEach(b => { b.disabled = true; if (b.textContent === q.correct) b.classList.add('right'); });
+  if (ok) { score++; } else { btn.classList.add('wrong'); missed.push(q); }
+  const fb = $('fb'); fb.className = 'fb ' + (ok ? 'ok' : 'no');
+  fb.innerHTML = '<b>' + (ok ? 'Correct!' : 'Not quite.') + '</b> ' + q.expl + (ok ? '' : '<br><small>Tip: ' + q.tip + '</small>');
+  $('scoreLive').textContent = 'Score: ' + score;
+  $('next').disabled = false;
+}
+function finish() {
+  $('play').classList.add('hidden'); $('end').classList.remove('hidden');
+  const pct = Math.round(score / order.length * 100);
+  $('final').textContent = score + ' / ' + order.length + ' (' + pct + '%)';
+  $('msg').textContent = pct >= 90 ? 'Excellent work. You really know your negatives.' : pct >= 70 ? 'Good job. Review the ones you missed below.' : pct >= 50 ? 'A fair start. Read the tips and try again.' : 'Keep practising. Use a number line and try again.';
+  $('review').innerHTML = missed.length ? '<h3>Questions to review</h3>' + missed.map(q => '<div><b>' + q.text + '</b><br>Answer: ' + q.correct + ' &mdash; ' + q.expl + '</div>').join('') : '<h3>No mistakes. Perfect score!</h3>';
+}
+function start() {
+  order = $('shuf').checked ? shuffle(Q) : Q.slice(); i = 0; score = 0; missed = [];
+  $('start').classList.add('hidden'); $('end').classList.add('hidden'); $('play').classList.remove('hidden'); load();
+}
+$('go').onclick = start;
+$('again').onclick = () => { $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
+$('next').onclick = () => { i++; if (i >= order.length) { $('prog').style.width = '100%'; finish(); } else load(); };
+</script>
 </body>
 </html>
