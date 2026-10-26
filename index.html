@@ -1,187 +1,282 @@
-<!doctype html>
-<html lang="en-GB">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>English Word Wizards</title>
+<title>Rhyme Time Quiz</title>
 <style>
-:root{--bg:#fff7e6;--card:#fff;--ink:#2b2d42;--pur:#7b5cff;--grn:#2bb673;--red:#ef5b5b;--yel:#ffc93c;--blu:#3aa0ff}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Trebuchet MS","Comic Sans MS",system-ui,sans-serif;background:linear-gradient(160deg,#fff7e6,#e8f3ff);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:16px}
-.wrap{width:100%;max-width:680px}
-.card{background:var(--card);border-radius:24px;padding:24px;box-shadow:0 8px 24px rgba(40,40,90,.12);margin-top:12px}
-h1{font-size:2.2rem;margin:0 0 6px;color:var(--pur)}
-h2{margin:0 0 12px}
-.hero{text-align:center}
-.emoji{font-size:3.5rem}
-input[type=text]{font:inherit;padding:12px 16px;border-radius:14px;border:3px solid #d9d4ff;width:100%;max-width:320px;text-align:center;margin:14px 0}
-button{font:inherit;cursor:pointer;border:0}
-.btn{background:var(--pur);color:#fff;padding:14px 28px;border-radius:16px;font-size:1.1rem;font-weight:bold;box-shadow:0 5px 0 #5a3fd1}
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #5a3fd1}
-.top{display:flex;justify-content:space-between;font-weight:bold;gap:8px}
-.bar{height:14px;background:#e6e6f5;border-radius:99px;overflow:hidden;margin:10px 0 4px}
-.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--blu),var(--pur));transition:width .3s}
-.passage{background:#fff4cf;border-left:6px solid var(--yel);padding:12px 16px;border-radius:12px;margin:12px 0;font-size:1.05rem;line-height:1.5}
-.q{font-size:1.4rem;font-weight:bold;margin:14px 0}
-.opts{display:grid;gap:12px}
-.opt{background:#f2efff;border:3px solid #d9d4ff;border-radius:16px;padding:14px 16px;font-size:1.15rem;text-align:left;color:var(--ink)}
-.opt:hover:not(:disabled){background:#e5deff}
-.opt.right{background:#d6f5e5;border-color:var(--grn)}
-.opt.wrong{background:#ffe0e0;border-color:var(--red)}
-.fb{margin-top:14px;padding:12px 16px;border-radius:14px;font-size:1.05rem;display:none}
-.fb.ok{background:#d6f5e5;display:block}.fb.no{background:#ffe9d6;display:block}
-.next{margin-top:16px;text-align:right}
-.hide{display:none}
-.score{font-size:3rem;font-weight:bold;color:var(--pur);text-align:center}
-.review li{margin:10px 0;padding:10px 14px;background:#fff4f4;border-radius:12px}
-.review b{color:var(--grn)}
-.center{text-align:center}
+  :root{
+    --bg1:#ffe9a8; --bg2:#ffc3d9; --ink:#2b2d42; --card:#ffffff;
+    --blue:#4cc9f0; --green:#52c41a; --red:#ff5d73; --purple:#7b5cff; --orange:#ff9f1c;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;
+    color:var(--ink); background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    display:flex; align-items:center; justify-content:center; padding:16px;
+  }
+  .card{
+    width:100%; max-width:640px; background:var(--card); border-radius:28px;
+    padding:28px 24px; box-shadow:0 14px 0 rgba(123,92,255,.18),0 20px 40px rgba(0,0,0,.12);
+    text-align:center;
+  }
+  h1{margin:6px 0 4px; font-size:2.2rem; color:var(--purple)}
+  p.sub{margin:0 0 18px; font-size:1.1rem}
+  .big-emoji{font-size:4rem; line-height:1}
+  button{font:inherit; cursor:pointer; border:none}
+  .btn{
+    background:var(--purple); color:#fff; font-size:1.4rem; font-weight:700;
+    padding:14px 34px; border-radius:50px; box-shadow:0 6px 0 #5238c9;
+    transition:transform .08s, box-shadow .08s;
+  }
+  .btn:active{transform:translateY(4px); box-shadow:0 2px 0 #5238c9}
+  .btn.alt{background:var(--orange); box-shadow:0 6px 0 #cc7f00}
+  .btn.alt:active{box-shadow:0 2px 0 #cc7f00}
+  .top{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; font-weight:700}
+  .bar{flex:1; height:16px; background:#eee; border-radius:20px; overflow:hidden}
+  .bar > div{height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--purple)); transition:width .3s}
+  .score{background:#fff4cc; padding:4px 12px; border-radius:20px; white-space:nowrap}
+  .prompt{font-size:1.35rem; margin:14px 0 6px; font-weight:700}
+  .word{
+    display:inline-flex; align-items:center; gap:12px; margin:6px 0 16px;
+    font-size:3rem; font-weight:800; color:var(--purple);
+    background:#efeaff; padding:6px 22px; border-radius:24px;
+  }
+  .sentence{font-size:1.9rem; font-weight:800; color:var(--purple); background:#efeaff; padding:14px 18px; border-radius:24px; margin:8px 0 16px}
+  .speak{
+    background:var(--blue); color:#fff; width:48px; height:48px; border-radius:50%;
+    font-size:1.5rem; box-shadow:0 4px 0 #2a9bc0;
+  }
+  .speak:active{transform:translateY(3px); box-shadow:0 1px 0 #2a9bc0}
+  .opts{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .opt{
+    background:#fff; border:4px solid #d9d4ff; border-radius:20px; padding:16px 8px;
+    font-size:1.8rem; font-weight:800; color:var(--ink); transition:transform .08s, background .15s, border-color .15s;
+  }
+  .opt:hover:not(:disabled){transform:scale(1.04); border-color:var(--purple)}
+  .opt.right{background:#d8f7c4; border-color:var(--green)}
+  .opt.wrong{background:#ffd9de; border-color:var(--red)}
+  .opt:disabled{cursor:default}
+  .fb{min-height:64px; margin-top:16px; font-size:1.2rem; font-weight:700}
+  .fb .good{color:#2f8f00} .fb .bad{color:#d62839}
+  .fb small{display:block; font-weight:400; font-size:1.05rem; margin-top:4px; color:var(--ink)}
+  .stars{font-size:2.6rem; letter-spacing:4px; margin:8px 0}
+  .review{text-align:left; margin:16px 0; max-height:220px; overflow:auto; background:#faf8ff; border-radius:16px; padding:10px 16px}
+  .review li{margin:6px 0}
+  .hidden{display:none}
+  @keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+  .pop{animation:pop .35s}
+  @media (max-width:420px){ .word{font-size:2.4rem} .opt{font-size:1.5rem} }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div id="start" class="card hero">
-    <div class="emoji">📚✨</div>
-    <h1>English Word Wizards</h1>
-    <p>50 fun questions on words, spelling, sentences and reading.</p>
-    <input id="name" type="text" placeholder="Type your name" maxlength="20">
-    <div><button class="btn" id="go">Start the quiz!</button></div>
-  </div>
+<div class="card" id="app">
 
-  <div id="quiz" class="card hide">
-    <div class="top"><span id="who"></span><span id="count"></span><span id="pts"></span></div>
-    <div class="bar"><div id="fill"></div></div>
-    <div id="passage" class="passage hide"></div>
-    <div class="q" id="q"></div>
+  <section id="start">
+    <div class="big-emoji">🎵🐱🎩</div>
+    <h1>Rhyme Time!</h1>
+    <p class="sub">Words that rhyme sound the same at the end.<br>Like <b>cat</b> and <b>hat</b>!</p>
+    <p class="sub">50 questions. Tap the 🔊 button to hear a word.</p>
+    <button class="btn" id="startBtn">Let's Play!</button>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="top">
+      <span id="qnum">1 / 50</span>
+      <div class="bar"><div id="barFill"></div></div>
+      <span class="score">⭐ <span id="scoreNum">0</span></span>
+    </div>
+    <div class="prompt" id="prompt"></div>
+    <div id="stage"></div>
     <div class="opts" id="opts"></div>
     <div class="fb" id="fb"></div>
-    <div class="next"><button class="btn hide" id="next">Next ➜</button></div>
-  </div>
+    <button class="btn hidden" id="nextBtn">Next ➜</button>
+  </section>
 
-  <div id="end" class="card hide">
-    <div class="center">
-      <div class="emoji" id="medal"></div>
-      <h2 id="endmsg"></h2>
-      <div class="score" id="final"></div>
+  <section id="end" class="hidden">
+    <div class="big-emoji" id="endEmoji">🏆</div>
+    <h1 id="endTitle">Great job!</h1>
+    <div class="stars" id="stars"></div>
+    <p class="sub" id="endScore"></p>
+    <div id="reviewWrap" class="hidden">
+      <p class="sub"><b>Let's practise these again:</b></p>
+      <ul class="review" id="reviewList"></ul>
     </div>
-    <div id="reviewBox" class="hide">
-      <h3>Let's look at the ones to practise:</h3>
-      <ol class="review" id="review"></ol>
-    </div>
-    <div class="center"><button class="btn" id="again">Play again</button></div>
-  </div>
+    <button class="btn alt hidden" id="retryMissed">Try the ones I missed</button>
+    <button class="btn" id="again">Play again</button>
+  </section>
+
 </div>
 
 <script>
-const P1="Tom has a red kite. On Saturday he took it to the park. The wind was strong, so the kite flew high above the trees.";
-// [question, [correct, wrong, wrong, wrong], explanation, passage?]
-const DATA=[
-["Which of these words is a noun (a naming word)?",["teacher","eat","slowly","tall"],"A noun names a person, place or thing. 'Teacher' is a person."],
-["Which word is the verb in this sentence?\n“The children giggle loudly.”",["giggle","children","loudly","The"],"A verb is a doing word. The children are doing the giggling."],
-["Which word is the adjective in this sentence?\n“The fluffy rabbit hopped away.”",["fluffy","rabbit","hopped","away"],"An adjective describes a noun. 'Fluffy' describes the rabbit."],
-["Which word tells us HOW the snail moved?\n“The snail crawled slowly.”",["slowly","snail","crawled","The"],"'Slowly' is an adverb. It tells us how the snail crawled."],
-["Which word is a doing word (verb)?",["climb","ladder","purple","gently"],"You can climb, so it is a doing word."],
-["Which word needs a capital letter because it is a name?",["London","city","river","town"],"London is the name of a place, so it starts with a capital letter."],
-["Which word means very, very big?",["enormous","tiny","narrow","brief"],"Enormous means extremely large."],
-["Which word is the name of a group of fish?",["school","pack","herd","flock"],"A group of fish is called a school."],
-["Which word is a noun?",["happiness","jumped","bravely","soft"],"Happiness is a thing we feel, so it is a noun."],
-["Choose the correct word: one fox, two ___.",["foxes","foxs","foxies","foxen"],"Words ending in -x add -es to make them plural."],
-["Choose the correct word: one baby, two ___.",["babies","babys","babyes","babis"],"Change the y to i and add -es."],
-["Choose the correct word: one child, three ___.",["children","childs","childen","childrens"],"Child is an irregular plural. It becomes children."],
-["Choose the correct word: one mouse, two ___.",["mice","mouses","mices","mouse"],"Mouse is an irregular plural. It becomes mice."],
-["Choose the correct word: one leaf, many ___.",["leaves","leafs","leafes","leavs"],"Change the f to v and add -es."],
-["Choose the correct word:\n“Yesterday I ___ to the shop.”",["went","goed","go","goes"],"Went is the past tense of go."],
-["Choose the correct word:\n“She ___ a lovely picture last night.”",["drew","drawed","draw","drawn"],"Drew is the past tense of draw."],
-["Choose the correct word:\n“We ___ our lunch before play.”",["ate","eated","eaten","eating"],"Ate is the past tense of eat."],
-["Which is the correct past tense of 'jump'?",["jumped","jumpt","jumping","jumps"],"Add -ed to jump to show it already happened."],
-["Which sentence is written correctly?",["My brother is called Sam.","my brother is called Sam.","My brother is called sam.","my Brother is called Sam."],"A sentence starts with a capital letter and names need a capital letter too."],
-["Which sentence is a question?",["Can we play outside?","We can play outside.","Play outside now.","How lovely it is outside!"],"A question asks something and ends with a question mark."],
-["Which sentence is a command?",["Please close the door.","The door is closed.","Is the door closed?","I closed the door."],"A command tells someone to do something."],
-["Which sentence uses commas correctly in a list?",["I packed apples, bananas, grapes and pears.","I packed, apples bananas grapes, and pears.","I packed apples bananas, grapes, and, pears.","I packed apples, bananas grapes and, pears."],"Commas go between the items in a list, and 'and' goes before the last one."],
-["Which sentence uses the apostrophe correctly?",["I can't find my shoes.","I ca'nt find my shoes.","I cant' find my shoes.","I can't' find my shoes."],"The apostrophe takes the place of the missing letter 'o' in 'cannot'."],
-["Which sentence shows that the bone belongs to ONE dog?",["The dog's bone was buried.","The dogs's bone was buried.","The dogs bone' was buried.","The dog bone's was buried."],"Add apostrophe + s to the owner to show it belongs to them."],
-["Which word is spelled correctly?",["because","becaus","becuase","becase"],"Remember: Big Elephants Can Always Understand Small Elephants."],
-["Which word is spelled correctly?",["friend","freind","frend","friand"],"Friend has 'ie' in it, as in 'a friend to the end'."],
-["Which word is spelled correctly?",["people","peeple","peopel","pepole"],"People is a tricky word. It is spelled p-e-o-p-l-e."],
-["Which word is spelled correctly?",["beautiful","beutiful","beautifull","butiful"],"Beautiful starts with 'beau' and ends with just one 'l'."],
-["Choose the right word:\n“I can ___ the birds singing.”",["hear","here","hair","heer"],"You hear with your ear. Hear has 'ear' inside it."],
-["Choose the right word:\n“Put the book over ___.”",["there","their","they're","thare"],"There tells us where something is."],
-["Choose the right word:\n“The ___ shone brightly in the sky.”",["sun","son","sum","sunn"],"The sun is the star in the sky. A son is a boy in a family."],
-["Choose the right word:\n“The bear has big ___.”",["paws","pause","pores","paus"],"Paws are an animal's feet."],
-["Choose the right word:\n“I have ___ pencils on my desk.”",["two","too","to","tow"],"Two is the number 2."],
-["Add -ful to the word 'care'. What do you get?",["careful","carefull","carful","carefel"],"When we add -ful, we only use one 'l'."],
-["Which word means the opposite of 'happy'?",["unhappy","dishappy","inhappy","nonhappy"],"The prefix un- changes the meaning to the opposite."],
-["Add -ly to the word 'quick'. What do you get?",["quickly","quickley","quickily","quicly"],"Just add -ly to the end of quick."],
-["Which of these is a compound word (two words joined together)?",["rainbow","rainy","raining","rained"],"Rain + bow = rainbow."],
-["How many syllables (beats) are in the word 'elephant'?",["3","2","4","1"],"el-e-phant. Clap it out: 3 beats."],
-["Which word rhymes with 'light'?",["kite","late","lit","lick"],"Light and kite end with the same sound: -ite."],
-["Which word comes first in alphabetical (ABC) order?",["banana","lemon","mango","orange"],"B comes before L, M and O in the alphabet."],
-["Which word means the opposite of 'empty'?",["full","tidy","quiet","dry"],"Full is the opposite of empty."],
-["Which word means the same as 'glad'?",["happy","sad","tired","calm"],"Glad and happy are synonyms (they mean the same)."],
-["Which one is a complete sentence?",["The birds flew south.","The birds in the tree.","Flying over the hills.","Under the big bridge."],"A complete sentence has a doer and a doing word and makes sense on its own."],
-["Choose the best joining word:\n“I wore my coat ___ it was cold.”",["because","but","or","if"],"Because gives the reason why I wore my coat."],
-["Choose the best joining word:\n“It was raining, ___ we stayed inside.”",["so","but","or","until"],"So shows what happened as a result of the rain."],
-["Which sentence is an exclamation?",["What a huge cake!","Is that a huge cake?","Cut the huge cake.","The cake is huge."],"An exclamation shows strong feeling and ends with an exclamation mark."],
-["What colour was Tom's kite?",["red","blue","yellow","green"],"The text says Tom has a red kite.",P1],
-["When did Tom take his kite to the park?",["Saturday","Sunday","Friday","Monday"],"The text says he went on Saturday.",P1],
-["Why did the kite fly high?",["The wind was strong.","The kite was new.","Tom ran very fast.","The sun was out."],"The text says the wind was strong, so the kite flew high.",P1],
-["Which word in the story describes the wind?",["strong","red","high","Saturday"],"'Strong' tells us what kind of wind it was.",P1]
+/* ---------- Question bank (50) ----------
+   r   = "Which word rhymes with ___?"  (w = word, a = answer, x = 3 plausible wrong choices)
+   odd = "Which word does NOT rhyme?"   (o = 4 words, a = the odd one, g = the rhyming group)
+   fill= finish the rhyme               (s = sentence, a = answer, x = wrong choices, w = word it rhymes with)
+   Wrong choices are deliberate near-misses: same first letter, same vowel letter,
+   look-alike spelling, or a different ending sound.
+*/
+const Q = [
+ {t:'r',w:'cat',a:'hat',x:['cap','cot','cut']},
+ {t:'r',w:'dog',a:'log',x:['dig','dot','door']},
+ {t:'r',w:'sun',a:'fun',x:['sum','sand','sin']},
+ {t:'r',w:'pen',a:'hen',x:['pan','pin','pet']},
+ {t:'r',w:'bed',a:'red',x:['bad','bud','bee']},
+ {t:'r',w:'hop',a:'top',x:['hip','hope','hot']},
+ {t:'r',w:'big',a:'pig',x:['bag','bug','bit']},
+ {t:'r',w:'bug',a:'rug',x:['bag','big','bun']},
+ {t:'r',w:'man',a:'fan',x:['men','mat','map']},
+ {t:'r',w:'cake',a:'lake',x:['cook','cape','kick']},
+ {t:'r',w:'bike',a:'hike',x:['back','bite','book']},
+ {t:'r',w:'tree',a:'knee',x:['bell','tray','tip']},
+ {t:'r',w:'moon',a:'spoon',x:['mean','moan','moss']},
+ {t:'r',w:'star',a:'car',x:['stir','sun','stop']},
+ {t:'r',w:'night',a:'light',x:['nine','knit','note']},
+ {t:'r',w:'rain',a:'train',x:['run','ran','rail']},
+ {t:'r',w:'boat',a:'coat',x:['bat','boot','bolt']},
+ {t:'r',w:'book',a:'look',x:['back','boot','bike']},
+ {t:'r',w:'fish',a:'dish',x:['fist','fresh','fin']},
+ {t:'r',w:'ball',a:'wall',x:['bell','bull','bat']},
+ {t:'r',w:'frog',a:'fog',x:['fig','free','from']},
+ {t:'r',w:'snow',a:'toe',x:['now','sun','snap']},
+ {t:'r',w:'house',a:'mouse',x:['horse','hose','hut']},
+ {t:'r',w:'king',a:'ring',x:['kick','kind','kit']},
+ {t:'r',w:'clock',a:'sock',x:['cluck','clap','cook']},
+ {t:'r',w:'duck',a:'truck',x:['deck','dock','dark']},
+ {t:'r',w:'boy',a:'toy',x:['bus','boat','bay']},
+ {t:'r',w:'bell',a:'shell',x:['ball','bill','bed']},
+ {t:'r',w:'sing',a:'wing',x:['sang','song','sink']},
+ {t:'r',w:'hill',a:'mill',x:['hall','hell','hid']},
+ {t:'r',w:'nest',a:'best',x:['neck','net','next']},
+ {t:'r',w:'gate',a:'late',x:['got','goat','gift']},
+ {t:'r',w:'pie',a:'sky',x:['pea','pin','pit']},
+ {t:'r',w:'blue',a:'glue',x:['blow','bleed','black']},
+ {t:'r',w:'hand',a:'sand',x:['hard','hunt','hen']},
+ {t:'r',w:'jump',a:'bump',x:['jam','jug','junk']},
+ {t:'r',w:'mop',a:'shop',x:['map','mud','mope']},
+ {t:'r',w:'six',a:'mix',x:['sit','sad','sick']},
+ {t:'r',w:'pear',a:'bear',x:['peel','pet','peer']},
+ {t:'r',w:'cold',a:'gold',x:['cool','cord','call']},
+
+ {t:'odd',o:['ten','pen','hen','tin'],a:'tin',g:'ten, pen, hen'},
+ {t:'odd',o:['cake','lake','snake','cook'],a:'cook',g:'cake, lake, snake'},
+ {t:'odd',o:['bug','rug','hug','bag'],a:'bag',g:'bug, rug, hug'},
+ {t:'odd',o:['ring','king','wing','rang'],a:'rang',g:'ring, king, wing'},
+ {t:'odd',o:['fox','box','socks','fix'],a:'fix',g:'fox, box, socks'},
+
+ {t:'fill',s:'The cat sat on the ___.',w:'cat',a:'mat',x:['map','mug','mop']},
+ {t:'fill',s:'I see a bee up in the ___.',w:'bee',a:'tree',x:['bush','sky','tray']},
+ {t:'fill',s:'A frog sat on a ___.',w:'frog',a:'log',x:['leaf','lake','lid']},
+ {t:'fill',s:'I can hop, hop, hop, and then I ___.',w:'hop',a:'stop',x:['skip','step','stand']},
+ {t:'fill',s:'I hear the rain, I see the ___.',w:'rain',a:'train',x:['rail','road','bus']}
 ];
 
-const $=id=>document.getElementById(id);
-const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-let qs,i,score,missed,name,locked;
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
+function say(text){
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.rate=.8; u.lang='en-CA'; speechSynthesis.speak(u);}catch(e){}
+}
+const CHEERS = ['Great job!','Awesome!','You got it!','Super!','Brilliant!','Well done!','Yes!'];
 
-function start(){
-  name=$("name").value.trim()||"Superstar";
-  qs=shuffle(DATA);i=0;score=0;missed=[];
-  $("start").classList.add("hide");$("end").classList.add("hide");$("quiz").classList.remove("hide");
-  $("who").textContent="👋 "+name;
-  show();
+let list=[], idx=0, score=0, missed=[], locked=false;
+
+function show(id){ ['start','quiz','end'].forEach(s=>$(s).classList.toggle('hidden', s!==id)); }
+
+function begin(questions){
+  list = questions; idx=0; score=0; missed=[];
+  show('quiz'); render();
 }
-function show(){
+
+function render(){
   locked=false;
-  const [q,o,ex,p]=qs[i];
-  $("count").textContent=`Question ${i+1} of ${qs.length}`;
-  $("pts").textContent=`⭐ ${score}`;
-  $("fill").style.width=(i/qs.length*100)+"%";
-  const pb=$("passage");
-  if(p){pb.textContent="📖 "+p;pb.classList.remove("hide")}else pb.classList.add("hide");
-  $("q").innerHTML=q.replace(/\n/g,"<br>");
-  const box=$("opts");box.innerHTML="";
-  shuffle(o).forEach(t=>{
-    const b=document.createElement("button");b.className="opt";b.textContent=t;
-    b.onclick=()=>pick(b,t,o[0],ex);box.appendChild(b);
+  const q=list[idx];
+  $('qnum').textContent = (idx+1)+' / '+list.length;
+  $('barFill').style.width = (idx/list.length*100)+'%';
+  $('scoreNum').textContent = score;
+  $('fb').innerHTML=''; $('nextBtn').classList.add('hidden');
+
+  let choices;
+  if(q.t==='r'){
+    $('prompt').textContent='Which word rhymes with…';
+    $('stage').innerHTML = `<div class="word"><span>${q.w}</span><button class="speak" aria-label="Hear the word">🔊</button></div>`;
+    choices = shuffle([q.a,...q.x]);
+  } else if(q.t==='odd'){
+    $('prompt').textContent='Three words rhyme. Which one does NOT rhyme?';
+    $('stage').innerHTML = `<div class="big-emoji">🕵️</div>`;
+    choices = shuffle(q.o);
+  } else {
+    $('prompt').textContent='Finish the rhyme!';
+    $('stage').innerHTML = `<div class="sentence">${q.s.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')}<br><button class="speak" aria-label="Hear it">🔊</button></div>`;
+    choices = shuffle([q.a,...q.x]);
+  }
+  const sp = $('stage').querySelector('.speak');
+  if(sp) sp.onclick = ()=> say(q.t==='fill' ? q.s.replace('___','blank') : q.w);
+
+  $('opts').innerHTML='';
+  choices.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=c;
+    b.onclick=()=>answer(b,c);
+    $('opts').appendChild(b);
   });
-  $("fb").className="fb";$("next").classList.add("hide");
 }
-function pick(btn,t,right,ex){
-  if(locked)return;locked=true;
-  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(b.textContent===right)b.classList.add("right")});
-  const fb=$("fb");
-  if(t===right){score++;fb.className="fb ok";fb.textContent="🎉 Brilliant! "+ex}
-  else{btn.classList.add("wrong");missed.push([qs[i][0],right,ex]);fb.className="fb no";fb.textContent="Not quite. "+ex}
-  $("pts").textContent=`⭐ ${score}`;
-  const n=$("next");n.textContent=i===qs.length-1?"See my score ➜":"Next ➜";n.classList.remove("hide");
+
+function explain(q){
+  if(q.t==='r')  return `<b>${q.w}</b> and <b>${q.a}</b> end with the same sound.`;
+  if(q.t==='odd')return `<b>${q.g}</b> rhyme. <b>${q.a}</b> does not.`;
+  return `<b>${q.w}</b> and <b>${q.a}</b> rhyme.`;
 }
+
+function answer(btn,choice){
+  if(locked) return; locked=true;
+  const q=list[idx];
+  const ok = choice===q.a;
+  [...$('opts').children].forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===q.a) b.classList.add('right');
+  });
+  if(ok){
+    score++; $('scoreNum').textContent=score;
+    btn.classList.add('pop');
+    $('fb').innerHTML = `<span class="good">🎉 ${CHEERS[Math.floor(Math.random()*CHEERS.length)]}</span><small>${explain(q)}</small>`;
+  } else {
+    btn.classList.add('wrong');
+    missed.push(q);
+    $('fb').innerHTML = `<span class="bad">Not quite. Good try!</span><small>The answer is <b>${q.a}</b>. ${explain(q)}</small>`;
+  }
+  $('nextBtn').textContent = idx===list.length-1 ? 'See my score ➜' : 'Next ➜';
+  $('nextBtn').classList.remove('hidden');
+}
+
+function next(){
+  idx++;
+  if(idx>=list.length) return finish();
+  render();
+}
+
 function finish(){
-  $("quiz").classList.add("hide");$("end").classList.remove("hide");
-  const pct=score/qs.length;
-  $("medal").textContent=pct>=.9?"🏆":pct>=.7?"🥇":pct>=.5?"🥈":"🌟";
-  $("endmsg").textContent=pct>=.9?`Amazing work, ${name}!`:pct>=.7?`Great job, ${name}!`:pct>=.5?`Good try, ${name}!`:`Keep practising, ${name}!`;
-  $("final").textContent=`${score} / ${qs.length}`;
-  const rb=$("reviewBox"),rv=$("review");rv.innerHTML="";
-  if(missed.length){
-    rb.classList.remove("hide");
-    missed.forEach(([q,a,ex])=>{const li=document.createElement("li");
-      li.innerHTML=`${q.replace(/\n/g," ")}<br>Answer: <b></b><br><small></small>`;
-      li.querySelector("b").textContent=a;li.querySelector("small").textContent=ex;rv.appendChild(li)});
-  }else rb.classList.add("hide");
+  $('barFill').style.width='100%';
+  show('end');
+  const pct = score/list.length;
+  const starCount = pct>=.9?3 : pct>=.7?2 : pct>=.4?1 : 0;
+  $('stars').textContent = '⭐'.repeat(starCount) + '☆'.repeat(3-starCount);
+  $('endEmoji').textContent = pct>=.9?'🏆':pct>=.7?'🎉':'💪';
+  $('endTitle').textContent = pct>=.9?'Rhyme Champion!':pct>=.7?'Great job!':'Keep practising!';
+  $('endScore').textContent = `You got ${score} out of ${list.length} right.`;
+  const has = missed.length>0;
+  $('reviewWrap').classList.toggle('hidden', !has);
+  $('retryMissed').classList.toggle('hidden', !has);
+  $('reviewList').innerHTML = missed.map(q=>{
+    const label = q.t==='r' ? `${q.w} → <b>${q.a}</b>` : q.t==='odd' ? `Odd one out: <b>${q.a}</b>` : `${q.s.replace('___','<b>'+q.a+'</b>')}`;
+    return `<li>${label}</li>`;
+  }).join('');
 }
-$("go").onclick=start;
-$("name").addEventListener("keydown",e=>{if(e.key==="Enter")start()});
-$("next").onclick=()=>{i++;i<qs.length?show():finish()};
-$("again").onclick=()=>{$("end").classList.add("hide");$("start").classList.remove("hide")};
+
+$('startBtn').onclick = ()=> begin(shuffle(Q));
+$('nextBtn').onclick = next;
+$('again').onclick = ()=> begin(shuffle(Q));
+$('retryMissed').onclick = ()=> begin(shuffle(missed));
 </script>
 </body>
 </html>
