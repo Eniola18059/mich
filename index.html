@@ -1,243 +1,187 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Negatives Quiz 3</title>
+<title>English Word Wizards</title>
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
+:root{--bg:#fff7e6;--card:#fff;--ink:#2b2d42;--pur:#7b5cff;--grn:#2bb673;--red:#ef5b5b;--yel:#ffc93c;--blu:#3aa0ff}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px}
-.wrap{width:100%;max-width:640px}
-.card{background:var(--card);border-radius:18px;box-shadow:0 6px 24px rgba(30,60,110,.09);padding:28px}
-h1{margin:0 0 6px;font-size:1.7rem}
-.sub{color:var(--muted);margin:0 0 20px}
-.btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:13px 22px;font-size:1rem;font-weight:600;cursor:pointer}
-.btn:hover{background:var(--brand-d)}
-.btn.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.opt-row{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted)}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
-.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
-.bar>div{height:100%;background:var(--brand);width:0;transition:width .25s}
-.sec{display:inline-block;background:#eaf1ff;color:var(--brand-d);font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:12px}
-.q{font-size:1.5rem;font-weight:700;margin:4px 0 18px;line-height:1.35}
-.q.small{font-size:1.2rem}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.ans{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:center;color:var(--ink)}
-.ans:hover:not(:disabled){border-color:var(--brand)}
-.ans.right{background:var(--okbg);border-color:var(--ok)}
-.ans.wrong{background:var(--badbg);border-color:var(--bad)}
-.ans:disabled{cursor:default}
-.fb{margin-top:18px;padding:14px;border-radius:12px;display:none;line-height:1.5}
-.fb.ok{display:block;background:var(--okbg)}
-.fb.no{display:block;background:var(--badbg)}
-.nav{margin-top:18px;text-align:right}
-.grid{display:grid;grid-template-columns:repeat(3,56px);gap:4px;margin:0 0 18px}
-.grid div{height:50px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border-radius:6px}
-.grid .qm{background:#fff4c9;border-color:#d4a300}
-.grid .blank{background:#f0f3f8;border-color:var(--line);color:var(--muted)}
-.score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
-.review{margin-top:18px;max-height:340px;overflow:auto;border-top:1px solid var(--line)}
-.review div{padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem}
-.review b{color:var(--bad)}
-.hidden{display:none}
-@media(max-width:480px){.answers{grid-template-columns:1fr}.q{font-size:1.3rem}.card{padding:20px}}
+body{margin:0;font-family:"Trebuchet MS","Comic Sans MS",system-ui,sans-serif;background:linear-gradient(160deg,#fff7e6,#e8f3ff);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:16px}
+.wrap{width:100%;max-width:680px}
+.card{background:var(--card);border-radius:24px;padding:24px;box-shadow:0 8px 24px rgba(40,40,90,.12);margin-top:12px}
+h1{font-size:2.2rem;margin:0 0 6px;color:var(--pur)}
+h2{margin:0 0 12px}
+.hero{text-align:center}
+.emoji{font-size:3.5rem}
+input[type=text]{font:inherit;padding:12px 16px;border-radius:14px;border:3px solid #d9d4ff;width:100%;max-width:320px;text-align:center;margin:14px 0}
+button{font:inherit;cursor:pointer;border:0}
+.btn{background:var(--pur);color:#fff;padding:14px 28px;border-radius:16px;font-size:1.1rem;font-weight:bold;box-shadow:0 5px 0 #5a3fd1}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #5a3fd1}
+.top{display:flex;justify-content:space-between;font-weight:bold;gap:8px}
+.bar{height:14px;background:#e6e6f5;border-radius:99px;overflow:hidden;margin:10px 0 4px}
+.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--blu),var(--pur));transition:width .3s}
+.passage{background:#fff4cf;border-left:6px solid var(--yel);padding:12px 16px;border-radius:12px;margin:12px 0;font-size:1.05rem;line-height:1.5}
+.q{font-size:1.4rem;font-weight:bold;margin:14px 0}
+.opts{display:grid;gap:12px}
+.opt{background:#f2efff;border:3px solid #d9d4ff;border-radius:16px;padding:14px 16px;font-size:1.15rem;text-align:left;color:var(--ink)}
+.opt:hover:not(:disabled){background:#e5deff}
+.opt.right{background:#d6f5e5;border-color:var(--grn)}
+.opt.wrong{background:#ffe0e0;border-color:var(--red)}
+.fb{margin-top:14px;padding:12px 16px;border-radius:14px;font-size:1.05rem;display:none}
+.fb.ok{background:#d6f5e5;display:block}.fb.no{background:#ffe9d6;display:block}
+.next{margin-top:16px;text-align:right}
+.hide{display:none}
+.score{font-size:3rem;font-weight:bold;color:var(--pur);text-align:center}
+.review li{margin:10px 0;padding:10px 14px;background:#fff4f4;border-radius:12px}
+.review b{color:var(--grn)}
+.center{text-align:center}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="card" id="start">
-    <h1>Negatives Quiz 3</h1>
-    <p class="sub">Adding and subtracting negative numbers. 50 more questions, one at a time.</p>
-    <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
-    <button class="btn" id="go">Start quiz</button>
+  <div id="start" class="card hero">
+    <div class="emoji">📚✨</div>
+    <h1>English Word Wizards</h1>
+    <p>50 fun questions on words, spelling, sentences and reading.</p>
+    <input id="name" type="text" placeholder="Type your name" maxlength="20">
+    <div><button class="btn" id="go">Start the quiz!</button></div>
   </div>
 
-  <div class="card hidden" id="play">
-    <div class="top"><span id="count"></span><span id="scoreLive"></span></div>
-    <div class="bar"><div id="prog"></div></div>
-    <span class="sec" id="sec"></span>
-    <div id="grid"></div>
-    <div class="q" id="qtext"></div>
-    <div class="answers" id="answers"></div>
+  <div id="quiz" class="card hide">
+    <div class="top"><span id="who"></span><span id="count"></span><span id="pts"></span></div>
+    <div class="bar"><div id="fill"></div></div>
+    <div id="passage" class="passage hide"></div>
+    <div class="q" id="q"></div>
+    <div class="opts" id="opts"></div>
     <div class="fb" id="fb"></div>
-    <div class="nav"><button class="btn" id="next" disabled>Next</button></div>
+    <div class="next"><button class="btn hide" id="next">Next ➜</button></div>
   </div>
 
-  <div class="card hidden" id="end">
-    <h1>Quiz complete</h1>
-    <div class="score" id="final"></div>
-    <p class="sub" id="msg"></p>
-    <button class="btn" id="again">Try again</button>
-    <div class="review" id="review"></div>
+  <div id="end" class="card hide">
+    <div class="center">
+      <div class="emoji" id="medal"></div>
+      <h2 id="endmsg"></h2>
+      <div class="score" id="final"></div>
+    </div>
+    <div id="reviewBox" class="hide">
+      <h3>Let's look at the ones to practise:</h3>
+      <ol class="review" id="review"></ol>
+    </div>
+    <div class="center"><button class="btn" id="again">Play again</button></div>
   </div>
 </div>
 
 <script>
-const ev = e => Function('return ' + e)();
-const fmt = n => String(n).replace('-', '\u2212');
-const show = e => e.replace(/([+\-]) ([+\-])(\d+)/g, '$1 ($2$3)').replace(/-/g, '\u2212');
-const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const P1="Tom has a red kite. On Saturday he took it to the park. The wind was strong, so the kite flew high above the trees.";
+// [question, [correct, wrong, wrong, wrong], explanation, passage?]
+const DATA=[
+["Which of these words is a noun (a naming word)?",["teacher","eat","slowly","tall"],"A noun names a person, place or thing. 'Teacher' is a person."],
+["Which word is the verb in this sentence?\n“The children giggle loudly.”",["giggle","children","loudly","The"],"A verb is a doing word. The children are doing the giggling."],
+["Which word is the adjective in this sentence?\n“The fluffy rabbit hopped away.”",["fluffy","rabbit","hopped","away"],"An adjective describes a noun. 'Fluffy' describes the rabbit."],
+["Which word tells us HOW the snail moved?\n“The snail crawled slowly.”",["slowly","snail","crawled","The"],"'Slowly' is an adverb. It tells us how the snail crawled."],
+["Which word is a doing word (verb)?",["climb","ladder","purple","gently"],"You can climb, so it is a doing word."],
+["Which word needs a capital letter because it is a name?",["London","city","river","town"],"London is the name of a place, so it starts with a capital letter."],
+["Which word means very, very big?",["enormous","tiny","narrow","brief"],"Enormous means extremely large."],
+["Which word is the name of a group of fish?",["school","pack","herd","flock"],"A group of fish is called a school."],
+["Which word is a noun?",["happiness","jumped","bravely","soft"],"Happiness is a thing we feel, so it is a noun."],
+["Choose the correct word: one fox, two ___.",["foxes","foxs","foxies","foxen"],"Words ending in -x add -es to make them plural."],
+["Choose the correct word: one baby, two ___.",["babies","babys","babyes","babis"],"Change the y to i and add -es."],
+["Choose the correct word: one child, three ___.",["children","childs","childen","childrens"],"Child is an irregular plural. It becomes children."],
+["Choose the correct word: one mouse, two ___.",["mice","mouses","mices","mouse"],"Mouse is an irregular plural. It becomes mice."],
+["Choose the correct word: one leaf, many ___.",["leaves","leafs","leafes","leavs"],"Change the f to v and add -es."],
+["Choose the correct word:\n“Yesterday I ___ to the shop.”",["went","goed","go","goes"],"Went is the past tense of go."],
+["Choose the correct word:\n“She ___ a lovely picture last night.”",["drew","drawed","draw","drawn"],"Drew is the past tense of draw."],
+["Choose the correct word:\n“We ___ our lunch before play.”",["ate","eated","eaten","eating"],"Ate is the past tense of eat."],
+["Which is the correct past tense of 'jump'?",["jumped","jumpt","jumping","jumps"],"Add -ed to jump to show it already happened."],
+["Which sentence is written correctly?",["My brother is called Sam.","my brother is called Sam.","My brother is called sam.","my Brother is called Sam."],"A sentence starts with a capital letter and names need a capital letter too."],
+["Which sentence is a question?",["Can we play outside?","We can play outside.","Play outside now.","How lovely it is outside!"],"A question asks something and ends with a question mark."],
+["Which sentence is a command?",["Please close the door.","The door is closed.","Is the door closed?","I closed the door."],"A command tells someone to do something."],
+["Which sentence uses commas correctly in a list?",["I packed apples, bananas, grapes and pears.","I packed, apples bananas grapes, and pears.","I packed apples bananas, grapes, and, pears.","I packed apples, bananas grapes and, pears."],"Commas go between the items in a list, and 'and' goes before the last one."],
+["Which sentence uses the apostrophe correctly?",["I can't find my shoes.","I ca'nt find my shoes.","I cant' find my shoes.","I can't' find my shoes."],"The apostrophe takes the place of the missing letter 'o' in 'cannot'."],
+["Which sentence shows that the bone belongs to ONE dog?",["The dog's bone was buried.","The dogs's bone was buried.","The dogs bone' was buried.","The dog bone's was buried."],"Add apostrophe + s to the owner to show it belongs to them."],
+["Which word is spelled correctly?",["because","becaus","becuase","becase"],"Remember: Big Elephants Can Always Understand Small Elephants."],
+["Which word is spelled correctly?",["friend","freind","frend","friand"],"Friend has 'ie' in it, as in 'a friend to the end'."],
+["Which word is spelled correctly?",["people","peeple","peopel","pepole"],"People is a tricky word. It is spelled p-e-o-p-l-e."],
+["Which word is spelled correctly?",["beautiful","beutiful","beautifull","butiful"],"Beautiful starts with 'beau' and ends with just one 'l'."],
+["Choose the right word:\n“I can ___ the birds singing.”",["hear","here","hair","heer"],"You hear with your ear. Hear has 'ear' inside it."],
+["Choose the right word:\n“Put the book over ___.”",["there","their","they're","thare"],"There tells us where something is."],
+["Choose the right word:\n“The ___ shone brightly in the sky.”",["sun","son","sum","sunn"],"The sun is the star in the sky. A son is a boy in a family."],
+["Choose the right word:\n“The bear has big ___.”",["paws","pause","pores","paus"],"Paws are an animal's feet."],
+["Choose the right word:\n“I have ___ pencils on my desk.”",["two","too","to","tow"],"Two is the number 2."],
+["Add -ful to the word 'care'. What do you get?",["careful","carefull","carful","carefel"],"When we add -ful, we only use one 'l'."],
+["Which word means the opposite of 'happy'?",["unhappy","dishappy","inhappy","nonhappy"],"The prefix un- changes the meaning to the opposite."],
+["Add -ly to the word 'quick'. What do you get?",["quickly","quickley","quickily","quicly"],"Just add -ly to the end of quick."],
+["Which of these is a compound word (two words joined together)?",["rainbow","rainy","raining","rained"],"Rain + bow = rainbow."],
+["How many syllables (beats) are in the word 'elephant'?",["3","2","4","1"],"el-e-phant. Clap it out: 3 beats."],
+["Which word rhymes with 'light'?",["kite","late","lit","lick"],"Light and kite end with the same sound: -ite."],
+["Which word comes first in alphabetical (ABC) order?",["banana","lemon","mango","orange"],"B comes before L, M and O in the alphabet."],
+["Which word means the opposite of 'empty'?",["full","tidy","quiet","dry"],"Full is the opposite of empty."],
+["Which word means the same as 'glad'?",["happy","sad","tired","calm"],"Glad and happy are synonyms (they mean the same)."],
+["Which one is a complete sentence?",["The birds flew south.","The birds in the tree.","Flying over the hills.","Under the big bridge."],"A complete sentence has a doer and a doing word and makes sense on its own."],
+["Choose the best joining word:\n“I wore my coat ___ it was cold.”",["because","but","or","if"],"Because gives the reason why I wore my coat."],
+["Choose the best joining word:\n“It was raining, ___ we stayed inside.”",["so","but","or","until"],"So shows what happened as a result of the rain."],
+["Which sentence is an exclamation?",["What a huge cake!","Is that a huge cake?","Cut the huge cake.","The cake is huge."],"An exclamation shows strong feeling and ends with an exclamation mark."],
+["What colour was Tom's kite?",["red","blue","yellow","green"],"The text says Tom has a red kite.",P1],
+["When did Tom take his kite to the park?",["Saturday","Sunday","Friday","Monday"],"The text says he went on Saturday.",P1],
+["Why did the kite fly high?",["The wind was strong.","The kite was new.","Tom ran very fast.","The sun was out."],"The text says the wind was strong, so the kite flew high.",P1],
+["Which word in the story describes the wind?",["strong","red","high","Saturday"],"'Strong' tells us what kind of wind it was.",P1]
+];
 
-const TIPS = {
-  basic: 'Use a number line. Taking away more than you have goes below zero. Adding to a negative moves you to the right.',
-  chain: 'Work from left to right, one step at a time.',
-  addneg: 'Adding a negative is the same as subtracting. For example, 4 + (\u22121) = 4 \u2212 1.',
-  subpos: 'Subtracting a positive number is just ordinary subtraction. For example, 6 \u2212 (+1) = 6 \u2212 1.',
-  subneg: 'Subtracting a negative is the same as adding. For example, 1 \u2212 (\u22122) = 1 + 2.',
-  mixed: 'Rewrite double signs first: + \u2212 becomes \u2212, and \u2212 \u2212 becomes +.',
-  missing: 'Put your answer back into the box and check that the sum works.',
-  magic: 'Find a complete row, column or diagonal to get the magic total, then work out the missing number.',
-  real: 'Draw a quick number line to see the change.',
-  cards: 'Try each pair and work out the answer before choosing.'
-};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let qs,i,score,missed,name,locked;
 
-const Q = [];
-function numOpts(a, unit) {
-  const c = [...new Set([-a, a + 1, a - 1, a + 2, a - 2, a + 3, a - 3].filter(x => x !== a))];
-  const first = c[0] === -a ? [c.shift()] : [];
-  const picks = first.concat(shuffle(c).slice(0, 3 - first.length));
-  const f = x => (unit === '\u00a3' ? (x < 0 ? '\u2212\u00a3' + Math.abs(x) : '\u00a3' + x) : fmt(x) + (unit || ''));
-  return { opts: shuffle([a, ...picks]).map(f), correct: f(a) };
+function start(){
+  name=$("name").value.trim()||"Superstar";
+  qs=shuffle(DATA);i=0;score=0;missed=[];
+  $("start").classList.add("hide");$("end").classList.add("hide");$("quiz").classList.remove("hide");
+  $("who").textContent="👋 "+name;
+  show();
 }
-function addExpr(sec, list) {
-  list.forEach(e => {
-    const a = ev(e), o = numOpts(a);
-    Q.push({ sec, tip: TIPS[sec.key], text: show(e) + ' = ?', opts: o.opts, correct: o.correct, expl: show(e) + ' = ' + fmt(a) });
+function show(){
+  locked=false;
+  const [q,o,ex,p]=qs[i];
+  $("count").textContent=`Question ${i+1} of ${qs.length}`;
+  $("pts").textContent=`⭐ ${score}`;
+  $("fill").style.width=(i/qs.length*100)+"%";
+  const pb=$("passage");
+  if(p){pb.textContent="📖 "+p;pb.classList.remove("hide")}else pb.classList.add("hide");
+  $("q").innerHTML=q.replace(/\n/g,"<br>");
+  const box=$("opts");box.innerHTML="";
+  shuffle(o).forEach(t=>{
+    const b=document.createElement("button");b.className="opt";b.textContent=t;
+    b.onclick=()=>pick(b,t,o[0],ex);box.appendChild(b);
   });
+  $("fb").className="fb";$("next").classList.add("hide");
 }
-
-const S = {
-  basic: { key: 'basic', name: 'Basic negatives' },
-  chain: { key: 'chain', name: 'Chains of + and \u2212' },
-  addneg: { key: 'addneg', name: 'Adding negatives' },
-  subpos: { key: 'subpos', name: 'Subtracting positives' },
-  subneg: { key: 'subneg', name: 'Subtracting negatives' },
-  mixed: { key: 'mixed', name: 'Mixed practice' },
-  missing: { key: 'missing', name: 'Missing numbers' },
-  magic: { key: 'magic', name: 'Magic squares' },
-  real: { key: 'real', name: 'Real-life problems' },
-  cards: { key: 'cards', name: 'Cards and reasoning' }
-};
-
-addExpr(S.basic, ['5 - 12','7 - 13','9 - 16','-3 + 8','-10 + 6','-14 + 20','-8 - 5','-12 - 6']);
-addExpr(S.chain, ['8 - 11 + 5','-6 + 9 - 7','3 - 10 - 2','-15 + 10 + 8','12 - 20 + 6','-4 - 5 - 6']);
-addExpr(S.addneg, ['7 + -12','10 + -4','3 + -11','-2 + -9','-14 + -6','-5 + -13']);
-addExpr(S.subpos, ['9 - +15','-3 - +9','-11 - +4','6 - +14','-7 - +13']);
-addExpr(S.subneg, ['4 - -9','8 - -5','-7 - -3','-12 - -5','-4 - -10','-9 - -9']);
-addExpr(S.mixed, ['16 - 25','-17 + 9','11 + -19','-6 - -14','-21 - 9','-30 + 45']);
-
-[['□ + 6 = 2', -4, '−4 + 6 = 2'], ['□ − 7 = −12', -5, '−5 − 7 = −12'],
- ['−4 − □ = 3', -7, '−4 − (−7) = 3'], ['5 − □ = 14', -9, '5 − (−9) = 14']]
-.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t, opts: o.opts, correct: o.correct, expl: x }); });
-
-const mg = [-2, 3, 2, 5, 1, -3, 0, -1, 4];
-const hole = k => mg.map((v, j) => j === k ? null : v);
-[[5, 'Every row, column and diagonal adds to 3. Middle row: 5 + 1 + ? = 3, so ? = −3.'],
- [6, 'Every row, column and diagonal adds to 3. Left column: −2 + 5 + ? = 3, so ? = 0.'],
- [8, 'Every row, column and diagonal adds to 3. Diagonal: −2 + 1 + ? = 3, so ? = 4.'],
- [1, 'Every row, column and diagonal adds to 3. Middle column: ? + 1 + (−1) = 3, so ? = 3.']]
-.forEach(([k, ex]) => { const o = numOpts(mg[k]); Q.push({ sec: S.magic, tip: TIPS.magic, grid: hole(k), qi: k, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
-
-(() => {
-  let o = numOpts(-14, '°C');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'At night the temperature was −9°C. It dropped by 5 more degrees. What is the temperature now?', opts: o.opts, correct: o.correct, expl: '−9 − 5 = −14, so it is −14°C.' });
-  o = numOpts(35, '£');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'Ada has −£20 in her account. She pays in £55. What is her balance now?', opts: o.opts, correct: o.correct, expl: '−£20 + £55 = £35.' });
-  o = numOpts(4);
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'A lift is at floor −3 (a basement level). It goes up 7 floors. Which floor is it at now?', opts: o.opts, correct: o.correct, expl: '−3 + 7 = 4, so it is at floor 4.' });
-})();
-
-const cardNote = 'Cards: −7, −3, 5, 9, −1, 2, 6. ';
-const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
-pairQ('Which two cards add to make −4?', '−3 and −1', ['−7 and 5', '−7 and 2', '−3 and 2'], '−3 + (−1) = −4.');
-pairQ('Which subtraction gives the smallest possible answer?', '−7 − 9', ['−7 − 6', '−3 − 9', '−7 − 5'], '−7 − 9 = −16, which is the lowest answer.');
-
-// Rebuild wrong options from realistic mistakes so the answer cannot be guessed by pattern
-(function rebuild() {
-  const parse = c => { const d = parseInt(c.replace(/[^\d]/g, '')); return /^−/.test(c) ? -d : d; };
-  Q.forEach(q => {
-    if (q.text.startsWith('Cards') || q.text.startsWith('Which of')) return;
-    const a = parse(q.correct);
-    const unit = q.correct.includes('£') ? '£' : q.correct.includes('°C') ? '°C' : q.correct.includes(' m') ? ' m' : '';
-    const f = x => unit === '£' ? (x < 0 ? '−£' + Math.abs(x) : '£' + x) : fmt(x) + unit;
-    let nums = [];
-    if (q.grid) nums = q.grid.filter(v => v !== null);
-    else {
-      const t = q.text.replace(/\d+\s?(am|pm)/g, '');
-      const re = /(−?)(\d+)/g; let m;
-      while ((m = re.exec(t))) nums.push((m[1] ? -1 : 1) * parseInt(m[2]));
-      nums = nums.slice(0, 4);
-    }
-    const pool = new Set();
-    for (let x = 0; x < nums.length; x++) {
-      const p = nums[x]; pool.add(p); pool.add(-p);
-      for (let y = 0; y < nums.length; y++) {
-        if (x === y) continue;
-        const r = nums[y];
-        [p + r, p - r, -(p + r), Math.abs(p) + Math.abs(r), -(Math.abs(p) + Math.abs(r)), Math.abs(p) - Math.abs(r), Math.abs(r) - Math.abs(p)].forEach(v => pool.add(v));
-      }
-    }
-    pool.delete(a);
-    let cand = shuffle([...pool]);
-    // keep wrong answers within a believable range of the real answer
-    const lim = Math.max(12, Math.abs(a) + 12);
-    cand = cand.filter(v => Math.abs(v) <= lim);
-    if (Math.random() < 0.5) { const k = cand.indexOf(-a); if (k > 0) { cand.splice(k, 1); cand.unshift(-a); } }
-    else { const k = cand.indexOf(-a); if (k >= 0) cand.splice(k, 1); }
-    let picks = cand.slice(0, 3);
-    let k = 1;
-    while (picks.length < 3) { const v = a + (Math.random() < 0.5 ? -1 : 1) * (k++ + 2); if (v !== a && !picks.includes(v)) picks.push(v); }
-    q.opts = shuffle([a, ...picks]).map(f);
-    q.correct = f(a);
-  });
-})();
-
-// App logic
-let order = [], i = 0, score = 0, missed = [], locked = false;
-const $ = id => document.getElementById(id);
-function renderGrid(q) {
-  if (!q.grid) return '';
-  return '<div class="grid">' + q.grid.map((v, k) => k === q.qi ? '<div class="qm">?</div>' : v === null ? '<div class="blank"></div>' : '<div>' + fmt(v) + '</div>').join('') + '</div>';
+function pick(btn,t,right,ex){
+  if(locked)return;locked=true;
+  document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(b.textContent===right)b.classList.add("right")});
+  const fb=$("fb");
+  if(t===right){score++;fb.className="fb ok";fb.textContent="🎉 Brilliant! "+ex}
+  else{btn.classList.add("wrong");missed.push([qs[i][0],right,ex]);fb.className="fb no";fb.textContent="Not quite. "+ex}
+  $("pts").textContent=`⭐ ${score}`;
+  const n=$("next");n.textContent=i===qs.length-1?"See my score ➜":"Next ➜";n.classList.remove("hide");
 }
-function load() {
-  const q = order[i]; locked = false;
-  $('count').textContent = 'Question ' + (i + 1) + ' of ' + order.length;
-  $('scoreLive').textContent = 'Score: ' + score;
-  $('prog').style.width = (i / order.length * 100) + '%';
-  $('sec').textContent = q.sec.name;
-  $('grid').innerHTML = renderGrid(q);
-  const t = $('qtext'); t.textContent = q.text; t.className = 'q' + (q.small || q.grid ? ' small' : '');
-  const box = $('answers'); box.innerHTML = '';
-  q.opts.forEach(o => { const b = document.createElement('button'); b.className = 'ans'; b.textContent = o; b.onclick = () => pick(b, o); box.appendChild(b); });
-  $('fb').className = 'fb'; $('fb').innerHTML = '';
-  $('next').disabled = true; $('next').textContent = i === order.length - 1 ? 'See results' : 'Next';
+function finish(){
+  $("quiz").classList.add("hide");$("end").classList.remove("hide");
+  const pct=score/qs.length;
+  $("medal").textContent=pct>=.9?"🏆":pct>=.7?"🥇":pct>=.5?"🥈":"🌟";
+  $("endmsg").textContent=pct>=.9?`Amazing work, ${name}!`:pct>=.7?`Great job, ${name}!`:pct>=.5?`Good try, ${name}!`:`Keep practising, ${name}!`;
+  $("final").textContent=`${score} / ${qs.length}`;
+  const rb=$("reviewBox"),rv=$("review");rv.innerHTML="";
+  if(missed.length){
+    rb.classList.remove("hide");
+    missed.forEach(([q,a,ex])=>{const li=document.createElement("li");
+      li.innerHTML=`${q.replace(/\n/g," ")}<br>Answer: <b></b><br><small></small>`;
+      li.querySelector("b").textContent=a;li.querySelector("small").textContent=ex;rv.appendChild(li)});
+  }else rb.classList.add("hide");
 }
-function pick(btn, val) {
-  if (locked) return; locked = true;
-  const q = order[i], ok = val === q.correct;
-  document.querySelectorAll('.ans').forEach(b => { b.disabled = true; if (b.textContent === q.correct) b.classList.add('right'); });
-  if (ok) { score++; } else { btn.classList.add('wrong'); missed.push(q); }
-  const fb = $('fb'); fb.className = 'fb ' + (ok ? 'ok' : 'no');
-  fb.innerHTML = '<b>' + (ok ? 'Correct!' : 'Not quite.') + '</b> ' + q.expl + (ok ? '' : '<br><small>Tip: ' + q.tip + '</small>');
-  $('scoreLive').textContent = 'Score: ' + score;
-  $('next').disabled = false;
-}
-function finish() {
-  $('play').classList.add('hidden'); $('end').classList.remove('hidden');
-  const pct = Math.round(score / order.length * 100);
-  $('final').textContent = score + ' / ' + order.length + ' (' + pct + '%)';
-  $('msg').textContent = pct >= 90 ? 'Excellent work. You really know your negatives.' : pct >= 70 ? 'Good job. Review the ones you missed below.' : pct >= 50 ? 'A fair start. Read the tips and try again.' : 'Keep practising. Use a number line and try again.';
-  $('review').innerHTML = missed.length ? '<h3>Questions to review</h3>' + missed.map(q => '<div><b>' + q.text + '</b><br>Answer: ' + q.correct + ' &mdash; ' + q.expl + '</div>').join('') : '<h3>No mistakes. Perfect score!</h3>';
-}
-function start() {
-  order = $('shuf').checked ? shuffle(Q) : Q.slice(); i = 0; score = 0; missed = [];
-  $('start').classList.add('hidden'); $('end').classList.add('hidden'); $('play').classList.remove('hidden'); load();
-}
-$('go').onclick = start;
-$('again').onclick = () => { $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
-$('next').onclick = () => { i++; if (i >= order.length) { $('prog').style.width = '100%'; finish(); } else load(); };
+$("go").onclick=start;
+$("name").addEventListener("keydown",e=>{if(e.key==="Enter")start()});
+$("next").onclick=()=>{i++;i<qs.length?show():finish()};
+$("again").onclick=()=>{$("end").classList.add("hide");$("start").classList.remove("hide")};
 </script>
 </body>
 </html>
