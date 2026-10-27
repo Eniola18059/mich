@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Negatives Quiz 3</title>
+<title>Negatives Quiz</title>
 <style>
 :root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
 *{box-sizing:border-box}
@@ -48,8 +48,8 @@ h1{margin:0 0 6px;font-size:1.7rem}
 <body>
 <div class="wrap">
   <div class="card" id="start">
-    <h1>Negatives Quiz 3</h1>
-    <p class="sub">Adding and subtracting negative numbers. 50 more questions, one at a time.</p>
+    <h1>Negatives Quiz</h1>
+    <p class="sub">Adding and subtracting negative numbers. 100 questions, one at a time.</p>
     <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
     <button class="btn" id="go">Start quiz</button>
   </div>
@@ -121,38 +121,45 @@ const S = {
   cards: { key: 'cards', name: 'Cards and reasoning' }
 };
 
-addExpr(S.basic, ['5 - 12','7 - 13','9 - 16','-3 + 8','-10 + 6','-14 + 20','-8 - 5','-12 - 6']);
-addExpr(S.chain, ['8 - 11 + 5','-6 + 9 - 7','3 - 10 - 2','-15 + 10 + 8','12 - 20 + 6','-4 - 5 - 6']);
-addExpr(S.addneg, ['7 + -12','10 + -4','3 + -11','-2 + -9','-14 + -6','-5 + -13']);
-addExpr(S.subpos, ['9 - +15','-3 - +9','-11 - +4','6 - +14','-7 - +13']);
-addExpr(S.subneg, ['4 - -9','8 - -5','-7 - -3','-12 - -5','-4 - -10','-9 - -9']);
-addExpr(S.mixed, ['16 - 25','-17 + 9','11 + -19','-6 - -14','-21 - 9','-30 + 45']);
+addExpr(S.basic, ['2 - 3','3 - 5','4 - 9','1 - 5','5 - 7','8 - 11','2 - 10','-2 + 4','-3 + 9','-7 + 10','-6 + 1','-5 + 8','-9 + 7','-20 + 11','-12 + 18','-3 - 2','-4 - 1','-6 - 3','-7 - 3','-15 - 13']);
+addExpr(S.chain, ['3 + 5 - 4','2 + 1 - 6','5 - 8 - 1','7 - 10 + 1','8 + 3 - 15','5 - 6 - 4','-3 + 6 + 1','-8 + 2 + 3','-10 + 4 - 6','-9 - 3 - 1','-2 - 7 + 4','-20 + 11 - 6','-5 + 14 - 8','-30 - 80 + 40']);
+addExpr(S.addneg, ['4 + -1','6 + -2','8 + -7','3 + -5','1 + -7','3 + -10','-2 + -1','-5 + -5','-10 + -11','-8 + -4']);
+addExpr(S.subpos, ['6 - +1','3 - +2','8 - +4','2 - +5','1 - +9','-2 - +5','-10 - +3','5 - +11','-20 - +13','15 - +25']);
+addExpr(S.subneg, ['1 - -2','3 - -1','3 - -5','6 - -4','9 - -2','-1 - -4','-2 - -1','-8 - -3','-15 - -8','-12 - -30']);
+addExpr(S.mixed, ['11 - 15','-9 + 5','-4 - 8','-4 + -3','-9 - +4','10 - -3','7 - 20','-2 - -5','12 + -7','6 - -11','-7 - +7','-6 - 5','-20 + -3','-9 - -15','-8 + 25','31 - 50','-30 - -16','-41 - 14','-52 + 90']);
 
-[['□ + 6 = 2', -4, '−4 + 6 = 2'], ['□ − 7 = −12', -5, '−5 − 7 = −12'],
- ['−4 − □ = 3', -7, '−4 − (−7) = 3'], ['5 − □ = 14', -9, '5 − (−9) = 14']]
-.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t, opts: o.opts, correct: o.correct, expl: x }); });
+// Missing numbers
+[['\u25a1 + 3 = 1', -2, '-2 + 3 = 1'], ['0 \u2212 \u25a1 = 8', -8, '0 \u2212 (\u22128) = 8'], ['\u22126 + \u25a1 = \u22121', 5, '\u22126 + 5 = \u22121'],
+ ['\u25a1 \u2212 5 = \u221213', -8, '\u22128 \u2212 5 = \u221213'], ['9 \u2212 \u25a1 = 15', -6, '9 \u2212 (\u22126) = 15'], ['\u22122 \u2212 \u25a1 = 5', -7, '\u22122 \u2212 (\u22127) = 5']]
+.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t.replace('-2 + 3', '\u22122 + 3'), opts: o.opts, correct: o.correct, expl: x.replace('-2 + 3', '\u22122 + 3') }); });
+Q[Q.length - 6].text = 'Find the missing number: \u25a1 + 3 = 1';
+Q[Q.length - 6].expl = '\u22122 + 3 = 1';
 
-const mg = [-2, 3, 2, 5, 1, -3, 0, -1, 4];
-const hole = k => mg.map((v, j) => j === k ? null : v);
-[[5, 'Every row, column and diagonal adds to 3. Middle row: 5 + 1 + ? = 3, so ? = −3.'],
- [6, 'Every row, column and diagonal adds to 3. Left column: −2 + 5 + ? = 3, so ? = 0.'],
- [8, 'Every row, column and diagonal adds to 3. Diagonal: −2 + 1 + ? = 3, so ? = 4.'],
- [1, 'Every row, column and diagonal adds to 3. Middle column: ? + 1 + (−1) = 3, so ? = 3.']]
-.forEach(([k, ex]) => { const o = numOpts(mg[k]); Q.push({ sec: S.magic, tip: TIPS.magic, grid: hole(k), qi: k, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
+// Magic squares
+const magicA = [-4, -9, -2, null, null, null, -8, null, -6];
+const magicB = [-3, null, -1, 2, null, null, 1, null, null];
+[[magicA, 4, -5, 'Every row, column and diagonal adds to \u221215. The centre must be \u22125.', 'the centre'],
+ [magicA, 7, -1, 'Every row, column and diagonal adds to \u221215. The bottom middle is \u22129 + \u22125 + \u22121 = \u221215, so it is \u22121.', 'the bottom middle'],
+ [magicB, 1, 4, 'Every row, column and diagonal adds to 0. The top row is \u22123 + 4 + \u22121 = 0, so it is 4.', 'the top middle'],
+ [magicB, 8, 3, 'Every row, column and diagonal adds to 0. The bottom right is 3 because \u22121 + \u22122 + 3 = 0.', 'the bottom right']]
+.forEach(([g, idx, a, ex, where]) => { const o = numOpts(a); Q.push({ sec: S.magic, tip: TIPS.magic, grid: g, qi: idx, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
 
+// Real life
 (() => {
-  let o = numOpts(-14, '°C');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'At night the temperature was −9°C. It dropped by 5 more degrees. What is the temperature now?', opts: o.opts, correct: o.correct, expl: '−9 − 5 = −14, so it is −14°C.' });
-  o = numOpts(35, '£');
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'Ada has −£20 in her account. She pays in £55. What is her balance now?', opts: o.opts, correct: o.correct, expl: '−£20 + £55 = £35.' });
-  o = numOpts(4);
-  Q.push({ sec: S.real, tip: TIPS.real, small: 1, text: 'A lift is at floor −3 (a basement level). It goes up 7 floors. Which floor is it at now?', opts: o.opts, correct: o.correct, expl: '−3 + 7 = 4, so it is at floor 4.' });
+  let o = numOpts(7, '\u00b0C');
+  Q.push({ sec: S.real, tip: TIPS.real, text: 'At midnight the temperature was \u22122\u00b0C. At 9am it was 5\u00b0C. By how many degrees did the temperature rise?', small: 1, opts: o.opts, correct: o.correct, expl: 'From \u22122 up to 0 is 2, then up to 5 is 5 more. The rise is 7\u00b0C.' });
+  o = numOpts(20, '\u00a3');
+  Q.push({ sec: S.real, tip: TIPS.real, text: 'Mr Jones has \u2212\u00a350 in his bank account. He pays \u00a370 into the bank. How much will he now have?', small: 1, opts: o.opts, correct: o.correct, expl: '\u2212\u00a350 + \u00a370 = \u00a320.' });
 })();
 
-const cardNote = 'Cards: −7, −3, 5, 9, −1, 2, 6. ';
+// Cards
+const cardNote = 'Cards: \u22123, \u22124, 6, 2, 4, \u22127, 1. ';
 const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
-pairQ('Which two cards add to make −4?', '−3 and −1', ['−7 and 5', '−7 and 2', '−3 and 2'], '−3 + (−1) = −4.');
-pairQ('Which subtraction gives the smallest possible answer?', '−7 − 9', ['−7 − 6', '−3 − 9', '−7 − 5'], '−7 − 9 = −16, which is the lowest answer.');
+pairQ('Which two cards add to make 2?', '6 and \u22124', ['4 and 2', '\u22123 and 1', '\u22127 and 6'], '6 + (\u22124) = 2.');
+pairQ('Which two cards, added together, give the smallest possible answer?', '\u22127 and \u22124', ['\u22127 and \u22123', '\u22123 and \u22124', '\u22127 and 1'], '\u22127 + (\u22124) = \u221211, which is the lowest total.');
+pairQ('Which two cards add to make zero?', '\u22124 and 4', ['\u22123 and 2', '\u22127 and 6', '1 and \u22124'], '\u22124 + 4 = 0.');
+pairQ('Which subtraction gives the greatest possible answer?', '6 \u2212 (\u22127)', ['6 \u2212 (\u22124)', '4 \u2212 (\u22127)', '6 \u2212 1'], '6 \u2212 (\u22127) = 6 + 7 = 13.');
+Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: 'Which of these subtractions has an answer of 2?', opts: shuffle(['\u22123 \u2212 (\u22125)', '\u22123 \u2212 5', '\u22125 \u2212 (\u22123)', '3 \u2212 (\u22125)']), correct: '\u22123 \u2212 (\u22125)', expl: '\u22123 \u2212 (\u22125) = \u22123 + 5 = 2.' });
 
 // Rebuild wrong options from realistic mistakes so the answer cannot be guessed by pattern
 (function rebuild() {
