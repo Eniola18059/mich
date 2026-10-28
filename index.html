@@ -1,250 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Negatives Quiz</title>
+<title>Math Practice Quiz</title>
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--ink:#1d2b3a;--muted:#5d6b7a;--brand:#2f6fed;--brand-d:#2457bd;--ok:#1e9e5a;--okbg:#e6f6ee;--bad:#d64545;--badbg:#fdeaea;--line:#dbe3ee}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px}
-.wrap{width:100%;max-width:640px}
-.card{background:var(--card);border-radius:18px;box-shadow:0 6px 24px rgba(30,60,110,.09);padding:28px}
-h1{margin:0 0 6px;font-size:1.7rem}
-.sub{color:var(--muted);margin:0 0 20px}
-.btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:13px 22px;font-size:1rem;font-weight:600;cursor:pointer}
-.btn:hover{background:var(--brand-d)}
-.btn.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.opt-row{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted)}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
-.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
-.bar>div{height:100%;background:var(--brand);width:0;transition:width .25s}
-.sec{display:inline-block;background:#eaf1ff;color:var(--brand-d);font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:12px}
-.q{font-size:1.5rem;font-weight:700;margin:4px 0 18px;line-height:1.35}
-.q.small{font-size:1.2rem}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.ans{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:center;color:var(--ink)}
-.ans:hover:not(:disabled){border-color:var(--brand)}
-.ans.right{background:var(--okbg);border-color:var(--ok)}
-.ans.wrong{background:var(--badbg);border-color:var(--bad)}
-.ans:disabled{cursor:default}
-.fb{margin-top:18px;padding:14px;border-radius:12px;display:none;line-height:1.5}
-.fb.ok{display:block;background:var(--okbg)}
-.fb.no{display:block;background:var(--badbg)}
-.nav{margin-top:18px;text-align:right}
-.grid{display:grid;grid-template-columns:repeat(3,56px);gap:4px;margin:0 0 18px}
-.grid div{height:50px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border-radius:6px}
-.grid .qm{background:#fff4c9;border-color:#d4a300}
-.grid .blank{background:#f0f3f8;border-color:var(--line);color:var(--muted)}
-.score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
-.review{margin-top:18px;max-height:340px;overflow:auto;border-top:1px solid var(--line)}
-.review div{padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem}
-.review b{color:var(--bad)}
-.hidden{display:none}
-@media(max-width:480px){.answers{grid-template-columns:1fr}.q{font-size:1.3rem}.card{padding:20px}}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eaf4ff;color:#1b2a3a;display:flex;justify-content:center;padding:16px}
+  .card{background:#fff;width:100%;max-width:560px;border-radius:16px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+  h1{margin:0 0 8px;font-size:26px;color:#1a6fd1}
+  p{font-size:18px;line-height:1.4}
+  .bar{height:10px;background:#dbe7f5;border-radius:6px;overflow:hidden;margin:8px 0 18px}
+  .bar div{height:100%;background:#1a6fd1;width:0;transition:width .3s}
+  .count{font-size:15px;color:#5a6b7d}
+  .q{font-size:22px;font-weight:bold;line-height:1.35;margin:0 0 18px}
+  .opt{display:block;width:100%;text-align:left;font-size:20px;padding:14px 16px;margin:10px 0;border:2px solid #b9cde6;background:#f7fbff;border-radius:12px;cursor:pointer;color:#1b2a3a}
+  .opt:hover:not(:disabled){background:#e3f0ff}
+  .opt.right{background:#c9f2d3;border-color:#2e9e4f}
+  .opt.wrong{background:#ffd5d5;border-color:#d33}
+  .msg{font-size:18px;min-height:26px;margin:12px 0 0;font-weight:bold}
+  .btn{font-size:20px;padding:12px 28px;margin-top:14px;border:0;border-radius:12px;background:#1a6fd1;color:#fff;cursor:pointer}
+  .score{font-size:44px;font-weight:bold;color:#1a6fd1;margin:10px 0}
+  .miss{font-size:16px;border-top:1px solid #dbe7f5;padding:8px 0}
+  .hide{display:none}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="card" id="start">
-    <h1>Negatives Quiz</h1>
-    <p class="sub">Adding and subtracting negative numbers. 100 questions, one at a time.</p>
-    <div class="opt-row"><input type="checkbox" id="shuf"><label for="shuf">Shuffle the question order</label></div>
-    <button class="btn" id="go">Start quiz</button>
+<div class="card">
+  <div id="start">
+    <h1>Math Practice Quiz</h1>
+    <p>50 questions. Tap the answer you think is right. You will see right away if you got it.</p>
+    <button class="btn" onclick="begin()">Start</button>
   </div>
 
-  <div class="card hidden" id="play">
-    <div class="top"><span id="count"></span><span id="scoreLive"></span></div>
-    <div class="bar"><div id="prog"></div></div>
-    <span class="sec" id="sec"></span>
-    <div id="grid"></div>
-    <div class="q" id="qtext"></div>
-    <div class="answers" id="answers"></div>
-    <div class="fb" id="fb"></div>
-    <div class="nav"><button class="btn" id="next" disabled>Next</button></div>
+  <div id="quiz" class="hide">
+    <div class="count" id="count"></div>
+    <div class="bar"><div id="fill"></div></div>
+    <p class="q" id="question"></p>
+    <div id="options"></div>
+    <div class="msg" id="msg"></div>
+    <button class="btn hide" id="next" onclick="next()">Next</button>
   </div>
 
-  <div class="card hidden" id="end">
-    <h1>Quiz complete</h1>
-    <div class="score" id="final"></div>
-    <p class="sub" id="msg"></p>
-    <button class="btn" id="again">Try again</button>
-    <div class="review" id="review"></div>
+  <div id="end" class="hide">
+    <h1>All done!</h1>
+    <div class="score" id="score"></div>
+    <p id="comment"></p>
+    <div id="missed"></div>
+    <button class="btn" onclick="begin()">Try again</button>
   </div>
 </div>
 
 <script>
-const ev = e => Function('return ' + e)();
-const fmt = n => String(n).replace('-', '\u2212');
-const show = e => e.replace(/([+\-]) ([+\-])(\d+)/g, '$1 ($2$3)').replace(/-/g, '\u2212');
-const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+// Each item: [question, correct answer, [three wrong answers that are common mistakes]]
+const Q = [
+ // Value of a digit
+ ["What is the value of the 7 in 4,732?", "700", ["7","70","7,000"]],
+ ["What is the value of the 5 in 5,208?", "5,000", ["500","50","5"]],
+ ["What is the value of the 9 in 29,461?", "9,000", ["90,000","900","90"]],
+ ["What is the value of the 4 in 1,409,019?", "400,000", ["4,000,000","40,000","4,000"]],
+ ["In 86,569,700, what is the value of the 6 in the millions place?", "6,000,000", ["600,000","60,000","60,000,000"]],
+ ["What is the value of the 4 in the ten thousands place of 44,000?", "40,000", ["4,000","400,000","400"]],
+ ["Which shows the value of the 8 in 8,150?", "8 × 1,000", ["8 × 100","8 × 10,000","8 × 10"]],
+ ["Which shows the value of the 2 in 52,300?", "2 × 1,000", ["2 × 10,000","2 × 100","2 × 100,000"]],
+ ["Which digit is in the hundreds place of 6,148?", "1", ["6","4","8"]],
+ ["Which digit is in the ten thousands place of 73,254?", "7", ["3","2","5"]],
 
-const TIPS = {
-  basic: 'Use a number line. Taking away more than you have goes below zero. Adding to a negative moves you to the right.',
-  chain: 'Work from left to right, one step at a time.',
-  addneg: 'Adding a negative is the same as subtracting. For example, 4 + (\u22121) = 4 \u2212 1.',
-  subpos: 'Subtracting a positive number is just ordinary subtraction. For example, 6 \u2212 (+1) = 6 \u2212 1.',
-  subneg: 'Subtracting a negative is the same as adding. For example, 1 \u2212 (\u22122) = 1 + 2.',
-  mixed: 'Rewrite double signs first: + \u2212 becomes \u2212, and \u2212 \u2212 becomes +.',
-  missing: 'Put your answer back into the box and check that the sum works.',
-  magic: 'Find a complete row, column or diagonal to get the magic total, then work out the missing number.',
-  real: 'Draw a quick number line to see the change.',
-  cards: 'Try each pair and work out the answer before choosing.'
-};
+ // How many times greater
+ ["In 3,366, the value of the 3 in the thousands place is how many times greater than the value of the 3 in the hundreds place?", "10", ["100","1,000","1"]],
+ ["In 5,500, the 5 in the thousands place is how many times greater than the 5 in the hundreds place?", "10", ["100","1","1,000"]],
+ ["In 22,000, the 2 in the ten thousands place is how many times greater than the 2 in the thousands place?", "10", ["100","2","1,000"]],
+ ["In 4,400, the value of the 4 in the hundreds place is ___ the value of the 4 in the thousands place.", "1/10 of", ["1/100 of","10 times","1/1,000 of"]],
+ ["In 44,000, the value of the 4 in the thousands place is ___ the value of the 4 in the ten thousands place.", "1/10 of", ["10 times","1/100 of","100 times"]],
+ ["In 770, the value of the 7 in the tens place is ___ the value of the 7 in the hundreds place.", "1/10 of", ["10 times","1/100 of","the same as"]],
 
-const Q = [];
-function numOpts(a, unit) {
-  const c = [...new Set([-a, a + 1, a - 1, a + 2, a - 2, a + 3, a - 3].filter(x => x !== a))];
-  const first = c[0] === -a ? [c.shift()] : [];
-  const picks = first.concat(shuffle(c).slice(0, 3 - first.length));
-  const f = x => (unit === '\u00a3' ? (x < 0 ? '\u2212\u00a3' + Math.abs(x) : '\u00a3' + x) : fmt(x) + (unit || ''));
-  return { opts: shuffle([a, ...picks]).map(f), correct: f(a) };
+ // Decimals
+ ["What is the value of the 2 in 7.25?", "0.2", ["0.02","2.0","20"]],
+ ["What is the value of the 9 in 32.95?", "0.9", ["0.09","9","90"]],
+ ["What is the value of the 2 in 0.12?", "0.02", ["0.2","2","0.002"]],
+ ["What is the value of the 3 in 32.95?", "30", ["3","0.3","300"]],
+ ["What is the value of the 5 in 7.25?", "0.05", ["0.5","5","0.005"]],
+ ["Which number is the least?", "0.021", ["0.12","0.1","0.2"]],
+ ["Which number is the greatest?", "7.5", ["7.25","7.052","7.2"]],
+
+ // Comparing and ordering
+ ["Which is the greatest number?", "530,267", ["528,159","512,838","512,550"]],
+ ["Which is the least number?", "512,550", ["512,838","528,159","530,267"]],
+ ["Atlanta 512,550, Mesa 528,159, Fresno 530,267, Sacramento 512,838. Which lists the cities from least to greatest population?", "Atlanta, Sacramento, Mesa, Fresno", ["Sacramento, Atlanta, Mesa, Fresno","Atlanta, Sacramento, Fresno, Mesa","Mesa, Sacramento, Fresno, Atlanta"]],
+ ["Egypt 86,569,700, Turkey 76,667,864, Vietnam 89,708,900, Germany 80,716,000, Ethiopia 86,613,986. Which lists the countries from greatest to least population?", "Vietnam, Ethiopia, Egypt, Germany, Turkey", ["Vietnam, Egypt, Ethiopia, Germany, Turkey","Vietnam, Ethiopia, Egypt, Turkey, Germany","Vietnam, Ethiopia, Germany, Egypt, Turkey"]],
+ ["Egypt 86,569,700, Turkey 76,667,864, Vietnam 89,708,900, Germany 80,716,000, Ethiopia 86,613,986. Which country has the greatest population?", "Vietnam", ["Ethiopia","Egypt","Germany"]],
+ ["Egypt 86,569,700, Turkey 76,667,864, Vietnam 89,708,900, Germany 80,716,000, Ethiopia 86,613,986. Which country has the least population?", "Turkey", ["Germany","Egypt","Ethiopia"]],
+ ["Which number is greater than 86,569,700?", "86,613,986", ["86,499,999","86,559,700","85,999,999"]],
+
+ // Multiplication word problems
+ ["A truck carries 140 crates. A bigger truck carries 10 times as many. How many crates does the bigger truck carry?", "1,400", ["14,000","150","1,040"]],
+ ["A quarry makes 100 tons of gravel each month. How many tons in 12 months?", "1,200", ["120","12,000","10,200"]],
+ ["A bakery truck carries 250 boxes. Another truck carries 10 times as many. How many boxes is that?", "2,500", ["260","25,000","2,050"]],
+ ["A farm picks 300 mangoes a day. How many mangoes in 10 days?", "3,000", ["30,000","310","300"]],
+ ["What is 12 × 100?", "1,200", ["120","12,000","112"]],
+ ["Each airline ticket costs $1,042. How much for 4 tickets?", "$4,168", ["$4,208","$4,068","$4,046"]],
+ ["What is 5 × 1,230?", "6,150", ["6,050","5,150","6,510"]],
+ ["What is 3 × 2,015?", "6,045", ["6,015","6,405","5,045"]],
+ ["A school buys 6 boxes with 125 pencils in each box. How many pencils?", "750", ["650","756","7,500"]],
+ ["What is 7 × 1,100?", "7,700", ["770","7,100","77,000"]],
+ ["What is 8 × 1,500?", "12,000", ["1,200","8,500","120,000"]],
+
+ // Money
+ ["Marcus buys a gaming system for $149.99 and 2 controllers for $19.79 each. What is the total cost?", "$189.57", ["$169.78","$319.77","$179.87"]],
+ ["A pen costs $2.50. How much do 4 pens cost?", "$10.00", ["$6.50","$100.00","$9.50"]],
+ ["Ben buys a bag for $12.45 and a cap for $8.30. What is the total?", "$20.75", ["$21.75","$4.15","$20.15"]],
+ ["Lisa has $50.00 and spends $32.60. How much is left?", "$17.40", ["$18.40","$82.60","$17.60"]],
+ ["A game costs $24.99. Two batteries cost $3.50 each. What is the total?", "$31.99", ["$28.49","$30.99","$35.49"]],
+ ["One notebook costs $1.25. How much do 3 notebooks cost?", "$3.75", ["$3.25","$4.25","$37.50"]],
+ ["A family buys 3 tickets at $1,215 each. What is the total?", "$3,645", ["$3,615","$3,045","$3,745"]],
+
+ // Mixed
+ ["A library has 44,000 books. The 4 in the ten thousands place is worth ___ times the 4 in the thousands place.", "10", ["100","1,000","4"]],
+ ["Which digit is in the ten thousands place of 1,409,019?", "0", ["4","9","1"]]
+];
+
+let order = [], i = 0, score = 0, missed = [], answered = false;
+
+function shuffle(a){
+  a = a.slice();
+  for(let k=a.length-1;k>0;k--){
+    const j=Math.floor(Math.random()*(k+1));
+    [a[k],a[j]]=[a[j],a[k]];
+  }
+  return a;
 }
-function addExpr(sec, list) {
-  list.forEach(e => {
-    const a = ev(e), o = numOpts(a);
-    Q.push({ sec, tip: TIPS[sec.key], text: show(e) + ' = ?', opts: o.opts, correct: o.correct, expl: show(e) + ' = ' + fmt(a) });
+function $(id){return document.getElementById(id)}
+
+function begin(){
+  i = 0; score = 0; missed = [];
+  $("start").classList.add("hide");
+  $("end").classList.add("hide");
+  $("quiz").classList.remove("hide");
+  show();
+}
+
+function show(){
+  answered = false;
+  const [q, right, wrongs] = Q[i];
+  $("count").textContent = "Question " + (i+1) + " of " + Q.length;
+  $("fill").style.width = (i / Q.length * 100) + "%";
+  $("question").textContent = q;
+  $("msg").textContent = "";
+  $("next").classList.add("hide");
+  const box = $("options");
+  box.innerHTML = "";
+  // Options are shuffled every time, so the right answer is never in a fixed spot
+  shuffle([right, ...wrongs]).forEach(text => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = text;
+    b.onclick = () => pick(b, text);
+    box.appendChild(b);
   });
 }
 
-const S = {
-  basic: { key: 'basic', name: 'Basic negatives' },
-  chain: { key: 'chain', name: 'Chains of + and \u2212' },
-  addneg: { key: 'addneg', name: 'Adding negatives' },
-  subpos: { key: 'subpos', name: 'Subtracting positives' },
-  subneg: { key: 'subneg', name: 'Subtracting negatives' },
-  mixed: { key: 'mixed', name: 'Mixed practice' },
-  missing: { key: 'missing', name: 'Missing numbers' },
-  magic: { key: 'magic', name: 'Magic squares' },
-  real: { key: 'real', name: 'Real-life problems' },
-  cards: { key: 'cards', name: 'Cards and reasoning' }
-};
-
-addExpr(S.basic, ['2 - 3','3 - 5','4 - 9','1 - 5','5 - 7','8 - 11','2 - 10','-2 + 4','-3 + 9','-7 + 10','-6 + 1','-5 + 8','-9 + 7','-20 + 11','-12 + 18','-3 - 2','-4 - 1','-6 - 3','-7 - 3','-15 - 13']);
-addExpr(S.chain, ['3 + 5 - 4','2 + 1 - 6','5 - 8 - 1','7 - 10 + 1','8 + 3 - 15','5 - 6 - 4','-3 + 6 + 1','-8 + 2 + 3','-10 + 4 - 6','-9 - 3 - 1','-2 - 7 + 4','-20 + 11 - 6','-5 + 14 - 8','-30 - 80 + 40']);
-addExpr(S.addneg, ['4 + -1','6 + -2','8 + -7','3 + -5','1 + -7','3 + -10','-2 + -1','-5 + -5','-10 + -11','-8 + -4']);
-addExpr(S.subpos, ['6 - +1','3 - +2','8 - +4','2 - +5','1 - +9','-2 - +5','-10 - +3','5 - +11','-20 - +13','15 - +25']);
-addExpr(S.subneg, ['1 - -2','3 - -1','3 - -5','6 - -4','9 - -2','-1 - -4','-2 - -1','-8 - -3','-15 - -8','-12 - -30']);
-addExpr(S.mixed, ['11 - 15','-9 + 5','-4 - 8','-4 + -3','-9 - +4','10 - -3','7 - 20','-2 - -5','12 + -7','6 - -11','-7 - +7','-6 - 5','-20 + -3','-9 - -15','-8 + 25','31 - 50','-30 - -16','-41 - 14','-52 + 90']);
-
-// Missing numbers
-[['\u25a1 + 3 = 1', -2, '-2 + 3 = 1'], ['0 \u2212 \u25a1 = 8', -8, '0 \u2212 (\u22128) = 8'], ['\u22126 + \u25a1 = \u22121', 5, '\u22126 + 5 = \u22121'],
- ['\u25a1 \u2212 5 = \u221213', -8, '\u22128 \u2212 5 = \u221213'], ['9 \u2212 \u25a1 = 15', -6, '9 \u2212 (\u22126) = 15'], ['\u22122 \u2212 \u25a1 = 5', -7, '\u22122 \u2212 (\u22127) = 5']]
-.forEach(([t, a, x]) => { const o = numOpts(a); Q.push({ sec: S.missing, tip: TIPS.missing, text: 'Find the missing number: ' + t.replace('-2 + 3', '\u22122 + 3'), opts: o.opts, correct: o.correct, expl: x.replace('-2 + 3', '\u22122 + 3') }); });
-Q[Q.length - 6].text = 'Find the missing number: \u25a1 + 3 = 1';
-Q[Q.length - 6].expl = '\u22122 + 3 = 1';
-
-// Magic squares
-const magicA = [-4, -9, -2, null, null, null, -8, null, -6];
-const magicB = [-3, null, -1, 2, null, null, 1, null, null];
-[[magicA, 4, -5, 'Every row, column and diagonal adds to \u221215. The centre must be \u22125.', 'the centre'],
- [magicA, 7, -1, 'Every row, column and diagonal adds to \u221215. The bottom middle is \u22129 + \u22125 + \u22121 = \u221215, so it is \u22121.', 'the bottom middle'],
- [magicB, 1, 4, 'Every row, column and diagonal adds to 0. The top row is \u22123 + 4 + \u22121 = 0, so it is 4.', 'the top middle'],
- [magicB, 8, 3, 'Every row, column and diagonal adds to 0. The bottom right is 3 because \u22121 + \u22122 + 3 = 0.', 'the bottom right']]
-.forEach(([g, idx, a, ex, where]) => { const o = numOpts(a); Q.push({ sec: S.magic, tip: TIPS.magic, grid: g, qi: idx, text: 'Every row, column and diagonal adds to the same total. What number goes in the yellow square?', opts: o.opts, correct: o.correct, expl: ex }); });
-
-// Real life
-(() => {
-  let o = numOpts(7, '\u00b0C');
-  Q.push({ sec: S.real, tip: TIPS.real, text: 'At midnight the temperature was \u22122\u00b0C. At 9am it was 5\u00b0C. By how many degrees did the temperature rise?', small: 1, opts: o.opts, correct: o.correct, expl: 'From \u22122 up to 0 is 2, then up to 5 is 5 more. The rise is 7\u00b0C.' });
-  o = numOpts(20, '\u00a3');
-  Q.push({ sec: S.real, tip: TIPS.real, text: 'Mr Jones has \u2212\u00a350 in his bank account. He pays \u00a370 into the bank. How much will he now have?', small: 1, opts: o.opts, correct: o.correct, expl: '\u2212\u00a350 + \u00a370 = \u00a320.' });
-})();
-
-// Cards
-const cardNote = 'Cards: \u22123, \u22124, 6, 2, 4, \u22127, 1. ';
-const pairQ = (text, ans, wrong, expl) => Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: cardNote + text, opts: shuffle([ans, ...wrong]), correct: ans, expl });
-pairQ('Which two cards add to make 2?', '6 and \u22124', ['4 and 2', '\u22123 and 1', '\u22127 and 6'], '6 + (\u22124) = 2.');
-pairQ('Which two cards, added together, give the smallest possible answer?', '\u22127 and \u22124', ['\u22127 and \u22123', '\u22123 and \u22124', '\u22127 and 1'], '\u22127 + (\u22124) = \u221211, which is the lowest total.');
-pairQ('Which two cards add to make zero?', '\u22124 and 4', ['\u22123 and 2', '\u22127 and 6', '1 and \u22124'], '\u22124 + 4 = 0.');
-pairQ('Which subtraction gives the greatest possible answer?', '6 \u2212 (\u22127)', ['6 \u2212 (\u22124)', '4 \u2212 (\u22127)', '6 \u2212 1'], '6 \u2212 (\u22127) = 6 + 7 = 13.');
-Q.push({ sec: S.cards, tip: TIPS.cards, small: 1, text: 'Which of these subtractions has an answer of 2?', opts: shuffle(['\u22123 \u2212 (\u22125)', '\u22123 \u2212 5', '\u22125 \u2212 (\u22123)', '3 \u2212 (\u22125)']), correct: '\u22123 \u2212 (\u22125)', expl: '\u22123 \u2212 (\u22125) = \u22123 + 5 = 2.' });
-
-// Rebuild wrong options from realistic mistakes so the answer cannot be guessed by pattern
-(function rebuild() {
-  const parse = c => { const d = parseInt(c.replace(/[^\d]/g, '')); return /^−/.test(c) ? -d : d; };
-  Q.forEach(q => {
-    if (q.text.startsWith('Cards') || q.text.startsWith('Which of')) return;
-    const a = parse(q.correct);
-    const unit = q.correct.includes('£') ? '£' : q.correct.includes('°C') ? '°C' : q.correct.includes(' m') ? ' m' : '';
-    const f = x => unit === '£' ? (x < 0 ? '−£' + Math.abs(x) : '£' + x) : fmt(x) + unit;
-    let nums = [];
-    if (q.grid) nums = q.grid.filter(v => v !== null);
-    else {
-      const t = q.text.replace(/\d+\s?(am|pm)/g, '');
-      const re = /(−?)(\d+)/g; let m;
-      while ((m = re.exec(t))) nums.push((m[1] ? -1 : 1) * parseInt(m[2]));
-      nums = nums.slice(0, 4);
-    }
-    const pool = new Set();
-    for (let x = 0; x < nums.length; x++) {
-      const p = nums[x]; pool.add(p); pool.add(-p);
-      for (let y = 0; y < nums.length; y++) {
-        if (x === y) continue;
-        const r = nums[y];
-        [p + r, p - r, -(p + r), Math.abs(p) + Math.abs(r), -(Math.abs(p) + Math.abs(r)), Math.abs(p) - Math.abs(r), Math.abs(r) - Math.abs(p)].forEach(v => pool.add(v));
-      }
-    }
-    pool.delete(a);
-    let cand = shuffle([...pool]);
-    // keep wrong answers within a believable range of the real answer
-    const lim = Math.max(12, Math.abs(a) + 12);
-    cand = cand.filter(v => Math.abs(v) <= lim);
-    if (Math.random() < 0.5) { const k = cand.indexOf(-a); if (k > 0) { cand.splice(k, 1); cand.unshift(-a); } }
-    else { const k = cand.indexOf(-a); if (k >= 0) cand.splice(k, 1); }
-    let picks = cand.slice(0, 3);
-    let k = 1;
-    while (picks.length < 3) { const v = a + (Math.random() < 0.5 ? -1 : 1) * (k++ + 2); if (v !== a && !picks.includes(v)) picks.push(v); }
-    q.opts = shuffle([a, ...picks]).map(f);
-    q.correct = f(a);
+function pick(btn, text){
+  if(answered) return;
+  answered = true;
+  const [q, right] = Q[i];
+  document.querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    if(b.textContent === right) b.classList.add("right");
   });
-})();
+  if(text === right){
+    score++;
+    $("msg").textContent = "✅ Correct!";
+  } else {
+    btn.classList.add("wrong");
+    $("msg").textContent = "❌ Not quite. The answer is " + right + ".";
+    missed.push({q, right, yours: text});
+  }
+  $("next").textContent = (i === Q.length-1) ? "See my score" : "Next";
+  $("next").classList.remove("hide");
+}
 
-// App logic
-let order = [], i = 0, score = 0, missed = [], locked = false;
-const $ = id => document.getElementById(id);
-function renderGrid(q) {
-  if (!q.grid) return '';
-  return '<div class="grid">' + q.grid.map((v, k) => k === q.qi ? '<div class="qm">?</div>' : v === null ? '<div class="blank"></div>' : '<div>' + fmt(v) + '</div>').join('') + '</div>';
+function next(){
+  i++;
+  if(i >= Q.length){ finish(); } else { show(); }
 }
-function load() {
-  const q = order[i]; locked = false;
-  $('count').textContent = 'Question ' + (i + 1) + ' of ' + order.length;
-  $('scoreLive').textContent = 'Score: ' + score;
-  $('prog').style.width = (i / order.length * 100) + '%';
-  $('sec').textContent = q.sec.name;
-  $('grid').innerHTML = renderGrid(q);
-  const t = $('qtext'); t.textContent = q.text; t.className = 'q' + (q.small || q.grid ? ' small' : '');
-  const box = $('answers'); box.innerHTML = '';
-  q.opts.forEach(o => { const b = document.createElement('button'); b.className = 'ans'; b.textContent = o; b.onclick = () => pick(b, o); box.appendChild(b); });
-  $('fb').className = 'fb'; $('fb').innerHTML = '';
-  $('next').disabled = true; $('next').textContent = i === order.length - 1 ? 'See results' : 'Next';
+
+function finish(){
+  $("quiz").classList.add("hide");
+  $("end").classList.remove("hide");
+  $("score").textContent = score + " / " + Q.length;
+  const pct = score / Q.length;
+  $("comment").textContent = pct >= .9 ? "Excellent work!" : pct >= .7 ? "Good job! Check the ones you missed." : "Keep practising. Look at the ones you missed and try again.";
+  const m = $("missed");
+  m.innerHTML = missed.length ? "<p><b>Questions to review:</b></p>" : "";
+  missed.forEach(x => {
+    const d = document.createElement("div");
+    d.className = "miss";
+    d.textContent = x.q + " → Correct answer: " + x.right + " (you chose " + x.yours + ")";
+    m.appendChild(d);
+  });
 }
-function pick(btn, val) {
-  if (locked) return; locked = true;
-  const q = order[i], ok = val === q.correct;
-  document.querySelectorAll('.ans').forEach(b => { b.disabled = true; if (b.textContent === q.correct) b.classList.add('right'); });
-  if (ok) { score++; } else { btn.classList.add('wrong'); missed.push(q); }
-  const fb = $('fb'); fb.className = 'fb ' + (ok ? 'ok' : 'no');
-  fb.innerHTML = '<b>' + (ok ? 'Correct!' : 'Not quite.') + '</b> ' + q.expl + (ok ? '' : '<br><small>Tip: ' + q.tip + '</small>');
-  $('scoreLive').textContent = 'Score: ' + score;
-  $('next').disabled = false;
-}
-function finish() {
-  $('play').classList.add('hidden'); $('end').classList.remove('hidden');
-  const pct = Math.round(score / order.length * 100);
-  $('final').textContent = score + ' / ' + order.length + ' (' + pct + '%)';
-  $('msg').textContent = pct >= 90 ? 'Excellent work. You really know your negatives.' : pct >= 70 ? 'Good job. Review the ones you missed below.' : pct >= 50 ? 'A fair start. Read the tips and try again.' : 'Keep practising. Use a number line and try again.';
-  $('review').innerHTML = missed.length ? '<h3>Questions to review</h3>' + missed.map(q => '<div><b>' + q.text + '</b><br>Answer: ' + q.correct + ' &mdash; ' + q.expl + '</div>').join('') : '<h3>No mistakes. Perfect score!</h3>';
-}
-function start() {
-  order = $('shuf').checked ? shuffle(Q) : Q.slice(); i = 0; score = 0; missed = [];
-  $('start').classList.add('hidden'); $('end').classList.add('hidden'); $('play').classList.remove('hidden'); load();
-}
-$('go').onclick = start;
-$('again').onclick = () => { $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
-$('next').onclick = () => { i++; if (i >= order.length) { $('prog').style.width = '100%'; finish(); } else load(); };
 </script>
 </body>
 </html>
