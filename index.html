@@ -1,466 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gator Compare Quiz</title>
+<title>Number Sense Quiz 2 – Grade 2</title>
 <style>
-:root{
-  --bg:#e8f8e0; --card:#ffffff; --ink:#23402a; --green:#2fa84f; --green-d:#1f7a38;
-  --orange:#ff9a3c; --blue:#3a8dde; --red:#e55353; --yellow:#ffd23f; --line:#cfe9c4;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
-body{
-  background:linear-gradient(#d9f3ff 0,#e8f8e0 220px,#e8f8e0 100%);
-  color:var(--ink); font-family:"Trebuchet MS","Comic Sans MS","Segoe UI",system-ui,sans-serif;
-  display:flex;justify-content:center;padding:14px;
-}
-#app{width:100%;max-width:760px}
-.card{background:var(--card);border-radius:26px;box-shadow:0 6px 0 var(--line),0 12px 30px rgba(0,0,0,.08);padding:22px}
-h1{margin:0 0 6px;font-size:2rem;line-height:1.1}
-.center{text-align:center}
-.gator{font-size:5.5rem;line-height:1;display:inline-block;animation:bob 1.8s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
-.btn{
-  font:inherit;font-weight:800;font-size:1.3rem;border:0;border-radius:18px;padding:14px 26px;cursor:pointer;
-  background:var(--green);color:#fff;box-shadow:0 5px 0 var(--green-d);transition:transform .08s;
-}
-.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--green-d)}
-.btn.alt{background:var(--orange);box-shadow:0 5px 0 #c9701d}
-.btn.small{font-size:1rem;padding:8px 14px;border-radius:12px;box-shadow:0 3px 0 var(--green-d)}
-.btn.alt.small{box-shadow:0 3px 0 #c9701d}
-.signs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
-.sg{background:#f4fbef;border:3px solid var(--line);border-radius:16px;padding:10px 6px;font-weight:700}
-.sg b{display:block;font-size:2.4rem;line-height:1.1;color:var(--green-d)}
-.sg small{display:block;font-weight:500;opacity:.85;font-size:.9rem}
-.levels{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 16px;text-align:left;font-weight:700}
-.lv{background:#fff8e1;border-radius:12px;padding:8px 10px;font-size:.95rem}
-.top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.bar{flex:1;display:flex;gap:4px}
-.seg{flex:1;height:14px;background:#e7efe3;border-radius:8px;overflow:hidden}
-.seg i{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
-.count{font-weight:800;white-space:nowrap}
-.chip{display:inline-block;background:var(--yellow);border-radius:999px;padding:5px 14px;font-weight:800;margin-bottom:10px}
-.q{font-size:1.55rem;font-weight:800;margin:6px 0 12px}
-.vis{display:flex;justify-content:center;align-items:center;margin:8px 0 14px;min-height:70px;flex-wrap:wrap;gap:10px}
-.eq{font-size:3.2rem;font-weight:900;letter-spacing:2px;text-align:center;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
-.eq .box{display:inline-block;min-width:1.1em;border:5px dashed var(--orange);border-radius:14px;color:var(--orange);padding:0 10px;text-align:center}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.opts.three{grid-template-columns:1fr}
-.opt{
-  font:inherit;font-weight:900;font-size:2rem;padding:16px 10px;border-radius:18px;cursor:pointer;
-  background:#fff;border:4px solid var(--blue);color:var(--blue);box-shadow:0 5px 0 #b7d3f2;
-}
-.opt.txt{font-size:1.3rem;padding:14px 12px}
-.opt:active{transform:translateY(3px)}
-.opt.right{background:var(--green);border-color:var(--green-d);color:#fff;box-shadow:0 5px 0 var(--green-d)}
-.opt.wrong{background:var(--red);border-color:#a93030;color:#fff;box-shadow:0 5px 0 #a93030}
-.opt[disabled]{cursor:default}
-.fb{margin-top:16px;border-radius:18px;padding:14px 16px;font-size:1.15rem;font-weight:600;display:none}
-.fb.good{display:block;background:#e3f8e6;border:3px solid var(--green)}
-.fb.bad{display:block;background:#fff0e0;border:3px solid var(--orange)}
-.fb b.t{font-size:1.4rem;display:block;margin-bottom:4px}
-.gline{margin-top:6px}
-.nextrow{margin-top:14px;text-align:right}
-.tools{display:flex;gap:8px;justify-content:flex-end;margin-bottom:6px}
-.nums{display:flex;align-items:center;gap:14px;font-size:3.4rem;font-weight:900;flex-wrap:wrap;justify-content:center}
-.big{font-size:3.6rem;font-weight:900}
-.side{text-align:center;font-weight:800;font-size:1.1rem}
-.side svg{display:block;margin:0 auto 4px;max-width:100%;height:auto}
-.vs{font-size:1.6rem;font-weight:900;opacity:.5}
-.score{font-size:4rem;font-weight:900;color:var(--green-d)}
-.stars{font-size:2.6rem}
-.review{text-align:left;margin-top:14px}
-.review li{margin:6px 0}
-.pop{position:fixed;pointer-events:none;font-size:2rem;animation:pop 1s ease-out forwards;z-index:9}
-@keyframes pop{from{opacity:1;transform:translate(0,0) scale(.6)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.4)}}
-.hide{display:none!important}
-@media(max-width:520px){.q{font-size:1.3rem}.eq{font-size:2.5rem}.opt{font-size:1.7rem}.opt.txt{font-size:1.15rem}.levels{grid-template-columns:1fr}.nums{font-size:2.6rem}}
+  :root{
+    --ink:#2b2d42; --muted:#6b7089; --bg1:#fff4d6; --bg2:#d9f1ff;
+    --card:#ffffff; --blue:#3a86ff; --green:#2bb673; --red:#ef476f;
+    --orange:#ff9f1c; --purple:#8338ec; --line:#e4e7f2;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;color:var(--ink);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;
+    display:flex;justify-content:center;padding:18px 14px 40px;
+  }
+  .wrap{width:100%;max-width:720px}
+  .card{background:var(--card);border-radius:24px;padding:26px 22px;box-shadow:0 10px 30px rgba(43,45,66,.12)}
+  h1{margin:0 0 6px;font-size:2rem;line-height:1.15;color:var(--purple)}
+  h2{margin:0 0 10px;font-size:1.4rem}
+  p{line-height:1.5;font-size:1.05rem}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .btn{
+    font:inherit;font-weight:700;font-size:1.15rem;border:0;border-radius:16px;
+    padding:14px 26px;cursor:pointer;color:#fff;background:var(--blue);
+    box-shadow:0 4px 0 rgba(0,0,0,.18);transition:transform .08s;
+  }
+  .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+  .btn.green{background:var(--green)} .btn.orange{background:var(--orange)}
+  .topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:0 0 22px;padding:0;list-style:none}
+  .topics li{background:#f4f6ff;border-radius:12px;padding:9px 12px;font-size:.98rem}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;font-weight:700}
+  .pill{background:#fff;border-radius:999px;padding:6px 14px;box-shadow:0 2px 8px rgba(43,45,66,.1);font-size:.95rem}
+  .bar{height:14px;background:#fff;border-radius:999px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 0 0 2px var(--line)}
+  .bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .35s}
+  .tag{display:inline-block;background:var(--purple);color:#fff;border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:700;margin-bottom:12px}
+  .q{font-size:1.4rem;font-weight:700;line-height:1.35;margin:0 0 16px}
+  .blocks{background:#f7f9ff;border:2px dashed var(--line);border-radius:16px;padding:14px;margin-bottom:16px}
+  .blocks .row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:center}
+  .grp{display:flex;gap:5px;align-items:flex-end}
+  .hund{width:54px;height:54px;background:var(--blue);border-radius:6px;border:2px solid #1f5fd1;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+  .ten{width:16px;height:54px;background:var(--green);border-radius:4px;border:2px solid #1d8a54}
+  .one{width:16px;height:16px;background:var(--orange);border-radius:4px;border:2px solid #c97800}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px;font-size:.88rem;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .opts{display:grid;gap:12px}
+  .opt{
+    font:inherit;font-size:1.25rem;font-weight:700;text-align:left;color:var(--ink);background:#fff;
+    border:3px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
+    transition:border-color .15s,background .15s;
+  }
+  .opt:hover:not(:disabled){border-color:var(--blue);background:#f2f7ff}
+  .opt .k{flex:0 0 34px;height:34px;border-radius:50%;background:#eef1fb;display:flex;align-items:center;justify-content:center;font-size:1rem}
+  .opt.correct{border-color:var(--green);background:#e8f9f0}
+  .opt.correct .k{background:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:#ffeef2}
+  .opt.wrong .k{background:var(--red);color:#fff}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:16px;border-radius:16px;padding:14px 16px;font-size:1.05rem;line-height:1.45;display:none}
+  .fb.show{display:block}
+  .fb.good{background:#e8f9f0;border:2px solid var(--green)}
+  .fb.bad{background:#fff3e0;border:2px solid var(--orange)}
+  .fb b{display:block;font-size:1.15rem;margin-bottom:4px}
+  .next{margin-top:16px;display:none;text-align:right}
+  .next.show{display:block}
+  .score{font-size:3.2rem;font-weight:800;color:var(--purple);margin:4px 0}
+  .stars{font-size:2rem;letter-spacing:4px;margin-bottom:6px}
+  .break{display:grid;gap:8px;margin:14px 0 20px}
+  .brow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:.98rem}
+  .mini{height:10px;background:#eef1fb;border-radius:999px;overflow:hidden;margin-top:4px}
+  .mini>div{height:100%;background:var(--green)}
+  .miss{border-top:2px solid var(--line);padding:12px 0;font-size:1rem}
+  .miss .you{color:var(--red);font-weight:700} .miss .right{color:var(--green);font-weight:700}
+  .hidden{display:none}
+  @media (max-width:480px){h1{font-size:1.6rem}.q{font-size:1.2rem}.opt{font-size:1.1rem}}
 </style>
 </head>
 <body>
-<div id="app">
+<div class="wrap">
 
-  <section id="start" class="card center">
-    <div class="gator">🐊</div>
-    <h1>Gator Compare Quiz</h1>
-    <p style="font-size:1.2rem;margin:6px 0 0">50 questions: greater than, less than, equal to!</p>
-    <p style="margin:12px 0 0;font-weight:700">Gator Gus always opens his mouth to the BIGGER number.</p>
-    <div class="signs">
-      <div class="sg"><b>&gt;</b>greater than<small>31 &gt; 13</small></div>
-      <div class="sg"><b>&lt;</b>less than<small>13 &lt; 31</small></div>
-      <div class="sg"><b>=</b>equal to<small>23 = 23</small></div>
-    </div>
-    <div class="levels">
-      <div class="lv">🐊 Level 1: Gator signs</div>
-      <div class="lv">🏆 Level 2: Greatest and smallest</div>
-      <div class="lv">🧊 Level 3: Which cubes have more?</div>
-      <div class="lv">➕ Level 4: Number sentences</div>
-      <div class="lv">✅ Level 5: True or not? Put in order</div>
-    </div>
-    <p>Look at the tens first. Then look at the ones. Take your time!</p>
-    <button class="btn" id="goBtn">Let's go! 🚀</button>
-    <p id="best" style="margin-top:14px;font-weight:700"></p>
-  </section>
+  <div id="start" class="card">
+    <h1>🔢 Number Sense Quiz 2</h1>
+    <p class="sub">Grade 2 · Number Sense &amp; Place Value · 50 questions</p>
+    <p>Read each question carefully, pick your answer, and see right away if you got it. Take your time and think it through!</p>
+    <ul class="topics">
+      <li>🔟 Counting &amp; number names</li>
+      <li>🧱 Tens and ones</li>
+      <li>💯 Hundreds</li>
+      <li>⚖️ Comparing &amp; ordering</li>
+      <li>🐸 Skip counting</li>
+      <li>🏁 Even, odd &amp; ordinals</li>
+      <li>🎯 Rounding &amp; word problems</li>
+    </ul>
+    <button class="btn green" id="go">Start the quiz</button>
+  </div>
 
-  <section id="quiz" class="card hide">
-    <div class="top">
-      <div class="count" id="count">1 / 50</div>
-      <div class="bar" id="bar"></div>
-      <div class="count" id="pts">⭐ 0</div>
+  <div id="quiz" class="hidden">
+    <div class="topbar">
+      <span class="pill" id="count">Question 1 of 50</span>
+      <span class="pill" id="scoreLive">⭐ 0</span>
     </div>
-    <div class="tools">
-      <button class="btn small alt" id="readBtn" title="Read the question">🔊 Read to me</button>
-      <button class="btn small" id="muteBtn" title="Sounds on/off">🔔</button>
+    <div class="bar"><div id="prog"></div></div>
+    <div class="card">
+      <span class="tag" id="tag"></span>
+      <p class="q" id="qtext"></p>
+      <div id="vis"></div>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb"></div>
+      <div class="next" id="nextWrap"><button class="btn" id="next">Next →</button></div>
     </div>
-    <div class="chip" id="chip"></div>
-    <div class="q" id="qtext"></div>
-    <div class="vis" id="vis"></div>
-    <div class="opts" id="opts"></div>
-    <div class="fb" id="fb"></div>
-    <div class="nextrow"><button class="btn hide" id="nextBtn">Next ➡️</button></div>
-  </section>
+  </div>
 
-  <section id="result" class="card center hide">
-    <div class="gator">🐊</div>
-    <h1>All done!</h1>
-    <div class="score" id="rScore"></div>
-    <div class="stars" id="rStars"></div>
-    <p id="rMsg" style="font-size:1.25rem;font-weight:700"></p>
-    <div id="rBreak" class="review"></div>
-    <div id="rReview" class="review"></div>
-    <p><button class="btn" id="againBtn">Play again 🔄</button></p>
-  </section>
+  <div id="result" class="card hidden">
+    <h1>All done! 🎉</h1>
+    <div class="stars" id="stars"></div>
+    <div class="score" id="final"></div>
+    <p id="msg"></p>
+    <h2>How you did on each topic</h2>
+    <div class="break" id="break"></div>
+    <div id="missWrap"></div>
+    <button class="btn orange" id="again">Try again</button>
+  </div>
 
 </div>
 
 <script>
-(function(){
-"use strict";
+/* Each question: s = topic, q = text, a = correct answer, w = wrong options (plausible mistakes),
+   e = explanation, v = optional base-ten blocks {h,t,o}. Option order is shuffled every time. */
+const QUESTIONS = [
+  // ---------- Counting & number names ----------
+  {s:"Counting & number names", q:"What number comes right after 79?", a:"80", w:["70","89","78"], e:"79 + 1 = 80. The 9 ones are full, so we make a new ten."},
+  {s:"Counting & number names", q:"What number comes right before 60?", a:"59", w:["61","50","58"], e:"59 + 1 = 60, so 59 comes right before 60."},
+  {s:"Counting & number names", q:"Count on: 95, 96, 97, ___", a:"98", w:["99","90","100"], e:"Count one at a time: 97, then 98."},
+  {s:"Counting & number names", q:"Which is the number name for 52?", a:"fifty-two", w:["twenty-five","fifteen","five hundred two"], e:"5 tens is fifty and 2 ones is two: fifty-two."},
+  {s:"Counting & number names", q:"Which number is “ninety-one”?", a:"91", w:["19","901","90"], e:"Ninety is 9 tens and one is 1 one, so it is 91."},
+  {s:"Counting & number names", q:"Which number is “three hundred sixty”?", a:"360", w:["306","3,060","36"], e:"3 hundreds, 6 tens and 0 ones make 360."},
 
-/* ---------- helpers ---------- */
-var $ = function(id){return document.getElementById(id)};
-function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
-function optsStr(correct,wrong){return shuffle([String(correct)].concat(wrong.map(String)))}
+  // ---------- Tens and ones ----------
+  {s:"Tens and ones", q:"In 82, which digit is in the ones place?", a:"2", w:["8","80","28"], e:"82 has 8 tens and 2 ones. The digit in the ones place is 2."},
+  {s:"Tens and ones", q:"How many tens are in 56?", a:"5", w:["6","50","56"], e:"56 is 5 tens and 6 ones."},
+  {s:"Tens and ones", q:"7 tens and 3 ones make which number?", a:"73", w:["37","703","10"], e:"7 tens = 70, and 70 + 3 = 73."},
+  {s:"Tens and ones", q:"9 tens and 0 ones make which number?", a:"90", w:["9","99","900"], e:"9 tens = 90, and there are no ones to add."},
+  {s:"Tens and ones", q:"What is the value of the 4 in 41?", a:"40", w:["4","1","41"], e:"The 4 is in the tens place, so it is worth 4 tens = 40."},
+  {s:"Tens and ones", q:"What is the value of the 8 in 78?", a:"8", w:["80","7","78"], e:"The 8 is in the ones place, so it is worth just 8."},
+  {s:"Tens and ones", q:"60 + 2 = ?", a:"62", w:["26","602","8"], e:"6 tens and 2 ones make 62."},
+  {s:"Tens and ones", q:"What number do the blocks show?", v:{h:0,t:3,o:6}, a:"36", w:["63","306","9"], e:"3 tens = 30 and 6 ones = 6. So 30 + 6 = 36."},
+  {s:"Tens and ones", q:"Which shows 74 in expanded form?", a:"70 + 4", w:["7 + 4","40 + 7","700 + 4"], e:"74 is 7 tens and 4 ones, which is 70 + 4."},
+  {s:"Tens and ones", q:"Which number has the digit 5 in the tens place?", a:"53", w:["35","15","25"], e:"53 has 5 tens and 3 ones. In the others, the 5 is in the ones place."},
 
-var SIGN={">":"> greater than","<":"< less than","=":"= equal to"};
-var SIGN_OPTS=[SIGN[">"],SIGN["<"],SIGN["="]];
-function rel(a,b){return a>b?">":a<b?"<":"="}
-var WORD={">":"greater than","<":"less than","=":"equal to"};
+  // ---------- Hundreds ----------
+  {s:"Hundreds", q:"How many hundreds are in 300?", a:"3", w:["30","300","100"], e:"300 is 3 hundreds, 0 tens and 0 ones."},
+  {s:"Hundreds", q:"What number do the blocks show?", v:{h:4,t:1,o:5}, a:"415", w:["514","145","451"], e:"4 hundreds, 1 ten and 5 ones make 400 + 10 + 5 = 415."},
+  {s:"Hundreds", q:"In 926, which digit is in the tens place?", a:"2", w:["9","6","20"], e:"926 has 9 hundreds, 2 tens and 6 ones."},
+  {s:"Hundreds", q:"What is the value of the 7 in 372?", a:"70", w:["7","700","2"], e:"The 7 is in the tens place, so its value is 7 tens = 70."},
+  {s:"Hundreds", q:"Which number is 800 + 50 + 3?", a:"853", w:["835","538","8,053"], e:"8 hundreds, 5 tens and 3 ones make 853."},
+  {s:"Hundreds", q:"Which shows 706 in expanded form?", a:"700 + 6", w:["700 + 60","70 + 6","7 + 0 + 6"], e:"706 has 7 hundreds, 0 tens and 6 ones, so it is 700 + 6."},
+  {s:"Hundreds", q:"What number do the blocks show?", v:{h:1,t:0,o:9}, a:"109", w:["190","19","119"], e:"1 hundred, 0 tens and 9 ones make 109."},
+  {s:"Hundreds", q:"What is 100 more than 234?", a:"334", w:["244","235","134"], e:"100 more means the hundreds digit goes up by 1: 234 becomes 334."},
 
-function cubes(t,o,maxW){
-  var u=18,gap=6,x=4,h='',i,j,H=u*10+8;
-  for(i=0;i<t;i++){
-    for(j=0;j<10;j++){
-      h+='<rect x="'+x+'" y="'+(4+j*u)+'" width="'+u+'" height="'+u+'" fill="#7cc5ff" stroke="#2a6fb0" stroke-width="1.5"/>';
-    }
-    x+=u+gap;
-  }
-  x+=10;
-  for(i=0;i<o;i++){
-    var cx=x+(i%2)*(u+4),cy=4+Math.floor(i/2)*(u+4);
-    h+='<rect x="'+cx+'" y="'+cy+'" width="'+u+'" height="'+u+'" rx="3" fill="#ffb86b" stroke="#c9701d" stroke-width="1.5"/>';
-  }
-  var W=x+Math.min(o,2)*(u+4)+6;
-  return '<svg viewBox="0 0 '+W+' '+H+'" width="'+Math.min(W*1.0,maxW)+'" aria-label="cubes">'+h+'</svg>';
+  // ---------- Comparing & ordering ----------
+  {s:"Comparing & ordering", q:"Which number is the greatest?", a:"91", w:["19","90","81"], e:"91 and 90 both have 9 tens, so look at the ones: 1 is more than 0. 91 is the greatest."},
+  {s:"Comparing & ordering", q:"Which number is the smallest?", a:"28", w:["82","38","29"], e:"28 and 29 both have 2 tens, and 8 ones is less than 9 ones. 28 is the smallest."},
+  {s:"Comparing & ordering", q:"Which sign makes this true?  63 ___ 36", a:">", w:["<","="], e:"63 has 6 tens and 36 has 3 tens. 63 is greater, so 63 > 36."},
+  {s:"Comparing & ordering", q:"Which sign makes this true?  405 ___ 450", a:"<", w:[">","="], e:"Both have 4 hundreds. 405 has 0 tens and 450 has 5 tens, so 405 < 450."},
+  {s:"Comparing & ordering", q:"Which list goes from least to greatest?", a:"18, 81, 88", w:["81, 18, 88","88, 81, 18","18, 88, 81"], e:"18 is smallest, then 81, then 88."},
+  {s:"Comparing & ordering", q:"Which list goes from greatest to least?", a:"620, 602, 62", w:["62, 602, 620","602, 620, 62","620, 62, 602"], e:"620 and 602 have 6 hundreds, and 620 is bigger. 62 has no hundreds, so it is last."},
+  {s:"Comparing & ordering", q:"Which number is between 78 and 80?", a:"79", w:["77","81","70"], e:"79 comes after 78 and before 80."},
+  {s:"Comparing & ordering", q:"Which number is 1 less than 500?", a:"499", w:["400","501","490"], e:"Counting back from 500: 499. The 5 hundreds becomes 4 hundreds and 9 tens and 9 ones."},
+
+  // ---------- Skip counting ----------
+  {s:"Skip counting", q:"Count by 2s: 28, 30, 32, ___", a:"34", w:["33","36","35"], e:"Add 2 each time: 32 + 2 = 34."},
+  {s:"Skip counting", q:"Count by 5s: 55, 60, 65, ___", a:"70", w:["66","75","80"], e:"Add 5 each time: 65 + 5 = 70."},
+  {s:"Skip counting", q:"Count by 10s: 60, 70, 80, ___", a:"90", w:["81","100","85"], e:"Add 10 each time: 80 + 10 = 90."},
+  {s:"Skip counting", q:"Count by 10s: 23, 33, 43, ___", a:"53", w:["44","63","50"], e:"Add 10 each time. Only the tens digit changes: 43 + 10 = 53."},
+  {s:"Skip counting", q:"Count back by 10s: 90, 80, 70, ___", a:"60", w:["50","71","65"], e:"Take away 10 each time: 70 − 10 = 60."},
+  {s:"Skip counting", q:"Count back by 2s: 20, 18, 16, ___", a:"14", w:["15","12","13"], e:"Take away 2 each time: 16 − 2 = 14."},
+  {s:"Skip counting", q:"Count by 100s: 200, 300, 400, ___", a:"500", w:["410","600","450"], e:"Add 100 each time. The hundreds digit goes up by 1: 500."},
+  {s:"Skip counting", q:"Count by 5s: 40, 45, ___, 55, 60. What number is missing?", a:"50", w:["48","52","51"], e:"45 + 5 = 50, and 50 + 5 = 55."},
+
+  // ---------- Even, odd & ordinals ----------
+  {s:"Even, odd & ordinals", q:"Which number is even?", a:"58", w:["37","71","95"], e:"58 ends in 8, so it can be shared into two equal groups. It is even."},
+  {s:"Even, odd & ordinals", q:"Which number is odd?", a:"49", w:["26","50","84"], e:"49 ends in 9, so one is left over when you make pairs. It is odd."},
+  {s:"Even, odd & ordinals", q:"You have 9 stickers. Can you share them equally between 2 friends with none left over?", a:"No, 9 is odd", w:["Yes, 9 is even","No, 9 is even","Yes, 9 is big"], e:"9 is odd, so when you share between 2 there is always 1 left over."},
+  {s:"Even, odd & ordinals", q:"Which number does “thirtieth” mean?", a:"30th", w:["3rd","13th","31st"], e:"Thirtieth is the position number 30, written 30th."},
+  {s:"Even, odd & ordinals", q:"Ben is 4th in line. How many people are in front of him?", a:"3", w:["4","5","1"], e:"If Ben is 4th, the 1st, 2nd and 3rd people are in front of him. That is 3 people."},
+
+  // ---------- Rounding & word problems ----------
+  {s:"Rounding & word problems", q:"Round 64 to the nearest ten.", a:"60", w:["70","65","50"], e:"64 is closer to 60 than to 70, because 4 ones is less than halfway."},
+  {s:"Rounding & word problems", q:"Round 75 to the nearest ten.", a:"80", w:["70","76","90"], e:"75 is exactly halfway between 70 and 80. When it is halfway, we round up to 80."},
+  {s:"Rounding & word problems", q:"A dot on a number line is exactly halfway between 10 and 20. What number is it?", a:"15", w:["12","25","5"], e:"Halfway between 10 and 20 is 15, since 10 + 5 = 15 and 15 + 5 = 20."},
+  {s:"Rounding & word problems", q:"Sam has 3 bundles of 10 straws and 9 loose straws. How many straws does he have?", a:"39", w:["93","309","12"], e:"3 tens = 30, plus 9 ones = 39 straws."},
+  {s:"Rounding & word problems", q:"One tray holds 10 eggs. How many eggs are on 5 trays?", a:"50", w:["15","5","500"], e:"5 groups of ten make 5 tens = 50 eggs."}
+];
+
+const $ = id => document.getElementById(id);
+const letters = ["A","B","C","D"];
+let order, idx, score, answers;
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
 }
 
-function cmpExplain(a,b){
-  var ta=Math.floor(a/10),tb=Math.floor(b/10),oa=a%10,ob=b%10,r=rel(a,b),s;
-  if(a===b){
-    s='Both numbers are exactly the same, so they are <b>equal</b>.';
-  }else if(ta!==tb){
-    s=a+' has '+ta+' ten'+(ta===1?'':'s')+' and '+b+' has '+tb+' ten'+(tb===1?'':'s')+'. Tens first! So '+a+' is '+WORD[r]+' '+b+'.';
-  }else{
-    s='Both have '+ta+' tens, so look at the ones: '+oa+' and '+ob+'. So '+a+' is '+WORD[r]+' '+b+'.';
-  }
-  return s;
-}
-function gatorLine(a,b){
-  var r=rel(a,b);
-  if(r==='=')return '<div class="gline">🐊 Same size: gator has no bigger number to eat. <b>'+a+' = '+b+'</b></div>';
-  return '<div class="gline">🐊 Gator opens his mouth to the bigger number: <b>'+a+' '+r+' '+b+'</b></div>';
+function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0);}
+
+function begin(){
+  // fresh random option order every attempt, so answers can't be learned by position
+  order = QUESTIONS.map(q => ({...q, opts: shuffle([q.a, ...q.w])}));
+  idx = 0; score = 0; answers = [];
+  show("quiz"); render();
 }
 
-/* ---------- question bank ---------- */
-function build(){
-  var Q=[];
-  var S1="Level 1 · Gator signs 🐊",
-      S2="Level 2 · Greatest and smallest 🏆",
-      S3="Level 3 · Which cubes have more? 🧊",
-      S4="Level 4 · Number sentences ➕",
-      S5="Level 5 · True or not? Put in order ✅";
-
-  /* Level 1: 12 sign questions (4 greater, 4 less, 4 equal) */
-  var A=[[31,13],[29,28],[30,29],[27,17],[35,36],[27,31],[14,41],[4,40],[23,23],[40,40],[15,15],[32,32]];
-  var L1=A.map(function(p){
-    var a=p[0],b=p[1],r=rel(a,b);
-    return {sec:S1,text:"Which sign goes in the box?",
-      vis:'<div class="eq"><span>'+a+'</span><span class="box">?</span><span>'+b+'</span></div>',
-      options:shuffle(SIGN_OPTS),answer:SIGN[r],
-      say:"Which sign goes between "+a+" and "+b+"?",
-      sayOpts:"greater than, less than, equal to",
-      explain:cmpExplain(a,b)+gatorLine(a,b),
-      rv:a+" ? "+b};
-  });
-  Q=Q.concat(shuffle(L1));
-
-  /* Level 2: greatest/smallest (6) + greater than / less than a number (6) */
-  var L2=[];
-  [
-    {kind:"greatest",nums:[27,31,17,13],ans:31},
-    {kind:"greatest",nums:[35,36,29,28],ans:36},
-    {kind:"greatest",nums:[14,41,24,42],ans:42},
-    {kind:"smallest",nums:[14,41,27,17],ans:14},
-    {kind:"smallest",nums:[30,29,33,19],ans:19},
-    {kind:"smallest",nums:[22,12,21,11],ans:11}
-  ].forEach(function(m){
-    var G=m.kind==="greatest";
-    L2.push({sec:S2,text:G?"Which number is the GREATEST?":"Which number is the SMALLEST?",
-      vis:'<div class="big">🐊</div>',
-      options:shuffle(m.nums.map(String)),answer:String(m.ans),
-      say:G?"Which number is the greatest?":"Which number is the smallest?",
-      explain:'Compare the tens first, then the ones. The '+(G?'greatest':'smallest')+' number is <b>'+m.ans+'</b>.',
-      rv:m.nums.join(", ")});
-  });
-  [
-    {dir:">",n:29,ans:30,wrong:[28,27,19]},
-    {dir:">",n:35,ans:36,wrong:[34,25,15]},
-    {dir:">",n:18,ans:21,wrong:[17,8,12]},
-    {dir:"<",n:40,ans:39,wrong:[41,50,44]},
-    {dir:"<",n:25,ans:24,wrong:[52,26,35]},
-    {dir:"<",n:16,ans:15,wrong:[61,17,26]}
-  ].forEach(function(m){
-    var G=m.dir===">";
-    L2.push({sec:S2,text:G?"Which number is GREATER than "+m.n+"?":"Which number is LESS than "+m.n+"?",
-      vis:'<div class="eq"><span class="box">?</span><span>'+m.dir+'</span><span>'+m.n+'</span></div>',
-      options:optsStr(m.ans,m.wrong),answer:String(m.ans),
-      say:G?"Which number is greater than "+m.n+"?":"Which number is less than "+m.n+"?",
-      explain:'<b>'+m.ans+'</b> is '+WORD[m.dir]+' '+m.n+'. '+cmpExplain(m.ans,m.n),
-      rv:(G?"greater than ":"less than ")+m.n});
-  });
-  Q=Q.concat(shuffle(L2));
-
-  /* Level 3: cubes compare (6) */
-  var C=[[[3,2],[2,8]],[[2,5],[4,1]],[[1,5],[1,5]],[[2,3],[1,13]],[[4,0],[3,9]],[[1,9],[2,1]]];
-  var L3=C.map(function(p){
-    var l=p[0],r=p[1],lt=l[0]*10+l[1],rt=r[0]*10+r[1];
-    var ans=lt>rt?"Left has more":lt<rt?"Right has more":"Same amount";
-    var ex='Left: '+l[0]+' tens and '+l[1]+' ones = <b>'+lt+'</b>. Right: '+r[0]+' tens and '+r[1]+' ones = <b>'+rt+'</b>. ';
-    if(l[1]>=10||r[1]>=10)ex+='<b>Tricky!</b> 10 loose cubes make 1 more ten. ';
-    ex+=lt===rt?'<b>'+lt+' = '+rt+'</b>, so it is the same amount.':'<b>'+lt+' '+rel(lt,rt)+' '+rt+'</b>.';
-    return {sec:S3,text:"Count the tens and ones. Which side has MORE cubes?",
-      vis:'<div class="side">'+cubes(l[0],l[1],150)+'Left</div><div class="vs">VS</div><div class="side">'+cubes(r[0],r[1],150)+'Right</div>',
-      options:shuffle(["Left has more","Right has more","Same amount"]),answer:ans,
-      say:"Count the tens and ones. Which side has more cubes?",sayOpts:"Left has more, Right has more, Same amount",
-      explain:ex,rv:"compare the two groups of cubes"};
-  });
-  Q=Q.concat(shuffle(L3));
-
-  /* Level 4: number sentences (6 sign) + equal-to (6) */
-  var L4=[];
-  [[[5,'+',3],[9]],[[10,'-',4],[6]],[[7,'+',2],[6,'+',2]],[[8,'-',3],[4]],[[4,'+',4],[9,'-',1]],[[3,'+',3],[7]]].forEach(function(p){
-    function val(e){return e.length===1?e[0]:(e[1]==='+'?e[0]+e[2]:e[0]-e[2])}
-    function txt(e){return e.length===1?String(e[0]):e[0]+' '+(e[1]==='+'?'+':'−')+' '+e[2]}
-    var a=val(p[0]),b=val(p[1]),r=rel(a,b);
-    L4.push({sec:S4,text:"Work out both sides. Which sign goes in the box?",
-      vis:'<div class="eq"><span>'+txt(p[0])+'</span><span class="box">?</span><span>'+txt(p[1])+'</span></div>',
-      options:shuffle(SIGN_OPTS),answer:SIGN[r],
-      say:"Work out both sides. Which sign goes in the box?",sayOpts:"greater than, less than, equal to",
-      explain:txt(p[0])+' = <b>'+a+'</b> and '+txt(p[1])+' = <b>'+b+'</b>. So '+a+' is '+WORD[r]+' '+b+'.'+gatorLine(a,b),
-      rv:txt(p[0])+" ? "+txt(p[1])});
-  });
-  [
-    {t:"Which number is EQUAL to 6 + 2?",ans:"8",wrong:["4","7","9"],ex:'6 + 2 = <b>8</b>, so 8 is equal to 6 + 2.',target:8},
-    {t:"Which number is EQUAL to 9 − 3?",ans:"6",wrong:["12","5","7"],ex:'9 − 3 = <b>6</b>, so 6 is equal to 9 − 3.',target:6},
-    {t:"Which one is EQUAL to 10?",ans:"5 + 5",wrong:["6 + 3","8 + 3","9 − 1"],ex:'5 + 5 = <b>10</b>. The others make 9, 11 and 8.',target:10},
-    {t:"Which one is EQUAL to 7?",ans:"4 + 3",wrong:["8 − 2","6 + 2","9 − 3"],ex:'4 + 3 = <b>7</b>. The others make 6, 8 and 6.',target:7},
-    {t:"Which one is EQUAL to 4 + 1?",ans:"6 − 1",wrong:["2 + 2","3 + 3","7 − 3"],ex:'4 + 1 = 5 and 6 − 1 = <b>5</b>. They are equal.',target:5},
-    {t:"Which one is EQUAL to 9?",ans:"4 + 5",wrong:["4 + 6","10 − 2","3 + 5"],ex:'4 + 5 = <b>9</b>. The others make 10, 8 and 8.',target:9}
-  ].forEach(function(m){
-    L4.push({sec:S4,text:m.t,vis:'<div class="big">=</div>',
-      options:optsStr(m.ans,m.wrong),answer:m.ans,say:m.t,explain:m.ex,rv:m.t,target:m.target});
-  });
-  Q=Q.concat(shuffle(L4));
-
-  /* Level 5: true sentence (4) + ordering (4) */
-  var L5=[];
-  [
-    {ans:"41 is greater than 14",wrong:["14 is greater than 41","14 is equal to 41","41 is less than 14"],a:41,b:14},
-    {ans:"27 is less than 72",wrong:["27 is greater than 72","72 is less than 27","27 is equal to 72"],a:27,b:72},
-    {ans:"35 is equal to 35",wrong:["35 is greater than 35","35 is less than 35","35 is equal to 53"],a:35,b:35},
-    {ans:"29 is less than 30",wrong:["30 is less than 29","29 is greater than 30","29 is equal to 30"],a:29,b:30}
-  ].forEach(function(m){
-    L5.push({sec:S5,text:"Which sentence is TRUE?",vis:'<div class="big">🐊 ✅</div>',
-      options:optsStr(m.ans,m.wrong),answer:m.ans,say:"Which sentence is true?",
-      explain:cmpExplain(m.a,m.b),rv:"which sentence is true",truth:true});
-  });
-  [
-    {t:"Put the numbers in order from LEAST to GREATEST.",nums:[23,32,13],ans:"13, 23, 32",wrong:["23, 13, 32","32, 23, 13","13, 32, 23"],dir:"up"},
-    {t:"Put the numbers in order from LEAST to GREATEST.",nums:[41,14,40],ans:"14, 40, 41",wrong:["14, 41, 40","41, 40, 14","40, 14, 41"],dir:"up"},
-    {t:"Put the numbers in order from GREATEST to LEAST.",nums:[27,31,17],ans:"31, 27, 17",wrong:["17, 27, 31","27, 31, 17","31, 17, 27"],dir:"down"},
-    {t:"Put the numbers in order from GREATEST to LEAST.",nums:[35,36,29],ans:"36, 35, 29",wrong:["29, 35, 36","35, 36, 29","36, 29, 35"],dir:"down"}
-  ].forEach(function(m){
-    L5.push({sec:S5,text:m.t,
-      vis:'<div class="nums">'+shuffle(m.nums).join('<span style="opacity:.35">·</span>')+'</div>',
-      options:optsStr(m.ans,m.wrong),answer:m.ans,say:m.t,
-      explain:'Look at the tens first, then the ones. The right order is <b>'+m.ans+'</b>.',rv:m.t+" "+m.nums.join(", "),
-      nums:m.nums,dir:m.dir});
-  });
-  Q=Q.concat(shuffle(L5));
-  return Q;
-}
-
-/* ---------- audio ---------- */
-var muted=false,actx=null;
-function tone(freqs,dur){
-  if(muted)return;
-  try{
-    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
-    var t=actx.currentTime;
-    freqs.forEach(function(f,i){
-      var o=actx.createOscillator(),g=actx.createGain();
-      o.type="triangle";o.frequency.value=f;o.connect(g);g.connect(actx.destination);
-      g.gain.setValueAtTime(.18,t+i*dur);g.gain.exponentialRampToValueAtTime(.001,t+i*dur+dur);
-      o.start(t+i*dur);o.stop(t+i*dur+dur);
-    });
-  }catch(e){}
-}
-function speak(txt){
-  try{
-    if(!window.speechSynthesis)return;
-    speechSynthesis.cancel();
-    var u=new SpeechSynthesisUtterance(txt);u.rate=.85;u.pitch=1.1;speechSynthesis.speak(u);
-  }catch(e){}
-}
-function burst(x,y,emojis){
-  for(var i=0;i<10;i++){
-    var s=document.createElement('span');s.className='pop';s.textContent=emojis[i%emojis.length];
-    s.style.left=x+'px';s.style.top=y+'px';
-    s.style.setProperty('--dx',(Math.random()*300-150)+'px');s.style.setProperty('--dy',(-Math.random()*200-20)+'px');
-    document.body.appendChild(s);setTimeout(function(el){el.remove()}.bind(null,s),1000);
-  }
-}
-
-/* ---------- state + flow ---------- */
-var qs=[],idx=0,score=0,missed=[],answered=false,secStats={},SEC_ORDER=[];
-
-function showScreen(id){["start","quiz","result"].forEach(function(s){$(s).classList.toggle("hide",s!==id)});window.scrollTo(0,0)}
-
-function start(){
-  qs=build();idx=0;score=0;missed=[];secStats={};SEC_ORDER=[];
-  qs.forEach(function(q){
-    if(SEC_ORDER.indexOf(q.sec)<0)SEC_ORDER.push(q.sec);
-    secStats[q.sec]=secStats[q.sec]||{ok:0,n:0};secStats[q.sec].n++;
-  });
-  var bar=$("bar");bar.innerHTML="";
-  SEC_ORDER.forEach(function(s,i){
-    var d=document.createElement("div");d.className="seg";d.innerHTML='<i id="seg'+i+'"></i>';bar.appendChild(d);
-  });
-  showScreen("quiz");render();
-}
-
-function updateBar(){
-  SEC_ORDER.forEach(function(s,i){
-    var total=secStats[s].n,done=0;
-    for(var k=0;k<qs.length;k++){if(qs[k].sec===s&&k<idx+(answered?1:0))done++}
-    $("seg"+i).style.width=(done/total*100)+"%";
-  });
+function blocksHTML(v){
+  let h = "";
+  if(v.h) h += '<div class="grp">' + '<div class="hund">100</div>'.repeat(v.h) + '</div>';
+  if(v.t) h += '<div class="grp">' + '<div class="ten"></div>'.repeat(v.t) + '</div>';
+  if(v.o) h += '<div class="grp">' + '<div class="one"></div>'.repeat(v.o) + '</div>';
+  return '<div class="blocks"><div class="row">'+h+'</div>' +
+    '<div class="legend">' +
+    (v.h?'<span><i class="hund" style="width:18px;height:18px;font-size:0"></i> = 100</span>':'') +
+    '<span><i class="ten" style="display:inline-block;width:8px;height:18px"></i> = 10</span>' +
+    '<span><i class="one" style="display:inline-block"></i> = 1</span></div></div>';
 }
 
 function render(){
-  var q=qs[idx];answered=false;
-  $("count").textContent=(idx+1)+" / "+qs.length;
-  $("pts").textContent="⭐ "+score;
-  $("chip").textContent=q.sec;
-  $("qtext").textContent=q.text;
-  $("vis").innerHTML=q.vis;
-  var o=$("opts");o.innerHTML="";
-  o.className="opts"+(q.options.length===3?" three":"");
-  q.options.forEach(function(v){
-    var b=document.createElement("button");b.className="opt"+(v.length>4?" txt":"");b.textContent=v;
-    b.onclick=function(){choose(b,v)};o.appendChild(b);
+  const q = order[idx];
+  $("count").textContent = "Question " + (idx+1) + " of " + order.length;
+  $("scoreLive").textContent = "⭐ " + score;
+  $("prog").style.width = (idx/order.length*100) + "%";
+  $("tag").textContent = q.s;
+  $("qtext").textContent = q.q;
+  $("vis").innerHTML = q.v ? blocksHTML(q.v) : "";
+  const box = $("opts"); box.innerHTML = "";
+  q.opts.forEach((o,i)=>{
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = '<span class="k">'+letters[i]+'</span><span></span>';
+    b.lastChild.textContent = o;
+    b.onclick = () => choose(o, b);
+    box.appendChild(b);
   });
-  $("fb").className="fb";$("fb").innerHTML="";
-  $("nextBtn").classList.add("hide");
-  $("nextBtn").textContent=idx===qs.length-1?"See my score 🏆":"Next ➡️";
-  updateBar();
+  $("fb").className = "fb"; $("fb").innerHTML = "";
+  $("nextWrap").classList.remove("show");
+  $("next").textContent = idx === order.length-1 ? "See my results 🎉" : "Next →";
 }
 
-var CHEERS=["Great job!","You got it!","Super!","Awesome!","Yes! Well done!","Brilliant!"];
-function choose(btn,v){
-  if(answered)return;answered=true;
-  var q=qs[idx],ok=v===q.answer,all=$("opts").children;
-  for(var i=0;i<all.length;i++){
-    all[i].disabled=true;
-    if(all[i].textContent===q.answer)all[i].classList.add("right");
-  }
-  var fb=$("fb");
-  if(ok){
-    score++;secStats[q.sec].ok++;
-    tone([523,659,784],.12);
-    var r=btn.getBoundingClientRect();burst(r.left+r.width/2,r.top,["⭐","🐊","✨"]);
-    fb.className="fb good";
-    fb.innerHTML='<b class="t">🎉 '+CHEERS[Math.floor(Math.random()*CHEERS.length)]+'</b>'+q.explain;
-  }else{
-    btn.classList.add("wrong");
-    missed.push({q:q,chosen:v});
-    tone([330,262],.18);
-    fb.className="fb bad";
-    fb.innerHTML='<b class="t">Oops! Let\'s learn from it 💡</b>The answer is <b>'+q.answer+'</b>.<br>'+q.explain;
-  }
-  $("pts").textContent="⭐ "+score;
-  $("nextBtn").classList.remove("hide");
-  updateBar();
-  setTimeout(function(){$("nextBtn").scrollIntoView({behavior:"smooth",block:"nearest"})},80);
+function choose(pick, btn){
+  const q = order[idx];
+  const ok = pick === q.a;
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled = true;
+    const val = b.lastChild.textContent;
+    if(val === q.a) b.classList.add("correct");
+  });
+  if(!ok) btn.classList.add("wrong");
+  if(ok) score++;
+  answers.push({q, pick, ok});
+  $("scoreLive").textContent = "⭐ " + score;
+  const fb = $("fb");
+  fb.className = "fb show " + (ok ? "good" : "bad");
+  fb.innerHTML = "<b>" + (ok ? "✅ Correct! Well done!" : "Not quite. The answer is " + q.a + ".") + "</b>" + q.e;
+  $("nextWrap").classList.add("show");
+  $("prog").style.width = ((idx+1)/order.length*100) + "%";
 }
-
-function next(){if(idx<qs.length-1){idx++;render()}else finish()}
 
 function finish(){
-  showScreen("result");
-  var pct=Math.round(score/qs.length*100);
-  $("rScore").textContent=score+" / "+qs.length;
-  var st=pct>=90?5:pct>=75?4:pct>=60?3:pct>=40?2:1;
-  $("rStars").textContent="⭐".repeat(st)+"☆".repeat(5-st);
-  $("rMsg").textContent=pct>=90?"WOW! You are a comparing superstar! Gator Gus is full and happy! 🐊💚"
-    :pct>=75?"Great work! Gator Gus is very proud of you!"
-    :pct>=60?"Good job! A little more practice and you will be a star."
-    :"Nice try! Look at the missed questions below and try again.";
-  var h='<h3>How you did in each level</h3><ul>';
-  SEC_ORDER.forEach(function(s){h+='<li>'+s+': <b>'+secStats[s].ok+' / '+secStats[s].n+'</b></li>'});
-  $("rBreak").innerHTML=h+'</ul>';
-  var rv='';
-  if(missed.length){
-    rv='<h3>Questions to practise</h3><ol>';
-    missed.forEach(function(m){
-      rv+='<li><b>'+m.q.text+'</b> ('+m.q.rv+')<br>You said <b>'+m.chosen+'</b>. Right answer: <b>'+m.q.answer+'</b></li>';
-    });
-    rv+='</ol>';
-  }else rv='<h3>🌟 No mistakes! Perfect score!</h3>';
-  $("rReview").innerHTML=rv;
-  tone([523,659,784,1047],.14);
-  burst(window.innerWidth/2,window.innerHeight/2,["⭐","🎉","🐊","✨"]);
-  try{
-    var best=parseInt(localStorage.getItem("gatorCompareBest")||"0",10);
-    if(score>best)localStorage.setItem("gatorCompareBest",String(score));
-  }catch(e){}
+  show("result");
+  const n = order.length, pct = score/n;
+  $("final").textContent = score + " / " + n;
+  const st = pct>=.9?5:pct>=.75?4:pct>=.6?3:pct>=.4?2:1;
+  $("stars").textContent = "⭐".repeat(st) + "☆".repeat(5-st);
+  $("msg").textContent =
+    pct>=.9 ? "Amazing! You really know your numbers!" :
+    pct>=.75 ? "Great job! You are almost a number superstar." :
+    pct>=.6 ? "Good work! Look at the ones you missed and try again." :
+    "Nice try! Practise the topics below and have another go.";
+  // topic breakdown
+  const by = {};
+  answers.forEach(a=>{const s=a.q.s;by[s]=by[s]||{r:0,t:0};by[s].t++;if(a.ok)by[s].r++;});
+  $("break").innerHTML = Object.keys(by).map(s=>{
+    const p = Math.round(by[s].r/by[s].t*100);
+    return '<div><div class="brow"><span>'+s+'</span><b>'+by[s].r+' / '+by[s].t+'</b></div><div class="mini"><div style="width:'+p+'%"></div></div></div>';
+  }).join("");
+  // missed questions
+  const missed = answers.filter(a=>!a.ok);
+  const mw = $("missWrap");
+  if(!missed.length){ mw.innerHTML = "<p><b>You got every question right! 🏆</b></p>"; }
+  else{
+    mw.innerHTML = "<h2>Questions to look at again</h2>" + missed.map(a=>{
+      const d = document.createElement("div"); d.className="miss";
+      d.innerHTML = "<div></div><div>You chose: <span class='you'></span> · Correct: <span class='right'></span></div><div style='color:#6b7089;margin-top:4px'></div>";
+      d.children[0].textContent = a.q.q;
+      d.querySelector(".you").textContent = a.pick;
+      d.querySelector(".right").textContent = a.q.a;
+      d.children[2].textContent = a.q.e;
+      return d.outerHTML;
+    }).join("") + "<br>";
+  }
 }
 
-/* ---------- wiring ---------- */
-$("goBtn").onclick=start;
-$("againBtn").onclick=start;
-$("nextBtn").onclick=next;
-$("readBtn").onclick=function(){var q=qs[idx];speak(q.say+" "+(q.sayOpts||q.options.join(", ")))};
-$("muteBtn").onclick=function(){muted=!muted;this.textContent=muted?"🔕":"🔔";if(muted)try{speechSynthesis.cancel()}catch(e){}};
-try{
-  var b=parseInt(localStorage.getItem("gatorCompareBest")||"0",10);
-  if(b>0)$("best").textContent="🏆 Best score so far: "+b+" / 50";
-}catch(e){}
-
-window.__build=build;
-})();
+$("go").onclick = begin;
+$("again").onclick = begin;
+$("next").onclick = () => { if(idx === order.length-1) finish(); else { idx++; render(); } };
 </script>
 </body>
 </html>
