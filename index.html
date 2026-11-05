@@ -1,310 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Number Sense Quiz 2 – Grade 2</title>
+<title>Grade 6 Science Quiz</title>
 <style>
-  :root{
-    --ink:#2b2d42; --muted:#6b7089; --bg1:#fff4d6; --bg2:#d9f1ff;
-    --card:#ffffff; --blue:#3a86ff; --green:#2bb673; --red:#ef476f;
-    --orange:#ff9f1c; --purple:#8338ec; --line:#e4e7f2;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;color:var(--ink);
-    background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;
-    display:flex;justify-content:center;padding:18px 14px 40px;
-  }
-  .wrap{width:100%;max-width:720px}
-  .card{background:var(--card);border-radius:24px;padding:26px 22px;box-shadow:0 10px 30px rgba(43,45,66,.12)}
-  h1{margin:0 0 6px;font-size:2rem;line-height:1.15;color:var(--purple)}
-  h2{margin:0 0 10px;font-size:1.4rem}
-  p{line-height:1.5;font-size:1.05rem}
-  .sub{color:var(--muted);margin:0 0 18px}
-  .btn{
-    font:inherit;font-weight:700;font-size:1.15rem;border:0;border-radius:16px;
-    padding:14px 26px;cursor:pointer;color:#fff;background:var(--blue);
-    box-shadow:0 4px 0 rgba(0,0,0,.18);transition:transform .08s;
-  }
-  .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
-  .btn.green{background:var(--green)} .btn.orange{background:var(--orange)}
-  .topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:0 0 22px;padding:0;list-style:none}
-  .topics li{background:#f4f6ff;border-radius:12px;padding:9px 12px;font-size:.98rem}
-  .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;font-weight:700}
-  .pill{background:#fff;border-radius:999px;padding:6px 14px;box-shadow:0 2px 8px rgba(43,45,66,.1);font-size:.95rem}
-  .bar{height:14px;background:#fff;border-radius:999px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 0 0 2px var(--line)}
-  .bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .35s}
-  .tag{display:inline-block;background:var(--purple);color:#fff;border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:700;margin-bottom:12px}
-  .q{font-size:1.4rem;font-weight:700;line-height:1.35;margin:0 0 16px}
-  .blocks{background:#f7f9ff;border:2px dashed var(--line);border-radius:16px;padding:14px;margin-bottom:16px}
-  .blocks .row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:center}
-  .grp{display:flex;gap:5px;align-items:flex-end}
-  .hund{width:54px;height:54px;background:var(--blue);border-radius:6px;border:2px solid #1f5fd1;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.8rem}
-  .ten{width:16px;height:54px;background:var(--green);border-radius:4px;border:2px solid #1d8a54}
-  .one{width:16px;height:16px;background:var(--orange);border-radius:4px;border:2px solid #c97800}
-  .legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px;font-size:.88rem;color:var(--muted)}
-  .legend span{display:inline-flex;align-items:center;gap:6px}
-  .opts{display:grid;gap:12px}
-  .opt{
-    font:inherit;font-size:1.25rem;font-weight:700;text-align:left;color:var(--ink);background:#fff;
-    border:3px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
-    transition:border-color .15s,background .15s;
-  }
-  .opt:hover:not(:disabled){border-color:var(--blue);background:#f2f7ff}
-  .opt .k{flex:0 0 34px;height:34px;border-radius:50%;background:#eef1fb;display:flex;align-items:center;justify-content:center;font-size:1rem}
-  .opt.correct{border-color:var(--green);background:#e8f9f0}
-  .opt.correct .k{background:var(--green);color:#fff}
-  .opt.wrong{border-color:var(--red);background:#ffeef2}
-  .opt.wrong .k{background:var(--red);color:#fff}
-  .opt:disabled{cursor:default}
-  .fb{margin-top:16px;border-radius:16px;padding:14px 16px;font-size:1.05rem;line-height:1.45;display:none}
-  .fb.show{display:block}
-  .fb.good{background:#e8f9f0;border:2px solid var(--green)}
-  .fb.bad{background:#fff3e0;border:2px solid var(--orange)}
-  .fb b{display:block;font-size:1.15rem;margin-bottom:4px}
-  .next{margin-top:16px;display:none;text-align:right}
-  .next.show{display:block}
-  .score{font-size:3.2rem;font-weight:800;color:var(--purple);margin:4px 0}
-  .stars{font-size:2rem;letter-spacing:4px;margin-bottom:6px}
-  .break{display:grid;gap:8px;margin:14px 0 20px}
-  .brow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:.98rem}
-  .mini{height:10px;background:#eef1fb;border-radius:999px;overflow:hidden;margin-top:4px}
-  .mini>div{height:100%;background:var(--green)}
-  .miss{border-top:2px solid var(--line);padding:12px 0;font-size:1rem}
-  .miss .you{color:var(--red);font-weight:700} .miss .right{color:var(--green);font-weight:700}
-  .hidden{display:none}
-  @media (max-width:480px){h1{font-size:1.6rem}.q{font-size:1.2rem}.opt{font-size:1.1rem}}
+:root{--bg:#f4f6fb;--card:#fff;--ink:#1d2433;--mute:#667089;--brand:#3b5bdb;--brand2:#5c7cfa;--ok:#2b9348;--okbg:#e6f6ec;--bad:#d62839;--badbg:#fdeaec;--line:#e1e5f0}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--card);border-radius:18px;padding:26px;box-shadow:0 4px 18px rgba(30,40,90,.08)}
+h1{margin:0 0 6px;font-size:1.7rem}
+h2{margin:0 0 14px;font-size:1.25rem;line-height:1.4}
+.sub{color:var(--mute);margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.chip{background:#edf1ff;color:var(--brand);padding:5px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+button{font:inherit;cursor:pointer}
+.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:0;padding:13px 26px;border-radius:12px;font-weight:700;font-size:1rem}
+.primary:hover{filter:brightness(1.07)}
+.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand);padding:11px 22px;border-radius:12px;font-weight:700}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--mute);margin-bottom:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0;transition:width .3s}
+.tag{display:inline-block;background:#edf1ff;color:var(--brand);font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 16px;margin:0 0 10px;font-size:1rem;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--brand2);background:#f6f8ff}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.fb{border-radius:12px;padding:13px 16px;margin:14px 0;font-size:.97rem}
+.fb.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--badbg);border-left:5px solid var(--bad)}
+.big{font-size:3rem;font-weight:800;color:var(--brand);margin:4px 0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.row b{white-space:nowrap}
+.miss{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:.93rem}
+.miss .a{color:var(--ok);font-weight:600}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.hide{display:none}
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <div id="start" class="card">
-    <h1>🔢 Number Sense Quiz 2</h1>
-    <p class="sub">Grade 2 · Number Sense &amp; Place Value · 50 questions</p>
-    <p>Read each question carefully, pick your answer, and see right away if you got it. Take your time and think it through!</p>
-    <ul class="topics">
-      <li>🔟 Counting &amp; number names</li>
-      <li>🧱 Tens and ones</li>
-      <li>💯 Hundreds</li>
-      <li>⚖️ Comparing &amp; ordering</li>
-      <li>🐸 Skip counting</li>
-      <li>🏁 Even, odd &amp; ordinals</li>
-      <li>🎯 Rounding &amp; word problems</li>
-    </ul>
-    <button class="btn green" id="go">Start the quiz</button>
+    <h1>Grade 6 Science Quiz</h1>
+    <p class="sub">70 questions to get ready for your test. Questions and answer choices are shuffled every time.</p>
+    <div class="chips" id="chips"></div>
+    <button class="primary" id="go">Start quiz</button>
   </div>
-
-  <div id="quiz" class="hidden">
-    <div class="topbar">
-      <span class="pill" id="count">Question 1 of 50</span>
-      <span class="pill" id="scoreLive">⭐ 0</span>
-    </div>
-    <div class="bar"><div id="prog"></div></div>
-    <div class="card">
-      <span class="tag" id="tag"></span>
-      <p class="q" id="qtext"></p>
-      <div id="vis"></div>
-      <div class="opts" id="opts"></div>
-      <div class="fb" id="fb"></div>
-      <div class="next" id="nextWrap"><button class="btn" id="next">Next →</button></div>
-    </div>
+  <div id="quiz" class="card hide">
+    <div class="top"><span id="qn"></span><span id="sc"></span></div>
+    <div class="bar"><i id="pb"></i></div>
+    <span class="tag" id="tag"></span>
+    <h2 id="q"></h2>
+    <div id="opts"></div>
+    <div id="fb"></div>
+    <button class="primary hide" id="next">Next question</button>
   </div>
-
-  <div id="result" class="card hidden">
-    <h1>All done! 🎉</h1>
-    <div class="stars" id="stars"></div>
-    <div class="score" id="final"></div>
-    <p id="msg"></p>
-    <h2>How you did on each topic</h2>
-    <div class="break" id="break"></div>
-    <div id="missWrap"></div>
-    <button class="btn orange" id="again">Try again</button>
-  </div>
-
+  <div id="end" class="card hide"></div>
 </div>
 
 <script>
-/* Each question: s = topic, q = text, a = correct answer, w = wrong options (plausible mistakes),
-   e = explanation, v = optional base-ten blocks {h,t,o}. Option order is shuffled every time. */
-const QUESTIONS = [
-  // ---------- Counting & number names ----------
-  {s:"Counting & number names", q:"What number comes right after 79?", a:"80", w:["70","89","78"], e:"79 + 1 = 80. The 9 ones are full, so we make a new ten."},
-  {s:"Counting & number names", q:"What number comes right before 60?", a:"59", w:["61","50","58"], e:"59 + 1 = 60, so 59 comes right before 60."},
-  {s:"Counting & number names", q:"Count on: 95, 96, 97, ___", a:"98", w:["99","90","100"], e:"Count one at a time: 97, then 98."},
-  {s:"Counting & number names", q:"Which is the number name for 52?", a:"fifty-two", w:["twenty-five","fifteen","five hundred two"], e:"5 tens is fifty and 2 ones is two: fifty-two."},
-  {s:"Counting & number names", q:"Which number is “ninety-one”?", a:"91", w:["19","901","90"], e:"Ninety is 9 tens and one is 1 one, so it is 91."},
-  {s:"Counting & number names", q:"Which number is “three hundred sixty”?", a:"360", w:["306","3,060","36"], e:"3 hundreds, 6 tens and 0 ones make 360."},
-
-  // ---------- Tens and ones ----------
-  {s:"Tens and ones", q:"In 82, which digit is in the ones place?", a:"2", w:["8","80","28"], e:"82 has 8 tens and 2 ones. The digit in the ones place is 2."},
-  {s:"Tens and ones", q:"How many tens are in 56?", a:"5", w:["6","50","56"], e:"56 is 5 tens and 6 ones."},
-  {s:"Tens and ones", q:"7 tens and 3 ones make which number?", a:"73", w:["37","703","10"], e:"7 tens = 70, and 70 + 3 = 73."},
-  {s:"Tens and ones", q:"9 tens and 0 ones make which number?", a:"90", w:["9","99","900"], e:"9 tens = 90, and there are no ones to add."},
-  {s:"Tens and ones", q:"What is the value of the 4 in 41?", a:"40", w:["4","1","41"], e:"The 4 is in the tens place, so it is worth 4 tens = 40."},
-  {s:"Tens and ones", q:"What is the value of the 8 in 78?", a:"8", w:["80","7","78"], e:"The 8 is in the ones place, so it is worth just 8."},
-  {s:"Tens and ones", q:"60 + 2 = ?", a:"62", w:["26","602","8"], e:"6 tens and 2 ones make 62."},
-  {s:"Tens and ones", q:"What number do the blocks show?", v:{h:0,t:3,o:6}, a:"36", w:["63","306","9"], e:"3 tens = 30 and 6 ones = 6. So 30 + 6 = 36."},
-  {s:"Tens and ones", q:"Which shows 74 in expanded form?", a:"70 + 4", w:["7 + 4","40 + 7","700 + 4"], e:"74 is 7 tens and 4 ones, which is 70 + 4."},
-  {s:"Tens and ones", q:"Which number has the digit 5 in the tens place?", a:"53", w:["35","15","25"], e:"53 has 5 tens and 3 ones. In the others, the 5 is in the ones place."},
-
-  // ---------- Hundreds ----------
-  {s:"Hundreds", q:"How many hundreds are in 300?", a:"3", w:["30","300","100"], e:"300 is 3 hundreds, 0 tens and 0 ones."},
-  {s:"Hundreds", q:"What number do the blocks show?", v:{h:4,t:1,o:5}, a:"415", w:["514","145","451"], e:"4 hundreds, 1 ten and 5 ones make 400 + 10 + 5 = 415."},
-  {s:"Hundreds", q:"In 926, which digit is in the tens place?", a:"2", w:["9","6","20"], e:"926 has 9 hundreds, 2 tens and 6 ones."},
-  {s:"Hundreds", q:"What is the value of the 7 in 372?", a:"70", w:["7","700","2"], e:"The 7 is in the tens place, so its value is 7 tens = 70."},
-  {s:"Hundreds", q:"Which number is 800 + 50 + 3?", a:"853", w:["835","538","8,053"], e:"8 hundreds, 5 tens and 3 ones make 853."},
-  {s:"Hundreds", q:"Which shows 706 in expanded form?", a:"700 + 6", w:["700 + 60","70 + 6","7 + 0 + 6"], e:"706 has 7 hundreds, 0 tens and 6 ones, so it is 700 + 6."},
-  {s:"Hundreds", q:"What number do the blocks show?", v:{h:1,t:0,o:9}, a:"109", w:["190","19","119"], e:"1 hundred, 0 tens and 9 ones make 109."},
-  {s:"Hundreds", q:"What is 100 more than 234?", a:"334", w:["244","235","134"], e:"100 more means the hundreds digit goes up by 1: 234 becomes 334."},
-
-  // ---------- Comparing & ordering ----------
-  {s:"Comparing & ordering", q:"Which number is the greatest?", a:"91", w:["19","90","81"], e:"91 and 90 both have 9 tens, so look at the ones: 1 is more than 0. 91 is the greatest."},
-  {s:"Comparing & ordering", q:"Which number is the smallest?", a:"28", w:["82","38","29"], e:"28 and 29 both have 2 tens, and 8 ones is less than 9 ones. 28 is the smallest."},
-  {s:"Comparing & ordering", q:"Which sign makes this true?  63 ___ 36", a:">", w:["<","="], e:"63 has 6 tens and 36 has 3 tens. 63 is greater, so 63 > 36."},
-  {s:"Comparing & ordering", q:"Which sign makes this true?  405 ___ 450", a:"<", w:[">","="], e:"Both have 4 hundreds. 405 has 0 tens and 450 has 5 tens, so 405 < 450."},
-  {s:"Comparing & ordering", q:"Which list goes from least to greatest?", a:"18, 81, 88", w:["81, 18, 88","88, 81, 18","18, 88, 81"], e:"18 is smallest, then 81, then 88."},
-  {s:"Comparing & ordering", q:"Which list goes from greatest to least?", a:"620, 602, 62", w:["62, 602, 620","602, 620, 62","620, 62, 602"], e:"620 and 602 have 6 hundreds, and 620 is bigger. 62 has no hundreds, so it is last."},
-  {s:"Comparing & ordering", q:"Which number is between 78 and 80?", a:"79", w:["77","81","70"], e:"79 comes after 78 and before 80."},
-  {s:"Comparing & ordering", q:"Which number is 1 less than 500?", a:"499", w:["400","501","490"], e:"Counting back from 500: 499. The 5 hundreds becomes 4 hundreds and 9 tens and 9 ones."},
-
-  // ---------- Skip counting ----------
-  {s:"Skip counting", q:"Count by 2s: 28, 30, 32, ___", a:"34", w:["33","36","35"], e:"Add 2 each time: 32 + 2 = 34."},
-  {s:"Skip counting", q:"Count by 5s: 55, 60, 65, ___", a:"70", w:["66","75","80"], e:"Add 5 each time: 65 + 5 = 70."},
-  {s:"Skip counting", q:"Count by 10s: 60, 70, 80, ___", a:"90", w:["81","100","85"], e:"Add 10 each time: 80 + 10 = 90."},
-  {s:"Skip counting", q:"Count by 10s: 23, 33, 43, ___", a:"53", w:["44","63","50"], e:"Add 10 each time. Only the tens digit changes: 43 + 10 = 53."},
-  {s:"Skip counting", q:"Count back by 10s: 90, 80, 70, ___", a:"60", w:["50","71","65"], e:"Take away 10 each time: 70 − 10 = 60."},
-  {s:"Skip counting", q:"Count back by 2s: 20, 18, 16, ___", a:"14", w:["15","12","13"], e:"Take away 2 each time: 16 − 2 = 14."},
-  {s:"Skip counting", q:"Count by 100s: 200, 300, 400, ___", a:"500", w:["410","600","450"], e:"Add 100 each time. The hundreds digit goes up by 1: 500."},
-  {s:"Skip counting", q:"Count by 5s: 40, 45, ___, 55, 60. What number is missing?", a:"50", w:["48","52","51"], e:"45 + 5 = 50, and 50 + 5 = 55."},
-
-  // ---------- Even, odd & ordinals ----------
-  {s:"Even, odd & ordinals", q:"Which number is even?", a:"58", w:["37","71","95"], e:"58 ends in 8, so it can be shared into two equal groups. It is even."},
-  {s:"Even, odd & ordinals", q:"Which number is odd?", a:"49", w:["26","50","84"], e:"49 ends in 9, so one is left over when you make pairs. It is odd."},
-  {s:"Even, odd & ordinals", q:"You have 9 stickers. Can you share them equally between 2 friends with none left over?", a:"No, 9 is odd", w:["Yes, 9 is even","No, 9 is even","Yes, 9 is big"], e:"9 is odd, so when you share between 2 there is always 1 left over."},
-  {s:"Even, odd & ordinals", q:"Which number does “thirtieth” mean?", a:"30th", w:["3rd","13th","31st"], e:"Thirtieth is the position number 30, written 30th."},
-  {s:"Even, odd & ordinals", q:"Ben is 4th in line. How many people are in front of him?", a:"3", w:["4","5","1"], e:"If Ben is 4th, the 1st, 2nd and 3rd people are in front of him. That is 3 people."},
-
-  // ---------- Rounding & word problems ----------
-  {s:"Rounding & word problems", q:"Round 64 to the nearest ten.", a:"60", w:["70","65","50"], e:"64 is closer to 60 than to 70, because 4 ones is less than halfway."},
-  {s:"Rounding & word problems", q:"Round 75 to the nearest ten.", a:"80", w:["70","76","90"], e:"75 is exactly halfway between 70 and 80. When it is halfway, we round up to 80."},
-  {s:"Rounding & word problems", q:"A dot on a number line is exactly halfway between 10 and 20. What number is it?", a:"15", w:["12","25","5"], e:"Halfway between 10 and 20 is 15, since 10 + 5 = 15 and 15 + 5 = 20."},
-  {s:"Rounding & word problems", q:"Sam has 3 bundles of 10 straws and 9 loose straws. How many straws does he have?", a:"39", w:["93","309","12"], e:"3 tens = 30, plus 9 ones = 39 straws."},
-  {s:"Rounding & word problems", q:"One tray holds 10 eggs. How many eggs are on 5 trays?", a:"50", w:["15","5","500"], e:"5 groups of ten make 5 tens = 50 eggs."}
+// [topic, question, correct answer, [3 wrong answers], explanation]
+const Q = [
+["Variables","A student tests how the height of a ramp affects how far a toy car rolls. What is the independent variable?","The height of the ramp",["The distance the car rolls","The mass of the toy car","The type of floor the car rolls on"],"The independent variable is the one the scientist changes on purpose. Here, the ramp height is changed."],
+["Variables","In the ramp experiment (ramp height and distance rolled), what is the dependent variable?","The distance the car rolls",["The height of the ramp","The toy car that is used","The person who lets the car go"],"The dependent variable is what you measure. It changes because of the independent variable."],
+["Variables","What is the independent variable?","The variable the scientist changes on purpose",["The variable that is measured at the end of the test","The variable that is kept the same each time","The variable that changes all by itself"],"Independent = the one you change (manipulate)."],
+["Variables","What is the dependent variable?","The variable that is measured and changes in response",["The variable the scientist changes on purpose","The variable that is kept the same in every trial","The variable the scientist predicts before starting"],"Dependent = the one that depends on the change. It is the result you measure."],
+["Variables","A student gives plants 0, 5, 10 and 15 mL of fertilizer and measures plant height after 2 weeks. What is the dependent variable?","Plant height",["Amount of fertilizer","Number of weeks","Type of plant"],"Plant height is measured and responds to the fertilizer."],
+["Variables","In the fertilizer experiment, which is a controlled variable?","The type of soil in every pot",["The amount of fertilizer each plant gets","The height of each plant at the end","The number of leaves on each plant"],"Controlled variables are kept the same so the test is fair."],
+["Variables","A student studies how water temperature affects how fast sugar dissolves. What is the independent variable?","Temperature of the water",["Time it takes the sugar to dissolve","Amount of sugar in each cup","Size of the cup"],"Water temperature is the thing being changed."],
+["Variables","In the sugar experiment, which should be a controlled variable?","The amount of sugar",["The temperature of the water","The time to dissolve","The way the water was heated"],"Keep the sugar amount the same each time so only temperature changes."],
+["Variables","Why should you change only ONE independent variable at a time?","So you know which change caused the results",["So the experiment can be finished faster","So the dependent variable stays exactly the same","So no measurements need to be taken"],"If two things change, you can't tell which one caused the result."],
+["Variables","A student drops balls of different masses from the same height and measures how high each bounces. What is the independent variable?","Mass of the ball",["Bounce height","Height the balls are dropped from","Surface the balls land on"],"Mass is what the student changes. Drop height and surface are kept the same."],
+["Graphs","On a graph, which axis does the independent variable go on?","The X-axis",["The Y-axis","Either axis","The title"],"Independent variable goes on the X-axis."],
+["Graphs","On a graph, which axis does the dependent variable go on?","The Y-axis",["The X-axis","Either axis","Neither axis"],"Dependent variable goes on the Y-axis."],
+["Graphs","The X-axis is the line that runs:","Left to right (horizontal)",["Up and down (vertical)","From the top corner to the bottom corner","Around the edge of the graph"],"X is across (horizontal). Y goes up (vertical)."],
+["Graphs","You graph amount of fertilizer and plant height. What goes on the X-axis?","Amount of fertilizer",["Height of the plant","Type of soil used","Number of leaves"],"Fertilizer amount is the independent variable, so it goes on X."],
+["Graphs","A graph shows time on the X-axis and distance on the Y-axis. What does this tell you?","Distance is the variable being measured as time changes",["Distance is the variable the scientist changed","Distance is a controlled variable","Time is the variable being measured"],"Y-axis = the measured (dependent) variable."],
+["Graphs","A student heats water and records its temperature every minute. What goes on the X-axis?","Time (minutes)",["Temperature (°C)","Amount of water","Type of pot"],"Time is the thing that changes on a schedule (independent). Temperature is measured."],
+["Graphs","A graph is titled 'Effect of Ramp Height on Distance Rolled.' What belongs on the Y-axis?","Distance rolled",["Ramp height","Mass of the car","Type of floor"],"The title says: height affects distance. Distance is the result, so it goes on Y."],
+["Graphs","What should each axis of a graph have?","A label with units",["A different color","A picture of the experiment","The conclusion"],"Labels and units tell the reader what the numbers mean."],
+["Newton's 3rd Law","Which statement is Newton's third law of motion?","Every action force has an equal and opposite reaction force",["An object at rest stays at rest unless a force acts on it","Force equals mass times acceleration","Heavier objects always fall faster than light ones"],"The 1st law is about inertia. The 2nd law is F = ma. The 3rd law is action-reaction."],
+["Newton's 3rd Law","You push on a wall with a force of 20 N. How does the wall push on you?","With 20 N back toward you",["With 0 N, because the wall does not move","With more than 20 N toward you","With 20 N in the same direction as your push"],"The reaction force is equal in size and opposite in direction."],
+["Newton's 3rd Law","A swimmer pushes the water backward. What does the water do to the swimmer?","Pushes the swimmer forward",["Pushes the swimmer backward","Pulls the swimmer downward","Does not push at all"],"Swimmer pushes water back, water pushes swimmer forward."],
+["Newton's 3rd Law","Air rushes out the back of a balloon and the balloon flies forward. Which is an action-reaction pair?","Balloon pushes air backward; air pushes balloon forward",["Gravity pulls the balloon down; the floor pushes it up","Balloon pushes air forward; air pushes balloon backward","The balloon moves forward; the air stays still"],"The pair is the balloon pushing the air and the air pushing the balloon."],
+["Newton's 3rd Law","Newton's third law is also known as the law of:","Action and reaction",["Inertia and motion","Force and acceleration","Gravity and weight"],"Third law = action and reaction."],
+["Newton's 3rd Law","A small bug hits the windshield of a fast truck. Compare the forces.","The forces are equal in size",["The truck pushes harder on the bug","The bug pushes harder on the truck","Only the truck exerts a force"],"Action-reaction forces are always equal. The effects differ because the masses differ."],
+["Newton's 3rd Law","You jump from a small boat toward a dock. What happens to the boat?","It moves backward, away from the dock",["It moves forward, toward the dock","It stays exactly where it was before","It moves straight up into the air"],"You push the boat back, so the boat pushes you forward."],
+["Newton's 3rd Law","A skateboarder pushes against a wall and rolls away. What force moves the skateboarder?","The wall pushing back on the skateboarder",["Friction from the ground on the wheels","Gravity pulling on the skateboarder","The skateboarder's own weight pressing down"],"The wall's reaction force pushes the skateboarder away."],
+["Newton's 3rd Law","Why do action and reaction forces NOT cancel each other out?","They act on different objects",["They are different sizes","They happen at different times","They point in the same direction"],"Forces only cancel when they act on the same object."],
+["Newton's 3rd Law","A bird flaps its wings and pushes air downward. What does the air do to the bird?","Pushes the bird upward",["Pushes the bird downward","Pushes the bird sideways","Pulls the bird toward the ground"],"Wings push air down, air pushes bird up."],
+["Force Pairs","When do the two forces in an action-reaction pair happen?","At exactly the same time",["The reaction happens after the action","Only when the objects are moving","The action happens first, then the reaction"],"Force pairs are simultaneous. One cannot exist without the other."],
+["Force Pairs","'Simultaneous' force pairs means the two forces:","Happen at the same time",["Are the same direction","Happen one after another","Cancel each other out"],"Simultaneous means at the same time."],
+["Force Pairs","Earth's gravity pulls down on you. What is the other force in this pair?","You pull up on Earth",["The ground pushes up on you","Air pushes down on you","Friction pushes against your shoes"],"The pair is Earth pulls you and you pull Earth. The ground pushing up is a different pair."],
+["Force Pairs","A table pushes up on a book (normal force). What is the force pair of this push?","The book pushes down on the table",["Earth pulls down on the book","The book pulls Earth upward","The table pulls down on the floor"],"Pairs are between the same two objects: table and book."],
+["Force Pairs","A hammer hits a nail. When does the nail push back on the hammer?","At the same moment the hammer hits",["A moment after the hammer hits it","Just before the hammer hits it","Only if the nail moves into the wood"],"Force pairs happen together."],
+["Force Pairs","Skater A pushes Skater B with 30 N. What force does Skater B put on Skater A?","30 N in the opposite direction, at the same time",["30 N in the same direction as the push","15 N in the opposite direction, a moment later","0 N, because B must be moving first"],"Equal size, opposite direction, same time."],
+["Thrust","What is thrust?","A push that moves an object forward, like a rocket engine",["A pull that draws objects toward the center of Earth","A force that slows down a moving object","An upward push from a surface under an object"],"Thrust is the pushing force that moves rockets and airplanes."],
+["Thrust","Where does a rocket's thrust come from?","Hot gases pushed out the bottom, pushing the rocket up",["Air under the rocket pushing it upward","Earth's magnetic field pulling it upward","The rocket's weight pushing against the ground"],"Gas goes down (action), rocket goes up (reaction)."],
+["Thrust","Which force works against the thrust of an airplane?","Drag",["Lift","Weight","Normal force"],"Drag (air resistance) opposes thrust. Weight opposes lift."],
+["Thrust","On an airplane, thrust is bigger than drag. What happens?","The plane speeds up",["The plane slows down","The plane stays at the same speed","The plane hovers in place"],"Unbalanced force: net force is forward, so it speeds up."],
+["Thrust","Which law best explains how a rocket gets its thrust?","Newton's third law",["Newton's first law","The law of universal gravitation","The law of conservation of mass"],"Gas pushed one way, rocket pushed the opposite way: action-reaction."],
+["Thrust","A jet engine blows gases out the back. In which direction is the thrust?","Forward, opposite the gases",["Backward, same as the gases","Straight down","Thrust has no direction"],"Thrust is opposite to the direction the gases go."],
+["States of Matter","Which describes the particles in a solid?","Packed tightly and vibrating in place",["Close together and sliding past each other","Far apart and moving freely","Not moving at all"],"Solid particles vibrate but stay in fixed positions."],
+["States of Matter","Which describes the particles in a liquid?","Close together but able to slide past each other",["Locked in a fixed pattern that never changes","Very far apart and moving very fast","Stuck to the walls of the container"],"Liquid particles flow, so liquids take the shape of their container."],
+["States of Matter","Which describes the particles in a gas?","Far apart and moving freely in all directions",["Close together and sliding past each other","Tightly packed together in neat rows","Vibrating in one spot without moving away"],"Gas particles spread out to fill the whole container."],
+["States of Matter","Which state of matter has a definite shape AND a definite volume?","Solid",["Liquid","Gas","Both liquid and gas"],"Only solids keep their own shape."],
+["States of Matter","A liquid has:","A definite volume but no definite shape",["A definite shape but no definite volume","Both a definite shape and volume","Neither a definite shape nor volume"],"Liquids take the shape of the container but the amount stays the same."],
+["States of Matter","A gas has:","No definite shape and no definite volume",["A definite volume but no definite shape","A definite shape but no definite volume","A definite shape and a definite volume"],"Gas spreads out to fill any container."],
+["States of Matter","Water becomes ice. What is this change called?","Freezing",["Melting","Condensation","Evaporation"],"Liquid to solid = freezing."],
+["States of Matter","Water droplets form on the outside of a cold glass. What is this called?","Condensation",["Evaporation","Freezing","Sublimation"],"Gas (water vapor) to liquid = condensation."],
+["States of Matter","What happens to the particles in a solid when heat is added?","They move faster",["They slow down","They stop moving","They become larger"],"Heat gives particles more energy, so they move faster."],
+["States of Matter","Which of these is a liquid at room temperature?","Cooking oil",["Steam","Table salt","Helium"],"Steam and helium are gases. Salt is a solid."],
+["Magnetism","What happens when two magnets' poles meet?","Opposite poles attract and like poles repel",["Like poles attract and opposite poles repel","All poles attract","All poles repel"],"North-South attract. North-North and South-South repel."],
+["Magnetism","Which object would a magnet attract?","An iron nail",["A piece of aluminum foil","A plastic spoon","A wooden pencil"],"Magnets attract iron, nickel and cobalt."],
+["Magnetism","Magnetic force is what type of force?","A non-contact force that acts at a distance",["A contact force that needs touching","A force that only works under water","A force that only pulls things downward"],"A magnet can pull a paper clip without touching it."],
+["Magnetism","Where is a bar magnet the strongest?","At its poles",["In the very middle","Equally everywhere","On the flat sides"],"The magnetic force is strongest at the ends (poles)."],
+["Magnetism","What is a magnetic field?","The area around a magnet where its force acts",["The outside surface of the magnet itself","The metal found inside of a magnet","The north pole of the magnet only"],"The field is the space around the magnet where it can push or pull."],
+["Magnetism","You cut a bar magnet in half. What do you get?","Two smaller magnets, each with a north and south pole",["One piece with only north and one with only south","Two pieces that have lost all their magnetism","Two magnets that each have only a north pole"],"Every piece of a magnet has two poles."],
+["Magnetism","A student tests how many paper clips a magnet can pick up from different distances. What is the dependent variable?","Number of paper clips picked up",["Distance between the magnet and the clips","Type of magnet","Size of the paper clips"],"The count is the result being measured."],
+["Magnetism","Why does a compass needle point north?","It lines up with Earth's magnetic field",["Gravity pulls the needle toward the north","The north side of Earth is heavier","It follows the stars at night"],"A compass needle is a small magnet that lines up with Earth's field."],
+["Applied Force","What is an applied force?","A push or pull from a person or object that is touching",["The pull of gravity on an object toward Earth","The push of a surface back on an object resting on it","The force that slows down objects sliding on a surface"],"Applied force is a push or pull directly from something."],
+["Applied Force","Which is an example of an applied force?","Pushing a shopping cart",["A book resting on a desk","An apple falling from a tree","A parachute slowing a skydiver"],"You are pushing the cart directly. The others involve gravity, normal force or air resistance."],
+["Applied Force","A student pushes a box with 10 N to the right. Friction pushes 4 N to the left. What is the net force?","6 N to the right",["14 N to the right","6 N to the left","10 N to the right"],"Subtract: 10 - 4 = 6. The bigger force sets the direction."],
+["Applied Force","What unit is used to measure force?","Newtons (N)",["Kilograms (kg)","Joules (J)","Meters (m)"],"Force is measured in newtons."],
+["Applied Force","A person pushes a box with 15 N to the right. Friction is 15 N to the left. What is true?","The forces are balanced and the net force is 0 N",["The net force is 30 N to the right","The box speeds up toward the right","The box slows down and then moves left"],"Equal and opposite forces cancel, so the motion does not change."],
+["Applied Force","Applied force is a:","Contact force",["Non-contact force","Force that only works in space","Force that has no direction"],"The object applying the force must touch the other object."],
+["Normal Force","What is the normal force?","The push a surface gives back, at a right angle to it",["The pull that draws objects toward Earth's center","The force that resists objects sliding over a surface","The forward push that comes from an engine"],"Normal force is the support force from a surface."],
+["Normal Force","A book rests on a table. In which direction is the normal force on the book?","Upward",["Downward","Sideways","The normal force has no direction"],"The table pushes up on the book."],
+["Normal Force","A book weighs 5 N and is resting on a table. How big is the normal force on it?","5 N upward",["0 N","5 N downward","10 N upward"],"The forces are balanced, so the table pushes up with 5 N, and the book does not move."],
+["Normal Force","Why is there a normal force on an object resting on the ground?","The ground pushes back when the object presses on it",["Gravity pulls the object up off the ground","Friction pushes the object upward from below","Magnetism holds the object against the ground"],"A surface pushes back when something presses on it."],
+["Normal Force","A person stands still on the floor. Which two forces are balanced?","Gravity and normal force",["Normal force and friction","Applied force and gravity","Gravity and thrust"],"Gravity pulls down and the floor pushes up with equal force."],
+["Normal Force","Which is an example of normal force?","The floor pushing up on your feet",["Wind pushing a sail","A rocket engine pushing the rocket","Earth pulling on the Moon"],"The floor is the surface pushing back on you."]
 ];
 
-const $ = id => document.getElementById(id);
-const letters = ["A","B","C","D"];
-let order, idx, score, answers;
+const TOPICS=[...new Set(Q.map(q=>q[0]))];
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-  return a;
+$("chips").innerHTML=TOPICS.map(t=>`<span class="chip">${t}</span>`).join("");
+
+let order=[],i=0,score=0,missed=[],byTopic={};
+
+function start(list){
+  order=shuffle(list);i=0;score=0;missed=[];byTopic={};
+  TOPICS.forEach(t=>byTopic[t]={r:0,n:0});
+  $("start").classList.add("hide");$("end").classList.add("hide");$("quiz").classList.remove("hide");
+  show();
 }
-
-function show(id){["start","quiz","result"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0);}
-
-function begin(){
-  // fresh random option order every attempt, so answers can't be learned by position
-  order = QUESTIONS.map(q => ({...q, opts: shuffle([q.a, ...q.w])}));
-  idx = 0; score = 0; answers = [];
-  show("quiz"); render();
-}
-
-function blocksHTML(v){
-  let h = "";
-  if(v.h) h += '<div class="grp">' + '<div class="hund">100</div>'.repeat(v.h) + '</div>';
-  if(v.t) h += '<div class="grp">' + '<div class="ten"></div>'.repeat(v.t) + '</div>';
-  if(v.o) h += '<div class="grp">' + '<div class="one"></div>'.repeat(v.o) + '</div>';
-  return '<div class="blocks"><div class="row">'+h+'</div>' +
-    '<div class="legend">' +
-    (v.h?'<span><i class="hund" style="width:18px;height:18px;font-size:0"></i> = 100</span>':'') +
-    '<span><i class="ten" style="display:inline-block;width:8px;height:18px"></i> = 10</span>' +
-    '<span><i class="one" style="display:inline-block"></i> = 1</span></div></div>';
-}
-
-function render(){
-  const q = order[idx];
-  $("count").textContent = "Question " + (idx+1) + " of " + order.length;
-  $("scoreLive").textContent = "⭐ " + score;
-  $("prog").style.width = (idx/order.length*100) + "%";
-  $("tag").textContent = q.s;
-  $("qtext").textContent = q.q;
-  $("vis").innerHTML = q.v ? blocksHTML(q.v) : "";
-  const box = $("opts"); box.innerHTML = "";
-  q.opts.forEach((o,i)=>{
-    const b = document.createElement("button");
-    b.className = "opt";
-    b.innerHTML = '<span class="k">'+letters[i]+'</span><span></span>';
-    b.lastChild.textContent = o;
-    b.onclick = () => choose(o, b);
-    box.appendChild(b);
+function show(){
+  const [topic,q,ans,wrong]=order[i];
+  $("qn").textContent=`Question ${i+1} of ${order.length}`;
+  $("sc").textContent=`Score: ${score}`;
+  $("pb").style.width=(i/order.length*100)+"%";
+  $("tag").textContent=topic;
+  $("q").textContent=q;
+  $("fb").innerHTML="";$("next").classList.add("hide");
+  const opts=shuffle([ans,...wrong]);
+  $("opts").innerHTML="";
+  opts.forEach(o=>{
+    const b=document.createElement("button");b.className="opt";b.textContent=o;
+    b.onclick=()=>pick(b,o);$("opts").appendChild(b);
   });
-  $("fb").className = "fb"; $("fb").innerHTML = "";
-  $("nextWrap").classList.remove("show");
-  $("next").textContent = idx === order.length-1 ? "See my results 🎉" : "Next →";
 }
-
-function choose(pick, btn){
-  const q = order[idx];
-  const ok = pick === q.a;
+function pick(btn,choice){
+  const [topic,q,ans,wrong,why]=order[i];
+  const ok=choice===ans;
+  byTopic[topic].n++;
   document.querySelectorAll(".opt").forEach(b=>{
-    b.disabled = true;
-    const val = b.lastChild.textContent;
-    if(val === q.a) b.classList.add("correct");
+    b.disabled=true;
+    if(b.textContent===ans)b.classList.add("right");
   });
-  if(!ok) btn.classList.add("wrong");
-  if(ok) score++;
-  answers.push({q, pick, ok});
-  $("scoreLive").textContent = "⭐ " + score;
-  const fb = $("fb");
-  fb.className = "fb show " + (ok ? "good" : "bad");
-  fb.innerHTML = "<b>" + (ok ? "✅ Correct! Well done!" : "Not quite. The answer is " + q.a + ".") + "</b>" + q.e;
-  $("nextWrap").classList.add("show");
-  $("prog").style.width = ((idx+1)/order.length*100) + "%";
+  if(ok){score++;byTopic[topic].r++;}
+  else{btn.classList.add("wrong");missed.push(order[i]);}
+  $("sc").textContent=`Score: ${score}`;
+  $("fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><b>${ok?"Correct!":"Not quite."}</b> ${ok?"":"The answer is: <b>"+ans+"</b>. "}${why}</div>`;
+  const n=$("next");n.classList.remove("hide");
+  n.textContent=i===order.length-1?"See results":"Next question";
+  n.focus();
 }
-
+$("next").onclick=()=>{i++;i<order.length?show():finish()};
 function finish(){
-  show("result");
-  const n = order.length, pct = score/n;
-  $("final").textContent = score + " / " + n;
-  const st = pct>=.9?5:pct>=.75?4:pct>=.6?3:pct>=.4?2:1;
-  $("stars").textContent = "⭐".repeat(st) + "☆".repeat(5-st);
-  $("msg").textContent =
-    pct>=.9 ? "Amazing! You really know your numbers!" :
-    pct>=.75 ? "Great job! You are almost a number superstar." :
-    pct>=.6 ? "Good work! Look at the ones you missed and try again." :
-    "Nice try! Practise the topics below and have another go.";
-  // topic breakdown
-  const by = {};
-  answers.forEach(a=>{const s=a.q.s;by[s]=by[s]||{r:0,t:0};by[s].t++;if(a.ok)by[s].r++;});
-  $("break").innerHTML = Object.keys(by).map(s=>{
-    const p = Math.round(by[s].r/by[s].t*100);
-    return '<div><div class="brow"><span>'+s+'</span><b>'+by[s].r+' / '+by[s].t+'</b></div><div class="mini"><div style="width:'+p+'%"></div></div></div>';
-  }).join("");
-  // missed questions
-  const missed = answers.filter(a=>!a.ok);
-  const mw = $("missWrap");
-  if(!missed.length){ mw.innerHTML = "<p><b>You got every question right! 🏆</b></p>"; }
-  else{
-    mw.innerHTML = "<h2>Questions to look at again</h2>" + missed.map(a=>{
-      const d = document.createElement("div"); d.className="miss";
-      d.innerHTML = "<div></div><div>You chose: <span class='you'></span> · Correct: <span class='right'></span></div><div style='color:#6b7089;margin-top:4px'></div>";
-      d.children[0].textContent = a.q.q;
-      d.querySelector(".you").textContent = a.pick;
-      d.querySelector(".right").textContent = a.q.a;
-      d.children[2].textContent = a.q.e;
-      return d.outerHTML;
-    }).join("") + "<br>";
+  $("quiz").classList.add("hide");$("end").classList.remove("hide");
+  const pct=Math.round(score/order.length*100);
+  const msg=pct>=90?"Excellent work!":pct>=75?"Great job! Review the ones you missed.":pct>=60?"Good effort. Study the topics below and try again.":"Keep studying. Focus on the weakest topics below.";
+  let h=`<h1>Quiz complete</h1><div class="big">${score} / ${order.length}</div><p class="sub">${pct}% - ${msg}</p><h2>By topic</h2>`;
+  TOPICS.forEach(t=>{const s=byTopic[t];if(s.n)h+=`<div class="row"><span>${t}</span><b>${s.r} / ${s.n}</b></div>`});
+  if(missed.length){
+    h+=`<h2 style="margin-top:22px">Questions to review (${missed.length})</h2>`;
+    missed.forEach(m=>{h+=`<div class="miss"><div>${m[1]}</div><div class="a">Answer: ${m[2]}</div><div style="color:var(--mute)">${m[4]}</div></div>`});
   }
+  h+=`<div class="btns"><button class="primary" id="again">Take all 70 again</button>`;
+  if(missed.length)h+=`<button class="ghost" id="redo">Retry missed only</button>`;
+  h+=`</div>`;
+  $("end").innerHTML=h;
+  $("again").onclick=()=>start(Q);
+  if(missed.length){const m=missed.slice();$("redo").onclick=()=>start(m);}
+  window.scrollTo(0,0);
 }
-
-$("go").onclick = begin;
-$("again").onclick = begin;
-$("next").onclick = () => { if(idx === order.length-1) finish(); else { idx++; render(); } };
+$("go").onclick=()=>start(Q);
 </script>
 </body>
 </html>
