@@ -38,6 +38,20 @@ button{font:inherit;cursor:pointer}
 .miss .a{color:var(--ok);font-weight:600}
 .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .hide{display:none}
+.note h3{margin:22px 0 8px;font-size:1.1rem;color:var(--brand)}
+.note p{margin:0 0 10px}
+.defs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.def{border-radius:14px;padding:14px 16px}
+.def.iv{background:#edf1ff;border:2px solid var(--brand2)}
+.def.dv{background:#fff4e5;border:2px solid #f59f00}
+.def b.t{display:block;font-size:1.05rem;margin-bottom:4px}
+.def small{display:block;color:var(--mute);margin-top:6px}
+.note table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.95rem}
+.note th,.note td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+.note th{background:#f4f6fb}
+.callout{background:var(--okbg);border-left:5px solid var(--ok);border-radius:10px;padding:12px 14px;margin:12px 0}
+.note svg{max-width:100%;height:auto;display:block;margin:8px auto}
+@media(max-width:560px){.defs{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -46,7 +60,71 @@ button{font:inherit;cursor:pointer}
     <h1>Grade 6 Science Quiz</h1>
     <p class="sub">70 questions to get ready for your test. Questions and answer choices are shuffled every time.</p>
     <div class="chips" id="chips"></div>
-    <button class="primary" id="go">Start quiz</button>
+    <div class="btns" style="margin-top:0">
+      <button class="primary" id="readnote">Read the study note first</button>
+      <button class="ghost" id="go">Skip to quiz</button>
+    </div>
+  </div>
+  <div id="notes" class="card note hide">
+    <h1>Study note: Independent and Dependent Variables</h1>
+    <p class="sub">Read this first, then take the quiz.</p>
+
+    <div class="defs">
+      <div class="def iv">
+        <b class="t">Independent variable (IV)</b>
+        The thing you <b>change on purpose</b>.
+        <small>Goes on the <b>X-axis</b> (across, horizontal).</small>
+      </div>
+      <div class="def dv">
+        <b class="t">Dependent variable (DV)</b>
+        The thing you <b>measure</b>. It changes <b>because of</b> the IV.
+        <small>Goes on the <b>Y-axis</b> (up, vertical).</small>
+      </div>
+    </div>
+
+    <div class="callout"><b>Quick test:</b> Ask "What did I change?" That is the independent variable. Ask "What did I measure?" That is the dependent variable.</div>
+
+    <h3>Controlled variables</h3>
+    <p>Controlled variables are everything else that you <b>keep the same</b> so the test is fair. If two things change, you cannot tell which one caused the result. Change <b>only one</b> independent variable at a time.</p>
+
+    <h3>Worked example 1</h3>
+    <p><b>Question:</b> Does the size of a paper airplane's wings change how far it flies?</p>
+    <table>
+      <tr><th>Part of the experiment</th><th>Answer</th></tr>
+      <tr><td>Independent variable (changed)</td><td>Wing size</td></tr>
+      <tr><td>Dependent variable (measured)</td><td>Distance the plane flies</td></tr>
+      <tr><td>Controlled variables (kept the same)</td><td>Type of paper, the thrower, the throwing strength, the room</td></tr>
+      <tr><td>X-axis</td><td>Wing size (cm)</td></tr>
+      <tr><td>Y-axis</td><td>Distance flown (m)</td></tr>
+    </table>
+
+    <h3>Worked example 2</h3>
+    <p><b>Question:</b> Does the number of hours a student studies change the test score?</p>
+    <table>
+      <tr><th>Part of the experiment</th><th>Answer</th></tr>
+      <tr><td>Independent variable</td><td>Hours studied</td></tr>
+      <tr><td>Dependent variable</td><td>Test score</td></tr>
+      <tr><td>Controlled variables</td><td>Same test, same subject, same amount of sleep</td></tr>
+    </table>
+
+    <h3>How it looks on a graph</h3>
+    <svg viewBox="0 0 420 250" role="img" aria-label="Graph with the independent variable on the X-axis and the dependent variable on the Y-axis">
+      <line x1="60" y1="20" x2="60" y2="200" stroke="#1d2433" stroke-width="2"/>
+      <line x1="60" y1="200" x2="400" y2="200" stroke="#1d2433" stroke-width="2"/>
+      <polyline points="80,180 150,150 220,115 290,85 360,50" fill="none" stroke="#3b5bdb" stroke-width="3"/>
+      <g fill="#3b5bdb"><circle cx="80" cy="180" r="5"/><circle cx="150" cy="150" r="5"/><circle cx="220" cy="115" r="5"/><circle cx="290" cy="85" r="5"/><circle cx="360" cy="50" r="5"/></g>
+      <text x="230" y="235" text-anchor="middle" font-size="14" font-weight="700" fill="#3b5bdb">X-axis: Wing size (cm) = independent</text>
+      <text transform="translate(16 110) rotate(-90)" text-anchor="middle" font-size="14" font-weight="700" fill="#c77700">Y-axis: Distance (m) = dependent</text>
+    </svg>
+
+    <h3>Remember</h3>
+    <ul>
+      <li><b>I</b>ndependent = I change it = <b>X</b>-axis (goes across).</li>
+      <li><b>D</b>ependent = Data I measure = <b>Y</b>-axis (goes up).</li>
+      <li>Always label both axes with units.</li>
+    </ul>
+
+    <div class="btns"><button class="primary" id="go2">Start quiz</button></div>
   </div>
   <div id="quiz" class="card hide">
     <div class="top"><span id="qn"></span><span id="sc"></span></div>
@@ -146,7 +224,8 @@ let order=[],i=0,score=0,missed=[],byTopic={};
 function start(list){
   order=shuffle(list);i=0;score=0;missed=[];byTopic={};
   TOPICS.forEach(t=>byTopic[t]={r:0,n:0});
-  $("start").classList.add("hide");$("end").classList.add("hide");$("quiz").classList.remove("hide");
+  $("start").classList.add("hide");$("notes").classList.add("hide");$("end").classList.add("hide");$("quiz").classList.remove("hide");
+  window.scrollTo(0,0);
   show();
 }
 function show(){
@@ -200,6 +279,8 @@ function finish(){
   window.scrollTo(0,0);
 }
 $("go").onclick=()=>start(Q);
+$("go2").onclick=()=>start(Q);
+$("readnote").onclick=()=>{$("start").classList.add("hide");$("notes").classList.remove("hide");window.scrollTo(0,0)};
 </script>
 </body>
 </html>
