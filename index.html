@@ -3,284 +3,240 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grade 6 Science Quiz</title>
+<title>Science Quiz Challenge</title>
 <style>
-:root{--bg:#f4f6fb;--card:#fff;--ink:#1d2433;--mute:#667089;--brand:#3b5bdb;--brand2:#5c7cfa;--ok:#2b9348;--okbg:#e6f6ec;--bad:#d62839;--badbg:#fdeaec;--line:#e1e5f0}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
-.card{background:var(--card);border-radius:18px;padding:26px;box-shadow:0 4px 18px rgba(30,40,90,.08)}
-h1{margin:0 0 6px;font-size:1.7rem}
-h2{margin:0 0 14px;font-size:1.25rem;line-height:1.4}
-.sub{color:var(--mute);margin:0 0 18px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
-.chip{background:#edf1ff;color:var(--brand);padding:5px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
-button{font:inherit;cursor:pointer}
-.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:0;padding:13px 26px;border-radius:12px;font-weight:700;font-size:1rem}
-.primary:hover{filter:brightness(1.07)}
-.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand);padding:11px 22px;border-radius:12px;font-weight:700}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--mute);margin-bottom:8px}
-.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:20px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0;transition:width .3s}
-.tag{display:inline-block;background:#edf1ff;color:var(--brand);font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px}
-.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 16px;margin:0 0 10px;font-size:1rem;color:var(--ink)}
-.opt:hover:not(:disabled){border-color:var(--brand2);background:#f6f8ff}
-.opt:disabled{cursor:default}
-.opt.right{border-color:var(--ok);background:var(--okbg)}
-.opt.wrong{border-color:var(--bad);background:var(--badbg)}
-.fb{border-radius:12px;padding:13px 16px;margin:14px 0;font-size:.97rem}
-.fb.ok{background:var(--okbg);border-left:5px solid var(--ok)}
-.fb.no{background:var(--badbg);border-left:5px solid var(--bad)}
-.big{font-size:3rem;font-weight:800;color:var(--brand);margin:4px 0}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
-.row b{white-space:nowrap}
-.miss{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:.93rem}
-.miss .a{color:var(--ok);font-weight:600}
-.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.hide{display:none}
-.note h3{margin:22px 0 8px;font-size:1.1rem;color:var(--brand)}
-.note p{margin:0 0 10px}
-.defs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-.def{border-radius:14px;padding:14px 16px}
-.def.iv{background:#edf1ff;border:2px solid var(--brand2)}
-.def.dv{background:#fff4e5;border:2px solid #f59f00}
-.def b.t{display:block;font-size:1.05rem;margin-bottom:4px}
-.def small{display:block;color:var(--mute);margin-top:6px}
-.note table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.95rem}
-.note th,.note td{border:1px solid var(--line);padding:8px 10px;text-align:left}
-.note th{background:#f4f6fb}
-.callout{background:var(--okbg);border-left:5px solid var(--ok);border-radius:10px;padding:12px 14px;margin:12px 0}
-.note svg{max-width:100%;height:auto;display:block;margin:8px auto}
-@media(max-width:560px){.defs{grid-template-columns:1fr}}
+  :root{
+    --bg1:#e0f7ff; --bg2:#fff4d6; --ink:#1f2a44; --card:#ffffff;
+    --blue:#2f80ed; --green:#27ae60; --red:#eb5757; --orange:#f2994a; --purple:#9b51e0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--ink);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  .card{background:var(--card);border-radius:24px;padding:26px;box-shadow:0 10px 30px rgba(31,42,68,.12)}
+  h1{margin:0 0 6px;font-size:2.2rem;text-align:center}
+  .sub{text-align:center;color:#51608a;margin-bottom:20px}
+  .big{font-size:4rem;text-align:center;margin:6px 0}
+  .topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:18px 0}
+  .topic{border-radius:16px;padding:12px 14px;color:#fff;font-weight:700;display:flex;align-items:center;gap:10px}
+  .topic span.e{font-size:1.6rem}
+  button{font:inherit;cursor:pointer;border:0}
+  .btn{background:var(--blue);color:#fff;font-weight:800;font-size:1.15rem;padding:14px 28px;border-radius:999px;
+    box-shadow:0 5px 0 #1d5fbd;transition:transform .08s}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #1d5fbd}
+  .btn.green{background:var(--green);box-shadow:0 5px 0 #1b8a49}
+  .center{text-align:center}
+  .top{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+  .pill{background:#eef3ff;border-radius:999px;padding:6px 14px}
+  .bar{height:14px;background:#e6ebf5;border-radius:999px;overflow:hidden;margin-bottom:18px}
+  .bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--green));transition:width .3s}
+  .tag{display:inline-block;color:#fff;font-weight:800;font-size:.85rem;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+  .q{font-size:1.4rem;font-weight:800;line-height:1.35;margin:4px 0 18px}
+  .opts{display:grid;gap:12px}
+  .opt{background:#f5f8ff;border:3px solid #d7e2fb;border-radius:16px;padding:14px 16px;text-align:left;
+    font-size:1.1rem;font-weight:700;color:var(--ink);display:flex;gap:12px;align-items:center}
+  .opt:hover:not(:disabled){border-color:var(--blue);background:#eaf2ff}
+  .opt .l{background:var(--blue);color:#fff;border-radius:50%;width:32px;height:32px;flex:none;display:grid;place-items:center;font-weight:800}
+  .opt.right{background:#e3f8ea;border-color:var(--green)}
+  .opt.right .l{background:var(--green)}
+  .opt.wrong{background:#fde8e8;border-color:var(--red)}
+  .opt.wrong .l{background:var(--red)}
+  .fb{margin-top:16px;border-radius:16px;padding:14px 16px;font-size:1.05rem;line-height:1.45;display:none}
+  .fb.show{display:block}
+  .fb.good{background:#e3f8ea}
+  .fb.bad{background:#fff0e0}
+  .fb b{display:block;font-size:1.15rem;margin-bottom:4px}
+  .next{margin-top:16px;display:none;text-align:right}
+  .next.show{display:block}
+  .stars{font-size:2.4rem;text-align:center;letter-spacing:4px}
+  .score{font-size:3rem;font-weight:900;text-align:center;color:var(--purple)}
+  .break{display:grid;gap:8px;margin:18px 0}
+  .row{display:flex;align-items:center;gap:10px}
+  .row .n{width:190px;font-weight:700;font-size:.95rem}
+  .row .b{flex:1;height:14px;background:#e6ebf5;border-radius:999px;overflow:hidden}
+  .row .b>div{height:100%}
+  .row .v{width:48px;text-align:right;font-weight:800}
+  .miss{background:#fafbff;border:2px solid #e3e9f7;border-radius:14px;padding:12px 14px;margin:10px 0}
+  .miss .a{color:var(--green);font-weight:800}
+  @media(max-width:520px){.row .n{width:120px;font-size:.85rem}.q{font-size:1.2rem}h1{font-size:1.8rem}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div id="start" class="card">
-    <h1>Grade 6 Science Quiz</h1>
-    <p class="sub">70 questions to get ready for your test. Questions and answer choices are shuffled every time.</p>
-    <div class="chips" id="chips"></div>
-    <div class="btns" style="margin-top:0">
-      <button class="primary" id="readnote">Read the study note first</button>
-      <button class="ghost" id="go">Skip to quiz</button>
-    </div>
-  </div>
-  <div id="notes" class="card note hide">
-    <h1>Study note: Independent and Dependent Variables</h1>
-    <p class="sub">Read this first, then take the quiz.</p>
-
-    <div class="defs">
-      <div class="def iv">
-        <b class="t">Independent variable (IV)</b>
-        The thing you <b>change on purpose</b>.
-        <small>Goes on the <b>X-axis</b> (across, horizontal).</small>
-      </div>
-      <div class="def dv">
-        <b class="t">Dependent variable (DV)</b>
-        The thing you <b>measure</b>. It changes <b>because of</b> the IV.
-        <small>Goes on the <b>Y-axis</b> (up, vertical).</small>
-      </div>
-    </div>
-
-    <div class="callout"><b>Quick test:</b> Ask "What did I change?" That is the independent variable. Ask "What did I measure?" That is the dependent variable.</div>
-
-    <h3>Controlled variables</h3>
-    <p>Controlled variables are everything else that you <b>keep the same</b> so the test is fair. If two things change, you cannot tell which one caused the result. Change <b>only one</b> independent variable at a time.</p>
-
-    <h3>Worked example 1</h3>
-    <p><b>Question:</b> Does the size of a paper airplane's wings change how far it flies?</p>
-    <table>
-      <tr><th>Part of the experiment</th><th>Answer</th></tr>
-      <tr><td>Independent variable (changed)</td><td>Wing size</td></tr>
-      <tr><td>Dependent variable (measured)</td><td>Distance the plane flies</td></tr>
-      <tr><td>Controlled variables (kept the same)</td><td>Type of paper, the thrower, the throwing strength, the room</td></tr>
-      <tr><td>X-axis</td><td>Wing size (cm)</td></tr>
-      <tr><td>Y-axis</td><td>Distance flown (m)</td></tr>
-    </table>
-
-    <h3>Worked example 2</h3>
-    <p><b>Question:</b> Does the number of hours a student studies change the test score?</p>
-    <table>
-      <tr><th>Part of the experiment</th><th>Answer</th></tr>
-      <tr><td>Independent variable</td><td>Hours studied</td></tr>
-      <tr><td>Dependent variable</td><td>Test score</td></tr>
-      <tr><td>Controlled variables</td><td>Same test, same subject, same amount of sleep</td></tr>
-    </table>
-
-    <h3>How it looks on a graph</h3>
-    <svg viewBox="0 0 420 250" role="img" aria-label="Graph with the independent variable on the X-axis and the dependent variable on the Y-axis">
-      <line x1="60" y1="20" x2="60" y2="200" stroke="#1d2433" stroke-width="2"/>
-      <line x1="60" y1="200" x2="400" y2="200" stroke="#1d2433" stroke-width="2"/>
-      <polyline points="80,180 150,150 220,115 290,85 360,50" fill="none" stroke="#3b5bdb" stroke-width="3"/>
-      <g fill="#3b5bdb"><circle cx="80" cy="180" r="5"/><circle cx="150" cy="150" r="5"/><circle cx="220" cy="115" r="5"/><circle cx="290" cy="85" r="5"/><circle cx="360" cy="50" r="5"/></g>
-      <text x="230" y="235" text-anchor="middle" font-size="14" font-weight="700" fill="#3b5bdb">X-axis: Wing size (cm) = independent</text>
-      <text transform="translate(16 110) rotate(-90)" text-anchor="middle" font-size="14" font-weight="700" fill="#c77700">Y-axis: Distance (m) = dependent</text>
-    </svg>
-
-    <h3>Remember</h3>
-    <ul>
-      <li><b>I</b>ndependent = I change it = <b>X</b>-axis (goes across).</li>
-      <li><b>D</b>ependent = Data I measure = <b>Y</b>-axis (goes up).</li>
-      <li>Always label both axes with units.</li>
-    </ul>
-
-    <div class="btns"><button class="primary" id="go2">Start quiz</button></div>
-  </div>
-  <div id="quiz" class="card hide">
-    <div class="top"><span id="qn"></span><span id="sc"></span></div>
-    <div class="bar"><i id="pb"></i></div>
-    <span class="tag" id="tag"></span>
-    <h2 id="q"></h2>
-    <div id="opts"></div>
-    <div id="fb"></div>
-    <button class="primary hide" id="next">Next question</button>
-  </div>
-  <div id="end" class="card hide"></div>
+  <div id="app"></div>
 </div>
 
 <script>
-// [topic, question, correct answer, [3 wrong answers], explanation]
+const TOPICS = {
+  F:{name:"Forces & Magnets",emoji:"🧲",color:"#2f80ed"},
+  L:{name:"Life Cycles & Traits",emoji:"🦋",color:"#27ae60"},
+  H:{name:"Habitats & Fossils",emoji:"🦕",color:"#f2994a"},
+  W:{name:"Weather & Climate",emoji:"⛈️",color:"#9b51e0"},
+  S:{name:"Being a Scientist",emoji:"🔬",color:"#eb5757"}
+};
+
+// QUESTIONS_START
 const Q = [
-["Variables","A student tests how the height of a ramp affects how far a toy car rolls. What is the independent variable?","The height of the ramp",["The distance the car rolls","The mass of the toy car","The type of floor the car rolls on"],"The independent variable is the one the scientist changes on purpose. Here, the ramp height is changed."],
-["Variables","In the ramp experiment (ramp height and distance rolled), what is the dependent variable?","The distance the car rolls",["The height of the ramp","The toy car that is used","The person who lets the car go"],"The dependent variable is what you measure. It changes because of the independent variable."],
-["Variables","What is the independent variable?","The variable the scientist changes on purpose",["The variable that is measured at the end of the test","The variable that is kept the same each time","The variable that changes all by itself"],"Independent = the one you change (manipulate)."],
-["Variables","What is the dependent variable?","The variable that is measured and changes in response",["The variable the scientist changes on purpose","The variable that is kept the same in every trial","The variable the scientist predicts before starting"],"Dependent = the one that depends on the change. It is the result you measure."],
-["Variables","A student gives plants 0, 5, 10 and 15 mL of fertilizer and measures plant height after 2 weeks. What is the dependent variable?","Plant height",["Amount of fertilizer","Number of weeks","Type of plant"],"Plant height is measured and responds to the fertilizer."],
-["Variables","In the fertilizer experiment, which is a controlled variable?","The type of soil in every pot",["The amount of fertilizer each plant gets","The height of each plant at the end","The number of leaves on each plant"],"Controlled variables are kept the same so the test is fair."],
-["Variables","A student studies how water temperature affects how fast sugar dissolves. What is the independent variable?","Temperature of the water",["Time it takes the sugar to dissolve","Amount of sugar in each cup","Size of the cup"],"Water temperature is the thing being changed."],
-["Variables","In the sugar experiment, which should be a controlled variable?","The amount of sugar",["The temperature of the water","The time to dissolve","The way the water was heated"],"Keep the sugar amount the same each time so only temperature changes."],
-["Variables","Why should you change only ONE independent variable at a time?","So you know which change caused the results",["So the experiment can be finished faster","So the dependent variable stays exactly the same","So no measurements need to be taken"],"If two things change, you can't tell which one caused the result."],
-["Variables","A student drops balls of different masses from the same height and measures how high each bounces. What is the independent variable?","Mass of the ball",["Bounce height","Height the balls are dropped from","Surface the balls land on"],"Mass is what the student changes. Drop height and surface are kept the same."],
-["Graphs","On a graph, which axis does the independent variable go on?","The X-axis",["The Y-axis","Either axis","The title"],"Independent variable goes on the X-axis."],
-["Graphs","On a graph, which axis does the dependent variable go on?","The Y-axis",["The X-axis","Either axis","Neither axis"],"Dependent variable goes on the Y-axis."],
-["Graphs","The X-axis is the line that runs:","Left to right (horizontal)",["Up and down (vertical)","From the top corner to the bottom corner","Around the edge of the graph"],"X is across (horizontal). Y goes up (vertical)."],
-["Graphs","You graph amount of fertilizer and plant height. What goes on the X-axis?","Amount of fertilizer",["Height of the plant","Type of soil used","Number of leaves"],"Fertilizer amount is the independent variable, so it goes on X."],
-["Graphs","A graph shows time on the X-axis and distance on the Y-axis. What does this tell you?","Distance is the variable being measured as time changes",["Distance is the variable the scientist changed","Distance is a controlled variable","Time is the variable being measured"],"Y-axis = the measured (dependent) variable."],
-["Graphs","A student heats water and records its temperature every minute. What goes on the X-axis?","Time (minutes)",["Temperature (°C)","Amount of water","Type of pot"],"Time is the thing that changes on a schedule (independent). Temperature is measured."],
-["Graphs","A graph is titled 'Effect of Ramp Height on Distance Rolled.' What belongs on the Y-axis?","Distance rolled",["Ramp height","Mass of the car","Type of floor"],"The title says: height affects distance. Distance is the result, so it goes on Y."],
-["Graphs","What should each axis of a graph have?","A label with units",["A different color","A picture of the experiment","The conclusion"],"Labels and units tell the reader what the numbers mean."],
-["Newton's 3rd Law","Which statement is Newton's third law of motion?","Every action force has an equal and opposite reaction force",["An object at rest stays at rest unless a force acts on it","Force equals mass times acceleration","Heavier objects always fall faster than light ones"],"The 1st law is about inertia. The 2nd law is F = ma. The 3rd law is action-reaction."],
-["Newton's 3rd Law","You push on a wall with a force of 20 N. How does the wall push on you?","With 20 N back toward you",["With 0 N, because the wall does not move","With more than 20 N toward you","With 20 N in the same direction as your push"],"The reaction force is equal in size and opposite in direction."],
-["Newton's 3rd Law","A swimmer pushes the water backward. What does the water do to the swimmer?","Pushes the swimmer forward",["Pushes the swimmer backward","Pulls the swimmer downward","Does not push at all"],"Swimmer pushes water back, water pushes swimmer forward."],
-["Newton's 3rd Law","Air rushes out the back of a balloon and the balloon flies forward. Which is an action-reaction pair?","Balloon pushes air backward; air pushes balloon forward",["Gravity pulls the balloon down; the floor pushes it up","Balloon pushes air forward; air pushes balloon backward","The balloon moves forward; the air stays still"],"The pair is the balloon pushing the air and the air pushing the balloon."],
-["Newton's 3rd Law","Newton's third law is also known as the law of:","Action and reaction",["Inertia and motion","Force and acceleration","Gravity and weight"],"Third law = action and reaction."],
-["Newton's 3rd Law","A small bug hits the windshield of a fast truck. Compare the forces.","The forces are equal in size",["The truck pushes harder on the bug","The bug pushes harder on the truck","Only the truck exerts a force"],"Action-reaction forces are always equal. The effects differ because the masses differ."],
-["Newton's 3rd Law","You jump from a small boat toward a dock. What happens to the boat?","It moves backward, away from the dock",["It moves forward, toward the dock","It stays exactly where it was before","It moves straight up into the air"],"You push the boat back, so the boat pushes you forward."],
-["Newton's 3rd Law","A skateboarder pushes against a wall and rolls away. What force moves the skateboarder?","The wall pushing back on the skateboarder",["Friction from the ground on the wheels","Gravity pulling on the skateboarder","The skateboarder's own weight pressing down"],"The wall's reaction force pushes the skateboarder away."],
-["Newton's 3rd Law","Why do action and reaction forces NOT cancel each other out?","They act on different objects",["They are different sizes","They happen at different times","They point in the same direction"],"Forces only cancel when they act on the same object."],
-["Newton's 3rd Law","A bird flaps its wings and pushes air downward. What does the air do to the bird?","Pushes the bird upward",["Pushes the bird downward","Pushes the bird sideways","Pulls the bird toward the ground"],"Wings push air down, air pushes bird up."],
-["Force Pairs","When do the two forces in an action-reaction pair happen?","At exactly the same time",["The reaction happens after the action","Only when the objects are moving","The action happens first, then the reaction"],"Force pairs are simultaneous. One cannot exist without the other."],
-["Force Pairs","'Simultaneous' force pairs means the two forces:","Happen at the same time",["Are the same direction","Happen one after another","Cancel each other out"],"Simultaneous means at the same time."],
-["Force Pairs","Earth's gravity pulls down on you. What is the other force in this pair?","You pull up on Earth",["The ground pushes up on you","Air pushes down on you","Friction pushes against your shoes"],"The pair is Earth pulls you and you pull Earth. The ground pushing up is a different pair."],
-["Force Pairs","A table pushes up on a book (normal force). What is the force pair of this push?","The book pushes down on the table",["Earth pulls down on the book","The book pulls Earth upward","The table pulls down on the floor"],"Pairs are between the same two objects: table and book."],
-["Force Pairs","A hammer hits a nail. When does the nail push back on the hammer?","At the same moment the hammer hits",["A moment after the hammer hits it","Just before the hammer hits it","Only if the nail moves into the wood"],"Force pairs happen together."],
-["Force Pairs","Skater A pushes Skater B with 30 N. What force does Skater B put on Skater A?","30 N in the opposite direction, at the same time",["30 N in the same direction as the push","15 N in the opposite direction, a moment later","0 N, because B must be moving first"],"Equal size, opposite direction, same time."],
-["Thrust","What is thrust?","A push that moves an object forward, like a rocket engine",["A pull that draws objects toward the center of Earth","A force that slows down a moving object","An upward push from a surface under an object"],"Thrust is the pushing force that moves rockets and airplanes."],
-["Thrust","Where does a rocket's thrust come from?","Hot gases pushed out the bottom, pushing the rocket up",["Air under the rocket pushing it upward","Earth's magnetic field pulling it upward","The rocket's weight pushing against the ground"],"Gas goes down (action), rocket goes up (reaction)."],
-["Thrust","Which force works against the thrust of an airplane?","Drag",["Lift","Weight","Normal force"],"Drag (air resistance) opposes thrust. Weight opposes lift."],
-["Thrust","On an airplane, thrust is bigger than drag. What happens?","The plane speeds up",["The plane slows down","The plane stays at the same speed","The plane hovers in place"],"Unbalanced force: net force is forward, so it speeds up."],
-["Thrust","Which law best explains how a rocket gets its thrust?","Newton's third law",["Newton's first law","The law of universal gravitation","The law of conservation of mass"],"Gas pushed one way, rocket pushed the opposite way: action-reaction."],
-["Thrust","A jet engine blows gases out the back. In which direction is the thrust?","Forward, opposite the gases",["Backward, same as the gases","Straight down","Thrust has no direction"],"Thrust is opposite to the direction the gases go."],
-["States of Matter","Which describes the particles in a solid?","Packed tightly and vibrating in place",["Close together and sliding past each other","Far apart and moving freely","Not moving at all"],"Solid particles vibrate but stay in fixed positions."],
-["States of Matter","Which describes the particles in a liquid?","Close together but able to slide past each other",["Locked in a fixed pattern that never changes","Very far apart and moving very fast","Stuck to the walls of the container"],"Liquid particles flow, so liquids take the shape of their container."],
-["States of Matter","Which describes the particles in a gas?","Far apart and moving freely in all directions",["Close together and sliding past each other","Tightly packed together in neat rows","Vibrating in one spot without moving away"],"Gas particles spread out to fill the whole container."],
-["States of Matter","Which state of matter has a definite shape AND a definite volume?","Solid",["Liquid","Gas","Both liquid and gas"],"Only solids keep their own shape."],
-["States of Matter","A liquid has:","A definite volume but no definite shape",["A definite shape but no definite volume","Both a definite shape and volume","Neither a definite shape nor volume"],"Liquids take the shape of the container but the amount stays the same."],
-["States of Matter","A gas has:","No definite shape and no definite volume",["A definite volume but no definite shape","A definite shape but no definite volume","A definite shape and a definite volume"],"Gas spreads out to fill any container."],
-["States of Matter","Water becomes ice. What is this change called?","Freezing",["Melting","Condensation","Evaporation"],"Liquid to solid = freezing."],
-["States of Matter","Water droplets form on the outside of a cold glass. What is this called?","Condensation",["Evaporation","Freezing","Sublimation"],"Gas (water vapor) to liquid = condensation."],
-["States of Matter","What happens to the particles in a solid when heat is added?","They move faster",["They slow down","They stop moving","They become larger"],"Heat gives particles more energy, so they move faster."],
-["States of Matter","Which of these is a liquid at room temperature?","Cooking oil",["Steam","Table salt","Helium"],"Steam and helium are gases. Salt is a solid."],
-["Magnetism","What happens when two magnets' poles meet?","Opposite poles attract and like poles repel",["Like poles attract and opposite poles repel","All poles attract","All poles repel"],"North-South attract. North-North and South-South repel."],
-["Magnetism","Which object would a magnet attract?","An iron nail",["A piece of aluminum foil","A plastic spoon","A wooden pencil"],"Magnets attract iron, nickel and cobalt."],
-["Magnetism","Magnetic force is what type of force?","A non-contact force that acts at a distance",["A contact force that needs touching","A force that only works under water","A force that only pulls things downward"],"A magnet can pull a paper clip without touching it."],
-["Magnetism","Where is a bar magnet the strongest?","At its poles",["In the very middle","Equally everywhere","On the flat sides"],"The magnetic force is strongest at the ends (poles)."],
-["Magnetism","What is a magnetic field?","The area around a magnet where its force acts",["The outside surface of the magnet itself","The metal found inside of a magnet","The north pole of the magnet only"],"The field is the space around the magnet where it can push or pull."],
-["Magnetism","You cut a bar magnet in half. What do you get?","Two smaller magnets, each with a north and south pole",["One piece with only north and one with only south","Two pieces that have lost all their magnetism","Two magnets that each have only a north pole"],"Every piece of a magnet has two poles."],
-["Magnetism","A student tests how many paper clips a magnet can pick up from different distances. What is the dependent variable?","Number of paper clips picked up",["Distance between the magnet and the clips","Type of magnet","Size of the paper clips"],"The count is the result being measured."],
-["Magnetism","Why does a compass needle point north?","It lines up with Earth's magnetic field",["Gravity pulls the needle toward the north","The north side of Earth is heavier","It follows the stars at night"],"A compass needle is a small magnet that lines up with Earth's field."],
-["Applied Force","What is an applied force?","A push or pull from a person or object that is touching",["The pull of gravity on an object toward Earth","The push of a surface back on an object resting on it","The force that slows down objects sliding on a surface"],"Applied force is a push or pull directly from something."],
-["Applied Force","Which is an example of an applied force?","Pushing a shopping cart",["A book resting on a desk","An apple falling from a tree","A parachute slowing a skydiver"],"You are pushing the cart directly. The others involve gravity, normal force or air resistance."],
-["Applied Force","A student pushes a box with 10 N to the right. Friction pushes 4 N to the left. What is the net force?","6 N to the right",["14 N to the right","6 N to the left","10 N to the right"],"Subtract: 10 - 4 = 6. The bigger force sets the direction."],
-["Applied Force","What unit is used to measure force?","Newtons (N)",["Kilograms (kg)","Joules (J)","Meters (m)"],"Force is measured in newtons."],
-["Applied Force","A person pushes a box with 15 N to the right. Friction is 15 N to the left. What is true?","The forces are balanced and the net force is 0 N",["The net force is 30 N to the right","The box speeds up toward the right","The box slows down and then moves left"],"Equal and opposite forces cancel, so the motion does not change."],
-["Applied Force","Applied force is a:","Contact force",["Non-contact force","Force that only works in space","Force that has no direction"],"The object applying the force must touch the other object."],
-["Normal Force","What is the normal force?","The push a surface gives back, at a right angle to it",["The pull that draws objects toward Earth's center","The force that resists objects sliding over a surface","The forward push that comes from an engine"],"Normal force is the support force from a surface."],
-["Normal Force","A book rests on a table. In which direction is the normal force on the book?","Upward",["Downward","Sideways","The normal force has no direction"],"The table pushes up on the book."],
-["Normal Force","A book weighs 5 N and is resting on a table. How big is the normal force on it?","5 N upward",["0 N","5 N downward","10 N upward"],"The forces are balanced, so the table pushes up with 5 N, and the book does not move."],
-["Normal Force","Why is there a normal force on an object resting on the ground?","The ground pushes back when the object presses on it",["Gravity pulls the object up off the ground","Friction pushes the object upward from below","Magnetism holds the object against the ground"],"A surface pushes back when something presses on it."],
-["Normal Force","A person stands still on the floor. Which two forces are balanced?","Gravity and normal force",["Normal force and friction","Applied force and gravity","Gravity and thrust"],"Gravity pulls down and the floor pushes up with equal force."],
-["Normal Force","Which is an example of normal force?","The floor pushing up on your feet",["Wind pushing a sail","A rocket engine pushing the rocket","Earth pulling on the Moon"],"The floor is the surface pushing back on you."]
+{"t":"F","q":"What is a force?","a":"A push or a pull on an object","w":["How fast an object is moving","How much matter an object contains","The path an object travels along"],"e":"A force is a push or a pull. Forces can make things start moving, stop, or change direction."},
+{"t":"F","q":"A ball rolls farther on a smooth floor than on thick grass. Why?","a":"There is less friction on the smooth floor","w":["Gravity pulls harder on the ball over the floor","The ball gets heavier when it rolls on grass","The grass pushes the ball forward faster"],"e":"Friction is a force that slows things down when surfaces rub together. Grass makes more friction than a smooth floor."},
+{"t":"F","q":"Which force pulls objects toward the center of Earth?","a":"Gravity","w":["Friction","Magnetism","Static electricity"],"e":"Gravity pulls everything toward Earth. It is why a dropped pencil falls down."},
+{"t":"F","q":"Two teams pull a rope with the same strength and the rope does not move. What does this tell you?","a":"The forces are balanced","w":["The forces are unbalanced","There are no forces on the rope","Only gravity is acting on the rope"],"e":"When forces on an object are equal and opposite, they are balanced and the object's motion does not change."},
+{"t":"F","q":"Which object would a magnet attract?","a":"A steel paper clip","w":["A piece of aluminum foil","A smooth glass marble","A plain wooden pencil"],"e":"Magnets attract some metals that contain iron, like steel. They do not attract glass, wood, or rubber."},
+{"t":"F","q":"What happens when you push two north poles of magnets close together?","a":"They push away from each other","w":["They pull together and stick tight","They stay the same with no force","The magnets both lose their power"],"e":"Like poles repel (push apart). Opposite poles attract (pull together)."},
+{"t":"F","q":"Which statement about magnetic force is true?","a":"It can act on objects without touching them","w":["It only works when the objects are touching","It attracts every kind of material around it","It only pushes objects and never pulls them"],"e":"Magnetic force works across a gap. A magnet can pull a paper clip without touching it."},
+{"t":"F","q":"You push a toy car with a bigger force. What happens?","a":"It speeds up more","w":["It speeds up less","It stays at the same speed","It gets heavier"],"e":"A bigger push changes an object's motion more than a small push does."},
+{"t":"F","q":"Which is an example of a force that needs no touching?","a":"A magnet pulling a nail across a table","w":["A foot kicking a soccer ball into a net","A hand pushing a shopping cart forward","A bat hitting a baseball over a fence"],"e":"Magnetism and gravity can act from a distance. Kicking, pushing, and hitting all need contact."},
+{"t":"F","q":"How could you reduce friction when moving a heavy box?","a":"Put the box on wheels","w":["Put sandpaper under the box","Drag it across a rough carpet","Add heavy rocks inside the box"],"e":"Wheels roll instead of rubbing, so there is less friction."},
+{"t":"F","q":"A swing moves back and forth in the same pattern again and again. How does that help you?","a":"You can predict where it will be next","w":["You can stop gravity from pulling on it","You can make the swing weigh less","You can change how heavy the chains are"],"e":"Patterns of motion are repeating, so scientists can use them to predict what will happen next."},
+{"t":"F","q":"You squeeze the brakes on a bike. Which force slows the wheels down?","a":"Friction","w":["Gravity","Magnetism","Static electricity"],"e":"The brake pads rub against the wheel. That rubbing is friction."},
+{"t":"F","q":"A box is pushed to the right with a big force and to the left with a small force. Which way does it move?","a":"To the right","w":["To the left","It does not move","Straight up"],"e":"The forces are unbalanced. The bigger force wins, so the box moves in its direction."},
+{"t":"F","q":"A book sits still on a table. Gravity pulls it down. Why doesn't it fall?","a":"The table pushes up on it with an equal force","w":["Gravity does not pull on objects that are still","Friction from the table holds it up in the air","Magnetism from the table pulls it upward"],"e":"The table pushes up as hard as gravity pulls down, so the forces are balanced."},
+{"t":"L","q":"Which list shows the life cycle of a butterfly in the right order?","a":"Egg, caterpillar, chrysalis, adult butterfly","w":["Egg, chrysalis, caterpillar, adult butterfly","Caterpillar, egg, adult butterfly, chrysalis","Adult butterfly, egg, chrysalis, caterpillar"],"e":"A butterfly starts as an egg, hatches into a caterpillar (larva), becomes a chrysalis (pupa), and then an adult."},
+{"t":"L","q":"Which animal goes through a pupa stage?","a":"A ladybug","w":["A grasshopper","A frog","A chicken"],"e":"Ladybugs go through complete metamorphosis with a pupa stage. Grasshoppers, frogs, and chickens do not have a pupa."},
+{"t":"L","q":"What is a young frog that lives in water called?","a":"A tadpole","w":["A caterpillar","A nymph","A cub"],"e":"A baby frog is a tadpole. It grows legs and lungs as it changes into an adult frog."},
+{"t":"L","q":"What stage comes right after a seed sprouts?","a":"Seedling","w":["Blossom","Seed pod","Pollination"],"e":"A sprouted seed becomes a small seedling, which then grows into an adult plant."},
+{"t":"L","q":"What is the main job of a flower?","a":"To help the plant make seeds","w":["To store water for the plant","To hold the plant up","To pull minerals from the soil"],"e":"Flowers help plants reproduce by making seeds."},
+{"t":"L","q":"Which is an inherited trait?","a":"Eye color","w":["Knowing how to ride a bike","A scar from a fall","Speaking English"],"e":"Inherited traits are passed from parents to children. Skills and scars are not inherited."},
+{"t":"L","q":"Which is a learned behavior for a dog?","a":"Sitting down when told to","w":["Having a thick, furry coat","Having four strong legs","Having a cold wet nose"],"e":"Learned behaviors come from training or experience. Fur, legs, and noses are inherited traits."},
+{"t":"L","q":"Why do young animals often look like their parents?","a":"They inherit traits from their parents","w":["They eat the same food as their parents","They live in the same place as their parents","They copy how their parents look"],"e":"Parents pass traits to their offspring, so they often look alike."},
+{"t":"L","q":"Puppies in the same litter can look a little different. Why?","a":"Each puppy gets a different mix of traits","w":["The puppies all eat different kinds of food","The puppies are really different animals","Only one parent gives traits to the puppies"],"e":"Each offspring inherits a different combination of traits from both parents."},
+{"t":"L","q":"A plant grows tall in a sunny window but stays small in a dark closet. What does this show?","a":"The environment can affect how living things grow","w":["Plants always inherit their height from the seed","Plants can grow without any light at all","Sunlight changes the seeds inside the plant"],"e":"Traits can be affected by the environment, such as how much light a plant gets."},
+{"t":"L","q":"What is the first stage in the life cycle of a chicken?","a":"Egg","w":["Chick","Nymph","Adult hen"],"e":"A chicken starts as an egg, hatches into a chick, and grows into an adult."},
+{"t":"L","q":"At which stage of its life cycle can an animal have babies of its own?","a":"Adult","w":["Egg","Baby","Larva"],"e":"Adults are fully grown and can reproduce, starting a new life cycle."},
+{"t":"L","q":"Which statement is true about the life cycle of every living thing?","a":"They are born, grow, reproduce, and die","w":["They all hatch from eggs and then grow up","They all go through a pupa stage first","They all live for exactly one full year"],"e":"Every living thing has a life cycle, but the stages and the length of life are different."},
+{"t":"L","q":"Which set of things do plants need to grow?","a":"Sunlight, water, and air","w":["Sunlight, salt, and wind","Shade, sand, and sugar","Moonlight, milk, and rocks"],"e":"Plants use sunlight, water, and air (carbon dioxide) to make their own food."},
+{"t":"H","q":"A polar bear has thick fur and a layer of fat. How does this help it?","a":"It keeps the bear warm in the cold","w":["It helps the bear hide in green grass","It helps the bear swim in warm water","It helps the bear climb tall trees"],"e":"Thick fur and fat are adaptations that protect a polar bear from freezing temperatures."},
+{"t":"H","q":"A cactus has a thick stem. How does it help the cactus live in the desert?","a":"It stores water for dry times","w":["It lets the cactus grow in deep shade","It makes the cactus float in floods","It keeps the cactus from getting sunlight"],"e":"Cactus stems store water, so the plant can survive long dry periods."},
+{"t":"H","q":"What does camouflage do for an animal?","a":"It helps the animal blend in with its surroundings","w":["It helps the animal run much faster than others","It helps the animal find water in dry places","It helps the animal stay warm in cold weather"],"e":"Camouflage helps animals hide from predators or sneak up on prey."},
+{"t":"H","q":"What is a habitat?","a":"A home that gives a living thing food and shelter","w":["A kind of food that one animal likes to eat the most","A tool that an animal uses to dig a hole in soil","A group of animals that travel together every year"],"e":"A habitat is the home environment that meets a living thing's needs."},
+{"t":"H","q":"What are gills used for?","a":"Breathing underwater","w":["Swimming faster","Finding food in the dark","Staying warm in cold water"],"e":"Fish use gills to take oxygen out of the water."},
+{"t":"H","q":"What is a fossil?","a":"The remains or marks of a living thing from long ago","w":["A rock that fell to Earth from outer space long ago","A plant that has only ever lived in water","A tool that was made by early people long ago"],"e":"Fossils are preserved remains, like bones or footprints, of plants and animals that lived long ago."},
+{"t":"H","q":"In which kind of rock are fossils most often found?","a":"Sedimentary rock","w":["Igneous rock","Metamorphic rock","Solid iron ore"],"e":"Sedimentary rock forms in layers from mud and sand that can bury and preserve living things."},
+{"t":"H","q":"What can fossils tell scientists?","a":"Which plants and animals lived long ago","w":["What the weather will be like next week","How old a person is when they get sick","Where to find fresh water in the desert today"],"e":"Fossils are clues about the past, such as what animals looked like and where they lived."},
+{"t":"H","q":"A lake dries up. What might happen to the fish living there?","a":"Some may move away and some may not survive","w":["All of them will grow legs and live on land","All of them will live there just fine","Every fish will quickly learn to breathe air"],"e":"When an environment changes, some living things move, some adapt over time, and some do not survive."},
+{"t":"H","q":"How does living in a group help some animals?","a":"They can find food and stay safe together","w":["They can fly higher when they are together","They never have to look for water again","They do not need a shelter or a home"],"e":"Animals in herds, packs, or flocks can warn each other and work together to find food."},
+{"t":"H","q":"Which animal is best suited to a hot, dry desert?","a":"A camel","w":["A penguin","A walrus","A moose"],"e":"Camels can go a long time without water and have feet that work well on sand."},
+{"t":"H","q":"How do the webbed feet of a duck help it?","a":"They push water when it swims","w":["They dig tunnels in soil","They grip tree branches","They keep it from sinking in sand"],"e":"Webbed feet work like paddles."},
+{"t":"H","q":"Which animal is an herbivore?","a":"A deer","w":["A hawk","A shark","A wolf"],"e":"Herbivores eat only plants. Hawks, sharks, and wolves eat other animals."},
+{"t":"H","q":"Which of these is a producer in a food chain?","a":"Grass","w":["A rabbit","A fox","A hawk"],"e":"Producers, like grass, make their own food using sunlight. Animals have to eat to get energy."},
+{"t":"W","q":"What is weather?","a":"What the air outside is like at a certain time and place","w":["The usual pattern of conditions in a place over many years","The names of the four seasons in a year","How warm the air is inside of a building"],"e":"Weather can change from hour to hour and day to day. Climate is the long-term pattern."},
+{"t":"W","q":"Phoenix, Arizona gets very little rain in most years. That describes its...","a":"Climate","w":["Weather","Forecast","Season"],"e":"Climate is the pattern of weather in a place over many years."},
+{"t":"W","q":"Which tool measures temperature?","a":"A thermometer","w":["An anemometer","A barometer","A rain gauge"],"e":"A thermometer tells how hot or cold something is."},
+{"t":"W","q":"What does a rain gauge measure?","a":"How much rain has fallen","w":["How fast the wind is blowing","How hot the air is","Which way the wind is blowing"],"e":"A rain gauge collects rain so you can measure the amount."},
+{"t":"W","q":"What does a wind vane show?","a":"The direction the wind is blowing","w":["The speed that the wind is blowing at","The amount of rain that has fallen","The temperature of the air outside"],"e":"A wind vane points into the wind. An anemometer measures wind speed."},
+{"t":"W","q":"Which weather event can cause a flood?","a":"Heavy rain for many hours","w":["A light breeze blowing all day","A clear sunny sky for many days","A cool morning with heavy dew"],"e":"Too much rain too fast can make rivers overflow and water cover the land."},
+{"t":"W","q":"What should you do during a tornado warning?","a":"Go to a low, inside room away from windows","w":["Stand near a large window to watch it pass","Go outside to see where the storm is going","Run to the tallest tree and stay under it"],"e":"A low room in the middle of a building with no windows is the safest place."},
+{"t":"W","q":"You hear thunder while playing outside. What is the safest choice?","a":"Go inside a building right away","w":["Stand under a tall tree to stay dry","Keep playing until it starts to rain","Hold up a long metal pole to watch"],"e":"If you can hear thunder, lightning can strike. Go indoors and stay there."},
+{"t":"W","q":"In the Northern Hemisphere, which season has the shortest days?","a":"Winter","w":["Summer","Spring","Fall"],"e":"In winter the Sun is up for fewer hours, so the days are short and the nights are long."},
+{"t":"W","q":"Which climate is cold with snow and ice most of the year?","a":"Polar","w":["Tropical","Desert","Temperate"],"e":"Polar regions, like Antarctica, are very cold all year."},
+{"t":"W","q":"Which describes the climate of a tropical rainforest?","a":"Hot and wet most of the year","w":["Cold and dry most of the year","Hot and dry most of the year","Cool with snow in winter"],"e":"Rainforests near the equator get lots of rain and stay warm."},
+{"t":"W","q":"The forecast says 95°F and sunny. What should you wear?","a":"Light clothes, a hat, and sunscreen","w":["A heavy coat, gloves, and warm boots","A raincoat, rain boots, and an umbrella","A wool scarf, a sweater, and long pants"],"e":"Choose clothes that match the weather. For hot, sunny days, dress light and protect your skin."},
+{"t":"W","q":"Which change in the sky often comes before rain?","a":"Clouds get thick and dark","w":["The sky turns bright blue","Stars become easier to see","Frost forms on the ground"],"e":"Thick, dark clouds are full of water droplets and often bring rain."},
+{"t":"W","q":"What happens when water vapor in the air cools down high in the sky?","a":"It condenses into tiny drops that form clouds","w":["It evaporates into the ground right away","It freezes into big hailstones that stay up high","It turns into dust that floats in the air"],"e":"Cooling water vapor condenses into liquid drops. Many drops together make a cloud."},
+{"t":"S","q":"What is an experiment?","a":"A fair test to answer a question","w":["A guess that nobody is able to test","A story about something in nature","A list of facts that you find in a book"],"e":"Scientists do experiments to test ideas and find answers."},
+{"t":"S","q":"To make a test fair, how many things should you change at a time?","a":"Only one thing at a time","w":["Two things at the same time","Three things at the same time","As many things as you can"],"e":"If you change only one thing, you can tell what caused the result."},
+{"t":"S","q":"Which tool helps you see very small details on a leaf?","a":"A hand lens","w":["A thermometer","A ruler","A balance"],"e":"A hand lens (magnifying glass) makes small things look bigger."},
+{"t":"S","q":"Which tool measures the mass of a rock?","a":"A balance scale","w":["A metric ruler","A measuring cup","A thermometer"],"e":"Mass is measured with a balance or scale, in grams or kilograms."},
+{"t":"S","q":"Which tool would you use to measure 100 mL of water?","a":"A measuring cup","w":["A ruler or tape","A balance scale","A thermometer"],"e":"A measuring cup or graduated cylinder measures liquid volume."},
+{"t":"S","q":"Which of these is an observation?","a":"The leaf is green and has five points","w":["The leaf is the prettiest one of them all","The leaf probably fell off the tree yesterday","Leaves are much better than flowers are"],"e":"An observation is something you notice with your senses. Opinions and guesses are not observations."},
+{"t":"S","q":"Why do scientists keep careful records?","a":"So others can check and repeat the results","w":["So their experiments take much longer to finish","So they never make a mistake in a test","So they can hide the mistakes they made"],"e":"Good records help other people trust and repeat an experiment."},
+{"t":"S","q":"Which unit is used to measure length?","a":"Centimeters","w":["Kilograms","Milliliters","Degrees Celsius"],"e":"Centimeters, inches, and meters measure length. Grams measure mass and liters measure volume."},
+{"t":"S","q":"Why do scientists use bar graphs?","a":"To show and compare data","w":["To hide their results","To change the experiment","To make the test longer"],"e":"A bar graph makes it easy to compare numbers at a glance."},
+{"t":"S","q":"What is a prediction?","a":"A guess about what will happen","w":["The results you get after a test","A tool used for measuring things","A fact that can never change"],"e":"A prediction is a guess about what will happen, made before a test using what you already know."},
+{"t":"S","q":"You test whether light affects how plants grow. Which thing should stay the same for every plant?","a":"The amount of water each plant gets","w":["The amount of light each plant gets","The final height of each plant","Which plant grows tallest"],"e":"Only the thing you are testing (light) should change. Everything else, like water, should stay the same."},
+{"t":"S","q":"What is a conclusion?","a":"What you learn from the results of your test","w":["The question you ask before the test begins","The steps you follow during the experiment","The tools you use to measure the results"],"e":"A conclusion explains what your results tell you."},
+{"t":"S","q":"Which is a good safety rule in science class?","a":"Wear safety goggles when your teacher says to","w":["Taste the materials to find out what they are","Run around the room while others are working","Mix chemicals together just to see what happens"],"e":"Follow your teacher's directions and use safety gear. Never taste or mix unknown materials."},
+{"t":"S","q":"Which unit measures temperature?","a":"Degrees (°F)","w":["Pounds (lb)","Inches (in)","Gallons (gal)"],"e":"Temperature is measured in degrees, such as °F or °C."}
 ];
+// QUESTIONS_END
 
-const TOPICS=[...new Set(Q.map(q=>q[0]))];
-const $=id=>document.getElementById(id);
-const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const app = document.getElementById("app");
+let order=[], idx=0, score=0, answered=false, missed=[], byTopic={};
 
-$("chips").innerHTML=TOPICS.map(t=>`<span class="chip">${t}</span>`).join("");
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
 
-let order=[],i=0,score=0,missed=[],byTopic={};
+function home(){
+  app.innerHTML=`
+  <div class="card">
+    <div class="big">🔬🌎🦋</div>
+    <h1>Science Quiz Challenge</h1>
+    <div class="sub">${Q.length} questions · tap the best answer · learn something new with every question!</div>
+    <div class="topics">
+      ${Object.values(TOPICS).map(t=>`<div class="topic" style="background:${t.color}"><span class="e">${t.emoji}</span>${t.name}</div>`).join("")}
+    </div>
+    <div class="center"><button class="btn" onclick="start()">Start Quiz 🚀</button></div>
+  </div>`;
+}
 
-function start(list){
-  order=shuffle(list);i=0;score=0;missed=[];byTopic={};
-  TOPICS.forEach(t=>byTopic[t]={r:0,n:0});
-  $("start").classList.add("hide");$("notes").classList.add("hide");$("end").classList.add("hide");$("quiz").classList.remove("hide");
-  window.scrollTo(0,0);
+function start(){
+  order=shuffle(Q.map((_,i)=>i));
+  idx=0;score=0;missed=[];byTopic={};
+  Object.keys(TOPICS).forEach(k=>byTopic[k]={c:0,n:0});
   show();
 }
+
 function show(){
-  const [topic,q,ans,wrong]=order[i];
-  $("qn").textContent=`Question ${i+1} of ${order.length}`;
-  $("sc").textContent=`Score: ${score}`;
-  $("pb").style.width=(i/order.length*100)+"%";
-  $("tag").textContent=topic;
-  $("q").textContent=q;
-  $("fb").innerHTML="";$("next").classList.add("hide");
-  const opts=shuffle([ans,...wrong]);
-  $("opts").innerHTML="";
-  opts.forEach(o=>{
-    const b=document.createElement("button");b.className="opt";b.textContent=o;
-    b.onclick=()=>pick(b,o);$("opts").appendChild(b);
-  });
+  const item=Q[order[idx]], T=TOPICS[item.t];
+  answered=false;
+  const opts=shuffle([item.a,...item.w]);
+  app.innerHTML=`
+  <div class="card">
+    <div class="top"><span class="pill">Question ${idx+1} of ${Q.length}</span><span class="pill">⭐ ${score}</span></div>
+    <div class="bar"><div style="width:${idx/Q.length*100}%"></div></div>
+    <span class="tag" style="background:${T.color}">${T.emoji} ${T.name}</span>
+    <div class="q">${esc(item.q)}</div>
+    <div class="opts">
+      ${opts.map((o,i)=>`<button class="opt" data-v="${esc(o).replace(/"/g,"&quot;")}"><span class="l">${"ABCD"[i]}</span><span>${esc(o)}</span></button>`).join("")}
+    </div>
+    <div class="fb" id="fb"></div>
+    <div class="next" id="next"><button class="btn green" onclick="nextQ()">${idx===Q.length-1?"See my results 🏆":"Next ➜"}</button></div>
+  </div>`;
+  document.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>pick(b,item)));
 }
-function pick(btn,choice){
-  const [topic,q,ans,wrong,why]=order[i];
-  const ok=choice===ans;
-  byTopic[topic].n++;
+
+function pick(btn,item){
+  if(answered)return;
+  answered=true;
+  const ok=btn.dataset.v===item.a;
+  byTopic[item.t].n++;
   document.querySelectorAll(".opt").forEach(b=>{
     b.disabled=true;
-    if(b.textContent===ans)b.classList.add("right");
+    if(b.dataset.v===item.a)b.classList.add("right");
   });
-  if(ok){score++;byTopic[topic].r++;}
-  else{btn.classList.add("wrong");missed.push(order[i]);}
-  $("sc").textContent=`Score: ${score}`;
-  $("fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><b>${ok?"Correct!":"Not quite."}</b> ${ok?"":"The answer is: <b>"+ans+"</b>. "}${why}</div>`;
-  const n=$("next");n.classList.remove("hide");
-  n.textContent=i===order.length-1?"See results":"Next question";
-  n.focus();
+  const fb=document.getElementById("fb");
+  if(ok){score++;byTopic[item.t].c++;btn.classList.add("right");
+    fb.className="fb show good";fb.innerHTML=`<b>🎉 Correct!</b>${esc(item.e)}`;}
+  else{btn.classList.add("wrong");missed.push(item);
+    fb.className="fb show bad";fb.innerHTML=`<b>Good try! The answer is: ${esc(item.a)}</b>${esc(item.e)}`;}
+  document.getElementById("next").classList.add("show");
+  document.querySelector(".top .pill:last-child").textContent="⭐ "+score;
 }
-$("next").onclick=()=>{i++;i<order.length?show():finish()};
-function finish(){
-  $("quiz").classList.add("hide");$("end").classList.remove("hide");
-  const pct=Math.round(score/order.length*100);
-  const msg=pct>=90?"Excellent work!":pct>=75?"Great job! Review the ones you missed.":pct>=60?"Good effort. Study the topics below and try again.":"Keep studying. Focus on the weakest topics below.";
-  let h=`<h1>Quiz complete</h1><div class="big">${score} / ${order.length}</div><p class="sub">${pct}% - ${msg}</p><h2>By topic</h2>`;
-  TOPICS.forEach(t=>{const s=byTopic[t];if(s.n)h+=`<div class="row"><span>${t}</span><b>${s.r} / ${s.n}</b></div>`});
-  if(missed.length){
-    h+=`<h2 style="margin-top:22px">Questions to review (${missed.length})</h2>`;
-    missed.forEach(m=>{h+=`<div class="miss"><div>${m[1]}</div><div class="a">Answer: ${m[2]}</div><div style="color:var(--mute)">${m[4]}</div></div>`});
-  }
-  h+=`<div class="btns"><button class="primary" id="again">Take all 70 again</button>`;
-  if(missed.length)h+=`<button class="ghost" id="redo">Retry missed only</button>`;
-  h+=`</div>`;
-  $("end").innerHTML=h;
-  $("again").onclick=()=>start(Q);
-  if(missed.length){const m=missed.slice();$("redo").onclick=()=>start(m);}
-  window.scrollTo(0,0);
+
+function nextQ(){idx++;idx>=Q.length?results():show();}
+
+function results(){
+  const pct=Math.round(score/Q.length*100);
+  const stars=pct>=90?"⭐⭐⭐⭐⭐":pct>=75?"⭐⭐⭐⭐":pct>=60?"⭐⭐⭐":pct>=40?"⭐⭐":"⭐";
+  const msg=pct>=90?"Super scientist! Amazing work!":pct>=75?"Great job! You really know your science!":pct>=60?"Nice work! Keep exploring!":"Good effort! Practice makes you stronger. Try again!";
+  app.innerHTML=`
+  <div class="card">
+    <div class="big">🏆</div>
+    <h1>Quiz Complete!</h1>
+    <div class="stars">${stars}</div>
+    <div class="score">${score} / ${Q.length}</div>
+    <div class="sub">${msg} (${pct}%)</div>
+    <div class="break">
+      ${Object.entries(TOPICS).map(([k,t])=>{const r=byTopic[k];const p=r.n?Math.round(r.c/r.n*100):0;
+        return `<div class="row"><div class="n">${t.emoji} ${t.name}</div><div class="b"><div style="width:${p}%;background:${t.color}"></div></div><div class="v">${r.c}/${r.n}</div></div>`}).join("")}
+    </div>
+    <div class="center" style="margin:18px 0"><button class="btn" onclick="start()">Play Again 🔁</button></div>
+    ${missed.length?`<h2>📝 Questions to review (${missed.length})</h2>`+missed.map(m=>`<div class="miss"><div><b>${esc(m.q)}</b></div><div class="a">✔ ${esc(m.a)}</div><div>${esc(m.e)}</div></div>`).join(""):`<h2 class="center">🌟 You got every question right!</h2>`}
+  </div>`;
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-$("go").onclick=()=>start(Q);
-$("go2").onclick=()=>start(Q);
-$("readnote").onclick=()=>{$("start").classList.add("hide");$("notes").classList.remove("hide");window.scrollTo(0,0)};
+
+home();
 </script>
 </body>
 </html>
