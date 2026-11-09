@@ -91,7 +91,7 @@
   <div class="card" id="start">
     <div class="big-emoji">🚀</div>
     <h1>Math Rocket</h1>
-    <p class="sub">Answer the questions to fuel the rocket.<br>Can you reach the moon? 🌙</p>
+    <p class="sub">Hi Zion! Answer the questions to fuel the rocket.<br>Can you reach the moon? 🌙</p>
     <button class="play" id="playBtn">▶ Let's Go!</button>
     <p class="small" id="best"></p>
   </div>
@@ -99,7 +99,7 @@
   <!-- PLAY -->
   <div class="card hidden" id="play">
     <div class="hud">
-      <span class="pill" id="qCount">Question 1 / 20</span>
+      <span class="pill" id="qCount">Question 1 / 30</span>
       <span class="pill" id="starsCount">⭐ 0</span>
       <button class="sound" id="soundBtn" title="Sound on/off">🔊</button>
     </div>
@@ -119,7 +119,7 @@
   <!-- END -->
   <div class="card hidden" id="end">
     <div class="big-emoji">🌙</div>
-    <h1>You made it to the moon!</h1>
+    <h1>You made it to the moon, Zion!</h1>
     <div class="stars-row" id="finalStars"></div>
     <div class="score" id="finalScore"></div>
     <button class="play" id="againBtn">↻ Play Again</button>
@@ -140,7 +140,7 @@
   }
 
   // ---------- helpers ----------
-  var TOTAL = 20;
+  var TOTAL = 30;
   var $ = function(id){return document.getElementById(id)};
   function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
   function shuffle(arr){
@@ -172,10 +172,10 @@
 
   // ---------- question building ----------
   var LEVELS = [
-    {name:'Level 1: Counting', from:1,  to:5},
-    {name:'Level 2: Adding',   from:6,  to:10},
-    {name:'Level 3: Taking Away', from:11, to:15},
-    {name:'Level 4: Mixed Challenge', from:16, to:20}
+    {name:'Level 1: Counting', from:1,  to:6},
+    {name:'Level 2: Adding',   from:7,  to:14},
+    {name:'Level 3: Taking Away', from:15, to:22},
+    {name:'Level 4: Mixed Challenge', from:23, to:30}
   ];
   var EMOJI = ['🍎','⭐','🐟','🐥','🚗','🎈','🍪','🐸','🌼','⚽','🍓','🦋'];
 
@@ -198,7 +198,7 @@
   }
 
   function makeQuestion(n){
-    var lvl = n<=5?0 : n<=10?1 : n<=15?2 : 3;
+    var lvl = n<=6?0 : n<=14?1 : n<=22?2 : 3;
     var q = {level:lvl};
     if (lvl===0){
       var count = rand(1,10);
@@ -285,8 +285,8 @@
     $('rocket').style.left=(done/TOTAL*trackW)+'px';
   }
 
-  var PRAISE=['Great job! 🎉','Super! 🌟','You got it! 👏','Awesome! 🚀','Brilliant! ✨','Yes! 🎈'];
-  var RETRY=['Oops, try again! 💪','Almost! Have another go 🙂','Not quite, you can do it! 🌈'];
+  var PRAISE=['Great job, Zion! 🎉','Super! 🌟','You got it, Zion! 👏','Awesome! 🚀','Brilliant! ✨','Yes! 🎈'];
+  var RETRY=['Oops, try again! 💪','Almost, Zion! Have another go 🙂','Not quite, you can do it! 🌈'];
 
   function choose(btn,val){
     if (locked) return;
@@ -313,7 +313,7 @@
 
   function finish(){
     show('end');
-    var rating = stars>=18?3 : stars>=12?2 : 1;
+    var rating = stars>=27?3 : stars>=18?2 : 1;
     var s=''; for (var i=0;i<3;i++) s+= i<rating?'⭐':'☆';
     $('finalStars').textContent=s;
     $('finalScore').textContent='You got '+stars+' out of '+TOTAL+' right on the first try!';
