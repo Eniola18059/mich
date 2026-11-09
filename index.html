@@ -1,239 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rhyme Time Quiz</title>
+<title>Math Rocket</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;background:linear-gradient(160deg,#fff4d6,#e3f4ff);min-height:100vh;color:#2b2b44;display:flex;justify-content:center;padding:16px}
-.app{width:100%;max-width:720px}
-.card{background:#fff;border-radius:24px;box-shadow:0 8px 24px rgba(60,60,120,.15);padding:24px;margin-top:12px}
-h1{margin:0;text-align:center;font-size:2.2rem;color:#ff6b6b}
-.sub{text-align:center;margin:6px 0 0;color:#5a5a7a}
-.top{display:flex;justify-content:space-between;align-items:center;font-weight:bold;gap:10px}
-.bar{height:14px;background:#e8eaf6;border-radius:10px;overflow:hidden;margin:10px 0 0}
-.bar div{height:100%;width:0;background:linear-gradient(90deg,#4dd0a1,#4da6ff);transition:width .3s}
-.prompt{font-size:1.4rem;text-align:center;margin:18px 0 6px}
-.big{font-size:3rem;font-weight:bold;text-align:center;color:#7c4dff;margin:4px 0 14px}
-.line{font-size:1.7rem;text-align:center;font-weight:bold;color:#7c4dff;margin:4px 0 14px;line-height:1.3}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.opt{font:inherit;font-size:1.6rem;font-weight:bold;padding:18px 8px;border:3px solid #d6dcff;background:#f6f8ff;border-radius:18px;cursor:pointer;transition:transform .1s}
-.opt:hover:enabled{transform:scale(1.03);border-color:#7c4dff}
-.opt.right{background:#c9f7e0;border-color:#2fb87a}
-.opt.wrong{background:#ffd9d9;border-color:#ee5a5a}
-.opt:disabled{cursor:default}
-.btn{font:inherit;font-size:1.2rem;font-weight:bold;border:none;border-radius:16px;padding:12px 22px;cursor:pointer;background:#ff6b6b;color:#fff}
-.btn.alt{background:#7c4dff}
-.btn.ghost{background:#e8eaf6;color:#3a3a6a}
-.row{display:flex;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap}
-.fb{text-align:center;font-size:1.25rem;min-height:2.2em;margin-top:14px;font-weight:bold}
-.fb.ok{color:#1f9d64}.fb.no{color:#d64545}
-.score{font-size:4rem;text-align:center;font-weight:bold;color:#ff6b6b}
-.stars{font-size:2.2rem;text-align:center}
-.miss{background:#fff7e6;border-radius:14px;padding:10px 14px;margin:8px 0;font-size:1.05rem}
-.hide{display:none}
-@media(max-width:480px){.opt{font-size:1.3rem}.big{font-size:2.4rem}}
+  :root{
+    --bg1:#1b1464; --bg2:#4b2a9b; --card:#fff; --ink:#2b2250;
+    --accent:#ffb703; --good:#2ecc71; --bad:#ff6b6b; --btn:#6c5ce7;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Trebuchet MS","Comic Sans MS",system-ui,sans-serif;
+    color:var(--ink);
+    background:radial-gradient(circle at 20% 10%,#6a4bd6 0,transparent 40%),
+               linear-gradient(180deg,var(--bg1),var(--bg2));
+    min-height:100%;
+    display:flex;align-items:center;justify-content:center;padding:14px;
+    overflow-x:hidden;
+  }
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .stars i{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;opacity:.7;animation:tw 3s infinite ease-in-out}
+  @keyframes tw{50%{opacity:.15}}
+  .game{position:relative;z-index:1;width:100%;max-width:560px}
+  .card{
+    background:var(--card);border-radius:28px;padding:22px 20px;
+    box-shadow:0 14px 0 rgba(0,0,0,.18),0 24px 50px rgba(0,0,0,.3);
+    text-align:center;
+  }
+  h1{margin:0 0 4px;font-size:2.1rem;line-height:1.1}
+  .sub{margin:0 0 16px;opacity:.75;font-size:1.05rem}
+  .big-emoji{font-size:4.5rem;line-height:1;margin:6px 0 10px;animation:bob 2s infinite ease-in-out}
+  @keyframes bob{50%{transform:translateY(-8px)}}
+  button{font-family:inherit;cursor:pointer;border:0}
+  .play{
+    background:var(--accent);color:#3a2a00;font-size:1.7rem;font-weight:800;
+    padding:14px 38px;border-radius:50px;box-shadow:0 7px 0 #c98a00;
+    transition:transform .08s, box-shadow .08s;
+  }
+  .play:active{transform:translateY(5px);box-shadow:0 2px 0 #c98a00}
+  .small{margin-top:14px;font-size:.95rem;opacity:.7}
+
+  /* HUD */
+  .hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:800;font-size:1.05rem;gap:8px}
+  .pill{background:#efeaff;border-radius:50px;padding:6px 14px;white-space:nowrap}
+  .sound{background:#efeaff;border-radius:50%;width:42px;height:42px;font-size:1.3rem}
+
+  /* track */
+  .track{position:relative;height:46px;margin:6px 6px 14px;background:#efeaff;border-radius:50px}
+  .track .fill{position:absolute;left:0;top:0;bottom:0;border-radius:50px;background:linear-gradient(90deg,#ffd166,#ff9f1c);width:0;transition:width .6s cubic-bezier(.3,1.4,.5,1)}
+  .rocket{position:absolute;top:-6px;font-size:2.1rem;left:0;transition:left .6s cubic-bezier(.3,1.4,.5,1);transform:rotate(45deg)}
+  .moon{position:absolute;right:-4px;top:-8px;font-size:2.4rem}
+
+  .level-tag{display:inline-block;background:var(--btn);color:#fff;border-radius:50px;padding:4px 14px;font-weight:800;font-size:.95rem;margin-bottom:8px}
+  .question{font-size:3rem;font-weight:900;margin:6px 0 4px;letter-spacing:2px;min-height:64px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px}
+  .prompt{font-size:1.25rem;font-weight:700;margin:0 0 6px;opacity:.85}
+  .things{font-size:2.3rem;line-height:1.35;margin:6px 0 4px;min-height:80px;display:flex;flex-wrap:wrap;justify-content:center;gap:2px 6px}
+  .things span{display:inline-block;animation:pop .35s backwards}
+  @keyframes pop{from{transform:scale(0)}}
+
+  .answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .ans{
+    background:var(--btn);color:#fff;font-size:2.4rem;font-weight:900;
+    padding:16px 0;border-radius:22px;box-shadow:0 7px 0 #4a3db8;
+    transition:transform .08s, box-shadow .08s, background .2s;
+  }
+  .ans:active{transform:translateY(5px);box-shadow:0 2px 0 #4a3db8}
+  .ans.right{background:var(--good);box-shadow:0 7px 0 #1e9a52}
+  .ans.wrong{background:var(--bad);box-shadow:0 7px 0 #c94444;animation:shake .4s}
+  .ans:disabled{cursor:default}
+  @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+  .feedback{height:38px;margin-top:12px;font-size:1.4rem;font-weight:800}
+  .stars-row{font-size:3rem;margin:6px 0}
+  .score{font-size:1.3rem;font-weight:800;margin:6px 0 14px}
+
+  .hidden{display:none!important}
+  canvas{position:fixed;inset:0;pointer-events:none;z-index:5}
+  @media (max-width:380px){.question{font-size:2.4rem}.ans{font-size:2rem}}
 </style>
 </head>
 <body>
-<div class="app">
-  <h1>🎵 Rhyme Time! 🎵</h1>
-  <p class="sub">Rhyming words sound the same at the end, like <b>cat</b> and <b>hat</b>.</p>
+<div class="stars" id="stars"></div>
+<canvas id="confetti"></canvas>
 
-  <div id="start" class="card">
-    <p style="font-size:1.3rem;text-align:center">50 fun questions about rhyming words.<br>Tap 🔊 if you want the question read aloud!</p>
-    <p id="best" class="sub"></p>
-    <div class="row"><button class="btn" id="go">Let's Start! 🚀</button></div>
+<div class="game">
+
+  <!-- START -->
+  <div class="card" id="start">
+    <div class="big-emoji">🚀</div>
+    <h1>Math Rocket</h1>
+    <p class="sub">Answer the questions to fuel the rocket.<br>Can you reach the moon? 🌙</p>
+    <button class="play" id="playBtn">▶ Let's Go!</button>
+    <p class="small" id="best"></p>
   </div>
 
-  <div id="quiz" class="card hide">
-    <div class="top"><span id="qn"></span><span id="sc"></span></div>
-    <div class="bar"><div id="pb"></div></div>
-    <div class="prompt" id="prompt"></div>
-    <div id="visual"></div>
-    <div class="opts" id="opts"></div>
-    <div class="fb" id="fb"></div>
-    <div class="row">
-      <button class="btn ghost" id="say">🔊 Read to me</button>
-      <button class="btn alt hide" id="next">Next ➜</button>
+  <!-- PLAY -->
+  <div class="card hidden" id="play">
+    <div class="hud">
+      <span class="pill" id="qCount">Question 1 / 20</span>
+      <span class="pill" id="starsCount">⭐ 0</span>
+      <button class="sound" id="soundBtn" title="Sound on/off">🔊</button>
     </div>
+    <div class="track">
+      <div class="fill" id="fill"></div>
+      <div class="rocket" id="rocket">🚀</div>
+      <div class="moon">🌙</div>
+    </div>
+    <div class="level-tag" id="levelTag">Level 1: Counting</div>
+    <p class="prompt" id="prompt"></p>
+    <div class="things hidden" id="things"></div>
+    <div class="question hidden" id="question"></div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
   </div>
 
-  <div id="end" class="card hide">
-    <div class="stars" id="stars"></div>
-    <div class="score" id="final"></div>
-    <p class="prompt" id="msg"></p>
-    <div id="missed"></div>
-    <div class="row"><button class="btn" id="again">Play Again 🔁</button></div>
+  <!-- END -->
+  <div class="card hidden" id="end">
+    <div class="big-emoji">🌙</div>
+    <h1>You made it to the moon!</h1>
+    <div class="stars-row" id="finalStars"></div>
+    <div class="score" id="finalScore"></div>
+    <button class="play" id="againBtn">↻ Play Again</button>
   </div>
+
 </div>
 
 <script>
-/* Question types:
-   A = which word rhymes with [word]
-   B = which word does NOT rhyme with the others
-   C = which pair rhymes
-   D = finish the rhyme */
-var Q = [
- // A: rhymes with
- {t:'A',w:'cat',a:'hat',o:['cap','cut','cot']},
- {t:'A',w:'dog',a:'log',o:['dig','dot','door']},
- {t:'A',w:'sun',a:'run',o:['sand','sip','moon']},
- {t:'A',w:'bee',a:'tree',o:['bed','bat','bell']},
- {t:'A',w:'pen',a:'ten',o:['pan','pig','pin']},
- {t:'A',w:'bug',a:'hug',o:['bag','big','bun']},
- {t:'A',w:'cake',a:'lake',o:['cap','kite','cook']},
- {t:'A',w:'star',a:'car',o:['stir','step','sun']},
- {t:'A',w:'ball',a:'wall',o:['bell','bill','bat']},
- {t:'A',w:'fish',a:'dish',o:['fit','fist','fan']},
- {t:'A',w:'moon',a:'spoon',o:['man','mop','mouse']},
- {t:'A',w:'king',a:'ring',o:['kick','kid','kite']},
- {t:'A',w:'boat',a:'coat',o:['bat','bone','book']},
- {t:'A',w:'rain',a:'train',o:['ran','run','road']},
- {t:'A',w:'light',a:'night',o:['list','lick','lake']},
- {t:'A',w:'snow',a:'toe',o:['now','snap','sock']},
- {t:'A',w:'mouse',a:'house',o:['moon','mop','mice']},
- {t:'A',w:'bed',a:'red',o:['bad','bud','bone']},
- {t:'A',w:'bell',a:'shell',o:['ball','bed','bill']},
- {t:'A',w:'tent',a:'went',o:['tint','tan','test']},
- {t:'A',w:'duck',a:'truck',o:['dock','deck','dig']},
- {t:'A',w:'clock',a:'sock',o:['cluck','clap','cloud']},
- {t:'A',w:'nest',a:'best',o:['net','nose','neck']},
- {t:'A',w:'bear',a:'chair',o:['bean','bird','bark']},
- {t:'A',w:'blue',a:'shoe',o:['blow','black','bee']},
- {t:'A',w:'jump',a:'bump',o:['jam','jet','junk']},
- {t:'A',w:'pie',a:'sky',o:['pig','pea','pin']},
- {t:'A',w:'hop',a:'top',o:['hip','hog','hope']},
- {t:'A',w:'gate',a:'plate',o:['gap','goat','get']},
- {t:'A',w:'sing',a:'wing',o:['sang','song','sit']},
- // B: odd one out
- {t:'B',a:'cup',o:['cat','hat','bat']},
- {t:'B',a:'pan',o:['pig','wig','dig']},
- {t:'B',a:'sand',o:['sun','run','fun']},
- {t:'B',a:'bed',o:['bell','well','tell']},
- {t:'B',a:'kit',o:['king','ring','wing']},
- {t:'B',a:'cap',o:['car','star','jar']},
- {t:'B',a:'kite',o:['cake','lake','bake']},
- {t:'B',a:'run',o:['rain','train','plane']},
- // C: which pair rhymes
- {t:'C',a:'cat – hat',o:['cat – cut','cat – cot','cat – cap']},
- {t:'C',a:'bed – red',o:['bed – bad','bed – bud','bed – bid']},
- {t:'C',a:'pin – win',o:['pin – pan','pin – pen','pin – pie']},
- {t:'C',a:'hop – mop',o:['hop – hip','hop – hope','hop – hug']},
- {t:'C',a:'box – fox',o:['box – bag','box – book','box – boy']},
- {t:'C',a:'mail – tail',o:['mail – mill','mail – meal','mail – man']},
- // D: finish the rhyme
- {t:'D',line:'Jack and Jill went up the ___',rw:'Jill',a:'hill',o:['hall','hole','hat']},
- {t:'D',line:'Twinkle, twinkle, little star, how I wonder what you ___',rw:'star',a:'are',o:['air','and','our']},
- {t:'D',line:'Humpty Dumpty sat on a ___',rw:'Dumpty',a:'wall',o:['well','wild','wing']},
- {t:'D',line:'The mouse ran up the ___',rw:'dock',a:'clock',o:['cloud','cook','cow']},
- {t:'D',line:'Little Bo Peep has lost her ___',rw:'Peep',a:'sheep',o:['ship','shoe','shop']},
- {t:'D',line:'Jack be nimble, Jack be quick, Jack jump over the candle ___',rw:'quick',a:'stick',o:['stack','step','sock']}
-];
+(function(){
+  // ---------- background stars ----------
+  var sky = document.getElementById('stars');
+  for (var i=0;i<45;i++){
+    var s=document.createElement('i');
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*3)+'s';
+    sky.appendChild(s);
+  }
 
-function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
-function $(id){return document.getElementById(id)}
+  // ---------- helpers ----------
+  var TOTAL = 20;
+  var $ = function(id){return document.getElementById(id)};
+  function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+  function shuffle(arr){
+    for (var i=arr.length-1;i>0;i--){
+      var j=rand(0,i), t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+    }
+    return arr;
+  }
+  function store(key,val){try{ if(val===undefined) return localStorage.getItem(key); localStorage.setItem(key,val);}catch(e){return null}}
 
-var order,idx,score,missed,locked,cur;
+  var soundOn = true;
+  var audioCtx = null;
+  function beep(freq,dur,type,delay){
+    if(!soundOn) return;
+    try{
+      audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+      var o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.type=type||'sine'; o.frequency.value=freq;
+      var t=audioCtx.currentTime+(delay||0);
+      g.gain.setValueAtTime(.001,t);
+      g.gain.exponentialRampToValueAtTime(.25,t+.02);
+      g.gain.exponentialRampToValueAtTime(.001,t+dur);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(t); o.stop(t+dur+.05);
+    }catch(e){}
+  }
+  function happy(){beep(523,.15,'triangle',0);beep(659,.15,'triangle',.12);beep(784,.25,'triangle',.24)}
+  function oops(){beep(220,.25,'square',0)}
 
-function getBest(){try{return localStorage.getItem('rhymeBest')}catch(e){return null}}
-function setBest(v){try{localStorage.setItem('rhymeBest',v)}catch(e){}}
-function showBest(){var b=getBest();$('best').textContent=b?('Your best score: '+b+' / 50 ⭐'):''}
+  // ---------- question building ----------
+  var LEVELS = [
+    {name:'Level 1: Counting', from:1,  to:5},
+    {name:'Level 2: Adding',   from:6,  to:10},
+    {name:'Level 3: Taking Away', from:11, to:15},
+    {name:'Level 4: Mixed Challenge', from:16, to:20}
+  ];
+  var EMOJI = ['🍎','⭐','🐟','🐥','🚗','🎈','🍪','🐸','🌼','⚽','🍓','🦋'];
 
-function start(){
-  order=shuffle(Q);idx=0;score=0;missed=[];
-  $('start').classList.add('hide');$('end').classList.add('hide');$('quiz').classList.remove('hide');
-  show();
-}
+  function makeOptions(correct, extras, max){
+    // plausible wrong answers: close numbers and "wrong operation" answers
+    var pool = [correct-2, correct-1, correct+1, correct+2].concat(extras||[]);
+    pool = pool.filter(function(n,i){
+      return n>=0 && n<=max && n!==correct && pool.indexOf(n)===i;
+    });
+    shuffle(pool);
+    var wrong = pool.slice(0,3);
+    // fallback if pool too small
+    var k = 3;
+    while (wrong.length<3){
+      var c = correct + k; k = (k>0)? -k : -k+1;
+      if (c>=0 && c<=max && c!==correct && wrong.indexOf(c)===-1) wrong.push(c);
+      if (Math.abs(k)>20) break;
+    }
+    return shuffle([correct].concat(wrong));
+  }
 
-function promptFor(q){
-  if(q.t==='A')return 'Which word rhymes with…';
-  if(q.t==='B')return 'Which word does NOT rhyme with the others?';
-  if(q.t==='C')return 'Which two words rhyme?';
-  return 'Finish the rhyme!';
-}
+  function makeQuestion(n){
+    var lvl = n<=5?0 : n<=10?1 : n<=15?2 : 3;
+    var q = {level:lvl};
+    if (lvl===0){
+      var count = rand(1,10);
+      q.type='count'; q.count=count; q.emoji=EMOJI[rand(0,EMOJI.length-1)];
+      q.prompt='How many do you see?';
+      q.answer=count; q.options=makeOptions(count,[],12);
+    } else if (lvl===1){
+      var a=rand(1,9), b=rand(1,10-a);
+      q.type='eq'; q.text=a+' + '+b+' = ?'; q.prompt='Add them up!';
+      q.answer=a+b; q.options=makeOptions(q.answer,[a,b,Math.abs(a-b)],12);
+    } else if (lvl===2){
+      var x=rand(2,10), y=rand(1,x-1);
+      q.type='eq'; q.text=x+' − '+y+' = ?'; q.prompt='Take away!';
+      q.answer=x-y; q.options=makeOptions(q.answer,[x+y>12?x:x+y,y],12);
+    } else {
+      if (Math.random()<0.5){
+        var p=rand(2,15), r=rand(1,20-p);
+        q.type='eq'; q.text=p+' + '+r+' = ?'; q.prompt='Add them up!';
+        q.answer=p+r; q.options=makeOptions(q.answer,[Math.abs(p-r),p,r],22);
+      } else {
+        var m=rand(8,20), d=rand(1,Math.min(9,m-1));
+        q.type='eq'; q.text=m+' − '+d+' = ?'; q.prompt='Take away!';
+        q.answer=m-d; q.options=makeOptions(q.answer,[m+d,d],22);
+      }
+    }
+    return q;
+  }
 
-function show(){
-  cur=order[idx];locked=false;
-  $('qn').textContent='Question '+(idx+1)+' of 50';
-  $('sc').textContent='⭐ '+score;
-  $('pb').style.width=(idx/50*100)+'%';
-  $('prompt').textContent=promptFor(cur);
-  var v=$('visual');
-  if(cur.t==='A')v.innerHTML='<div class="big">'+cur.w+'</div>';
-  else if(cur.t==='D')v.innerHTML='<div class="line">'+cur.line.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</div>';
-  else v.innerHTML='<div style="height:10px"></div>';
-  $('fb').textContent='';$('fb').className='fb';
-  $('next').classList.add('hide');
-  var box=$('opts');box.innerHTML='';
-  shuffle([cur.a].concat(cur.o)).forEach(function(txt){
-    var b=document.createElement('button');
-    b.className='opt';b.textContent=txt;
-    b.onclick=function(){pick(b,txt)};
-    box.appendChild(b);
+  // ---------- game state ----------
+  var cur=0, mistakes=0, stars=0, locked=false, qObj=null, firstTry=true;
+
+  function show(id){['start','play','end'].forEach(function(x){$(x).classList.toggle('hidden',x!==id)})}
+
+  function startGame(){
+    cur=0; mistakes=0; stars=0;
+    show('play');
+    nextQuestion();
+  }
+
+  function updateTrack(){
+    var pct = (cur/TOTAL)*100;
+    $('fill').style.width = pct+'%';
+    var trackW = $('fill').parentNode.clientWidth - 40;
+    $('rocket').style.left = (cur/TOTAL*trackW)+'px';
+  }
+
+  function nextQuestion(){
+    if (cur>=TOTAL){ return finish(); }
+    cur++;
+    firstTry=true; locked=false;
+    qObj = makeQuestion(cur);
+    $('qCount').textContent='Question '+cur+' / '+TOTAL;
+    $('starsCount').textContent='⭐ '+stars;
+    $('levelTag').textContent=LEVELS[qObj.level].name;
+    $('prompt').textContent=qObj.prompt;
+    $('feedback').textContent='';
+
+    var things=$('things'), qEl=$('question');
+    if (qObj.type==='count'){
+      things.classList.remove('hidden'); qEl.classList.add('hidden');
+      things.innerHTML='';
+      for (var i=0;i<qObj.count;i++){
+        var sp=document.createElement('span');
+        sp.textContent=qObj.emoji; sp.style.animationDelay=(i*0.06)+'s';
+        things.appendChild(sp);
+      }
+    } else {
+      things.classList.add('hidden'); qEl.classList.remove('hidden');
+      qEl.textContent=qObj.text;
+    }
+
+    var box=$('answers'); box.innerHTML='';
+    qObj.options.forEach(function(val){
+      var b=document.createElement('button');
+      b.className='ans'; b.textContent=val;
+      b.addEventListener('click',function(){choose(b,val)});
+      box.appendChild(b);
+    });
+    updateTrack();
+    // rocket position reflects completed questions
+    var done = cur-1;
+    var trackW = $('fill').parentNode.clientWidth - 40;
+    $('fill').style.width=(done/TOTAL*100)+'%';
+    $('rocket').style.left=(done/TOTAL*trackW)+'px';
+  }
+
+  var PRAISE=['Great job! 🎉','Super! 🌟','You got it! 👏','Awesome! 🚀','Brilliant! ✨','Yes! 🎈'];
+  var RETRY=['Oops, try again! 💪','Almost! Have another go 🙂','Not quite, you can do it! 🌈'];
+
+  function choose(btn,val){
+    if (locked) return;
+    if (val===qObj.answer){
+      locked=true;
+      btn.classList.add('right');
+      happy();
+      if (firstTry) stars++;
+      $('starsCount').textContent='⭐ '+stars;
+      $('feedback').textContent=PRAISE[rand(0,PRAISE.length-1)];
+      // move rocket forward
+      var trackW = $('fill').parentNode.clientWidth - 40;
+      $('fill').style.width=(cur/TOTAL*100)+'%';
+      $('rocket').style.left=(cur/TOTAL*trackW)+'px';
+      Array.prototype.forEach.call($('answers').children,function(b){b.disabled=true});
+      setTimeout(nextQuestion,1100);
+    } else {
+      firstTry=false; mistakes++;
+      btn.classList.add('wrong'); btn.disabled=true;
+      oops();
+      $('feedback').textContent=RETRY[rand(0,RETRY.length-1)];
+    }
+  }
+
+  function finish(){
+    show('end');
+    var rating = stars>=18?3 : stars>=12?2 : 1;
+    var s=''; for (var i=0;i<3;i++) s+= i<rating?'⭐':'☆';
+    $('finalStars').textContent=s;
+    $('finalScore').textContent='You got '+stars+' out of '+TOTAL+' right on the first try!';
+    var prev = parseInt(store('mathRocketBest')||'0',10);
+    if (stars>prev){ store('mathRocketBest',String(stars)); }
+    showBest();
+    burst();
+    happy();
+  }
+
+  function showBest(){
+    var b = store('mathRocketBest');
+    $('best').textContent = b ? ('Best score: '+b+' / '+TOTAL+' ⭐') : '';
+  }
+
+  // ---------- confetti ----------
+  var cv=$('confetti'), cx=cv.getContext('2d'), bits=[], anim=null;
+  function size(){cv.width=window.innerWidth;cv.height=window.innerHeight}
+  window.addEventListener('resize',size); size();
+  function burst(){
+    var cols=['#ffb703','#ff6b6b','#2ecc71','#6c5ce7','#4dd0e1','#fff'];
+    for (var i=0;i<140;i++){
+      bits.push({x:cv.width/2,y:cv.height/3,vx:(Math.random()-.5)*14,vy:Math.random()*-12-2,
+                 g:.28,s:rand(6,11),c:cols[rand(0,cols.length-1)],r:Math.random()*6,life:160});
+    }
+    if(!anim) loop();
+  }
+  function loop(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    bits=bits.filter(function(p){return p.life>0});
+    bits.forEach(function(p){
+      p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.r+=.2; p.life--;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r);
+      cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cx.restore();
+    });
+    if (bits.length){anim=requestAnimationFrame(loop)} else {anim=null;cx.clearRect(0,0,cv.width,cv.height)}
+  }
+
+  // ---------- wiring ----------
+  $('playBtn').addEventListener('click',startGame);
+  $('againBtn').addEventListener('click',startGame);
+  $('soundBtn').addEventListener('click',function(){
+    soundOn=!soundOn; this.textContent=soundOn?'🔊':'🔇';
   });
-}
-
-function why(q){
-  if(q.t==='A')return q.w+' and '+q.a+' rhyme!';
-  if(q.t==='B')return q.o.join(', ')+' rhyme. '+q.a+' does not.';
-  if(q.t==='C')return q.a.replace(' – ',' and ')+' rhyme!';
-  return q.a+' rhymes with '+q.rw+'!';
-}
-
-function pick(btn,txt){
-  if(locked)return;locked=true;
-  var ok=txt===cur.a;
-  var all=$('opts').children;
-  for(var i=0;i<all.length;i++){
-    all[i].disabled=true;
-    if(all[i].textContent===cur.a)all[i].classList.add('right');
-  }
-  if(ok){score++;$('fb').textContent='🎉 Yes! '+why(cur);$('fb').className='fb ok'}
-  else{btn.classList.add('wrong');missed.push(cur);$('fb').textContent='Oops! '+why(cur);$('fb').className='fb no'}
-  $('sc').textContent='⭐ '+score;
-  $('next').textContent=idx===49?'See my score 🏆':'Next ➜';
-  $('next').classList.remove('hide');
-}
-
-function next(){
-  idx++;
-  if(idx>=50)finish();else show();
-}
-
-function finish(){
-  $('quiz').classList.add('hide');$('end').classList.remove('hide');
-  $('final').textContent=score+' / 50';
-  var s=score>=45?5:score>=38?4:score>=30?3:score>=20?2:1;
-  $('stars').textContent=new Array(s+1).join('⭐');
-  $('msg').textContent=score>=45?'Amazing rhyming superstar!':score>=38?'Great job! You know your rhymes!':score>=30?'Good work! Keep practicing!':'Nice try! Let\'s practice again!';
-  var b=getBest();if(!b||score>parseInt(b,10))setBest(score);
-  var m=$('missed');m.innerHTML='';
-  if(missed.length){
-    var h=document.createElement('div');h.style.fontWeight='bold';h.style.margin='10px 0 4px';h.textContent='Let\'s look at the ones to practice:';m.appendChild(h);
-    missed.forEach(function(q){var d=document.createElement('div');d.className='miss';d.textContent=why(q);m.appendChild(d)});
-  }
-}
-
-function speak(){
-  if(!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  var parts=[promptFor(cur)];
-  if(cur.t==='A')parts.push(cur.w);
-  if(cur.t==='D')parts.push(cur.line.replace('___','blank'));
-  var opts=$('opts').children;
-  for(var i=0;i<opts.length;i++)parts.push(opts[i].textContent.replace(' – ',' and '));
-  var u=new SpeechSynthesisUtterance(parts.join('. '));
-  u.lang='en-US';u.rate=0.85;
-  window.speechSynthesis.speak(u);
-}
-
-$('go').onclick=start;
-$('again').onclick=function(){showBest();start()};
-$('next').onclick=next;
-$('say').onclick=speak;
-showBest();
+  window.addEventListener('resize',function(){ if(!$('play').classList.contains('hidden')) updateTrack(); });
+  showBest();
+})();
 </script>
 </body>
 </html>
