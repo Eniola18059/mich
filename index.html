@@ -1,242 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Science Quiz</title>
+<title>Math Quiz – Operations & Algebraic Thinking</title>
 <style>
   :root{
-    --bg1:#e0f7ff; --bg2:#fff4d6; --ink:#1f2a44; --card:#ffffff;
-    --blue:#2f80ed; --green:#27ae60; --red:#eb5757; --orange:#f2994a; --purple:#9b51e0;
+    --bg1:#fff4d6; --bg2:#d9f0ff; --ink:#1f2a44; --card:#ffffff;
+    --blue:#3b82f6; --green:#22a559; --red:#e5484d; --orange:#ff9f1c; --purple:#7c5cff;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--ink);
-    background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh}
-  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
-  .card{background:var(--card);border-radius:24px;padding:26px;box-shadow:0 10px 30px rgba(31,42,68,.12)}
-  h1{margin:0 0 6px;font-size:2.2rem;text-align:center}
-  .sub{text-align:center;color:#51608a;margin-bottom:20px}
-  .big{font-size:4rem;text-align:center;margin:6px 0}
-  .topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:18px 0}
-  .topic{border-radius:16px;padding:12px 14px;color:#fff;font-weight:700;display:flex;align-items:center;gap:10px}
-  .topic span.e{font-size:1.6rem}
-  button{font:inherit;cursor:pointer;border:0}
-  .btn{background:var(--blue);color:#fff;font-weight:800;font-size:1.15rem;padding:14px 28px;border-radius:999px;
-    box-shadow:0 5px 0 #1d5fbd;transition:transform .08s}
-  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #1d5fbd}
-  .btn.green{background:var(--green);box-shadow:0 5px 0 #1b8a49}
+  body{
+    margin:0; min-height:100vh; font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;
+    color:var(--ink); background:linear-gradient(160deg,var(--bg1),var(--bg2)); padding:16px;
+  }
+  .wrap{max-width:720px; margin:0 auto}
+  .card{background:var(--card); border-radius:24px; padding:26px; box-shadow:0 8px 28px rgba(31,42,68,.12)}
+  h1{margin:0 0 6px; font-size:2rem; line-height:1.15}
+  h2{margin:0 0 14px; font-size:1.45rem; line-height:1.35}
+  .sub{color:#4b587a; margin:0 0 18px}
+  .emoji-big{font-size:3.2rem}
+  .topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px; padding:0; list-style:none}
+  .topics li{background:#eef3ff; border-radius:999px; padding:7px 14px; font-weight:700; font-size:.92rem}
+  button{font:inherit; cursor:pointer; border:none}
+  .btn{background:var(--blue); color:#fff; font-weight:800; font-size:1.1rem; padding:14px 28px; border-radius:16px; box-shadow:0 4px 0 #2563c9}
+  .btn:active{transform:translateY(2px); box-shadow:0 2px 0 #2563c9}
+  .btn.green{background:var(--green); box-shadow:0 4px 0 #17803f}
+  .btn.orange{background:var(--orange); box-shadow:0 4px 0 #cc7a00}
+  .top{display:flex; justify-content:space-between; align-items:center; font-weight:800; margin-bottom:10px}
+  .bar{height:14px; background:#e6ebf7; border-radius:999px; overflow:hidden; margin-bottom:20px}
+  .bar>div{height:100%; width:0; background:linear-gradient(90deg,var(--purple),var(--blue)); border-radius:999px; transition:width .35s}
+  .tag{display:inline-block; background:#fff1d6; color:#a35a00; font-weight:800; font-size:.8rem; padding:4px 12px; border-radius:999px; margin-bottom:12px}
+  .art{font-size:1.7rem; line-height:1.5; letter-spacing:4px; margin:0 0 14px; text-align:center; background:#f6f9ff; border-radius:16px; padding:10px}
+  .opts{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+  @media(max-width:520px){.opts{grid-template-columns:1fr} h1{font-size:1.65rem}}
+  .opt{background:#f4f7ff; border:3px solid #d6e0fb; border-radius:16px; padding:16px; font-weight:800; font-size:1.15rem; color:var(--ink); text-align:center}
+  .opt:hover:not(:disabled){border-color:var(--blue); background:#eaf1ff}
+  .opt.correct{background:#dcf7e6; border-color:var(--green)}
+  .opt.wrong{background:#ffe3e4; border-color:var(--red)}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:18px; padding:14px 16px; border-radius:16px; font-weight:700; display:none}
+  .fb.good{display:block; background:#dcf7e6; color:#0f5c2c}
+  .fb.bad{display:block; background:#ffe9d6; color:#7a3b00}
+  .next{margin-top:18px; text-align:right; display:none}
+  .score-big{font-size:3.4rem; font-weight:900; color:var(--purple); margin:6px 0}
+  .stars{font-size:2.2rem; margin-bottom:8px}
+  .review{margin-top:20px; text-align:left}
+  .review .item{border-left:6px solid var(--red); background:#fff5f5; padding:10px 14px; border-radius:10px; margin-bottom:10px; font-size:.95rem}
+  .review .item b{display:block; margin-bottom:4px}
   .center{text-align:center}
-  .top{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-  .pill{background:#eef3ff;border-radius:999px;padding:6px 14px}
-  .bar{height:14px;background:#e6ebf5;border-radius:999px;overflow:hidden;margin-bottom:18px}
-  .bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--green));transition:width .3s}
-  .tag{display:inline-block;color:#fff;font-weight:800;font-size:.85rem;padding:4px 12px;border-radius:999px;margin-bottom:10px}
-  .q{font-size:1.4rem;font-weight:800;line-height:1.35;margin:4px 0 18px}
-  .opts{display:grid;gap:12px}
-  .opt{background:#f5f8ff;border:3px solid #d7e2fb;border-radius:16px;padding:14px 16px;text-align:left;
-    font-size:1.1rem;font-weight:700;color:var(--ink);display:flex;gap:12px;align-items:center}
-  .opt:hover:not(:disabled){border-color:var(--blue);background:#eaf2ff}
-  .opt .l{background:var(--blue);color:#fff;border-radius:50%;width:32px;height:32px;flex:none;display:grid;place-items:center;font-weight:800}
-  .opt.right{background:#e3f8ea;border-color:var(--green)}
-  .opt.right .l{background:var(--green)}
-  .opt.wrong{background:#fde8e8;border-color:var(--red)}
-  .opt.wrong .l{background:var(--red)}
-  .fb{margin-top:16px;border-radius:16px;padding:14px 16px;font-size:1.05rem;line-height:1.45;display:none}
-  .fb.show{display:block}
-  .fb.good{background:#e3f8ea}
-  .fb.bad{background:#fff0e0}
-  .fb b{display:block;font-size:1.15rem;margin-bottom:4px}
-  .next{margin-top:16px;display:none;text-align:right}
-  .next.show{display:block}
-  .stars{font-size:2.4rem;text-align:center;letter-spacing:4px}
-  .score{font-size:3rem;font-weight:900;text-align:center;color:var(--purple)}
-  .break{display:grid;gap:8px;margin:18px 0}
-  .row{display:flex;align-items:center;gap:10px}
-  .row .n{width:190px;font-weight:700;font-size:.95rem}
-  .row .b{flex:1;height:14px;background:#e6ebf5;border-radius:999px;overflow:hidden}
-  .row .b>div{height:100%}
-  .row .v{width:48px;text-align:right;font-weight:800}
-  .miss{background:#fafbff;border:2px solid #e3e9f7;border-radius:14px;padding:12px 14px;margin:10px 0}
-  .miss .a{color:var(--green);font-weight:800}
-  @media(max-width:520px){.row .n{width:120px;font-size:.85rem}.q{font-size:1.2rem}h1{font-size:1.8rem}}
+  .hidden{display:none}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div id="app"></div>
+
+  <div id="start" class="card center">
+    <div class="emoji-big">🧮🌟</div>
+    <h1>Math Quiz</h1>
+    <p class="sub"><b>Part 1: Operations & Algebraic Thinking</b><br>50 questions · Pick the best answer · No timer, take your time!</p>
+    <ul class="topics" style="justify-content:center">
+      <li>➕ Word problems within 100</li>
+      <li>⚡ Facts within 20</li>
+      <li>🔟 Sums of two digits</li>
+      <li>⚖️ Odd &amp; even</li>
+      <li>🔲 Equal groups &amp; arrays</li>
+    </ul>
+    <button class="btn" id="startBtn">Let's Start! 🚀</button>
+  </div>
+
+  <div id="quiz" class="card hidden">
+    <div class="top"><span id="qnum">Question 1 of 50</span><span id="scoreNow">⭐ 0</span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <span class="tag" id="tag"></span>
+    <h2 id="qtext"></h2>
+    <div class="art hidden" id="art"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div class="next" id="nextWrap"><button class="btn green" id="nextBtn">Next ➜</button></div>
+  </div>
+
+  <div id="result" class="card center hidden">
+    <div class="stars" id="stars"></div>
+    <h1 id="rtitle"></h1>
+    <div class="score-big" id="rscore"></div>
+    <p class="sub" id="rmsg"></p>
+    <div id="topicScores" class="topics" style="justify-content:center"></div>
+    <button class="btn orange" id="againBtn">Try Again 🔁</button>
+    <div class="review" id="review"></div>
+  </div>
+
 </div>
 
 <script>
-const TOPICS = {
-  F:{name:"Push, Pull & Magnets",emoji:"🧲",color:"#2f80ed"},
-  L:{name:"Plants & Life Cycles",emoji:"🌱",color:"#27ae60"},
-  H:{name:"Animals & Their Homes",emoji:"🦁",color:"#f2994a"},
-  W:{name:"Weather & Sky",emoji:"🌦️",color:"#9b51e0"},
-  S:{name:"Materials & Our Senses",emoji:"👀",color:"#eb5757"}
-};
-
-// QUESTIONS_START
+// Each question: [topic, question, correctAnswer, [three wrong answers], explanation, optional picture]
 const Q = [
-{"t":"F","q":"Pushing and pulling are both kinds of what?","a":"Forces","w":["Machines","Materials","Sounds"],"e":"A push or a pull is a force. Forces make things move, stop, or change direction."},
-{"t":"F","q":"You open a door by pulling its handle. What did you use?","a":"A pull","w":["A push","A magnet","A spin"],"e":"When you move something toward you, you are pulling it."},
-{"t":"F","q":"Which one is a push?","a":"Closing a drawer by pressing it in","w":["Opening a drawer by its handle","Stretching a rubber band","Dragging a bag along the floor"],"e":"Pressing something away from you is a push. Opening, stretching, and dragging are pulls."},
-{"t":"F","q":"Which of these will a magnet pick up?","a":"An iron nail","w":["A plastic spoon","A paper cup","A wooden block"],"e":"Magnets pick up things made of iron or steel."},
-{"t":"F","q":"A magnet has two ends. What are they called?","a":"Poles","w":["Edges","Sides","Tips"],"e":"The two ends of a magnet are the north pole and the south pole."},
-{"t":"F","q":"What happens when the opposite poles of two magnets come close?","a":"They pull together","w":["They push apart","They break in half","They turn into wood"],"e":"Opposite poles attract. Poles that are the same push away from each other."},
-{"t":"F","q":"What pulls things down toward the ground?","a":"Gravity","w":["Friction","Wind","Heat"],"e":"Gravity is the force that pulls everything toward the Earth."},
-{"t":"F","q":"You let go of a ball in the air. What does it do?","a":"It falls down to the ground","w":["It floats away in the wind","It stays up in the air","It rolls up to the sky"],"e":"Gravity pulls the ball down."},
-{"t":"F","q":"Rubbing your hands together makes them feel warm. What force does this?","a":"Friction","w":["Gravity","Magnetism","Pushing"],"e":"Friction happens when two things rub together. It can make heat and slow things down."},
-{"t":"F","q":"Which floor is the hardest to slide a box across?","a":"A rough carpet","w":["A smooth ice floor","A wet tile floor","A shiny wooden floor"],"e":"Rough surfaces have more friction, so things slide less easily."},
-{"t":"F","q":"A magnet pulls a paper clip without touching it. What does this show?","a":"A magnet can pull from a little way off","w":["A magnet must always touch to pull","A paper clip can pull a magnet harder","A magnet only works in water"],"e":"Magnetic force works across a small gap."},
-{"t":"F","q":"Which one is moved by a pull?","a":"A wagon pulled with a rope","w":["A door pushed shut","A ball kicked by a foot","A swing pushed by a friend"],"e":"A rope pulls the wagon toward you."},
-{"t":"F","q":"What does a bigger push do to a toy car?","a":"Makes it go faster and farther","w":["Makes it stop sooner","Makes it get lighter","Makes it stay in one place"],"e":"A bigger force changes how something moves more."},
-{"t":"F","q":"Which one will a magnet NOT pick up?","a":"A rubber band","w":["A steel key","An iron nail","A steel paper clip"],"e":"Rubber is not magnetic. Iron and steel are."},
-{"t":"L","q":"What do plants need to grow?","a":"Sunlight, water, and air","w":["Candy, water, and sand","Darkness, sand, and wind","Sunlight, salt, and plastic"],"e":"Plants use sunlight, water, and air to make their food and grow."},
-{"t":"L","q":"Which part of a plant takes in water from the soil?","a":"Roots","w":["Leaves","Flower","Stem"],"e":"Roots grow in the soil and soak up water."},
-{"t":"L","q":"What does the stem of a plant do?","a":"Holds it up and carries water","w":["Makes seeds for new plants","Takes in water from the soil","Gives the flower its smell"],"e":"The stem holds the plant up and moves water to the leaves."},
-{"t":"L","q":"Which part of a plant uses sunlight to make food?","a":"Leaves","w":["Roots","Stem","Seeds"],"e":"Leaves catch sunlight and use it to make food for the plant."},
-{"t":"L","q":"What does a seed need to start growing?","a":"Water and warmth","w":["Only bright sunlight","Only cold air","Salt and sand"],"e":"A seed needs water and warmth to sprout."},
-{"t":"L","q":"What is the first stage in a butterfly's life?","a":"Egg","w":["Caterpillar","Wings","Adult butterfly"],"e":"A butterfly starts as an egg. Then it hatches into a caterpillar."},
-{"t":"L","q":"What do we call a baby frog?","a":"A tadpole","w":["A caterpillar","A chick","A cub"],"e":"A baby frog is a tadpole. It lives in water and later grows legs."},
-{"t":"L","q":"What do we call a baby dog?","a":"A puppy","w":["A kitten","A cub","A calf"],"e":"A baby dog is a puppy."},
-{"t":"L","q":"What do we call a baby cow?","a":"A calf","w":["A lamb","A foal","A piglet"],"e":"A baby cow is a calf. A lamb is a baby sheep."},
-{"t":"L","q":"Which of these is a living thing?","a":"A tree","w":["A wooden table","A cloud","A river"],"e":"Living things grow and need water. A table is made from a tree, but it is not alive."},
-{"t":"L","q":"Which one do all living things need?","a":"Water","w":["Toys","Electricity","Sugar"],"e":"All living things need water to stay alive."},
-{"t":"L","q":"What does a flower make that can grow into a new plant?","a":"Seeds","w":["Roots","Leaves","Bark"],"e":"Flowers make seeds. A seed can grow into a new plant."},
-{"t":"L","q":"Which of these animals lays eggs?","a":"A duck","w":["A rabbit","A cow","A monkey"],"e":"Birds, like ducks, lay eggs. Rabbits, cows, and monkeys give birth to live babies."},
-{"t":"L","q":"Which comes first in a plant's life?","a":"Seed","w":["Flower","Fruit","Big tree"],"e":"A plant starts as a seed."},
-{"t":"H","q":"Where does a fish live?","a":"In water","w":["In a nest","In a tree","In a burrow"],"e":"Fish live in water, like rivers, lakes, and the sea."},
-{"t":"H","q":"What do we call the place where an animal lives?","a":"Its habitat","w":["Its weather","Its region","Its garden"],"e":"A habitat is a home that gives an animal food, water, and shelter."},
-{"t":"H","q":"Which animal lives in a hot, dry desert?","a":"A camel","w":["A penguin","A whale","A polar bear"],"e":"A camel can live a long time without water."},
-{"t":"H","q":"Which animal lives where it is very cold and icy?","a":"A penguin","w":["A monkey","A camel","A lion"],"e":"Penguins live in cold places, like Antarctica."},
-{"t":"H","q":"What is a bird's nest for?","a":"A safe home for eggs and chicks","w":["A place to find water","A tool to catch fish","A bed for the farmer"],"e":"Birds build nests to keep their eggs and babies safe."},
-{"t":"H","q":"Which animal has feathers?","a":"An eagle","w":["A bat","A frog","A snake"],"e":"Birds are the only animals with feathers. A bat has fur."},
-{"t":"H","q":"Which animal has fur or hair?","a":"A dog","w":["A fish","A bird","A lizard"],"e":"Dogs are mammals, and mammals have fur or hair."},
-{"t":"H","q":"How does a fish breathe?","a":"With gills","w":["With a nose","With lungs","With wings"],"e":"Gills take air from the water so the fish can breathe."},
-{"t":"H","q":"Which animal eats only plants?","a":"A cow","w":["A lion","A snake","A crocodile"],"e":"A cow is a herbivore. It eats grass and other plants."},
-{"t":"H","q":"Which animal hunts and eats other animals?","a":"A lion","w":["A rabbit","A goat","A horse"],"e":"A lion is a meat eater. A rabbit, goat, and horse eat plants."},
-{"t":"H","q":"Which animal has a hard shell to protect its body?","a":"A turtle","w":["A rabbit","A parrot","A cat"],"e":"A turtle can pull its body inside its shell."},
-{"t":"H","q":"Which of these animals can fly?","a":"An owl","w":["A penguin","An ostrich","A turtle"],"e":"An owl has wings and can fly. Penguins and ostriches are birds that cannot fly."},
-{"t":"H","q":"Which animal lives mostly in trees?","a":"A monkey","w":["A whale","A crab","A camel"],"e":"Monkeys climb and live in trees."},
-{"t":"H","q":"Why do some animals have thick fur?","a":"To stay warm","w":["To swim faster","To find food","To be louder"],"e":"Thick fur keeps an animal warm in cold weather."},
-{"t":"W","q":"What is the weather like when water falls from the clouds?","a":"Rainy","w":["Windy","Sunny","Foggy"],"e":"Rain is water that falls from clouds."},
-{"t":"W","q":"Which tool tells us how hot or cold it is?","a":"A thermometer","w":["A ruler","A clock","A compass"],"e":"A thermometer measures temperature."},
-{"t":"W","q":"What do we call air that is moving?","a":"Wind","w":["Rain","Cloud","Fog"],"e":"Moving air is wind."},
-{"t":"W","q":"What gives us light and heat during the day?","a":"The Sun","w":["The Moon","The stars","The clouds"],"e":"The Sun is a star that gives Earth light and heat."},
-{"t":"W","q":"What is the Moon?","a":"A big rock that moves around Earth","w":["A star that makes its own light","A small cloud in the sky","A planet far away"],"e":"The Moon is a big ball of rock. It shines because the Sun lights it up."},
-{"t":"W","q":"Which season is usually the coldest?","a":"Winter","w":["Summer","Spring","Fall"],"e":"Winter has the coldest weather of the year."},
-{"t":"W","q":"What falls from the sky when it is very cold and water freezes into flakes?","a":"Snow","w":["Rain","Fog","Dew"],"e":"Snow is made of tiny frozen flakes of water."},
-{"t":"W","q":"What should you wear on a rainy day?","a":"A raincoat and boots","w":["A swimsuit and sandals","A scarf and gloves","A sun hat and shorts"],"e":"A raincoat and boots keep you dry."},
-{"t":"W","q":"What makes a rainbow?","a":"Sunlight shining through raindrops","w":["Wind blowing through clouds","Snow melting on a hill","Lightning hitting water"],"e":"Sunlight bends in raindrops and shows all its colors."},
-{"t":"W","q":"Which one is a sign that a storm is coming?","a":"Dark, heavy clouds","w":["A clear blue sky","A gentle breeze","Bright morning sun"],"e":"Dark, heavy clouds are full of water and often bring storms."},
-{"t":"W","q":"What should you do if you hear thunder?","a":"Go inside","w":["Climb a tree","Go swimming","Fly a kite"],"e":"Thunder means lightning is near. Stay inside where it is safe."},
-{"t":"W","q":"What do we call water that is in the air as a gas we cannot see?","a":"Water vapor","w":["Smoke","Dust","Ice"],"e":"Water vapor is water in the form of a gas."},
-{"t":"W","q":"The Sun heats a puddle. Where does the water go?","a":"Into the air","w":["Into the ground only","It disappears forever","Into the nearby trees"],"e":"The Sun makes the water evaporate into the air."},
-{"t":"W","q":"Which planet do we live on?","a":"Earth","w":["Mars","Venus","Jupiter"],"e":"We live on planet Earth."},
-{"t":"S","q":"Which sense do we use our eyes for?","a":"Sight","w":["Hearing","Touch","Taste"],"e":"Our eyes help us see. That is the sense of sight."},
-{"t":"S","q":"Which body part do we use to hear sounds?","a":"Ears","w":["Eyes","Nose","Skin"],"e":"Ears let us hear."},
-{"t":"S","q":"Which sense helps you feel if something is hot or cold?","a":"Touch","w":["Sight","Smell","Hearing"],"e":"Our skin gives us the sense of touch."},
-{"t":"S","q":"Which body part helps you smell a flower?","a":"Nose","w":["Tongue","Ears","Eyes"],"e":"We smell with our nose."},
-{"t":"S","q":"Which body part helps you taste food?","a":"Tongue","w":["Nose","Teeth","Lips"],"e":"Our tongue can tell if food is sweet, salty, sour, or bitter."},
-{"t":"S","q":"Which of these is a solid?","a":"A pencil","w":["Milk","Air","Juice"],"e":"A solid keeps its own shape. Milk and juice are liquids. Air is a gas."},
-{"t":"S","q":"Which of these is a liquid?","a":"Juice","w":["An ice cube","A pencil","Sand"],"e":"A liquid flows and takes the shape of its cup."},
-{"t":"S","q":"What happens to an ice cube in a warm room?","a":"It melts into water","w":["It turns into steam at once","It gets harder","It turns into snow"],"e":"Heat melts ice into water."},
-{"t":"S","q":"What happens when water gets very, very cold?","a":"It freezes into ice","w":["It turns into steam","It turns into sand","It turns into oil"],"e":"Cold turns water into ice."},
-{"t":"S","q":"Which material can you see through?","a":"Clear glass","w":["Wood","Metal","Cardboard"],"e":"Clear glass lets light go through, so you can see through it."},
-{"t":"S","q":"Which material is best for making a cooking pot?","a":"Metal","w":["Paper","Wool","Plastic"],"e":"Metal can get very hot without melting or burning."},
-{"t":"S","q":"Which of these will float on water?","a":"A wooden stick","w":["A stone","A coin","A metal key"],"e":"Wood is light for its size, so it floats."},
-{"t":"S","q":"Which one is soft?","a":"A pillow","w":["A rock","A brick","A glass cup"],"e":"A pillow is soft. Rocks, bricks, and glass are hard."},
-{"t":"S","q":"Which tool helps you see very small things up close?","a":"A magnifying glass","w":["A ruler","A thermometer","A clock"],"e":"A magnifying glass makes small things look bigger."}
+// ---------- Word problems within 100 ----------
+["Word Problems","Mia has 34 stickers. Her friend gives her 25 more. How many stickers does Mia have now?","59",["49","69","9"],"34 + 25 = 59. Add the tens (30 + 20 = 50), then the ones (4 + 5 = 9)."],
+["Word Problems","There were 78 birds in a tree. 43 birds flew away. How many birds are still in the tree?","35",["45","25","121"],"78 − 43 = 35. Flying away means we take away, so we subtract."],
+["Word Problems","Sam has 46 marbles. Leo has 29 marbles. How many marbles do they have altogether?","75",["65","73","17"],"46 + 29 = 75. Altogether means add."],
+["Word Problems","A bus has 52 seats. 37 seats are taken. How many seats are empty?","15",["25","89","19"],"52 − 37 = 15. Regroup 1 ten to make 12 ones, then subtract."],
+["Word Problems","Ava read 28 pages on Monday and 35 pages on Tuesday. How many pages did she read in all?","63",["53","73","7"],"28 + 35 = 63. 8 + 5 = 13 ones, so we regroup 1 ten."],
+["Word Problems","A baker made 90 muffins. She sold 64 of them. How many muffins are left?","26",["36","154","24"],"90 − 64 = 26. Count up from 64 to 90: 6 + 20 = 26."],
+["Word Problems","There were some apples in a basket. Then 23 more apples were added. Now there are 61 apples. How many apples were in the basket at first?","38",["84","48","36"],"Start + 23 = 61, so 61 − 23 = 38."],
+["Word Problems","Ben had some stickers. He gave away 17 stickers. Now he has 40 stickers left. How many stickers did Ben have at the start?","57",["23","47","67"],"Start − 17 = 40, so 40 + 17 = 57. Giving away means he had more before."],
+["Word Problems","Zoe has 19 crayons. Jay has 8 more crayons than Zoe. How many crayons does Jay have?","27",["11","17","37"],"\"8 more than\" means add: 19 + 8 = 27."],
+["Word Problems","Class A has 45 students. Class B has 18 fewer students than Class A. How many students are in Class B?","27",["63","37","33"],"\"18 fewer than\" means subtract: 45 − 18 = 27."],
+["Word Problems","A shop has 24 red balloons, 38 blue balloons, and 15 green balloons. How many balloons are there in all?","77",["62","67","87"],"24 + 38 = 62, then 62 + 15 = 77."],
+["Word Problems","Dad had $85. He spent $47 on shoes. How much money does Dad have left?","$38",["$48","$132","$42"],"85 − 47 = 38. Take 50 away, then add 3 back."],
+["Word Problems","Lily had 56 stickers. She gave 20 stickers to a friend. Which number sentence shows how many stickers Lily has left?","56 − 20 = 36",["56 + 20 = 76","56 − 20 = 46","56 − 30 = 26"],"Gave away means subtract. 56 − 20 = 36 (5 tens − 2 tens = 3 tens, and the 6 ones stay)."],
+["Word Problems","What number makes this true? ___ + 14 = 50","36",["64","26","34"],"Think 50 − 14 = 36. Check: 36 + 14 = 50."],
+
+// ---------- Facts within 20 ----------
+["Facts within 20","9 + 6 = ?","15",["14","16","13"],"Make a ten: take 1 from the 6 to make 10 + 5 = 15."],
+["Facts within 20","16 − 9 = ?","7",["6","8","25"],"Think 9 + 7 = 16, so 16 − 9 = 7."],
+["Facts within 20","8 + 5 = ?","13",["12","14","15"],"Make a ten: 8 + 2 = 10, then add the other 3 to get 13."],
+["Facts within 20","15 − 7 = ?","8",["9","7","12"],"Subtract to 10 first: 15 − 5 = 10, then 10 − 2 = 8."],
+["Facts within 20","12 − 5 = ?","7",["6","8","17"],"Think 5 + 7 = 12, so 12 − 5 = 7."],
+["Facts within 20","Use a doubles fact. 7 + 7 = ?","14",["12","15","16"],"Doubles: 7 + 7 = 14."],
+["Facts within 20","Use doubles plus one. 6 + 7 = ?","13",["12","14","11"],"6 + 6 = 12, and one more makes 13."],
+["Facts within 20","Making a ten helps us add. Which number sentence has the same total as 9 + 4?","10 + 3",["10 + 4","10 + 2","9 + 3"],"Move 1 from the 4 to the 9: 9 + 4 = 10 + 3 = 13."],
+["Facts within 20","13 − 4 = ?","9",["8","10","17"],"Think 4 + 9 = 13, so 13 − 4 = 9."],
+["Facts within 20","Which fact belongs to the same fact family as 7 + 8 = 15?","15 − 8 = 7",["15 − 9 = 6","8 + 8 = 16","15 + 8 = 23"],"A fact family uses the same three numbers: 7, 8 and 15."],
+
+// ---------- Sums of two one-digit numbers ----------
+["Addition Facts","6 + 8 = ?","14",["13","15","12"],"6 + 8 = 14. Think 6 + 4 = 10, then add 4 more."],
+["Addition Facts","9 + 9 = ?","18",["17","19","16"],"Doubles: 9 + 9 = 18."],
+["Addition Facts","7 + 5 = ?","12",["11","13","10"],"7 + 3 = 10, then add 2 more to make 12."],
+["Addition Facts","4 + 9 = ?","13",["12","14","15"],"Think 10 + 3 = 13 (take 1 from the 4 to make the 9 a ten)."],
+["Addition Facts","8 + 8 = ?","16",["15","14","18"],"Doubles: 8 + 8 = 16."],
+["Addition Facts","7 + 9 = ?","16",["15","17","14"],"7 + 9 = 16. Think 10 + 6, since 9 + 1 = 10."],
+["Addition Facts","6 + ___ = 15. What number is missing?","9",["8","10","21"],"15 − 6 = 9. Check: 6 + 9 = 15."],
+["Addition Facts","8 + ___ = 17. What number is missing?","9",["8","10","25"],"17 − 8 = 9. Check: 8 + 9 = 17."],
+
+// ---------- Odd and even ----------
+["Odd & Even","Which of these numbers is even?","48",["37","39","41"],"48 can be split into two equal groups (24 and 24), and it ends in 8."],
+["Odd & Even","Which of these numbers is odd?","83",["80","74","96"],"83 ends in 3, so there is one left over when you make pairs."],
+["Odd & Even","Even numbers always end with which digits?","0, 2, 4, 6 or 8",["1, 3, 5, 7 or 9","0 or 5","2, 4 or 6"],"The last digit tells you: 0, 2, 4, 6 and 8 mean the number is even."],
+["Odd & Even","Tom has 13 cookies. He puts them in pairs. What happens?","6 pairs with 1 left over, so 13 is odd",["7 pairs with none left over, so 13 is even","6 pairs with none left over, so 13 is even","7 pairs with 1 left over, so 13 is odd"],"6 pairs use 12 cookies, so 1 cookie is left over. A number with 1 left over is odd."],
+["Odd & Even","Which number sentence shows that 10 is an even number?","5 + 5 = 10",["6 + 5 = 11","4 + 5 = 9","3 + 3 = 6"],"An even number is a double: 5 + 5 = 10."],
+["Odd & Even","Which list has only odd numbers?","11, 15, 19, 23",["11, 14, 19, 23","12, 15, 18, 21","13, 17, 20, 25"],"All the numbers in 11, 15, 19, 23 end in 1, 5, 9 or 3."],
+["Odd & Even","Which list has only even numbers?","12, 18, 24, 30",["12, 18, 25, 30","14, 16, 19, 22","10, 15, 20, 25"],"Every number in 12, 18, 24, 30 ends in 2, 8, 4 or 0."],
+["Odd & Even","What is the next even number after 38?","40",["39","41","42"],"After 38 comes 39 (odd), then 40 (even)."],
+["Odd & Even","I am an odd number. I am more than 20 and less than 23. Which number am I?","21",["22","20","23"],"The numbers between 20 and 23 are 21 and 22. Only 21 is odd."],
+
+// ---------- Equal groups and arrays ----------
+["Equal Groups & Arrays","An array has 3 rows with 4 in each row. How many are there in all?","12",["7","16","9"],"4 + 4 + 4 = 12. Add the rows, do not add 3 + 4.","arr:3x4"],
+["Equal Groups & Arrays","What is 5 + 5 + 5 + 5?","20",["15","25","10"],"Count by 5s: 5, 10, 15, 20.","grp:4x5"],
+["Equal Groups & Arrays","An array has 2 rows with 7 in each row. How many are there in all?","14",["9","12","16"],"7 + 7 = 14.","arr:2x7"],
+["Equal Groups & Arrays","There are 4 plates. Each plate has 3 cookies. How many cookies are there altogether?","12",["7","9","15"],"3 + 3 + 3 + 3 = 12.","grp:4x3"],
+["Equal Groups & Arrays","Which addition sentence matches 3 equal groups of 6?","6 + 6 + 6 = 18",["3 + 3 + 3 = 9","6 + 3 = 9","6 + 6 + 6 + 6 = 24"],"3 groups of 6 means we add 6 three times: 6 + 6 + 6 = 18."],
+["Equal Groups & Arrays","An array has 5 rows with 2 in each row. How many are there in all?","10",["7","12","25"],"2 + 2 + 2 + 2 + 2 = 10.","arr:5x2"],
+["Equal Groups & Arrays","There are 3 bags. Each bag has 5 apples. How many apples are there in all?","15",["8","12","20"],"5 + 5 + 5 = 15.","grp:3x5"],
+["Equal Groups & Arrays","Which addition sentence does NOT show equal groups?","5 + 5 + 4",["5 + 5 + 5","2 + 2 + 2 + 2","10 + 10"],"The groups 5, 5 and 4 are not the same size, so they are not equal groups."],
+["Equal Groups & Arrays","An array has 4 rows. Each row has 5 dots. Which sentence adds up the rows?","5 + 5 + 5 + 5 = 20",["4 + 5 = 9","5 + 5 + 5 = 15","4 + 4 + 4 = 12"],"There are 4 rows, and each row has 5, so add 5 four times.","arr:4x5"]
 ];
-// QUESTIONS_END
 
-const app = document.getElementById("app");
-let order=[], idx=0, score=0, answered=false, missed=[], byTopic={};
+const TOTAL = Q.length;
+const $ = id => document.getElementById(id);
+let order, idx, score, missed, byTopic;
 
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
 
-function home(){
-  app.innerHTML=`
-  <div class="card">
-    <div class="big">🔬🌎🦋</div>
-    <h1>Science Quiz</h1>
-    <div class="sub">${Q.length} questions · tap the best answer · learn something new with every question!</div>
-    <div class="topics">
-      ${Object.values(TOPICS).map(t=>`<div class="topic" style="background:${t.color}"><span class="e">${t.emoji}</span>${t.name}</div>`).join("")}
-    </div>
-    <div class="center"><button class="btn" onclick="start()">Start Quiz 🚀</button></div>
-  </div>`;
+function artHTML(spec){
+  if(!spec) return "";
+  const [kind,dims]=spec.split(":"); const [r,c]=dims.split("x").map(Number);
+  if(kind==="arr"){
+    return Array.from({length:r},()=>"🔵".repeat(c)).join("<br>");
+  }
+  // groups: show r groups of c
+  return Array.from({length:r},()=>"("+"🍎".repeat(c)+")").join(" ");
 }
 
 function start(){
-  order=shuffle(Q.map((_,i)=>i));
-  idx=0;score=0;missed=[];byTopic={};
-  Object.keys(TOPICS).forEach(k=>byTopic[k]={c:0,n:0});
+  order = shuffle(Q.map((_,i)=>i));
+  idx=0; score=0; missed=[]; byTopic={};
+  $("start").classList.add("hidden"); $("result").classList.add("hidden"); $("quiz").classList.remove("hidden");
   show();
 }
 
 function show(){
-  const item=Q[order[idx]], T=TOPICS[item.t];
-  answered=false;
-  const opts=shuffle([item.a,...item.w]);
-  app.innerHTML=`
-  <div class="card">
-    <div class="top"><span class="pill">Question ${idx+1} of ${Q.length}</span><span class="pill">⭐ ${score}</span></div>
-    <div class="bar"><div style="width:${idx/Q.length*100}%"></div></div>
-    <span class="tag" style="background:${T.color}">${T.emoji} ${T.name}</span>
-    <div class="q">${esc(item.q)}</div>
-    <div class="opts">
-      ${opts.map((o,i)=>`<button class="opt" data-v="${esc(o).replace(/"/g,"&quot;")}"><span class="l">${"ABCD"[i]}</span><span>${esc(o)}</span></button>`).join("")}
-    </div>
-    <div class="fb" id="fb"></div>
-    <div class="next" id="next"><button class="btn green" onclick="nextQ()">${idx===Q.length-1?"See my results 🏆":"Next ➜"}</button></div>
-  </div>`;
-  document.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>pick(b,item)));
+  const q = Q[order[idx]];
+  $("qnum").textContent = "Question "+(idx+1)+" of "+TOTAL;
+  $("scoreNow").textContent = "⭐ "+score;
+  $("prog").style.width = (idx/TOTAL*100)+"%";
+  $("tag").textContent = q[0];
+  $("qtext").textContent = q[1];
+  const art = $("art");
+  if(q[5]){ art.innerHTML = artHTML(q[5]); art.classList.remove("hidden"); } else { art.classList.add("hidden"); }
+  const fb=$("fb"); fb.className="fb"; fb.textContent="";
+  $("nextWrap").style.display="none";
+  const box=$("opts"); box.innerHTML="";
+  shuffle([q[2],...q[3]]).forEach(text=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.textContent=text;
+    b.onclick=()=>answer(b,text,q);
+    box.appendChild(b);
+  });
 }
 
-function pick(btn,item){
-  if(answered)return;
-  answered=true;
-  const ok=btn.dataset.v===item.a;
-  byTopic[item.t].n++;
+function answer(btn,text,q){
+  const ok = text===q[2];
+  const t=q[0]; byTopic[t]=byTopic[t]||{right:0,total:0}; byTopic[t].total++;
   document.querySelectorAll(".opt").forEach(b=>{
     b.disabled=true;
-    if(b.dataset.v===item.a)b.classList.add("right");
+    if(b.textContent===q[2]) b.classList.add("correct");
   });
-  const fb=document.getElementById("fb");
-  if(ok){score++;byTopic[item.t].c++;btn.classList.add("right");
-    fb.className="fb show good";fb.innerHTML=`<b>🎉 Correct!</b>${esc(item.e)}`;}
-  else{btn.classList.add("wrong");missed.push(item);
-    fb.className="fb show bad";fb.innerHTML=`<b>Good try! The answer is: ${esc(item.a)}</b>${esc(item.e)}`;}
-  document.getElementById("next").classList.add("show");
-  document.querySelector(".top .pill:last-child").textContent="⭐ "+score;
+  const fb=$("fb");
+  if(ok){ score++; byTopic[t].right++; btn.classList.add("correct"); fb.className="fb good"; fb.textContent="🎉 Correct! "+q[4]; }
+  else { btn.classList.add("wrong"); fb.className="fb bad"; fb.textContent="Not quite. The answer is "+q[2]+". "+q[4]; missed.push({q:q[1],a:q[2],e:q[4],mine:text}); }
+  $("scoreNow").textContent="⭐ "+score;
+  $("nextBtn").textContent = idx===TOTAL-1 ? "See my score 🏆" : "Next ➜";
+  $("nextWrap").style.display="block";
 }
 
-function nextQ(){idx++;idx>=Q.length?results():show();}
+function next(){
+  idx++;
+  if(idx>=TOTAL) finish(); else show();
+}
 
-function results(){
-  const pct=Math.round(score/Q.length*100);
-  const stars=pct>=90?"⭐⭐⭐⭐⭐":pct>=75?"⭐⭐⭐⭐":pct>=60?"⭐⭐⭐":pct>=40?"⭐⭐":"⭐";
-  const msg=pct>=90?"Super scientist! Amazing work!":pct>=75?"Great job! You really know your science!":pct>=60?"Nice work! Keep exploring!":"Good effort! Practice makes you stronger. Try again!";
-  app.innerHTML=`
-  <div class="card">
-    <div class="big">🏆</div>
-    <h1>Quiz Complete!</h1>
-    <div class="stars">${stars}</div>
-    <div class="score">${score} / ${Q.length}</div>
-    <div class="sub">${msg} (${pct}%)</div>
-    <div class="break">
-      ${Object.entries(TOPICS).map(([k,t])=>{const r=byTopic[k];const p=r.n?Math.round(r.c/r.n*100):0;
-        return `<div class="row"><div class="n">${t.emoji} ${t.name}</div><div class="b"><div style="width:${p}%;background:${t.color}"></div></div><div class="v">${r.c}/${r.n}</div></div>`}).join("")}
-    </div>
-    <div class="center" style="margin:18px 0"><button class="btn" onclick="start()">Play Again 🔁</button></div>
-    ${missed.length?`<h2>📝 Questions to review (${missed.length})</h2>`+missed.map(m=>`<div class="miss"><div><b>${esc(m.q)}</b></div><div class="a">✔ ${esc(m.a)}</div><div>${esc(m.e)}</div></div>`).join(""):`<h2 class="center">🌟 You got every question right!</h2>`}
-  </div>`;
+function finish(){
+  $("quiz").classList.add("hidden"); $("result").classList.remove("hidden");
+  $("prog").style.width="100%";
+  const pct=Math.round(score/TOTAL*100);
+  $("rscore").textContent=score+" / "+TOTAL+"  ("+pct+"%)";
+  let stars, title, msg;
+  if(pct>=90){stars="⭐⭐⭐⭐⭐";title="Math Superstar! 🏆";msg="Amazing work. You really know your facts!";}
+  else if(pct>=75){stars="⭐⭐⭐⭐";title="Great Job! 🎉";msg="You are doing really well. Check the ones you missed below.";}
+  else if(pct>=60){stars="⭐⭐⭐";title="Good Effort! 👍";msg="You are getting there. Practise the topics marked below and try again.";}
+  else {stars="⭐⭐";title="Keep Practising! 💪";msg="Every try makes you stronger. Read the explanations below and try again.";}
+  $("stars").textContent=stars; $("rtitle").textContent=title; $("rmsg").textContent=msg;
+  $("topicScores").innerHTML = Object.entries(byTopic).map(([k,v])=>"<li>"+k+": "+v.right+"/"+v.total+"</li>").join("");
+  const rv=$("review"); rv.innerHTML="";
+  if(missed.length){
+    rv.innerHTML="<h2>Questions to look at again 🔍</h2>"+missed.map(m=>
+      "<div class='item'><b>"+m.q+"</b>You chose: "+m.mine+" · Right answer: <b style='display:inline'>"+m.a+"</b><br>"+m.e+"</div>").join("");
+  } else { rv.innerHTML="<h2>Perfect score! Nothing to review. 🌈</h2>"; }
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
-home();
+$("startBtn").onclick=start;
+$("nextBtn").onclick=next;
+$("againBtn").onclick=start;
 </script>
 </body>
 </html>
