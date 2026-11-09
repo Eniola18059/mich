@@ -1,247 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Math Quiz – Operations & Algebraic Thinking</title>
+<title>Rhyme Time Quiz</title>
 <style>
-  :root{
-    --bg1:#fff4d6; --bg2:#d9f0ff; --ink:#1f2a44; --card:#ffffff;
-    --blue:#3b82f6; --green:#22a559; --red:#e5484d; --orange:#ff9f1c; --purple:#7c5cff;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;
-    color:var(--ink); background:linear-gradient(160deg,var(--bg1),var(--bg2)); padding:16px;
-  }
-  .wrap{max-width:720px; margin:0 auto}
-  .card{background:var(--card); border-radius:24px; padding:26px; box-shadow:0 8px 28px rgba(31,42,68,.12)}
-  h1{margin:0 0 6px; font-size:2rem; line-height:1.15}
-  h2{margin:0 0 14px; font-size:1.45rem; line-height:1.35}
-  .sub{color:#4b587a; margin:0 0 18px}
-  .emoji-big{font-size:3.2rem}
-  .topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px; padding:0; list-style:none}
-  .topics li{background:#eef3ff; border-radius:999px; padding:7px 14px; font-weight:700; font-size:.92rem}
-  button{font:inherit; cursor:pointer; border:none}
-  .btn{background:var(--blue); color:#fff; font-weight:800; font-size:1.1rem; padding:14px 28px; border-radius:16px; box-shadow:0 4px 0 #2563c9}
-  .btn:active{transform:translateY(2px); box-shadow:0 2px 0 #2563c9}
-  .btn.green{background:var(--green); box-shadow:0 4px 0 #17803f}
-  .btn.orange{background:var(--orange); box-shadow:0 4px 0 #cc7a00}
-  .top{display:flex; justify-content:space-between; align-items:center; font-weight:800; margin-bottom:10px}
-  .bar{height:14px; background:#e6ebf7; border-radius:999px; overflow:hidden; margin-bottom:20px}
-  .bar>div{height:100%; width:0; background:linear-gradient(90deg,var(--purple),var(--blue)); border-radius:999px; transition:width .35s}
-  .tag{display:inline-block; background:#fff1d6; color:#a35a00; font-weight:800; font-size:.8rem; padding:4px 12px; border-radius:999px; margin-bottom:12px}
-  .art{font-size:1.7rem; line-height:1.5; letter-spacing:4px; margin:0 0 14px; text-align:center; background:#f6f9ff; border-radius:16px; padding:10px}
-  .opts{display:grid; gap:12px; grid-template-columns:1fr 1fr}
-  @media(max-width:520px){.opts{grid-template-columns:1fr} h1{font-size:1.65rem}}
-  .opt{background:#f4f7ff; border:3px solid #d6e0fb; border-radius:16px; padding:16px; font-weight:800; font-size:1.15rem; color:var(--ink); text-align:center}
-  .opt:hover:not(:disabled){border-color:var(--blue); background:#eaf1ff}
-  .opt.correct{background:#dcf7e6; border-color:var(--green)}
-  .opt.wrong{background:#ffe3e4; border-color:var(--red)}
-  .opt:disabled{cursor:default}
-  .fb{margin-top:18px; padding:14px 16px; border-radius:16px; font-weight:700; display:none}
-  .fb.good{display:block; background:#dcf7e6; color:#0f5c2c}
-  .fb.bad{display:block; background:#ffe9d6; color:#7a3b00}
-  .next{margin-top:18px; text-align:right; display:none}
-  .score-big{font-size:3.4rem; font-weight:900; color:var(--purple); margin:6px 0}
-  .stars{font-size:2.2rem; margin-bottom:8px}
-  .review{margin-top:20px; text-align:left}
-  .review .item{border-left:6px solid var(--red); background:#fff5f5; padding:10px 14px; border-radius:10px; margin-bottom:10px; font-size:.95rem}
-  .review .item b{display:block; margin-bottom:4px}
-  .center{text-align:center}
-  .hidden{display:none}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;background:linear-gradient(160deg,#fff4d6,#e3f4ff);min-height:100vh;color:#2b2b44;display:flex;justify-content:center;padding:16px}
+.app{width:100%;max-width:720px}
+.card{background:#fff;border-radius:24px;box-shadow:0 8px 24px rgba(60,60,120,.15);padding:24px;margin-top:12px}
+h1{margin:0;text-align:center;font-size:2.2rem;color:#ff6b6b}
+.sub{text-align:center;margin:6px 0 0;color:#5a5a7a}
+.top{display:flex;justify-content:space-between;align-items:center;font-weight:bold;gap:10px}
+.bar{height:14px;background:#e8eaf6;border-radius:10px;overflow:hidden;margin:10px 0 0}
+.bar div{height:100%;width:0;background:linear-gradient(90deg,#4dd0a1,#4da6ff);transition:width .3s}
+.prompt{font-size:1.4rem;text-align:center;margin:18px 0 6px}
+.big{font-size:3rem;font-weight:bold;text-align:center;color:#7c4dff;margin:4px 0 14px}
+.line{font-size:1.7rem;text-align:center;font-weight:bold;color:#7c4dff;margin:4px 0 14px;line-height:1.3}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{font:inherit;font-size:1.6rem;font-weight:bold;padding:18px 8px;border:3px solid #d6dcff;background:#f6f8ff;border-radius:18px;cursor:pointer;transition:transform .1s}
+.opt:hover:enabled{transform:scale(1.03);border-color:#7c4dff}
+.opt.right{background:#c9f7e0;border-color:#2fb87a}
+.opt.wrong{background:#ffd9d9;border-color:#ee5a5a}
+.opt:disabled{cursor:default}
+.btn{font:inherit;font-size:1.2rem;font-weight:bold;border:none;border-radius:16px;padding:12px 22px;cursor:pointer;background:#ff6b6b;color:#fff}
+.btn.alt{background:#7c4dff}
+.btn.ghost{background:#e8eaf6;color:#3a3a6a}
+.row{display:flex;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.fb{text-align:center;font-size:1.25rem;min-height:2.2em;margin-top:14px;font-weight:bold}
+.fb.ok{color:#1f9d64}.fb.no{color:#d64545}
+.score{font-size:4rem;text-align:center;font-weight:bold;color:#ff6b6b}
+.stars{font-size:2.2rem;text-align:center}
+.miss{background:#fff7e6;border-radius:14px;padding:10px 14px;margin:8px 0;font-size:1.05rem}
+.hide{display:none}
+@media(max-width:480px){.opt{font-size:1.3rem}.big{font-size:2.4rem}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
+  <h1>🎵 Rhyme Time! 🎵</h1>
+  <p class="sub">Rhyming words sound the same at the end, like <b>cat</b> and <b>hat</b>.</p>
 
-  <div id="start" class="card center">
-    <div class="emoji-big">🧮🌟</div>
-    <h1>Math Quiz</h1>
-    <p class="sub"><b>Part 1: Operations & Algebraic Thinking</b><br>50 questions · Pick the best answer · No timer, take your time!</p>
-    <ul class="topics" style="justify-content:center">
-      <li>➕ Word problems within 100</li>
-      <li>⚡ Facts within 20</li>
-      <li>🔟 Sums of two digits</li>
-      <li>⚖️ Odd &amp; even</li>
-      <li>🔲 Equal groups &amp; arrays</li>
-    </ul>
-    <button class="btn" id="startBtn">Let's Start! 🚀</button>
+  <div id="start" class="card">
+    <p style="font-size:1.3rem;text-align:center">50 fun questions about rhyming words.<br>Tap 🔊 if you want the question read aloud!</p>
+    <p id="best" class="sub"></p>
+    <div class="row"><button class="btn" id="go">Let's Start! 🚀</button></div>
   </div>
 
-  <div id="quiz" class="card hidden">
-    <div class="top"><span id="qnum">Question 1 of 50</span><span id="scoreNow">⭐ 0</span></div>
-    <div class="bar"><div id="prog"></div></div>
-    <span class="tag" id="tag"></span>
-    <h2 id="qtext"></h2>
-    <div class="art hidden" id="art"></div>
+  <div id="quiz" class="card hide">
+    <div class="top"><span id="qn"></span><span id="sc"></span></div>
+    <div class="bar"><div id="pb"></div></div>
+    <div class="prompt" id="prompt"></div>
+    <div id="visual"></div>
     <div class="opts" id="opts"></div>
     <div class="fb" id="fb"></div>
-    <div class="next" id="nextWrap"><button class="btn green" id="nextBtn">Next ➜</button></div>
+    <div class="row">
+      <button class="btn ghost" id="say">🔊 Read to me</button>
+      <button class="btn alt hide" id="next">Next ➜</button>
+    </div>
   </div>
 
-  <div id="result" class="card center hidden">
+  <div id="end" class="card hide">
     <div class="stars" id="stars"></div>
-    <h1 id="rtitle"></h1>
-    <div class="score-big" id="rscore"></div>
-    <p class="sub" id="rmsg"></p>
-    <div id="topicScores" class="topics" style="justify-content:center"></div>
-    <button class="btn orange" id="againBtn">Try Again 🔁</button>
-    <div class="review" id="review"></div>
+    <div class="score" id="final"></div>
+    <p class="prompt" id="msg"></p>
+    <div id="missed"></div>
+    <div class="row"><button class="btn" id="again">Play Again 🔁</button></div>
   </div>
-
 </div>
 
 <script>
-// Each question: [topic, question, correctAnswer, [three wrong answers], explanation, optional picture]
-const Q = [
-// ---------- Word problems within 100 ----------
-["Word Problems","Mia has 34 stickers. Her friend gives her 25 more. How many stickers does Mia have now?","59",["49","69","9"],"34 + 25 = 59. Add the tens (30 + 20 = 50), then the ones (4 + 5 = 9)."],
-["Word Problems","There were 78 birds in a tree. 43 birds flew away. How many birds are still in the tree?","35",["45","25","121"],"78 − 43 = 35. Flying away means we take away, so we subtract."],
-["Word Problems","Sam has 46 marbles. Leo has 29 marbles. How many marbles do they have altogether?","75",["65","73","17"],"46 + 29 = 75. Altogether means add."],
-["Word Problems","A bus has 52 seats. 37 seats are taken. How many seats are empty?","15",["25","89","19"],"52 − 37 = 15. Regroup 1 ten to make 12 ones, then subtract."],
-["Word Problems","Ava read 28 pages on Monday and 35 pages on Tuesday. How many pages did she read in all?","63",["53","73","7"],"28 + 35 = 63. 8 + 5 = 13 ones, so we regroup 1 ten."],
-["Word Problems","A baker made 90 muffins. She sold 64 of them. How many muffins are left?","26",["36","154","24"],"90 − 64 = 26. Count up from 64 to 90: 6 + 20 = 26."],
-["Word Problems","There were some apples in a basket. Then 23 more apples were added. Now there are 61 apples. How many apples were in the basket at first?","38",["84","48","36"],"Start + 23 = 61, so 61 − 23 = 38."],
-["Word Problems","Ben had some stickers. He gave away 17 stickers. Now he has 40 stickers left. How many stickers did Ben have at the start?","57",["23","47","67"],"Start − 17 = 40, so 40 + 17 = 57. Giving away means he had more before."],
-["Word Problems","Zoe has 19 crayons. Jay has 8 more crayons than Zoe. How many crayons does Jay have?","27",["11","17","37"],"\"8 more than\" means add: 19 + 8 = 27."],
-["Word Problems","Class A has 45 students. Class B has 18 fewer students than Class A. How many students are in Class B?","27",["63","37","33"],"\"18 fewer than\" means subtract: 45 − 18 = 27."],
-["Word Problems","A shop has 24 red balloons, 38 blue balloons, and 15 green balloons. How many balloons are there in all?","77",["62","67","87"],"24 + 38 = 62, then 62 + 15 = 77."],
-["Word Problems","Dad had $85. He spent $47 on shoes. How much money does Dad have left?","$38",["$48","$132","$42"],"85 − 47 = 38. Take 50 away, then add 3 back."],
-["Word Problems","Lily had 56 stickers. She gave 20 stickers to a friend. Which number sentence shows how many stickers Lily has left?","56 − 20 = 36",["56 + 20 = 76","56 − 20 = 46","56 − 30 = 26"],"Gave away means subtract. 56 − 20 = 36 (5 tens − 2 tens = 3 tens, and the 6 ones stay)."],
-["Word Problems","What number makes this true? ___ + 14 = 50","36",["64","26","34"],"Think 50 − 14 = 36. Check: 36 + 14 = 50."],
-
-// ---------- Facts within 20 ----------
-["Facts within 20","9 + 6 = ?","15",["14","16","13"],"Make a ten: take 1 from the 6 to make 10 + 5 = 15."],
-["Facts within 20","16 − 9 = ?","7",["6","8","25"],"Think 9 + 7 = 16, so 16 − 9 = 7."],
-["Facts within 20","8 + 5 = ?","13",["12","14","15"],"Make a ten: 8 + 2 = 10, then add the other 3 to get 13."],
-["Facts within 20","15 − 7 = ?","8",["9","7","12"],"Subtract to 10 first: 15 − 5 = 10, then 10 − 2 = 8."],
-["Facts within 20","12 − 5 = ?","7",["6","8","17"],"Think 5 + 7 = 12, so 12 − 5 = 7."],
-["Facts within 20","Use a doubles fact. 7 + 7 = ?","14",["12","15","16"],"Doubles: 7 + 7 = 14."],
-["Facts within 20","Use doubles plus one. 6 + 7 = ?","13",["12","14","11"],"6 + 6 = 12, and one more makes 13."],
-["Facts within 20","Making a ten helps us add. Which number sentence has the same total as 9 + 4?","10 + 3",["10 + 4","10 + 2","9 + 3"],"Move 1 from the 4 to the 9: 9 + 4 = 10 + 3 = 13."],
-["Facts within 20","13 − 4 = ?","9",["8","10","17"],"Think 4 + 9 = 13, so 13 − 4 = 9."],
-["Facts within 20","Which fact belongs to the same fact family as 7 + 8 = 15?","15 − 8 = 7",["15 − 9 = 6","8 + 8 = 16","15 + 8 = 23"],"A fact family uses the same three numbers: 7, 8 and 15."],
-
-// ---------- Sums of two one-digit numbers ----------
-["Addition Facts","6 + 8 = ?","14",["13","15","12"],"6 + 8 = 14. Think 6 + 4 = 10, then add 4 more."],
-["Addition Facts","9 + 9 = ?","18",["17","19","16"],"Doubles: 9 + 9 = 18."],
-["Addition Facts","7 + 5 = ?","12",["11","13","10"],"7 + 3 = 10, then add 2 more to make 12."],
-["Addition Facts","4 + 9 = ?","13",["12","14","15"],"Think 10 + 3 = 13 (take 1 from the 4 to make the 9 a ten)."],
-["Addition Facts","8 + 8 = ?","16",["15","14","18"],"Doubles: 8 + 8 = 16."],
-["Addition Facts","7 + 9 = ?","16",["15","17","14"],"7 + 9 = 16. Think 10 + 6, since 9 + 1 = 10."],
-["Addition Facts","6 + ___ = 15. What number is missing?","9",["8","10","21"],"15 − 6 = 9. Check: 6 + 9 = 15."],
-["Addition Facts","8 + ___ = 17. What number is missing?","9",["8","10","25"],"17 − 8 = 9. Check: 8 + 9 = 17."],
-
-// ---------- Odd and even ----------
-["Odd & Even","Which of these numbers is even?","48",["37","39","41"],"48 can be split into two equal groups (24 and 24), and it ends in 8."],
-["Odd & Even","Which of these numbers is odd?","83",["80","74","96"],"83 ends in 3, so there is one left over when you make pairs."],
-["Odd & Even","Even numbers always end with which digits?","0, 2, 4, 6 or 8",["1, 3, 5, 7 or 9","0 or 5","2, 4 or 6"],"The last digit tells you: 0, 2, 4, 6 and 8 mean the number is even."],
-["Odd & Even","Tom has 13 cookies. He puts them in pairs. What happens?","6 pairs with 1 left over, so 13 is odd",["7 pairs with none left over, so 13 is even","6 pairs with none left over, so 13 is even","7 pairs with 1 left over, so 13 is odd"],"6 pairs use 12 cookies, so 1 cookie is left over. A number with 1 left over is odd."],
-["Odd & Even","Which number sentence shows that 10 is an even number?","5 + 5 = 10",["6 + 5 = 11","4 + 5 = 9","3 + 3 = 6"],"An even number is a double: 5 + 5 = 10."],
-["Odd & Even","Which list has only odd numbers?","11, 15, 19, 23",["11, 14, 19, 23","12, 15, 18, 21","13, 17, 20, 25"],"All the numbers in 11, 15, 19, 23 end in 1, 5, 9 or 3."],
-["Odd & Even","Which list has only even numbers?","12, 18, 24, 30",["12, 18, 25, 30","14, 16, 19, 22","10, 15, 20, 25"],"Every number in 12, 18, 24, 30 ends in 2, 8, 4 or 0."],
-["Odd & Even","What is the next even number after 38?","40",["39","41","42"],"After 38 comes 39 (odd), then 40 (even)."],
-["Odd & Even","I am an odd number. I am more than 20 and less than 23. Which number am I?","21",["22","20","23"],"The numbers between 20 and 23 are 21 and 22. Only 21 is odd."],
-
-// ---------- Equal groups and arrays ----------
-["Equal Groups & Arrays","An array has 3 rows with 4 in each row. How many are there in all?","12",["7","16","9"],"4 + 4 + 4 = 12. Add the rows, do not add 3 + 4.","arr:3x4"],
-["Equal Groups & Arrays","What is 5 + 5 + 5 + 5?","20",["15","25","10"],"Count by 5s: 5, 10, 15, 20.","grp:4x5"],
-["Equal Groups & Arrays","An array has 2 rows with 7 in each row. How many are there in all?","14",["9","12","16"],"7 + 7 = 14.","arr:2x7"],
-["Equal Groups & Arrays","There are 4 plates. Each plate has 3 cookies. How many cookies are there altogether?","12",["7","9","15"],"3 + 3 + 3 + 3 = 12.","grp:4x3"],
-["Equal Groups & Arrays","Which addition sentence matches 3 equal groups of 6?","6 + 6 + 6 = 18",["3 + 3 + 3 = 9","6 + 3 = 9","6 + 6 + 6 + 6 = 24"],"3 groups of 6 means we add 6 three times: 6 + 6 + 6 = 18."],
-["Equal Groups & Arrays","An array has 5 rows with 2 in each row. How many are there in all?","10",["7","12","25"],"2 + 2 + 2 + 2 + 2 = 10.","arr:5x2"],
-["Equal Groups & Arrays","There are 3 bags. Each bag has 5 apples. How many apples are there in all?","15",["8","12","20"],"5 + 5 + 5 = 15.","grp:3x5"],
-["Equal Groups & Arrays","Which addition sentence does NOT show equal groups?","5 + 5 + 4",["5 + 5 + 5","2 + 2 + 2 + 2","10 + 10"],"The groups 5, 5 and 4 are not the same size, so they are not equal groups."],
-["Equal Groups & Arrays","An array has 4 rows. Each row has 5 dots. Which sentence adds up the rows?","5 + 5 + 5 + 5 = 20",["4 + 5 = 9","5 + 5 + 5 = 15","4 + 4 + 4 = 12"],"There are 4 rows, and each row has 5, so add 5 four times.","arr:4x5"]
+/* Question types:
+   A = which word rhymes with [word]
+   B = which word does NOT rhyme with the others
+   C = which pair rhymes
+   D = finish the rhyme */
+var Q = [
+ // A: rhymes with
+ {t:'A',w:'cat',a:'hat',o:['cap','cut','cot']},
+ {t:'A',w:'dog',a:'log',o:['dig','dot','door']},
+ {t:'A',w:'sun',a:'run',o:['sand','sip','moon']},
+ {t:'A',w:'bee',a:'tree',o:['bed','bat','bell']},
+ {t:'A',w:'pen',a:'ten',o:['pan','pig','pin']},
+ {t:'A',w:'bug',a:'hug',o:['bag','big','bun']},
+ {t:'A',w:'cake',a:'lake',o:['cap','kite','cook']},
+ {t:'A',w:'star',a:'car',o:['stir','step','sun']},
+ {t:'A',w:'ball',a:'wall',o:['bell','bill','bat']},
+ {t:'A',w:'fish',a:'dish',o:['fit','fist','fan']},
+ {t:'A',w:'moon',a:'spoon',o:['man','mop','mouse']},
+ {t:'A',w:'king',a:'ring',o:['kick','kid','kite']},
+ {t:'A',w:'boat',a:'coat',o:['bat','bone','book']},
+ {t:'A',w:'rain',a:'train',o:['ran','run','road']},
+ {t:'A',w:'light',a:'night',o:['list','lick','lake']},
+ {t:'A',w:'snow',a:'toe',o:['now','snap','sock']},
+ {t:'A',w:'mouse',a:'house',o:['moon','mop','mice']},
+ {t:'A',w:'bed',a:'red',o:['bad','bud','bone']},
+ {t:'A',w:'bell',a:'shell',o:['ball','bed','bill']},
+ {t:'A',w:'tent',a:'went',o:['tint','tan','test']},
+ {t:'A',w:'duck',a:'truck',o:['dock','deck','dig']},
+ {t:'A',w:'clock',a:'sock',o:['cluck','clap','cloud']},
+ {t:'A',w:'nest',a:'best',o:['net','nose','neck']},
+ {t:'A',w:'bear',a:'chair',o:['bean','bird','bark']},
+ {t:'A',w:'blue',a:'shoe',o:['blow','black','bee']},
+ {t:'A',w:'jump',a:'bump',o:['jam','jet','junk']},
+ {t:'A',w:'pie',a:'sky',o:['pig','pea','pin']},
+ {t:'A',w:'hop',a:'top',o:['hip','hog','hope']},
+ {t:'A',w:'gate',a:'plate',o:['gap','goat','get']},
+ {t:'A',w:'sing',a:'wing',o:['sang','song','sit']},
+ // B: odd one out
+ {t:'B',a:'cup',o:['cat','hat','bat']},
+ {t:'B',a:'pan',o:['pig','wig','dig']},
+ {t:'B',a:'sand',o:['sun','run','fun']},
+ {t:'B',a:'bed',o:['bell','well','tell']},
+ {t:'B',a:'kit',o:['king','ring','wing']},
+ {t:'B',a:'cap',o:['car','star','jar']},
+ {t:'B',a:'kite',o:['cake','lake','bake']},
+ {t:'B',a:'run',o:['rain','train','plane']},
+ // C: which pair rhymes
+ {t:'C',a:'cat – hat',o:['cat – cut','cat – cot','cat – cap']},
+ {t:'C',a:'bed – red',o:['bed – bad','bed – bud','bed – bid']},
+ {t:'C',a:'pin – win',o:['pin – pan','pin – pen','pin – pie']},
+ {t:'C',a:'hop – mop',o:['hop – hip','hop – hope','hop – hug']},
+ {t:'C',a:'box – fox',o:['box – bag','box – book','box – boy']},
+ {t:'C',a:'mail – tail',o:['mail – mill','mail – meal','mail – man']},
+ // D: finish the rhyme
+ {t:'D',line:'Jack and Jill went up the ___',rw:'Jill',a:'hill',o:['hall','hole','hat']},
+ {t:'D',line:'Twinkle, twinkle, little star, how I wonder what you ___',rw:'star',a:'are',o:['air','and','our']},
+ {t:'D',line:'Humpty Dumpty sat on a ___',rw:'Dumpty',a:'wall',o:['well','wild','wing']},
+ {t:'D',line:'The mouse ran up the ___',rw:'dock',a:'clock',o:['cloud','cook','cow']},
+ {t:'D',line:'Little Bo Peep has lost her ___',rw:'Peep',a:'sheep',o:['ship','shoe','shop']},
+ {t:'D',line:'Jack be nimble, Jack be quick, Jack jump over the candle ___',rw:'quick',a:'stick',o:['stack','step','sock']}
 ];
 
-const TOTAL = Q.length;
-const $ = id => document.getElementById(id);
-let order, idx, score, missed, byTopic;
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function $(id){return document.getElementById(id)}
 
-function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+var order,idx,score,missed,locked,cur;
 
-function artHTML(spec){
-  if(!spec) return "";
-  const [kind,dims]=spec.split(":"); const [r,c]=dims.split("x").map(Number);
-  if(kind==="arr"){
-    return Array.from({length:r},()=>"🔵".repeat(c)).join("<br>");
-  }
-  // groups: show r groups of c
-  return Array.from({length:r},()=>"("+"🍎".repeat(c)+")").join(" ");
-}
+function getBest(){try{return localStorage.getItem('rhymeBest')}catch(e){return null}}
+function setBest(v){try{localStorage.setItem('rhymeBest',v)}catch(e){}}
+function showBest(){var b=getBest();$('best').textContent=b?('Your best score: '+b+' / 50 ⭐'):''}
 
 function start(){
-  order = shuffle(Q.map((_,i)=>i));
-  idx=0; score=0; missed=[]; byTopic={};
-  $("start").classList.add("hidden"); $("result").classList.add("hidden"); $("quiz").classList.remove("hidden");
+  order=shuffle(Q);idx=0;score=0;missed=[];
+  $('start').classList.add('hide');$('end').classList.add('hide');$('quiz').classList.remove('hide');
   show();
 }
 
+function promptFor(q){
+  if(q.t==='A')return 'Which word rhymes with…';
+  if(q.t==='B')return 'Which word does NOT rhyme with the others?';
+  if(q.t==='C')return 'Which two words rhyme?';
+  return 'Finish the rhyme!';
+}
+
 function show(){
-  const q = Q[order[idx]];
-  $("qnum").textContent = "Question "+(idx+1)+" of "+TOTAL;
-  $("scoreNow").textContent = "⭐ "+score;
-  $("prog").style.width = (idx/TOTAL*100)+"%";
-  $("tag").textContent = q[0];
-  $("qtext").textContent = q[1];
-  const art = $("art");
-  if(q[5]){ art.innerHTML = artHTML(q[5]); art.classList.remove("hidden"); } else { art.classList.add("hidden"); }
-  const fb=$("fb"); fb.className="fb"; fb.textContent="";
-  $("nextWrap").style.display="none";
-  const box=$("opts"); box.innerHTML="";
-  shuffle([q[2],...q[3]]).forEach(text=>{
-    const b=document.createElement("button");
-    b.className="opt"; b.textContent=text;
-    b.onclick=()=>answer(b,text,q);
+  cur=order[idx];locked=false;
+  $('qn').textContent='Question '+(idx+1)+' of 50';
+  $('sc').textContent='⭐ '+score;
+  $('pb').style.width=(idx/50*100)+'%';
+  $('prompt').textContent=promptFor(cur);
+  var v=$('visual');
+  if(cur.t==='A')v.innerHTML='<div class="big">'+cur.w+'</div>';
+  else if(cur.t==='D')v.innerHTML='<div class="line">'+cur.line.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</div>';
+  else v.innerHTML='<div style="height:10px"></div>';
+  $('fb').textContent='';$('fb').className='fb';
+  $('next').classList.add('hide');
+  var box=$('opts');box.innerHTML='';
+  shuffle([cur.a].concat(cur.o)).forEach(function(txt){
+    var b=document.createElement('button');
+    b.className='opt';b.textContent=txt;
+    b.onclick=function(){pick(b,txt)};
     box.appendChild(b);
   });
 }
 
-function answer(btn,text,q){
-  const ok = text===q[2];
-  const t=q[0]; byTopic[t]=byTopic[t]||{right:0,total:0}; byTopic[t].total++;
-  document.querySelectorAll(".opt").forEach(b=>{
-    b.disabled=true;
-    if(b.textContent===q[2]) b.classList.add("correct");
-  });
-  const fb=$("fb");
-  if(ok){ score++; byTopic[t].right++; btn.classList.add("correct"); fb.className="fb good"; fb.textContent="🎉 Correct! "+q[4]; }
-  else { btn.classList.add("wrong"); fb.className="fb bad"; fb.textContent="Not quite. The answer is "+q[2]+". "+q[4]; missed.push({q:q[1],a:q[2],e:q[4],mine:text}); }
-  $("scoreNow").textContent="⭐ "+score;
-  $("nextBtn").textContent = idx===TOTAL-1 ? "See my score 🏆" : "Next ➜";
-  $("nextWrap").style.display="block";
+function why(q){
+  if(q.t==='A')return q.w+' and '+q.a+' rhyme!';
+  if(q.t==='B')return q.o.join(', ')+' rhyme. '+q.a+' does not.';
+  if(q.t==='C')return q.a.replace(' – ',' and ')+' rhyme!';
+  return q.a+' rhymes with '+q.rw+'!';
+}
+
+function pick(btn,txt){
+  if(locked)return;locked=true;
+  var ok=txt===cur.a;
+  var all=$('opts').children;
+  for(var i=0;i<all.length;i++){
+    all[i].disabled=true;
+    if(all[i].textContent===cur.a)all[i].classList.add('right');
+  }
+  if(ok){score++;$('fb').textContent='🎉 Yes! '+why(cur);$('fb').className='fb ok'}
+  else{btn.classList.add('wrong');missed.push(cur);$('fb').textContent='Oops! '+why(cur);$('fb').className='fb no'}
+  $('sc').textContent='⭐ '+score;
+  $('next').textContent=idx===49?'See my score 🏆':'Next ➜';
+  $('next').classList.remove('hide');
 }
 
 function next(){
   idx++;
-  if(idx>=TOTAL) finish(); else show();
+  if(idx>=50)finish();else show();
 }
 
 function finish(){
-  $("quiz").classList.add("hidden"); $("result").classList.remove("hidden");
-  $("prog").style.width="100%";
-  const pct=Math.round(score/TOTAL*100);
-  $("rscore").textContent=score+" / "+TOTAL+"  ("+pct+"%)";
-  let stars, title, msg;
-  if(pct>=90){stars="⭐⭐⭐⭐⭐";title="Math Superstar! 🏆";msg="Amazing work. You really know your facts!";}
-  else if(pct>=75){stars="⭐⭐⭐⭐";title="Great Job! 🎉";msg="You are doing really well. Check the ones you missed below.";}
-  else if(pct>=60){stars="⭐⭐⭐";title="Good Effort! 👍";msg="You are getting there. Practise the topics marked below and try again.";}
-  else {stars="⭐⭐";title="Keep Practising! 💪";msg="Every try makes you stronger. Read the explanations below and try again.";}
-  $("stars").textContent=stars; $("rtitle").textContent=title; $("rmsg").textContent=msg;
-  $("topicScores").innerHTML = Object.entries(byTopic).map(([k,v])=>"<li>"+k+": "+v.right+"/"+v.total+"</li>").join("");
-  const rv=$("review"); rv.innerHTML="";
+  $('quiz').classList.add('hide');$('end').classList.remove('hide');
+  $('final').textContent=score+' / 50';
+  var s=score>=45?5:score>=38?4:score>=30?3:score>=20?2:1;
+  $('stars').textContent=new Array(s+1).join('⭐');
+  $('msg').textContent=score>=45?'Amazing rhyming superstar!':score>=38?'Great job! You know your rhymes!':score>=30?'Good work! Keep practicing!':'Nice try! Let\'s practice again!';
+  var b=getBest();if(!b||score>parseInt(b,10))setBest(score);
+  var m=$('missed');m.innerHTML='';
   if(missed.length){
-    rv.innerHTML="<h2>Questions to look at again 🔍</h2>"+missed.map(m=>
-      "<div class='item'><b>"+m.q+"</b>You chose: "+m.mine+" · Right answer: <b style='display:inline'>"+m.a+"</b><br>"+m.e+"</div>").join("");
-  } else { rv.innerHTML="<h2>Perfect score! Nothing to review. 🌈</h2>"; }
-  window.scrollTo({top:0,behavior:"smooth"});
+    var h=document.createElement('div');h.style.fontWeight='bold';h.style.margin='10px 0 4px';h.textContent='Let\'s look at the ones to practice:';m.appendChild(h);
+    missed.forEach(function(q){var d=document.createElement('div');d.className='miss';d.textContent=why(q);m.appendChild(d)});
+  }
 }
 
-$("startBtn").onclick=start;
-$("nextBtn").onclick=next;
-$("againBtn").onclick=start;
+function speak(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  var parts=[promptFor(cur)];
+  if(cur.t==='A')parts.push(cur.w);
+  if(cur.t==='D')parts.push(cur.line.replace('___','blank'));
+  var opts=$('opts').children;
+  for(var i=0;i<opts.length;i++)parts.push(opts[i].textContent.replace(' – ',' and '));
+  var u=new SpeechSynthesisUtterance(parts.join('. '));
+  u.lang='en-US';u.rate=0.85;
+  window.speechSynthesis.speak(u);
+}
+
+$('go').onclick=start;
+$('again').onclick=function(){showBest();start()};
+$('next').onclick=next;
+$('say').onclick=speak;
+showBest();
 </script>
 </body>
 </html>
