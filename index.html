@@ -1,249 +1,167 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grade 5 Maths Quiz: Operations &amp; Algebraic Thinking</title>
+<title>Grade 4 Math Challenge</title>
 <style>
-  :root{
-    --bg:#f4f7fb; --card:#ffffff; --ink:#1d2b3a; --muted:#5d6c7c;
-    --brand:#3b6fe0; --brand-d:#2a54b8; --ok:#1f9d55; --okbg:#e6f6ec;
-    --bad:#d8453b; --badbg:#fdeceb; --line:#dde5ef;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-  .wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 2px 10px rgba(30,60,100,.06)}
-  h1{font-size:1.6rem;margin:0 0 6px}
-  h2{font-size:1.2rem;margin:0 0 12px}
-  .sub{color:var(--muted);margin:0 0 18px}
-  .topics{display:grid;gap:8px;margin:16px 0 22px;padding:0;list-style:none}
-  .topics li{background:#eef3fc;border-radius:10px;padding:10px 14px;font-size:.95rem}
-  .topics b{color:var(--brand-d)}
-  button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:12px 22px;font-weight:600}
-  .primary{background:var(--brand);color:#fff}
-  .primary:hover{background:var(--brand-d)}
-  .primary:disabled{background:#aab9d6;cursor:not-allowed}
-  .ghost{background:#eef3fc;color:var(--brand-d)}
-  .ghost:hover{background:#dfe9fa}
-  .top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
-  .bar{height:8px;background:#e5ecf6;border-radius:99px;overflow:hidden;margin-bottom:18px}
-  .bar>div{height:100%;background:var(--brand);width:0;transition:width .3s}
-  .tag{display:inline-block;background:#eef3fc;color:var(--brand-d);font-size:.78rem;font-weight:600;border-radius:99px;padding:3px 10px;margin-bottom:10px}
-  .q{font-size:1.25rem;font-weight:600;margin:0 0 18px;white-space:pre-line}
-  .opts{display:grid;gap:10px}
-  .opt{display:flex;gap:12px;align-items:center;text-align:left;background:#fff;border:2px solid var(--line);color:var(--ink);padding:13px 16px;font-weight:500;font-size:1.05rem;width:100%}
-  .opt:hover:not(:disabled){border-color:var(--brand)}
-  .opt .k{flex:0 0 28px;height:28px;border-radius:50%;background:#eef3fc;color:var(--brand-d);display:grid;place-items:center;font-size:.85rem;font-weight:700}
-  .opt.ok{border-color:var(--ok);background:var(--okbg)}
-  .opt.ok .k{background:var(--ok);color:#fff}
-  .opt.bad{border-color:var(--bad);background:var(--badbg)}
-  .opt.bad .k{background:var(--bad);color:#fff}
-  .opt:disabled{cursor:default}
-  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:.98rem;display:none}
-  .fb.show{display:block}
-  .fb.ok{background:var(--okbg);border:1px solid #b6e2c6}
-  .fb.bad{background:var(--badbg);border:1px solid #f1c1bd}
-  .nav{margin-top:18px;display:flex;justify-content:flex-end}
-  .score{font-size:3rem;font-weight:800;color:var(--brand-d);margin:4px 0}
-  .msg{font-size:1.1rem;margin:0 0 18px}
-  .sec{display:grid;gap:8px;margin:14px 0 22px}
-  .sec div{display:flex;justify-content:space-between;background:#f4f7fb;border-radius:10px;padding:9px 14px;font-size:.95rem}
-  .rev{border-top:1px solid var(--line);padding:14px 0}
-  .rev p{margin:4px 0;font-size:.95rem}
-  .rev .qq{font-weight:600;white-space:pre-line}
-  .x{color:var(--bad)} .c{color:var(--ok)}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .hide{display:none}
-  @media(max-width:480px){.card{padding:18px}.q{font-size:1.12rem}}
+:root{--ink:#1f2540;--mut:#667;--acc:#4f46e5;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2;--line:#e3e6f2}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(160deg,#eef2ff,#fdf4ff);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:18px}
+.app{width:100%;max-width:680px}
+.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 6px 24px rgba(60,60,120,.12)}
+h1{margin:0 0 6px;font-size:1.8rem}
+.sub{color:var(--mut);margin:0 0 18px}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px}
+.topics span{background:#eef2ff;color:var(--acc);padding:4px 10px;border-radius:14px;font-size:.82rem;font-weight:600}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:1rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.alt{background:#eef2ff;color:var(--acc)}
+.bar{height:10px;background:#e8eaf6;border-radius:6px;overflow:hidden;margin-bottom:6px}
+.bar div{height:100%;background:linear-gradient(90deg,#4f46e5,#a855f7);width:0;transition:width .3s}
+.meta{display:flex;justify-content:space-between;color:var(--mut);font-size:.88rem;margin-bottom:14px}
+.q{font-size:1.15rem;font-weight:600;margin:6px 0 14px;line-height:1.5}
+.vis{margin:0 0 14px;padding:12px;background:#f7f8ff;border-radius:12px;overflow-x:auto}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0;font-size:1rem;color:var(--ink)}
+.opt:hover:not([disabled]){border-color:var(--acc);background:#f5f6ff}
+.opt .l{display:inline-block;width:26px;height:26px;border-radius:50%;background:#eef2ff;color:var(--acc);text-align:center;line-height:26px;font-weight:700;margin-right:10px;font-size:.85rem}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--bad)}
+.fb{margin-top:14px;padding:14px;border-radius:12px;font-size:.98rem}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.fb b.h{display:block;margin-bottom:4px}
+.strip{display:flex;border:2px solid #333;height:36px;max-width:380px;background:#fff}
+.strip div{display:flex;align-items:center;justify-content:center;border-right:2px solid #333;font-weight:700}
+.strip div:last-child{border:0}
+.s24{flex:4;background:#cfe0ff}.sd{flex:1;background:#ffe9b8}
+.brace{max-width:380px;text-align:center;border-top:2px solid #333;font-weight:700;font-size:.85rem;padding-top:2px}
+.dots{display:flex;flex-wrap:wrap;gap:8px}
+.g{border:2px solid var(--acc);border-radius:8px;padding:3px 6px;font-size:.7rem;letter-spacing:1px;line-height:1.1;width:62px;text-align:center;background:#fff}
+.g.r{border:2px dashed var(--ok);background:var(--okbg)}
+.score{font-size:3rem;font-weight:800;color:var(--acc);margin:6px 0}
+.rev{margin-top:14px;text-align:left}
+.rev div{padding:8px 10px;border-bottom:1px solid var(--line);font-size:.92rem}
+.rev .x{color:var(--bad);font-weight:700}.rev .v{color:var(--ok);font-weight:700}
+.center{text-align:center}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <div id="start" class="card">
-    <h1>Grade 5 Maths Quiz</h1>
-    <p class="sub">Operations and Algebraic Thinking &bull; 50 questions</p>
-    <ul class="topics">
-      <li><b>Questions 1&ndash;10:</b> Writing and reading numerical expressions</li>
-      <li><b>Questions 11&ndash;25:</b> Order of operations (parentheses, brackets, braces)</li>
-      <li><b>Questions 26&ndash;30:</b> Interpreting expressions without calculating</li>
-      <li><b>Questions 31&ndash;40:</b> Generating numerical patterns from rules</li>
-      <li><b>Questions 41&ndash;50:</b> Comparing two patterns and ordered pairs</li>
-    </ul>
-    <p class="sub">You see the answer and a short explanation after every question. Take your time and work each one out on paper first.</p>
-    <button class="primary" onclick="startQuiz()">Start Quiz</button>
-  </div>
-
-  <div id="quiz" class="card hide">
-    <div class="top"><span id="count"></span><span id="scoreNow"></span></div>
-    <div class="bar"><div id="prog"></div></div>
-    <span class="tag" id="tag"></span>
-    <p class="q" id="qtext"></p>
-    <div class="opts" id="opts"></div>
-    <div class="fb" id="fb"></div>
-    <div class="nav"><button class="primary" id="next" onclick="next()" disabled>Next</button></div>
-  </div>
-
-  <div id="result" class="card hide">
-    <h1>Quiz complete</h1>
-    <div class="score" id="final"></div>
-    <p class="msg" id="msg"></p>
-    <h2>By topic</h2>
-    <div class="sec" id="sec"></div>
-    <div class="row">
-      <button class="primary" onclick="startQuiz()">Try again</button>
-      <button class="ghost" id="retryBtn" onclick="retryMissed()">Retry missed questions</button>
-      <button class="ghost" onclick="toggleReview()">Review answers</button>
-    </div>
-    <div id="review" class="hide" style="margin-top:20px"></div>
-  </div>
-
-</div>
-
+<div class="app"><div class="card" id="root"></div></div>
 <script>
-// Each question: t = topic, q = question, a = correct answer, w = 3 plausible wrong answers, e = explanation.
-// Options are shuffled every time, so the correct answer is never in a predictable spot.
-var T1="Numerical expressions", T2="Order of operations", T3="Interpreting expressions", T4="Number patterns", T5="Two patterns & ordered pairs";
-var Q = [
-// ---- Writing and reading expressions (1-10)
-{t:T1,q:"Which expression shows: add 8 and 7, then multiply by 2?",a:"(8 + 7) × 2",w:["8 + 7 × 2","(8 × 2) + 7","8 + (7 ÷ 2)"],e:"The adding happens first, so 8 + 7 goes in parentheses. Then multiply the sum by 2."},
-{t:T1,q:"Which expression shows: subtract 5 from 20, then divide by 3?",a:"(20 − 5) ÷ 3",w:["20 − 5 ÷ 3","(5 − 20) ÷ 3","20 ÷ 3 − 5"],e:"“Subtract 5 from 20” is 20 − 5. It is done first, so it needs parentheses before dividing by 3."},
-{t:T1,q:"Which expression shows: three times the sum of 12 and 4?",a:"3 × (12 + 4)",w:["3 × 12 + 4","3 + (12 × 4)","(3 + 12) × 4"],e:"“The sum of 12 and 4” is one group, 12 + 4, and the whole group is multiplied by 3."},
-{t:T1,q:"Which expression shows: half of the difference of 18 and 6?",a:"(18 − 6) ÷ 2",w:["18 − 6 ÷ 2","(18 ÷ 2) − 6","18 − (6 × 2)"],e:"Find the difference 18 − 6 first, then take half of it by dividing by 2."},
-{t:T1,q:"Which expression shows: 10 less than the product of 6 and 5?",a:"(6 × 5) − 10",w:["10 − (6 × 5)","6 × (5 − 10)","(6 + 5) − 10"],e:"The product is 6 × 5. “10 less than” that product means subtract 10 from it."},
-{t:T1,q:"Which phrase matches 4 × (9 + 2)?",a:"4 times the sum of 9 and 2",w:["The sum of 4 times 9, and 2","4 more than the sum of 9 and 2","The product of 4 and 9, plus 2"],e:"The parentheses group 9 + 2 as a sum, and that sum is multiplied by 4."},
-{t:T1,q:"Which phrase matches (15 − 3) ÷ 4?",a:"Divide the difference of 15 and 3 by 4",w:["Subtract 3 from 15 divided by 4","Divide 15 by 4, then subtract 3","Subtract the quotient of 3 and 4 from 15"],e:"15 − 3 is the difference, and it is in parentheses, so the whole difference is divided by 4."},
-{t:T1,q:"Mia has 9 stickers. Her brother gives her 6 more. She then shares all of them equally among 3 friends. Which expression shows how many each friend gets?",a:"(9 + 6) ÷ 3",w:["9 + 6 ÷ 3","(9 − 6) ÷ 3","9 ÷ 3 + 6"],e:"All the stickers (9 + 6) are shared, so the sum goes in parentheses before dividing by 3."},
-{t:T1,q:"Which expression has the same value as 2 × (10 + 3)?",a:"(2 × 10) + (2 × 3)",w:["(2 × 10) + 3","2 + (10 × 3)","(2 + 10) × 3"],e:"2 × (10 + 3) = 26, and (2 × 10) + (2 × 3) = 20 + 6 = 26. The 2 multiplies both numbers."},
-{t:T1,q:"Which expression shows: twice the sum of 6 and 9, minus 4?",a:"2 × (6 + 9) − 4",w:["2 × 6 + 9 − 4","2 × (6 + 9 − 4)","(2 × 6) + (9 − 4)"],e:"The sum 6 + 9 is doubled first. After that, subtract 4 from the result."},
+function strip(a,n,d,total){var h='<div class="strip"><div class="s24">'+a+'</div>';for(var i=0;i<n;i++)h+='<div class="sd">'+d+'</div>';return h+'</div><div class="brace">'+total+'</div>';}
+function dots(groups,size,left){var h='<div class="dots">';for(var i=0;i<groups;i++)h+='<div class="g">'+'●'.repeat(size)+'</div>';if(left)h+='<div class="g r">'+'●'.repeat(left)+'</div>';return h+'</div>';}
 
-// ---- Order of operations (11-25)
-{t:T2,q:"What is 6 + 4 × 3?",a:"18",w:["30","13","21"],e:"Multiply before adding: 4 × 3 = 12, then 6 + 12 = 18."},
-{t:T2,q:"What is 40 − 8 ÷ 2?",a:"36",w:["16","32","34"],e:"Divide first: 8 ÷ 2 = 4. Then 40 − 4 = 36."},
-{t:T2,q:"What is 5 × (12 − 7) + 3?",a:"28",w:["56","40","25"],e:"Parentheses first: 12 − 7 = 5. Then 5 × 5 = 25, and 25 + 3 = 28."},
-{t:T2,q:"What is 48 ÷ 6 + 2?",a:"10",w:["6","8","20"],e:"Work left to right with division first: 48 ÷ 6 = 8, then 8 + 2 = 10."},
-{t:T2,q:"What is 18 − 2 × 5 + 1?",a:"9",w:["81","6","11"],e:"Multiply first: 2 × 5 = 10. Then go left to right: 18 − 10 = 8, and 8 + 1 = 9."},
-{t:T2,q:"What is 3 × [4 + (10 − 6)]?",a:"24",w:["16","36","12"],e:"Innermost first: 10 − 6 = 4. Then 4 + 4 = 8 inside the brackets. Finally 3 × 8 = 24."},
-{t:T2,q:"What is 2 × {3 + [8 ÷ (5 − 1)]}?",a:"10",w:["8","12","14"],e:"Start inside: 5 − 1 = 4. Then 8 ÷ 4 = 2. Then 3 + 2 = 5. Finally 2 × 5 = 10."},
-{t:T2,q:"What is 24 ÷ (2 + 4) × 3?",a:"12",w:["24","36","4"],e:"Parentheses first: 2 + 4 = 6. Then left to right: 24 ÷ 6 = 4, and 4 × 3 = 12."},
-{t:T2,q:"What is 9 × 4 − 3 × 5?",a:"21",w:["45","165","33"],e:"Do both multiplications first: 36 and 15. Then subtract: 36 − 15 = 21."},
-{t:T2,q:"What is 100 − 4 × (6 + 9)?",a:"40",w:["1,440","85","55"],e:"Parentheses: 6 + 9 = 15. Multiply: 4 × 15 = 60. Subtract: 100 − 60 = 40."},
-{t:T2,q:"Which operation do you do FIRST in 12 + 18 ÷ 3 × 2?",a:"18 ÷ 3",w:["12 + 18","3 × 2","12 + 18 ÷ 3"],e:"Division and multiplication come before addition, and they go left to right. 18 ÷ 3 comes first."},
-{t:T2,q:"What is 12 + 18 ÷ 3 × 2?",a:"24",w:["15","20","36"],e:"18 ÷ 3 = 6, then 6 × 2 = 12, then 12 + 12 = 24."},
-{t:T2,q:"What do you do FIRST in 30 − (4 + 6) ÷ 2?",a:"4 + 6",w:["30 − 4","(4 + 6) ÷ 2","6 ÷ 2"],e:"Parentheses always come first. 4 + 6 = 10, then 10 ÷ 2 = 5, then 30 − 5 = 25."},
-{t:T2,q:"Where do the parentheses go to make 2 + 3 × 4 + 5 equal 25?",a:"(2 + 3) × 4 + 5",w:["2 + 3 × (4 + 5)","(2 + 3) × (4 + 5)","2 + (3 × 4) + 5"],e:"(2 + 3) × 4 + 5 = 5 × 4 + 5 = 25. The other choices give 29, 45 and 19."},
-{t:T2,q:"A student wrote 8 + 2 × 5 = 50. What mistake did the student make?",a:"Added 8 + 2 before multiplying",w:["Multiplied 2 × 5 before adding","Ignored the 8 completely","Added 2 + 5 before multiplying"],e:"The correct answer is 8 + 10 = 18. The student did (8 + 2) × 5 = 50, adding too early."},
-
-// ---- Interpreting expressions without calculating (26-30)
-{t:T3,q:"Without calculating, how does 3 × (25 + 17) compare to 25 + 17?",a:"3 times as large",w:["3 more than","One-third as large","The same size"],e:"The sum 25 + 17 is being multiplied by 3, so the result is 3 times as large."},
-{t:T3,q:"Which expression is exactly half of 18 + 26?",a:"(18 + 26) ÷ 2",w:["18 + 26 ÷ 2","2 × (18 + 26)","(18 ÷ 2) × 26"],e:"To take half of the whole sum, add first (parentheses) and then divide the sum by 2."},
-{t:T3,q:"Which expression is 4 times as large as 7 + 9?",a:"4 × (7 + 9)",w:["(4 × 7) + 9","4 + 7 + 9","(7 + 9) ÷ 4"],e:"4 times as large means multiplying the whole sum by 4, so keep 7 + 9 together."},
-{t:T3,q:"Without calculating, how does (54 + 36) ÷ 3 compare to 54 + 36?",a:"One-third as large",w:["3 times as large","3 less than","The same size"],e:"Dividing the sum by 3 makes it one-third of the sum."},
-{t:T3,q:"Which expression is 3 times as large as 5 × 8?",a:"3 × (5 × 8)",w:["3 + (5 × 8)","(3 × 5) + 8","(5 × 8) ÷ 3"],e:"3 times as large means multiply the whole product 5 × 8 by 3."},
-
-// ---- Generating patterns (31-40)
-{t:T4,q:"Start at 4 and use the rule “add 6”. What are the first four numbers?",a:"4, 10, 16, 22",w:["4, 6, 12, 18","4, 10, 16, 21","6, 10, 16, 22"],e:"Begin with 4, then keep adding 6: 4, 10, 16, 22."},
-{t:T4,q:"Start at 3 and use the rule “multiply by 2”. What are the first four numbers?",a:"3, 6, 12, 24",w:["3, 5, 7, 9","3, 6, 9, 12","3, 6, 12, 18"],e:"Double each number to get the next: 3, 6, 12, 24."},
-{t:T4,q:"What number comes next? 5, 13, 21, 29, ___",a:"37",w:["35","36","38"],e:"The rule is “add 8”. 29 + 8 = 37."},
-{t:T4,q:"What number comes next? 2, 6, 18, 54, ___",a:"162",w:["108","72","160"],e:"Each number is multiplied by 3. 54 × 3 = 162."},
-{t:T4,q:"Which rule makes this pattern? 12, 20, 28, 36",a:"Add 8",w:["Add 4","Multiply by 8","Add 12"],e:"20 − 12 = 8, 28 − 20 = 8, and 36 − 28 = 8, so the rule is add 8."},
-{t:T4,q:"A pattern starts at 1 and the rule is “multiply by 2”. What is the 6th number?",a:"32",w:["16","64","12"],e:"1, 2, 4, 8, 16, 32. The 6th number is 32."},
-{t:T4,q:"A pattern starts at 7 and the rule is “add 5”. What is the 6th number?",a:"32",w:["27","37","35"],e:"7, 12, 17, 22, 27, 32. The 6th number is 32."},
-{t:T4,q:"A pattern starts at 100 and the rule is “subtract 10”. What is the 7th number?",a:"40",w:["30","50","60"],e:"100, 90, 80, 70, 60, 50, 40. The 7th number is 40."},
-{t:T4,q:"Which rule makes this pattern? 1, 4, 16, 64",a:"Multiply by 4",w:["Add 3","Multiply by 3","Multiply by 2"],e:"1 × 4 = 4, 4 × 4 = 16, 16 × 4 = 64. The rule is multiply by 4."},
-{t:T4,q:"Rule A: start at 0, add 4. Rule B: start at 0, add 8. How do the matching numbers compare?",a:"Each number in B is twice the number in A",w:["Each number in B is 4 more than in A","Each number in B is half the number in A","The numbers are all the same"],e:"A: 0, 4, 8, 12. B: 0, 8, 16, 24. Each B number is double the matching A number."},
-
-// ---- Two patterns and ordered pairs (41-50)
-{t:T5,q:"Pattern A: start at 0, add 2. Pattern B: start at 0, add 6. Which list shows the first three ordered pairs (A, B)?",a:"(0, 0), (2, 6), (4, 12)",w:["(0, 0), (6, 2), (12, 4)","(2, 6), (4, 12), (6, 18)","(0, 0), (2, 6), (6, 12)"],e:"A goes 0, 2, 4 and B goes 0, 6, 12. Match them in order with A first: (0, 0), (2, 6), (4, 12)."},
-{t:T5,q:"On a coordinate plane, what does the 11 tell you in the ordered pair (4, 11)?",a:"Move 11 units up",w:["Move 11 units right","Move 4 units up, then 11 units right","Move 11 units left"],e:"The first number is how far right (x). The second number is how far up (y). So 11 means 11 units up."},
-{t:T5,q:"Pattern A: start at 0, add 3. Pattern B: start at 0, add 6. When A is 15, what is B?",a:"30",w:["21","45","33"],e:"15 is the 5th step of A (5 × 3). B takes 5 steps of 6, which is 30. B is always double A."},
-{t:T5,q:"Pattern A: start at 0, add 4. Pattern B: start at 0, add 8. Which ordered pair (A, B) belongs to the patterns?",a:"(12, 24)",w:["(12, 20)","(16, 12)","(8, 12)"],e:"B is always double A. (12, 24) is the only pair where the second number is twice the first."},
-{t:T5,q:"Which ordered pair fits the rule “y is 3 more than x”?",a:"(5, 8)",w:["(5, 15)","(8, 5)","(5, 2)"],e:"5 + 3 = 8, so the pair is (5, 8)."},
-{t:T5,q:"The pairs (1, 2), (2, 4), (3, 6), (4, 8) follow which rule?",a:"y is double x",w:["y is x plus 2","y is x plus 1","y is half of x"],e:"2 = 1 × 2, 4 = 2 × 2, 6 = 3 × 2, 8 = 4 × 2. Every y is double its x."},
-{t:T5,q:"The rule is “y is 4 times x”. What is the missing y in (6, ?)",a:"24",w:["10","18","30"],e:"4 × 6 = 24, so the pair is (6, 24)."},
-{t:T5,q:"The rule is “y is x minus 3”. What is the missing y in (11, ?)",a:"8",w:["14","33","7"],e:"11 − 3 = 8, so the pair is (11, 8)."},
-{t:T5,q:"How do you plot the point (2, 5) starting at the origin?",a:"Move 2 right, then 5 up",w:["Move 5 right, then 2 up","Move 2 up, then 5 left","Move 2 right, then 5 down"],e:"The first number tells how far to go right, and the second tells how far to go up."},
-{t:T5,q:"Rule 1: start at 0, add 3. Rule 2: start at 0, add 6. Why is each number in Rule 2 double the matching number in Rule 1?",a:"Because 6 is double 3, so every step adds double",w:["Because 6 is 3 more than 3","Because both patterns start at 0","Because 6 − 3 is 3"],e:"Each step of Rule 2 adds twice as much as Rule 1, so after the same number of steps Rule 2 is twice as big."}
+// First option in each list is the correct one; options are shuffled when shown.
+var Q=[
+{q:"Leo was given $48. He saved half of it and will spend the rest over 4 days, the same amount each day. The strip diagram shows the money. Which equation helps find d, the dollars he spends each day?",
+ vis:strip('24 saved',4,'d','48'),
+ o:["4 × d = 24","4 × d = 48","d ÷ 4 = 24","24 + 4 = d"],
+ e:"Half of 48 is 24 saved, so 24 is left to spend. Four equal days of d make 24, so 4 × d = 24. Then d = 24 ÷ 4 = $6."},
+{q:"Which expression has a quotient of about 7?",
+ o:["29 ÷ 4","33 ÷ 3","40 ÷ 8","18 ÷ 2"],
+ e:"29 ÷ 4 is about 7.25. Check: 33 ÷ 3 = 11, 40 ÷ 8 = 5, and 18 ÷ 2 = 9."},
+{q:"Which expression has a quotient of about 8?",
+ o:["65 ÷ 8","72 ÷ 6","35 ÷ 7","54 ÷ 9"],
+ e:"65 ÷ 8 is a little over 8 (8 × 8 = 64). The others give 12, 5, and 6."},
+{q:"In which number is the value of the digit in the tens place 10 times the value of the digit in the ones place?",
+ o:["322","458","117","640"],
+ e:"In 322 the tens digit is worth 20 and the ones digit is worth 2. Since 10 × 2 = 20, it works. In 458 the values are 50 and 8, and 10 × 8 = 80, not 50."},
+{q:"Which number has a tens digit worth 10 times the value of its ones digit?",
+ o:["488","848","884","808"],
+ e:"In 488 the tens digit is worth 80 and the ones digit is worth 8. 10 × 8 = 80, so it fits. In 884 the values are 80 and 4, but 10 × 4 = 40."},
+{q:"Each of 15 pumpkins was cut into 6 pieces. The pieces were shared equally among 9 baskets. How many pieces were in each basket?",
+ o:["10","90","21","12"],
+ e:"15 × 6 = 90 pieces in all. Then 90 ÷ 9 = 10 pieces in each basket. (90 is the total before sharing.)"},
+{q:"Kayla walks 14 kilometers each day during October. October has 31 days. How many kilometers does she walk in all?",
+ o:["434","424","444","45"],
+ e:"14 × 31 = (14 × 30) + (14 × 1) = 420 + 14 = 434 kilometers."},
+{q:"Dev had one $20 bill, one $5 bill, three quarters, and two dimes. He bought a book for $12.40. How much money did he have left?",
+ o:["$13.55","$13.45","$14.55","$25.95"],
+ e:"Dev's money: 20 + 5 + 0.75 + 0.20 = $25.95. After the book: 25.95 − 12.40 = $13.55. ($25.95 is what he had before buying the book.)"},
+{q:"Maya had two $10 bills, one $1 bill, four quarters, and one nickel. She spent $9.85 on lunch. How much money does she have now?",
+ o:["$12.20","$12.80","$11.20","$22.05"],
+ e:"Four quarters make $1.00, so her money is 20 + 1 + 1.00 + 0.05 = $22.05. Then 22.05 − 9.85 = $12.20."},
+{q:"A librarian put 756 books on 6 shelves, the same number on each shelf. How many books were on each shelf?",
+ o:["126","106","136","156"],
+ e:"756 ÷ 6 = 126. Check: 126 × 6 = 756."},
+{q:"How is 72,405,863 written in expanded form?",
+ o:["70,000,000 + 2,000,000 + 400,000 + 5,000 + 800 + 60 + 3",
+    "70,000,000 + 2,000,000 + 40,000 + 5,000 + 800 + 60 + 3",
+    "7,000,000 + 200,000 + 400,000 + 5,000 + 800 + 60 + 3",
+    "70,000,000 + 2,000,000 + 400,000 + 500 + 800 + 60 + 3"],
+ e:"7 is in the ten-millions place, 2 in millions, 4 in hundred-thousands, 0 in ten-thousands (so skip it), 5 in thousands, 8 in hundreds, 6 in tens, 3 in ones."},
+{q:"How is 46,150,297 written in expanded form?",
+ o:["40,000,000 + 6,000,000 + 100,000 + 50,000 + 200 + 90 + 7",
+    "40,000,000 + 6,000,000 + 10,000 + 5,000 + 200 + 90 + 7",
+    "4,000,000 + 600,000 + 100,000 + 50,000 + 200 + 90 + 7",
+    "40,000,000 + 6,000,000 + 100,000 + 50,000 + 2,000 + 90 + 7"],
+ e:"4 = 40,000,000; 6 = 6,000,000; 1 = 100,000; 5 = 50,000; 0 thousands (skip); 2 = 200; 9 = 90; 7 = 7."},
+{q:"In the number 38,214,605, what is the value of the digit 8?",
+ o:["8,000,000","80,000,000","800,000","8,000"],
+ e:"The 8 is in the millions place (3 is in the ten-millions place). So its value is 8,000,000."},
+{q:"The model shows 53 counters. They are put into groups of 8, with some left over. Which equation does the model show?",
+ vis:dots(6,8,5),
+ o:["53 ÷ 8 = 6 r 5","53 ÷ 8 = 6 r 13","53 ÷ 8 = 7 r 5","53 ÷ 8 = 5 r 3"],
+ e:"There are 6 full groups of 8 (48 counters) and 5 left over: 48 + 5 = 53. A remainder must be smaller than 8, so 6 r 13 cannot be right."},
+{q:"What is 61 ÷ 7?",
+ o:["8 r 5","8 r 4","9 r 2","7 r 12"],
+ e:"7 × 8 = 56, and 61 − 56 = 5. So 61 ÷ 7 = 8 r 5. (7 × 9 = 63 is too big.)"},
+{q:"What is 6.45 − 3.9?",
+ o:["2.55","2.65","3.36","2.06"],
+ e:"Line up the decimal points and write 3.9 as 3.90. Then 6.45 − 3.90 = 2.55."},
+{q:"Ben's tablet battery lasts 8.2 hours. Cara's tablet battery lasts 2.75 hours. What is the difference in hours?",
+ o:["5.45","6.45","5.55","6.55"],
+ e:"Write 8.2 as 8.20. Then 8.20 − 2.75 = 5.45 hours."},
+{q:"Sara was given $36. She saved half and will spend the rest over 3 days, the same amount each day. How much does she spend each day?",
+ o:["$6","$12","$18","$9"],
+ e:"Half of 36 is 18, so 18 is left to spend. 18 ÷ 3 = $6 per day. ($12 comes from dividing all 36 by 3.)"},
+{q:"Which is the best estimate for 412 ÷ 6?",
+ o:["70","700","60","80"],
+ e:"412 is close to 420, and 420 ÷ 6 = 70. 6 × 60 = 360 is too low, and 6 × 80 = 480 is too high."},
+{q:"A school ordered 24 boxes of pencils with 36 pencils in each box. The pencils were shared equally among 9 classrooms. How many pencils did each classroom get?",
+ o:["96","86","106","864"],
+ e:"24 × 36 = 864 pencils in all. Then 864 ÷ 9 = 96 pencils per classroom."}
 ];
 
-var LET=["A","B","C","D"], cur=0, score=0, list=[], missed=[], answered=false, answers=[], base=Q;
+var root=document.getElementById('root'),i=0,score=0,log=[];
+function shuf(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t;}return a;}
 
-function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function show(id){["start","quiz","result"].forEach(function(x){document.getElementById(x).classList.toggle("hide",x!==id);});window.scrollTo(0,0);}
+function start(){i=0;score=0;log=[];
+ root.innerHTML='<h1>Grade 4 Math Challenge</h1><p class="sub">20 questions. Take your time and show your thinking on paper first.</p>'+
+ '<div class="topics"><span>Strip diagrams</span><span>Division</span><span>Place value</span><span>Expanded form</span><span>Money</span><span>Remainders</span><span>Decimals</span></div>'+
+ '<button class="btn" onclick="show()">Start quiz</button>';}
 
-function startQuiz(){ list=Q.slice(); begin(); }
-function retryMissed(){ if(!missed.length) return; list=missed.slice(); begin(); }
-function begin(){ cur=0; score=0; missed=[]; answers=[]; show("quiz"); render(); }
-
-function render(){
-  var q=list[cur]; answered=false;
-  q._opts = shuffle([q.a].concat(q.w));
-  document.getElementById("count").textContent="Question "+(cur+1)+" of "+list.length;
-  document.getElementById("scoreNow").textContent="Score: "+score;
-  document.getElementById("prog").style.width=(cur/list.length*100)+"%";
-  document.getElementById("tag").textContent=q.t;
-  document.getElementById("qtext").textContent=q.q;
-  var box=document.getElementById("opts"); box.innerHTML="";
-  q._opts.forEach(function(o,i){
-    var b=document.createElement("button"); b.className="opt";
-    b.innerHTML='<span class="k">'+LET[i]+'</span><span></span>';
-    b.lastChild.textContent=o;
-    b.onclick=function(){pick(i);};
-    box.appendChild(b);
-  });
-  var fb=document.getElementById("fb"); fb.className="fb"; fb.textContent="";
-  var n=document.getElementById("next"); n.disabled=true;
-  n.textContent=(cur===list.length-1)?"See results":"Next";
+function show(){
+ var q=Q[i],opts=shuf(q.o),L=['A','B','C','D'];
+ var h='<div class="bar"><div style="width:'+(i/Q.length*100)+'%"></div></div><div class="meta"><span>Question '+(i+1)+' of '+Q.length+'</span><span>Score: '+score+'</span></div>';
+ h+='<div class="q">'+q.q+'</div>'+(q.vis?'<div class="vis">'+q.vis+'</div>':'');
+ opts.forEach(function(o,k){h+='<button class="opt" data-v="'+k+'"><span class="l">'+L[k]+'</span>'+o+'</button>';});
+ h+='<div id="fb"></div>';
+ root.innerHTML=h;
+ var bs=root.querySelectorAll('.opt');
+ bs.forEach(function(b,k){b.onclick=function(){pick(b,opts[k],bs,q)};});
 }
 
-function pick(i){
-  if(answered) return; answered=true;
-  var q=list[cur], chosen=q._opts[i], right=(chosen===q.a);
-  var btns=document.querySelectorAll(".opt");
-  btns.forEach(function(b,k){
-    b.disabled=true;
-    if(q._opts[k]===q.a) b.classList.add("ok");
-    else if(k===i) b.classList.add("bad");
-  });
-  if(right) score++; else missed.push(q);
-  answers.push({q:q,chosen:chosen,right:right});
-  var fb=document.getElementById("fb");
-  fb.className="fb show "+(right?"ok":"bad");
-  fb.innerHTML="<b>"+(right?"Correct!":"Not quite. The answer is "+escapeHtml(q.a)+".")+"</b><br>"+escapeHtml(q.e);
-  document.getElementById("scoreNow").textContent="Score: "+score;
-  document.getElementById("next").disabled=false;
+function pick(b,val,bs,q){
+ var ok=val===q.o[0];
+ bs.forEach(function(x){x.disabled=true;if(x.textContent.slice(1)===q.o[0])x.classList.add('right');});
+ if(!ok)b.classList.add('wrong');
+ if(ok)score++;
+ log.push({n:i+1,ok:ok,mine:val,right:q.o[0]});
+ var last=i===Q.length-1;
+ document.getElementById('fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><b class="h">'+(ok?'Correct!':'Not quite.')+'</b>'+q.e+'</div><p><button class="btn" id="nx">'+(last?'See my score':'Next question')+'</button></p>';
+ document.getElementById('nx').onclick=function(){i++;last?end():show();};
 }
 
-function next(){ if(cur<list.length-1){cur++;render();} else finish(); }
-
-function finish(){
-  show("result");
-  var n=list.length, pct=Math.round(score/n*100);
-  document.getElementById("final").textContent=score+" / "+n+"  ("+pct+"%)";
-  var m = pct>=90?"Excellent work! You have a strong grip on this topic.":
-          pct>=75?"Great job! Review the questions you missed and try again.":
-          pct>=50?"Good effort. Read the explanations for the ones you missed, then retry them.":
-                  "Keep practising. Go through the explanations carefully and try again.";
-  document.getElementById("msg").textContent=m;
-  var by={}; answers.forEach(function(a){var t=a.q.t; by[t]=by[t]||{r:0,n:0}; by[t].n++; if(a.right) by[t].r++;});
-  var sec=document.getElementById("sec"); sec.innerHTML="";
-  Object.keys(by).forEach(function(t){var d=document.createElement("div"); d.innerHTML="<span></span><b>"+by[t].r+" / "+by[t].n+"</b>"; d.firstChild.textContent=t; sec.appendChild(d);});
-  document.getElementById("retryBtn").classList.toggle("hide",missed.length===0);
-  document.getElementById("review").classList.add("hide");
-  var r=document.getElementById("review"); r.innerHTML="";
-  answers.forEach(function(a,i){
-    var d=document.createElement("div"); d.className="rev";
-    d.innerHTML='<p class="qq"></p><p class="'+(a.right?'c':'x')+'"></p>'+(a.right?'':'<p class="c"></p>')+'<p style="color:#5d6c7c"></p>';
-    var ps=d.querySelectorAll("p");
-    ps[0].textContent=(i+1)+". "+a.q.q;
-    ps[1].textContent=(a.right?"Your answer: ":"Your answer: ")+a.chosen+(a.right?"  ✓":"  ✗");
-    if(!a.right){ps[2].textContent="Correct answer: "+a.q.a; ps[3].textContent=a.q.e;} else {ps[2].textContent=a.q.e;}
-    r.appendChild(d);
-  });
+function end(){
+ var pct=Math.round(score/Q.length*100);
+ var msg=pct>=90?'Excellent work!':pct>=70?'Great job!':pct>=50?'Good effort. Review the explanations and try again.':'Keep practising. Try the quiz again after reviewing.';
+ var h='<div class="center"><h1>Quiz complete</h1><div class="score">'+score+' / '+Q.length+'</div><p class="sub">'+pct+'%. '+msg+'</p><button class="btn" onclick="start()">Try again</button></div><div class="rev"><b>Review</b>';
+ log.forEach(function(r){h+='<div>'+(r.ok?'<span class="v">✓</span>':'<span class="x">✗</span>')+' Q'+r.n+': '+(r.ok?r.right:'you chose '+r.mine+'. Correct: '+r.right)+'</div>';});
+ root.innerHTML=h+'</div>';
 }
-function toggleReview(){document.getElementById("review").classList.toggle("hide");}
-function escapeHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+start();
 </script>
 </body>
 </html>
