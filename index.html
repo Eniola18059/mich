@@ -3,244 +3,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Math Quiz Set 2 – Operations & Algebraic Thinking</title>
+<title>Grade 6 Algebra &amp; PEMDAS Quiz</title>
 <style>
-  :root{
-    --bg1:#fff4d6; --bg2:#d9f0ff; --ink:#1f2a44; --card:#ffffff;
-    --blue:#3b82f6; --green:#22a559; --red:#e5484d; --orange:#ff9f1c; --purple:#7c5cff;
-  }
+  :root{--bg:#f4f6fb;--card:#fff;--ink:#1f2a44;--muted:#6b7794;--brand:#4f46e5;--brand-d:#3730a3;--ok:#16a34a;--okbg:#dcfce7;--bad:#dc2626;--badbg:#fee2e2;--line:#e3e7f1}
   *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;
-    color:var(--ink); background:linear-gradient(160deg,var(--bg1),var(--bg2)); padding:16px;
-  }
-  .wrap{max-width:720px; margin:0 auto}
-  .card{background:var(--card); border-radius:24px; padding:26px; box-shadow:0 8px 28px rgba(31,42,68,.12)}
-  h1{margin:0 0 6px; font-size:2rem; line-height:1.15}
-  h2{margin:0 0 14px; font-size:1.45rem; line-height:1.35}
-  .sub{color:#4b587a; margin:0 0 18px}
-  .emoji-big{font-size:3.2rem}
-  .topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px; padding:0; list-style:none}
-  .topics li{background:#eef3ff; border-radius:999px; padding:7px 14px; font-weight:700; font-size:.92rem}
-  button{font:inherit; cursor:pointer; border:none}
-  .btn{background:var(--blue); color:#fff; font-weight:800; font-size:1.1rem; padding:14px 28px; border-radius:16px; box-shadow:0 4px 0 #2563c9}
-  .btn:active{transform:translateY(2px); box-shadow:0 2px 0 #2563c9}
-  .btn.green{background:var(--green); box-shadow:0 4px 0 #17803f}
-  .btn.orange{background:var(--orange); box-shadow:0 4px 0 #cc7a00}
-  .top{display:flex; justify-content:space-between; align-items:center; font-weight:800; margin-bottom:10px}
-  .bar{height:14px; background:#e6ebf7; border-radius:999px; overflow:hidden; margin-bottom:20px}
-  .bar>div{height:100%; width:0; background:linear-gradient(90deg,var(--purple),var(--blue)); border-radius:999px; transition:width .35s}
-  .tag{display:inline-block; background:#fff1d6; color:#a35a00; font-weight:800; font-size:.8rem; padding:4px 12px; border-radius:999px; margin-bottom:12px}
-  .art{font-size:1.7rem; line-height:1.5; letter-spacing:4px; margin:0 0 14px; text-align:center; background:#f6f9ff; border-radius:16px; padding:10px}
-  .opts{display:grid; gap:12px; grid-template-columns:1fr 1fr}
-  @media(max-width:520px){.opts{grid-template-columns:1fr} h1{font-size:1.65rem}}
-  .opt{background:#f4f7ff; border:3px solid #d6e0fb; border-radius:16px; padding:16px; font-weight:800; font-size:1.15rem; color:var(--ink); text-align:center}
-  .opt:hover:not(:disabled){border-color:var(--blue); background:#eaf1ff}
-  .opt.correct{background:#dcf7e6; border-color:var(--green)}
-  .opt.wrong{background:#ffe3e4; border-color:var(--red)}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  .wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+  .card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(31,42,68,.08)}
+  h1{font-size:1.6rem;margin:0 0 6px}
+  h2{font-size:1.15rem;margin:0 0 10px}
+  p{margin:0 0 12px}
+  .muted{color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
+  .chip{background:#eef0ff;color:var(--brand-d);border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:600}
+  button{font:inherit;cursor:pointer}
+  .btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:1rem}
+  .btn:hover{background:var(--brand-d)}
+  .btn.alt{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+  .btn.alt:hover{background:#eef0ff}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .cheat{background:#f8f9ff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:.93rem}
+  .cheat b{color:var(--brand-d)}
+  .cheat ul{margin:6px 0 0;padding-left:20px}
+  .top{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+  .bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>div{height:100%;background:var(--brand);width:0;transition:width .3s}
+  .topic{display:inline-block;font-size:.78rem;font-weight:700;color:var(--brand-d);background:#eef0ff;border-radius:6px;padding:2px 9px;margin-bottom:10px}
+  .q{font-size:1.25rem;font-weight:700;margin:0 0 18px}
+  .opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:10px;font-size:1.05rem;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--brand);background:#f8f9ff}
+  .opt .l{flex:0 0 30px;height:30px;border-radius:50%;background:#eef0ff;color:var(--brand-d);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+  .opt.correct{border-color:var(--ok);background:var(--okbg)}
+  .opt.correct .l{background:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .l{background:var(--bad);color:#fff}
   .opt:disabled{cursor:default}
-  .fb{margin-top:18px; padding:14px 16px; border-radius:16px; font-weight:700; display:none}
-  .fb.good{display:block; background:#dcf7e6; color:#0f5c2c}
-  .fb.bad{display:block; background:#ffe9d6; color:#7a3b00}
-  .next{margin-top:18px; text-align:right; display:none}
-  .score-big{font-size:3.4rem; font-weight:900; color:var(--purple); margin:6px 0}
-  .stars{font-size:2.2rem; margin-bottom:8px}
-  .review{margin-top:20px; text-align:left}
-  .review .item{border-left:6px solid var(--red); background:#fff5f5; padding:10px 14px; border-radius:10px; margin-bottom:10px; font-size:.95rem}
-  .review .item b{display:block; margin-bottom:4px}
-  .center{text-align:center}
+  .fb{border-radius:12px;padding:14px 16px;margin:6px 0 4px;font-size:.98rem}
+  .fb.ok{background:var(--okbg);border:1px solid #86efac}
+  .fb.no{background:var(--badbg);border:1px solid #fca5a5}
+  .score{font-size:3rem;font-weight:800;color:var(--brand);margin:4px 0}
+  table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:.95rem}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+  .pill{font-weight:700}
+  .pill.g{color:var(--ok)} .pill.r{color:var(--bad)} .pill.o{color:#d97706}
+  .rev{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+  .rev .qq{font-weight:700;margin-bottom:6px}
+  .rev .you{color:var(--bad)} .rev .ans{color:var(--ok);font-weight:700}
   .hidden{display:none}
+  @media(max-width:480px){.card{padding:18px}.q{font-size:1.12rem}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div id="start" class="card center">
-    <div class="emoji-big">🧮🌟</div>
-    <h1>Math Quiz · Set 2</h1>
-    <p class="sub"><b>Part 1: Operations & Algebraic Thinking</b><br>50 brand-new questions · Pick the best answer · No timer, take your time!</p>
-    <ul class="topics" style="justify-content:center">
-      <li>➕ Word problems within 100</li>
-      <li>⚡ Facts within 20</li>
-      <li>🔟 Sums of two digits</li>
-      <li>⚖️ Odd &amp; even</li>
-      <li>🔲 Equal groups &amp; arrays</li>
-    </ul>
-    <button class="btn" id="startBtn">Let's Start! 🚀</button>
+  <div id="start" class="card">
+    <h1>Algebra &amp; PEMDAS Quiz</h1>
+    <p class="muted">Grade 6 Math &middot; 50 questions &middot; Questions and answer choices are shuffled every time.</p>
+    <div class="chips">
+      <span class="chip">Coefficients</span><span class="chip">Terms</span><span class="chip">Constants</span>
+      <span class="chip">Variables</span><span class="chip">Exponents</span><span class="chip">Equivalent expressions &amp; equations</span><span class="chip">PEMDAS</span>
+    </div>
+    <div class="cheat">
+      <b>Quick reminders</b>
+      <ul>
+        <li><b>Coefficient</b>: the number multiplied by a variable (in 7x, it is 7).</li>
+        <li><b>Term</b>: a part of an expression separated by + or &minus; (3x + 5y &minus; 7 has 3 terms).</li>
+        <li><b>Constant</b>: a number with no variable. <b>Variable</b>: a letter standing for a number.</li>
+        <li><b>Exponent</b>: how many times the base is multiplied by itself (2&sup3; = 2 &times; 2 &times; 2 = 8).</li>
+        <li><b>PEMDAS</b>: Parentheses, Exponents, then Multiply/Divide (left to right), then Add/Subtract (left to right).</li>
+      </ul>
+    </div>
+    <button class="btn" id="startBtn">Start Quiz</button>
   </div>
 
   <div id="quiz" class="card hidden">
-    <div class="top"><span id="qnum">Question 1 of 50</span><span id="scoreNow">⭐ 0</span></div>
+    <div class="top"><span id="count"></span><span id="liveScore"></span></div>
     <div class="bar"><div id="prog"></div></div>
-    <span class="tag" id="tag"></span>
-    <h2 id="qtext"></h2>
-    <div class="art hidden" id="art"></div>
-    <div class="opts" id="opts"></div>
-    <div class="fb" id="fb"></div>
-    <div class="next" id="nextWrap"><button class="btn green" id="nextBtn">Next ➜</button></div>
+    <span class="topic" id="topic"></span>
+    <p class="q" id="qtext"></p>
+    <div id="opts"></div>
+    <div id="fb"></div>
+    <div class="row"><button class="btn hidden" id="nextBtn">Next</button></div>
   </div>
 
-  <div id="result" class="card center hidden">
-    <div class="stars" id="stars"></div>
-    <h1 id="rtitle"></h1>
-    <div class="score-big" id="rscore"></div>
-    <p class="sub" id="rmsg"></p>
-    <div id="topicScores" class="topics" style="justify-content:center"></div>
-    <button class="btn orange" id="againBtn">Try Again 🔁</button>
-    <div class="review" id="review"></div>
+  <div id="result" class="card hidden">
+    <h1>Quiz complete!</h1>
+    <div class="score" id="finalScore"></div>
+    <p id="msg"></p>
+    <h2>Score by topic</h2>
+    <table id="topicTable"></table>
+    <div id="reviewBox"></div>
+    <div class="row">
+      <button class="btn" id="retryMissed">Retry missed questions</button>
+      <button class="btn alt" id="restart">Start over (all 50)</button>
+    </div>
   </div>
 
 </div>
 
 <script>
-// Each question: [topic, question, correctAnswer, [three wrong answers], explanation, optional picture]
-const Q = [
-// ---------- Word problems within 100 ----------
-["Word Problems","Nora has 52 beads. She buys 29 more beads. How many beads does she have now?","81",["71","83","23"],"52 + 29 = 81. Add the tens (50 + 20 = 70), then the ones (2 + 9 = 11), then 70 + 11 = 81."],
-["Word Problems","A farmer had 91 eggs. He sold 56 eggs. How many eggs are left?","35",["45","147","25"],"91 − 56 = 35. Count up from 56: 4 to reach 60, 30 more to reach 90, and 1 more to reach 91. That is 4 + 30 + 1 = 35."],
-["Word Problems","Kai scored 37 points in game one and 48 points in game two. How many points did he score in all?","85",["75","95","11"],"37 + 48 = 85. Tens: 30 + 40 = 70. Ones: 7 + 8 = 15. Then 70 + 15 = 85."],
-["Word Problems","There are 63 children at the park. 27 children go home. How many children are still at the park?","36",["46","90","34"],"63 − 27 = 36. Take away 20 to get 43, then take away 7 more to get 36."],
-["Word Problems","A library had some books. Then 34 new books arrived. Now the library has 90 books. How many books were there at first?","56",["124","66","46"],"Start + 34 = 90, so 90 − 34 = 56."],
-["Word Problems","Ella had some stickers. She gave 26 stickers away. Now she has 38 stickers. How many stickers did Ella start with?","64",["12","54","74"],"Start − 26 = 38, so 38 + 26 = 64. She gave some away, so she had more at the start."],
-["Word Problems","Omar has 47 cards. Ravi has 15 more cards than Omar. How many cards does Ravi have?","62",["32","52","61"],"\"15 more than\" means add: 47 + 15 = 62."],
-["Word Problems","Team Red has 74 players. Team Blue has 19 fewer players than Team Red. How many players does Team Blue have?","55",["93","65","45"],"\"19 fewer than\" means subtract: 74 − 19 = 55. Take away 20, then add 1 back."],
-["Word Problems","A store sold 18 hats on Monday, 25 hats on Tuesday, and 30 hats on Wednesday. How many hats did it sell in all?","73",["63","83","43"],"18 + 25 = 43, then 43 + 30 = 73."],
-["Word Problems","Mom had $72. She spent $38 on food. How much money does Mom have left?","$34",["$44","$110","$36"],"72 − 38 = 34. Take away 40 to get 32, then add 2 back."],
-["Word Problems","Max had 40 marbles. He won 17 more marbles. Then he gave 9 marbles to his sister. How many marbles does Max have now?","48",["57","66","49"],"First: 40 + 17 = 57. Then: 57 − 9 = 48. This problem has two steps."],
-["Word Problems","Tia had 45 pencils. She bought 30 more pencils. Which number sentence shows how many pencils Tia has now?","45 + 30 = 75",["45 − 30 = 15","45 + 20 = 65","45 + 35 = 80"],"Bought more means add. 45 + 30 = 75 (4 tens + 3 tens = 7 tens, and the 5 ones stay)."],
-["Word Problems","What number makes this true? 29 + ___ = 72","43",["101","53","57"],"Think 72 − 29 = 43. Check: 29 + 43 = 72."],
-["Word Problems","A hall has 86 seats. 49 seats are filled. How many seats are empty?","37",["47","135","43"],"86 − 49 = 37. Take away 50 to get 36, then add 1 back."],
-
-// ---------- Facts within 20 ----------
-["Facts within 20","8 + 6 = ?","14",["13","15","12"],"Make a ten: 8 + 2 = 10, then add the other 4 to get 14."],
-["Facts within 20","14 − 6 = ?","8",["7","9","20"],"Think 6 + 8 = 14, so 14 − 6 = 8."],
-["Facts within 20","17 − 8 = ?","9",["8","10","25"],"Think 8 + 9 = 17, so 17 − 8 = 9."],
-["Facts within 20","9 + 8 = ?","17",["16","18","15"],"Make a ten: 9 + 1 = 10, then add the other 7 to get 17."],
-["Facts within 20","11 − 4 = ?","7",["6","8","15"],"Subtract to 10 first: 11 − 1 = 10, then 10 − 3 = 7."],
-["Facts within 20","Use doubles plus one. 7 + 8 = ?","15",["14","16","13"],"7 + 7 = 14, and one more makes 15."],
-["Facts within 20","Making a ten helps us add. Which number sentence has the same total as 8 + 5?","10 + 3",["10 + 5","8 + 3","10 + 2"],"Move 2 from the 5 to the 8: 8 + 5 = 10 + 3 = 13."],
-["Facts within 20","12 − 8 = ?","4",["3","5","20"],"Think 8 + 4 = 12, so 12 − 8 = 4."],
-["Facts within 20","Which fact belongs to the same fact family as 9 + 5 = 14?","14 − 5 = 9",["14 − 6 = 8","9 + 6 = 15","14 + 5 = 19"],"A fact family uses the same three numbers: 9, 5 and 14."],
-["Facts within 20","Which number sentence is a doubles fact with a total of 16?","8 + 8 = 16",["9 + 7 = 16","10 + 6 = 16","8 + 9 = 17"],"A doubles fact adds the same number twice. 8 + 8 = 16."],
-
-// ---------- Sums of two one-digit numbers ----------
-["Addition Facts","7 + 6 = ?","13",["12","14","11"],"7 + 3 = 10, then add 3 more to make 13."],
-["Addition Facts","9 + 5 = ?","14",["13","15","4"],"Take 1 from the 5 to make 9 into 10. Then 10 + 4 = 14."],
-["Addition Facts","9 + 7 = ?","16",["15","17","14"],"9 + 1 = 10, then add the other 6 to make 16."],
-["Addition Facts","6 + 6 = ?","12",["11","13","14"],"Doubles: 6 + 6 = 12."],
-["Addition Facts","4 + 7 = ?","11",["10","12","13"],"7 + 3 = 10, then add the other 1 to make 11."],
-["Addition Facts","3 + 9 = ?","12",["11","13","6"],"Take 1 from the 3 to make 9 into 10. Then 10 + 2 = 12."],
-["Addition Facts","7 + ___ = 16. What number is missing?","9",["8","10","23"],"16 − 7 = 9. Check: 7 + 9 = 16."],
-["Addition Facts","___ + 8 = 14. What number is missing?","6",["5","7","22"],"14 − 8 = 6. Check: 6 + 8 = 14."],
-
-// ---------- Odd and even ----------
-["Odd & Even","Which of these numbers is odd?","57",["52","60","78"],"57 ends in 7, so when you make pairs there is 1 left over."],
-["Odd & Even","Which of these numbers is even?","36",["29","51","73"],"36 can be split into two equal groups (18 and 18), and it ends in 6."],
-["Odd & Even","Ruby has 16 balloons. She shares them equally between 2 friends. What does this show?","16 is even, because each friend gets 8 with none left over",["16 is odd, because each friend gets 8","16 is even, because 1 balloon is left over","16 is odd, because 1 balloon is left over"],"Each friend gets 8 and no balloons are left. When nothing is left over, the number is even."],
-["Odd & Even","Which number sentence shows that 14 is an even number?","7 + 7 = 14",["7 + 8 = 15","6 + 7 = 13","4 + 4 = 8"],"An even number is a double. 7 + 7 = 14."],
-["Odd & Even","Which number sentence shows that 9 is odd, with 1 left over after making groups of 2?","2 + 2 + 2 + 2 + 1 = 9",["2 + 2 + 2 + 2 = 8","2 + 2 + 2 + 2 + 2 = 10","3 + 3 + 3 = 9"],"Four groups of 2 make 8, and there is 1 left over. So 9 is odd."],
-["Odd & Even","Which list has only odd numbers?","31, 45, 59, 63",["31, 45, 58, 63","32, 45, 59, 63","31, 44, 59, 62"],"Every number in 31, 45, 59, 63 ends in 1, 5, 9 or 3."],
-["Odd & Even","Which list has only even numbers?","22, 46, 70, 88",["22, 46, 71, 88","24, 36, 50, 99","20, 42, 65, 80"],"Every number in 22, 46, 70, 88 ends in 2, 6, 0 or 8."],
-["Odd & Even","What is the next odd number after 49?","51",["50","52","53"],"After 49 comes 50 (even), then 51 (odd)."],
-["Odd & Even","I am an even number. I am more than 30 and less than 35. My ones digit is greater than 3. Which number am I?","34",["32","33","31"],"The numbers between 30 and 35 are 31, 32, 33 and 34. Only 34 is even with a ones digit greater than 3."],
-
-// ---------- Equal groups and arrays ----------
-["Equal Groups & Arrays","An array has 3 rows with 5 in each row. How many are there in all?","15",["8","12","18"],"5 + 5 + 5 = 15. Add the rows, do not add 3 + 5.","arr:3x5"],
-["Equal Groups & Arrays","What is 10 + 10 + 10?","30",["20","40","3"],"Count by 10s: 10, 20, 30."],
-["Equal Groups & Arrays","An array has 4 rows with 4 in each row. How many are there in all?","16",["8","12","20"],"4 + 4 + 4 + 4 = 16.","arr:4x4"],
-["Equal Groups & Arrays","There are 5 baskets. Each basket has 4 apples. How many apples are there altogether?","20",["9","16","25"],"4 + 4 + 4 + 4 + 4 = 20.","grp:5x4"],
-["Equal Groups & Arrays","Which addition sentence matches 2 equal groups of 9?","9 + 9 = 18",["2 + 9 = 11","9 + 9 + 9 = 27","2 + 2 = 4"],"2 groups of 9 means we add 9 two times: 9 + 9 = 18."],
-["Equal Groups & Arrays","An array has 4 rows with 2 in each row. How many are there in all?","8",["6","10","12"],"2 + 2 + 2 + 2 = 8.","arr:4x2"],
-["Equal Groups & Arrays","Which addition sentence does NOT show equal groups?","6 + 6 + 6 + 3",["4 + 4 + 4","7 + 7","9 + 9 + 9 + 9"],"The numbers 6, 6, 6 and 3 are not all the same size, so they are not equal groups."],
-["Equal Groups & Arrays","An array has 3 rows. Each row has 6 dots. Which sentence adds up the rows?","6 + 6 + 6 = 18",["3 + 6 = 9","6 + 6 = 12","6 + 6 + 6 + 6 = 24"],"There are 3 rows, and each row has 6, so add 6 three times.","arr:3x6"],
-["Equal Groups & Arrays","There are 6 bags. Each bag has 2 apples. How many apples are there in all?","12",["8","10","14"],"2 + 2 + 2 + 2 + 2 + 2 = 12.","grp:6x2"]
+const QUESTIONS = [
+/* ---------- COEFFICIENT ---------- */
+{t:"Coefficient",q:"In the expression 7x + 3, what is the coefficient of x?",a:"7",w:["3","x","10"],e:"The coefficient is the number multiplied by the variable. In 7x, the 7 is multiplying x. The 3 is a constant."},
+{t:"Coefficient",q:"What is the coefficient of y in 12y − 5?",a:"12",w:["5","−5","y"],e:"The number attached to y by multiplication is 12. The −5 is a separate term (a constant)."},
+{t:"Coefficient",q:"In 4a + 9b, what is the coefficient of b?",a:"9",w:["4","13","b"],e:"Look at the term with b: 9b. Its coefficient is 9. Do not add 4 and 9, because a and b are different variables."},
+{t:"Coefficient",q:"What is the coefficient of m in the expression m + 6?",a:"1",w:["0","6","m"],e:"m is the same as 1m, so its coefficient is 1 even though you do not see it."},
+{t:"Coefficient",q:"What is the coefficient of z in −3z + 8?",a:"−3",w:["3","8","z"],e:"The coefficient keeps its sign. In −3z, the coefficient is −3."},
+{t:"Coefficient",q:"Which term has a coefficient of 9?",a:"9k",w:["k + 9","k ÷ 9","k²"],e:"9k means 9 × k, so the coefficient is 9. In k + 9, the 9 is a constant. In k ÷ 9 the coefficient is 1/9, and in k² it is 1."},
+/* ---------- TERMS ---------- */
+{t:"Terms",q:"How many terms are in 3x + 5y − 7?",a:"3",w:["2","4","5"],e:"The terms are 3x, 5y and −7. Terms are separated by + and − signs."},
+{t:"Terms",q:"Which list shows the terms of 4x² − 9x + 2?",a:"4x², −9x, 2",w:["4, 9, 2","x², x, 2","4x², 9x, −2"],e:"Each term keeps its sign and everything multiplied together inside it: 4x², −9x and 2."},
+{t:"Terms",q:"How many terms are in the expression 6a?",a:"1",w:["2","6","0"],e:"6a is a single term because 6 and a are multiplied, not added or subtracted."},
+{t:"Terms",q:"In an expression, terms are separated by what?",a:"Plus or minus signs",w:["Times signs","Equal signs","Exponent signs"],e:"Plus and minus signs split an expression into terms. Multiplication stays inside a single term. An equal sign makes an equation, not terms."},
+{t:"Terms",q:"In 5x + 3y + 2x − 8, which two terms are like terms?",a:"5x and 2x",w:["5x and 3y","3y and −8","5x and −8"],e:"Like terms have the same variable part. 5x and 2x both have x, so they can be combined to make 7x."},
+{t:"Terms",q:"Simplify: 4x + 3x",a:"7x",w:["12x","7x²","7"],e:"Add the coefficients and keep the variable the same: 4 + 3 = 7, so 7x. Do not multiply the coefficients."},
+/* ---------- CONSTANT ---------- */
+{t:"Constant",q:"What is the constant in 8x + 5?",a:"5",w:["8","x","13"],e:"The constant is the term with no variable. Here it is 5. You cannot add 8x and 5 because they are different kinds of terms."},
+{t:"Constant",q:"In 3x + 7y + 12, which one is the constant term?",a:"12",w:["3","7","3x"],e:"Only 12 has no variable attached, so it is the constant term."},
+{t:"Constant",q:"What is a constant?",a:"A number on its own with no letter",w:["A letter that stands for a number","A number multiplied by a letter","A raised number showing repeats"],e:"A constant is a fixed number with no variable, like 5 or 12. Its value never changes."},
+{t:"Constant",q:"Which expression has no constant term?",a:"5x + 2x²",w:["5x + 2","x² − 9","7 + 3x"],e:"5x + 2x² has two terms and both contain a variable. The other expressions each include a plain number (2, −9, 7)."},
+/* ---------- VARIABLE ---------- */
+{t:"Variable",q:"What is the variable in 5n + 8?",a:"n",w:["5","8","5n"],e:"A variable is a letter. Here the letter is n."},
+{t:"Variable",q:"What is a variable?",a:"A letter used to stand for an unknown number",w:["A number that is multiplied by a letter","A number written without any letter","A small raised number showing repeats"],e:"A variable such as x, n or a is a placeholder for a number that can change or that we do not know yet."},
+{t:"Variable",q:"How many different variables are in 3ab + 4?",a:"2",w:["1","3","4"],e:"The letters a and b are two different variables. The 3 and the 4 are numbers."},
+{t:"Variable",q:"Which expression means “a number n increased by 7”?",a:"n + 7",w:["7n","7 − n","n − 7"],e:"“Increased by” means add. So n increased by 7 is n + 7."},
+{t:"Variable",q:"Which expression means “5 less than a number x”?",a:"x − 5",w:["5 − x","5x","x + 5"],e:"“5 less than x” means start at x and take away 5: x − 5. The order is flipped from how you read it."},
+{t:"Variable",q:"Evaluate 3x + 2 when x = 4.",a:"14",w:["18","36","9"],expr:"3*4+2",e:"Replace x with 4: 3 × 4 + 2 = 12 + 2 = 14. Remember 3x means 3 times x, not 3 and 4 side by side."},
+/* ---------- EXPONENTS ---------- */
+{t:"Exponents",q:"What is 3²?",a:"9",w:["6","5","8"],expr:"3**2",e:"3² = 3 × 3 = 9. An exponent tells you how many times to multiply the base by itself, not to multiply by the exponent."},
+{t:"Exponents",q:"What is 2⁴?",a:"16",w:["8","6","24"],expr:"2**4",e:"2⁴ = 2 × 2 × 2 × 2 = 16."},
+{t:"Exponents",q:"What is 5³?",a:"125",w:["15","75","8"],expr:"5**3",e:"5³ = 5 × 5 × 5 = 25 × 5 = 125."},
+{t:"Exponents",q:"In 7⁵, which number is the exponent?",a:"5",w:["7","35","12"],e:"The big number is the base (7). The small raised number is the exponent (5). It tells how many 7s are multiplied."},
+{t:"Exponents",q:"What is the base in 4³?",a:"4",w:["3","12","64"],e:"The base is the number being multiplied by itself. In 4³ the base is 4 and the exponent is 3."},
+{t:"Exponents",q:"What is 10²?",a:"100",w:["20","12","1000"],expr:"10**2",e:"10² = 10 × 10 = 100."},
+{t:"Exponents",q:"What is 2³ + 2²?",a:"12",w:["32","10","16"],expr:"2**3+2**2",e:"2³ = 8 and 2² = 4, so 8 + 4 = 12. Do not combine the exponents."},
+{t:"Exponents",q:"What is 6² − 4²?",a:"20",w:["4","8","52"],expr:"6**2-4**2",e:"6² = 36 and 4² = 16, so 36 − 16 = 20. Square each number first, then subtract."},
+/* ---------- EQUIVALENT EXPRESSIONS & EQUATIONS ---------- */
+{t:"Equivalent / Equations",q:"Which expression is equivalent to 3(x + 4)?",a:"3x + 12",w:["3x + 4","x + 12","3x + 7"],e:"Distribute the 3 to both terms: 3 × x = 3x and 3 × 4 = 12. So 3(x + 4) = 3x + 12."},
+{t:"Equivalent / Equations",q:"Which expression is equivalent to 4x + 4?",a:"4(x + 1)",w:["4x","8x","4(x + 4)"],e:"Factor out the common 4: 4x + 4 = 4(x + 1). Check by distributing: 4 × x + 4 × 1 = 4x + 4."},
+{t:"Equivalent / Equations",q:"Which expression is equivalent to x + x + x?",a:"3x",w:["x³","3 + x","x + 3"],e:"Adding x three times gives 3x. The expression x³ would mean x × x × x, which is multiplying."},
+{t:"Equivalent / Equations",q:"Which pair of expressions is NOT equivalent?",a:"3x and x + 3",w:["2(x + 3) and 2x + 6","x + x and 2x","5 × y and y × 5"],e:"Try x = 4: 3x = 12 but x + 3 = 7. They give different values, so they are not equivalent. The other pairs match for every value."},
+{t:"Equivalent / Equations",q:"Which expression is equivalent to 12 + 8x?",a:"4(3 + 2x)",w:["4(3 + 8x)","12(1 + 8x)","4(12 + 2x)"],e:"The greatest common factor of 12 and 8 is 4. Factor it out: 12 ÷ 4 = 3 and 8x ÷ 4 = 2x, giving 4(3 + 2x)."},
+{t:"Equivalent / Equations",q:"Simplify: 2(x + 5) + 3x",a:"5x + 10",w:["5x + 5","6x + 10","5x² + 10"],e:"Distribute first: 2x + 10 + 3x. Then combine like terms: 2x + 3x = 5x. The result is 5x + 10."},
+{t:"Equivalent / Equations",q:"Solve the equation: x + 7 = 12",a:"x = 5",w:["x = 19","x = 7","x = 84"],e:"Subtract 7 from both sides: x = 12 − 7 = 5. Check: 5 + 7 = 12."},
+{t:"Equivalent / Equations",q:"Which of these is an equation (not just an expression)?",a:"3x + 2 = 11",w:["3x + 2","5y − 9","4 + 9x"],e:"An equation has an equal sign and says two things are equal. The others are expressions because they have no equal sign."},
+/* ---------- PEMDAS ---------- */
+{t:"PEMDAS",q:"Evaluate: 3² + 12 ÷ 2",a:"15",w:["10.5","12","21"],expr:"3**2+12/2",e:"Exponent first: 3² = 9. Then divide: 12 ÷ 2 = 6. Last, add: 9 + 6 = 15."},
+{t:"PEMDAS",q:"Evaluate: 5 + 2³",a:"13",w:["343","11","21"],expr:"5+2**3",e:"Exponent before addition: 2³ = 8. Then 5 + 8 = 13."},
+{t:"PEMDAS",q:"Evaluate: 4² − 3 × 2",a:"10",w:["26","22","4"],expr:"4**2-3*2",e:"Exponent: 4² = 16. Multiply: 3 × 2 = 6. Subtract: 16 − 6 = 10."},
+{t:"PEMDAS",q:"Evaluate: (2 + 3)²",a:"25",w:["13","10","7"],expr:"(2+3)**2",e:"Parentheses first: 2 + 3 = 5. Then square it: 5² = 25. The exponent applies to the whole group."},
+{t:"PEMDAS",q:"Evaluate: 2 + 3²",a:"11",w:["25","8","10"],expr:"2+3**2",e:"No parentheses, so the exponent only touches the 3. 3² = 9, then 2 + 9 = 11."},
+{t:"PEMDAS",q:"Evaluate: 18 ÷ 3²",a:"2",w:["36","6","54"],expr:"18/3**2",e:"Exponent first: 3² = 9. Then 18 ÷ 9 = 2."},
+{t:"PEMDAS",q:"Evaluate: 20 − 2³ ÷ 4",a:"18",w:["3","15","22"],expr:"20-2**3/4",e:"Exponent: 2³ = 8. Divide: 8 ÷ 4 = 2. Subtract: 20 − 2 = 18."},
+{t:"PEMDAS",q:"Evaluate: 6 × 2²",a:"24",w:["144","14","16"],expr:"6*2**2",e:"Exponent first: 2² = 4. Then multiply: 6 × 4 = 24."},
+{t:"PEMDAS",q:"Evaluate: 3 × (4 + 2)² − 10",a:"98",w:["314","8","50"],expr:"3*(4+2)**2-10",e:"Parentheses: 4 + 2 = 6. Exponent: 6² = 36. Multiply: 3 × 36 = 108. Subtract: 108 − 10 = 98."},
+{t:"PEMDAS",q:"Evaluate: 8 + 4 × 3²",a:"44",w:["108","400","20"],expr:"8+4*3**2",e:"Exponent: 3² = 9. Multiply: 4 × 9 = 36. Add: 8 + 36 = 44."},
+{t:"PEMDAS",q:"Evaluate: 50 ÷ 5² + 3",a:"5",w:["13","103","2"],expr:"50/5**2+3",e:"Exponent: 5² = 25. Divide: 50 ÷ 25 = 2. Add: 2 + 3 = 5."},
+{t:"PEMDAS",q:"In the order of operations PEMDAS, what does the E stand for?",a:"Exponents",w:["Equations","Equals","Expressions"],e:"P = Parentheses, E = Exponents, M/D = Multiply and Divide (left to right), A/S = Add and Subtract (left to right)."}
 ];
 
-const TOTAL = Q.length;
+/* ---------- App logic ---------- */
 const $ = id => document.getElementById(id);
-let order, idx, score, missed, byTopic;
+const shuffle = arr => { const a = arr.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+let deck=[], idx=0, score=0, missed=[], tally={}, locked=false;
 
-function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function show(id){ ["start","quiz","result"].forEach(x=>$(x).classList.toggle("hidden",x!==id)); window.scrollTo(0,0); }
 
-function artHTML(spec){
-  if(!spec) return "";
-  const [kind,dims]=spec.split(":"); const [r,c]=dims.split("x").map(Number);
-  if(kind==="arr"){
-    return Array.from({length:r},()=>"🔵".repeat(c)).join("<br>");
-  }
-  return Array.from({length:r},()=>"("+"🍎".repeat(c)+")").join(" ");
+function begin(list){
+  deck = shuffle(list); idx=0; score=0; missed=[]; tally={};
+  show("quiz"); render();
 }
 
-function start(){
-  order = shuffle(Q.map((_,i)=>i));
-  idx=0; score=0; missed=[]; byTopic={};
-  $("start").classList.add("hidden"); $("result").classList.add("hidden"); $("quiz").classList.remove("hidden");
-  show();
-}
-
-function show(){
-  const q = Q[order[idx]];
-  $("qnum").textContent = "Question "+(idx+1)+" of "+TOTAL;
-  $("scoreNow").textContent = "⭐ "+score;
-  $("prog").style.width = (idx/TOTAL*100)+"%";
-  $("tag").textContent = q[0];
-  $("qtext").textContent = q[1];
-  const art = $("art");
-  if(q[5]){ art.innerHTML = artHTML(q[5]); art.classList.remove("hidden"); } else { art.classList.add("hidden"); }
-  const fb=$("fb"); fb.className="fb"; fb.textContent="";
-  $("nextWrap").style.display="none";
-  const box=$("opts"); box.innerHTML="";
-  shuffle([q[2],...q[3]]).forEach(text=>{
-    const b=document.createElement("button");
-    b.className="opt"; b.textContent=text;
-    b.onclick=()=>answer(b,text,q);
+function render(){
+  const q = deck[idx]; locked=false;
+  $("count").textContent = "Question " + (idx+1) + " of " + deck.length;
+  $("liveScore").textContent = "Score: " + score;
+  $("prog").style.width = (idx/deck.length*100) + "%";
+  $("topic").textContent = q.t;
+  $("qtext").textContent = q.q;
+  $("fb").innerHTML = ""; $("nextBtn").classList.add("hidden");
+  const box = $("opts"); box.innerHTML = "";
+  shuffle([q.a].concat(q.w)).forEach((txt,i)=>{
+    const b = document.createElement("button");
+    b.className="opt"; b.innerHTML='<span class="l">'+"ABCD"[i]+'</span><span></span>';
+    b.lastChild.textContent = txt;
+    b.onclick = ()=>pick(b,txt);
     box.appendChild(b);
   });
 }
 
-function answer(btn,text,q){
-  const ok = text===q[2];
-  const t=q[0]; byTopic[t]=byTopic[t]||{right:0,total:0}; byTopic[t].total++;
-  document.querySelectorAll(".opt").forEach(b=>{
+function pick(btn,txt){
+  if(locked) return; locked=true;
+  const q = deck[idx], right = txt===q.a;
+  tally[q.t] = tally[q.t] || {c:0,n:0}; tally[q.t].n++;
+  [...$("opts").children].forEach(b=>{
     b.disabled=true;
-    if(b.textContent===q[2]) b.classList.add("correct");
+    if(b.lastChild.textContent===q.a) b.classList.add("correct");
   });
-  const fb=$("fb");
-  if(ok){ score++; byTopic[t].right++; btn.classList.add("correct"); fb.className="fb good"; fb.textContent="🎉 Correct! "+q[4]; }
-  else { btn.classList.add("wrong"); fb.className="fb bad"; fb.textContent="Not quite. The answer is "+q[2]+". "+q[4]; missed.push({q:q[1],a:q[2],e:q[4],mine:text}); }
-  $("scoreNow").textContent="⭐ "+score;
-  $("nextBtn").textContent = idx===TOTAL-1 ? "See my score 🏆" : "Next ➜";
-  $("nextWrap").style.display="block";
+  if(right){ score++; tally[q.t].c++; btn.classList.add("correct"); }
+  else { btn.classList.add("wrong"); missed.push({q:q,you:txt}); }
+  $("liveScore").textContent = "Score: " + score;
+  const fb = document.createElement("div");
+  fb.className = "fb " + (right?"ok":"no");
+  fb.innerHTML = "<b>" + (right?"Correct!":"Not quite.") + "</b> ";
+  fb.appendChild(document.createTextNode((right?"":"The answer is " + q.a + ". ") + q.e));
+  $("fb").appendChild(fb);
+  const nb = $("nextBtn"); nb.textContent = idx===deck.length-1 ? "See results" : "Next question";
+  nb.classList.remove("hidden");
 }
 
-function next(){
-  idx++;
-  if(idx>=TOTAL) finish(); else show();
-}
+$("nextBtn").onclick = ()=>{ idx++; if(idx>=deck.length) finish(); else render(); };
 
 function finish(){
-  $("quiz").classList.add("hidden"); $("result").classList.remove("hidden");
-  $("prog").style.width="100%";
-  const pct=Math.round(score/TOTAL*100);
-  $("rscore").textContent=score+" / "+TOTAL+"  ("+pct+"%)";
-  let stars, title, msg;
-  if(pct>=90){stars="⭐⭐⭐⭐⭐";title="Math Superstar! 🏆";msg="Amazing work. You really know your facts!";}
-  else if(pct>=75){stars="⭐⭐⭐⭐";title="Great Job! 🎉";msg="You are doing really well. Check the ones you missed below.";}
-  else if(pct>=60){stars="⭐⭐⭐";title="Good Effort! 👍";msg="You are getting there. Practise the topics marked below and try again.";}
-  else {stars="⭐⭐";title="Keep Practising! 💪";msg="Every try makes you stronger. Read the explanations below and try again.";}
-  $("stars").textContent=stars; $("rtitle").textContent=title; $("rmsg").textContent=msg;
-  $("topicScores").innerHTML = Object.entries(byTopic).map(([k,v])=>"<li>"+k+": "+v.right+"/"+v.total+"</li>").join("");
-  const rv=$("review"); rv.innerHTML="";
+  show("result");
+  const n = deck.length, pct = Math.round(score/n*100);
+  $("finalScore").textContent = score + " / " + n + "  (" + pct + "%)";
+  $("msg").textContent = pct>=90 ? "Excellent work! You are ready for the test." :
+    pct>=75 ? "Good job! Review the questions you missed and you will be in great shape." :
+    pct>=50 ? "A decent start. Study the explanations below, then retry the missed questions." :
+    "Keep practicing. Read the reminders on the start screen and try again.";
+  let rows = "<tr><th>Topic</th><th>Correct</th><th>Result</th></tr>";
+  Object.keys(tally).forEach(k=>{
+    const t=tally[k], p=t.c/t.n, cls = p>=.8?"g":p>=.5?"o":"r";
+    rows += "<tr><td>"+k+"</td><td>"+t.c+" / "+t.n+"</td><td class='pill "+cls+"'>"+Math.round(p*100)+"%</td></tr>";
+  });
+  $("topicTable").innerHTML = rows;
+  const rb = $("reviewBox"); rb.innerHTML = "";
   if(missed.length){
-    rv.innerHTML="<h2>Questions to look at again 🔍</h2>"+missed.map(m=>
-      "<div class='item'><b>"+m.q+"</b>You chose: "+m.mine+" · Right answer: <b style='display:inline'>"+m.a+"</b><br>"+m.e+"</div>").join("");
-  } else { rv.innerHTML="<h2>Perfect score! Nothing to review. 🌈</h2>"; }
-  window.scrollTo({top:0,behavior:"smooth"});
+    const h = document.createElement("h2"); h.textContent = "Review your mistakes (" + missed.length + ")"; rb.appendChild(h);
+    missed.forEach(m=>{
+      const d = document.createElement("div"); d.className="rev";
+      const a = document.createElement("div"); a.className="qq"; a.textContent = m.q.q;
+      const b = document.createElement("div"); b.innerHTML = "Your answer: <span class='you'></span> &nbsp;|&nbsp; Correct: <span class='ans'></span>";
+      b.querySelector(".you").textContent = m.you; b.querySelector(".ans").textContent = m.q.a;
+      const c = document.createElement("div"); c.className="muted"; c.textContent = m.q.e;
+      d.append(a,b,c); rb.appendChild(d);
+    });
+  }
+  $("retryMissed").classList.toggle("hidden", !missed.length);
 }
 
-$("startBtn").onclick=start;
-$("nextBtn").onclick=next;
-$("againBtn").onclick=start;
+$("startBtn").onclick = ()=>begin(QUESTIONS);
+$("restart").onclick = ()=>begin(QUESTIONS);
+$("retryMissed").onclick = ()=>begin(missed.map(m=>m.q));
 </script>
 </body>
 </html>
