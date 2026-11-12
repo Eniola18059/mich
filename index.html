@@ -1,167 +1,246 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grade 4 Math Challenge</title>
+<title>Math Quiz Set 2 – Operations & Algebraic Thinking</title>
 <style>
-:root{--ink:#1f2540;--mut:#667;--acc:#4f46e5;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2;--line:#e3e6f2}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(160deg,#eef2ff,#fdf4ff);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:18px}
-.app{width:100%;max-width:680px}
-.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 6px 24px rgba(60,60,120,.12)}
-h1{margin:0 0 6px;font-size:1.8rem}
-.sub{color:var(--mut);margin:0 0 18px}
-.topics{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px}
-.topics span{background:#eef2ff;color:var(--acc);padding:4px 10px;border-radius:14px;font-size:.82rem;font-weight:600}
-button{font:inherit;cursor:pointer}
-.btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:1rem}
-.btn:hover{filter:brightness(1.08)}
-.btn.alt{background:#eef2ff;color:var(--acc)}
-.bar{height:10px;background:#e8eaf6;border-radius:6px;overflow:hidden;margin-bottom:6px}
-.bar div{height:100%;background:linear-gradient(90deg,#4f46e5,#a855f7);width:0;transition:width .3s}
-.meta{display:flex;justify-content:space-between;color:var(--mut);font-size:.88rem;margin-bottom:14px}
-.q{font-size:1.15rem;font-weight:600;margin:6px 0 14px;line-height:1.5}
-.vis{margin:0 0 14px;padding:12px;background:#f7f8ff;border-radius:12px;overflow-x:auto}
-.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0;font-size:1rem;color:var(--ink)}
-.opt:hover:not([disabled]){border-color:var(--acc);background:#f5f6ff}
-.opt .l{display:inline-block;width:26px;height:26px;border-radius:50%;background:#eef2ff;color:var(--acc);text-align:center;line-height:26px;font-weight:700;margin-right:10px;font-size:.85rem}
-.opt.right{background:var(--okbg);border-color:var(--ok)}
-.opt.wrong{background:var(--badbg);border-color:var(--bad)}
-.fb{margin-top:14px;padding:14px;border-radius:12px;font-size:.98rem}
-.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
-.fb b.h{display:block;margin-bottom:4px}
-.strip{display:flex;border:2px solid #333;height:36px;max-width:380px;background:#fff}
-.strip div{display:flex;align-items:center;justify-content:center;border-right:2px solid #333;font-weight:700}
-.strip div:last-child{border:0}
-.s24{flex:4;background:#cfe0ff}.sd{flex:1;background:#ffe9b8}
-.brace{max-width:380px;text-align:center;border-top:2px solid #333;font-weight:700;font-size:.85rem;padding-top:2px}
-.dots{display:flex;flex-wrap:wrap;gap:8px}
-.g{border:2px solid var(--acc);border-radius:8px;padding:3px 6px;font-size:.7rem;letter-spacing:1px;line-height:1.1;width:62px;text-align:center;background:#fff}
-.g.r{border:2px dashed var(--ok);background:var(--okbg)}
-.score{font-size:3rem;font-weight:800;color:var(--acc);margin:6px 0}
-.rev{margin-top:14px;text-align:left}
-.rev div{padding:8px 10px;border-bottom:1px solid var(--line);font-size:.92rem}
-.rev .x{color:var(--bad);font-weight:700}.rev .v{color:var(--ok);font-weight:700}
-.center{text-align:center}
+  :root{
+    --bg1:#fff4d6; --bg2:#d9f0ff; --ink:#1f2a44; --card:#ffffff;
+    --blue:#3b82f6; --green:#22a559; --red:#e5484d; --orange:#ff9f1c; --purple:#7c5cff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;
+    color:var(--ink); background:linear-gradient(160deg,var(--bg1),var(--bg2)); padding:16px;
+  }
+  .wrap{max-width:720px; margin:0 auto}
+  .card{background:var(--card); border-radius:24px; padding:26px; box-shadow:0 8px 28px rgba(31,42,68,.12)}
+  h1{margin:0 0 6px; font-size:2rem; line-height:1.15}
+  h2{margin:0 0 14px; font-size:1.45rem; line-height:1.35}
+  .sub{color:#4b587a; margin:0 0 18px}
+  .emoji-big{font-size:3.2rem}
+  .topics{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px; padding:0; list-style:none}
+  .topics li{background:#eef3ff; border-radius:999px; padding:7px 14px; font-weight:700; font-size:.92rem}
+  button{font:inherit; cursor:pointer; border:none}
+  .btn{background:var(--blue); color:#fff; font-weight:800; font-size:1.1rem; padding:14px 28px; border-radius:16px; box-shadow:0 4px 0 #2563c9}
+  .btn:active{transform:translateY(2px); box-shadow:0 2px 0 #2563c9}
+  .btn.green{background:var(--green); box-shadow:0 4px 0 #17803f}
+  .btn.orange{background:var(--orange); box-shadow:0 4px 0 #cc7a00}
+  .top{display:flex; justify-content:space-between; align-items:center; font-weight:800; margin-bottom:10px}
+  .bar{height:14px; background:#e6ebf7; border-radius:999px; overflow:hidden; margin-bottom:20px}
+  .bar>div{height:100%; width:0; background:linear-gradient(90deg,var(--purple),var(--blue)); border-radius:999px; transition:width .35s}
+  .tag{display:inline-block; background:#fff1d6; color:#a35a00; font-weight:800; font-size:.8rem; padding:4px 12px; border-radius:999px; margin-bottom:12px}
+  .art{font-size:1.7rem; line-height:1.5; letter-spacing:4px; margin:0 0 14px; text-align:center; background:#f6f9ff; border-radius:16px; padding:10px}
+  .opts{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+  @media(max-width:520px){.opts{grid-template-columns:1fr} h1{font-size:1.65rem}}
+  .opt{background:#f4f7ff; border:3px solid #d6e0fb; border-radius:16px; padding:16px; font-weight:800; font-size:1.15rem; color:var(--ink); text-align:center}
+  .opt:hover:not(:disabled){border-color:var(--blue); background:#eaf1ff}
+  .opt.correct{background:#dcf7e6; border-color:var(--green)}
+  .opt.wrong{background:#ffe3e4; border-color:var(--red)}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:18px; padding:14px 16px; border-radius:16px; font-weight:700; display:none}
+  .fb.good{display:block; background:#dcf7e6; color:#0f5c2c}
+  .fb.bad{display:block; background:#ffe9d6; color:#7a3b00}
+  .next{margin-top:18px; text-align:right; display:none}
+  .score-big{font-size:3.4rem; font-weight:900; color:var(--purple); margin:6px 0}
+  .stars{font-size:2.2rem; margin-bottom:8px}
+  .review{margin-top:20px; text-align:left}
+  .review .item{border-left:6px solid var(--red); background:#fff5f5; padding:10px 14px; border-radius:10px; margin-bottom:10px; font-size:.95rem}
+  .review .item b{display:block; margin-bottom:4px}
+  .center{text-align:center}
+  .hidden{display:none}
 </style>
 </head>
 <body>
-<div class="app"><div class="card" id="root"></div></div>
-<script>
-function strip(a,n,d,total){var h='<div class="strip"><div class="s24">'+a+'</div>';for(var i=0;i<n;i++)h+='<div class="sd">'+d+'</div>';return h+'</div><div class="brace">'+total+'</div>';}
-function dots(groups,size,left){var h='<div class="dots">';for(var i=0;i<groups;i++)h+='<div class="g">'+'●'.repeat(size)+'</div>';if(left)h+='<div class="g r">'+'●'.repeat(left)+'</div>';return h+'</div>';}
+<div class="wrap">
 
-// First option in each list is the correct one; options are shuffled when shown.
-var Q=[
-{q:"Leo was given $48. He saved half of it and will spend the rest over 4 days, the same amount each day. The strip diagram shows the money. Which equation helps find d, the dollars he spends each day?",
- vis:strip('24 saved',4,'d','48'),
- o:["4 × d = 24","4 × d = 48","d ÷ 4 = 24","24 + 4 = d"],
- e:"Half of 48 is 24 saved, so 24 is left to spend. Four equal days of d make 24, so 4 × d = 24. Then d = 24 ÷ 4 = $6."},
-{q:"Which expression has a quotient of about 7?",
- o:["29 ÷ 4","33 ÷ 3","40 ÷ 8","18 ÷ 2"],
- e:"29 ÷ 4 is about 7.25. Check: 33 ÷ 3 = 11, 40 ÷ 8 = 5, and 18 ÷ 2 = 9."},
-{q:"Which expression has a quotient of about 8?",
- o:["65 ÷ 8","72 ÷ 6","35 ÷ 7","54 ÷ 9"],
- e:"65 ÷ 8 is a little over 8 (8 × 8 = 64). The others give 12, 5, and 6."},
-{q:"In which number is the value of the digit in the tens place 10 times the value of the digit in the ones place?",
- o:["322","458","117","640"],
- e:"In 322 the tens digit is worth 20 and the ones digit is worth 2. Since 10 × 2 = 20, it works. In 458 the values are 50 and 8, and 10 × 8 = 80, not 50."},
-{q:"Which number has a tens digit worth 10 times the value of its ones digit?",
- o:["488","848","884","808"],
- e:"In 488 the tens digit is worth 80 and the ones digit is worth 8. 10 × 8 = 80, so it fits. In 884 the values are 80 and 4, but 10 × 4 = 40."},
-{q:"Each of 15 pumpkins was cut into 6 pieces. The pieces were shared equally among 9 baskets. How many pieces were in each basket?",
- o:["10","90","21","12"],
- e:"15 × 6 = 90 pieces in all. Then 90 ÷ 9 = 10 pieces in each basket. (90 is the total before sharing.)"},
-{q:"Kayla walks 14 kilometers each day during October. October has 31 days. How many kilometers does she walk in all?",
- o:["434","424","444","45"],
- e:"14 × 31 = (14 × 30) + (14 × 1) = 420 + 14 = 434 kilometers."},
-{q:"Dev had one $20 bill, one $5 bill, three quarters, and two dimes. He bought a book for $12.40. How much money did he have left?",
- o:["$13.55","$13.45","$14.55","$25.95"],
- e:"Dev's money: 20 + 5 + 0.75 + 0.20 = $25.95. After the book: 25.95 − 12.40 = $13.55. ($25.95 is what he had before buying the book.)"},
-{q:"Maya had two $10 bills, one $1 bill, four quarters, and one nickel. She spent $9.85 on lunch. How much money does she have now?",
- o:["$12.20","$12.80","$11.20","$22.05"],
- e:"Four quarters make $1.00, so her money is 20 + 1 + 1.00 + 0.05 = $22.05. Then 22.05 − 9.85 = $12.20."},
-{q:"A librarian put 756 books on 6 shelves, the same number on each shelf. How many books were on each shelf?",
- o:["126","106","136","156"],
- e:"756 ÷ 6 = 126. Check: 126 × 6 = 756."},
-{q:"How is 72,405,863 written in expanded form?",
- o:["70,000,000 + 2,000,000 + 400,000 + 5,000 + 800 + 60 + 3",
-    "70,000,000 + 2,000,000 + 40,000 + 5,000 + 800 + 60 + 3",
-    "7,000,000 + 200,000 + 400,000 + 5,000 + 800 + 60 + 3",
-    "70,000,000 + 2,000,000 + 400,000 + 500 + 800 + 60 + 3"],
- e:"7 is in the ten-millions place, 2 in millions, 4 in hundred-thousands, 0 in ten-thousands (so skip it), 5 in thousands, 8 in hundreds, 6 in tens, 3 in ones."},
-{q:"How is 46,150,297 written in expanded form?",
- o:["40,000,000 + 6,000,000 + 100,000 + 50,000 + 200 + 90 + 7",
-    "40,000,000 + 6,000,000 + 10,000 + 5,000 + 200 + 90 + 7",
-    "4,000,000 + 600,000 + 100,000 + 50,000 + 200 + 90 + 7",
-    "40,000,000 + 6,000,000 + 100,000 + 50,000 + 2,000 + 90 + 7"],
- e:"4 = 40,000,000; 6 = 6,000,000; 1 = 100,000; 5 = 50,000; 0 thousands (skip); 2 = 200; 9 = 90; 7 = 7."},
-{q:"In the number 38,214,605, what is the value of the digit 8?",
- o:["8,000,000","80,000,000","800,000","8,000"],
- e:"The 8 is in the millions place (3 is in the ten-millions place). So its value is 8,000,000."},
-{q:"The model shows 53 counters. They are put into groups of 8, with some left over. Which equation does the model show?",
- vis:dots(6,8,5),
- o:["53 ÷ 8 = 6 r 5","53 ÷ 8 = 6 r 13","53 ÷ 8 = 7 r 5","53 ÷ 8 = 5 r 3"],
- e:"There are 6 full groups of 8 (48 counters) and 5 left over: 48 + 5 = 53. A remainder must be smaller than 8, so 6 r 13 cannot be right."},
-{q:"What is 61 ÷ 7?",
- o:["8 r 5","8 r 4","9 r 2","7 r 12"],
- e:"7 × 8 = 56, and 61 − 56 = 5. So 61 ÷ 7 = 8 r 5. (7 × 9 = 63 is too big.)"},
-{q:"What is 6.45 − 3.9?",
- o:["2.55","2.65","3.36","2.06"],
- e:"Line up the decimal points and write 3.9 as 3.90. Then 6.45 − 3.90 = 2.55."},
-{q:"Ben's tablet battery lasts 8.2 hours. Cara's tablet battery lasts 2.75 hours. What is the difference in hours?",
- o:["5.45","6.45","5.55","6.55"],
- e:"Write 8.2 as 8.20. Then 8.20 − 2.75 = 5.45 hours."},
-{q:"Sara was given $36. She saved half and will spend the rest over 3 days, the same amount each day. How much does she spend each day?",
- o:["$6","$12","$18","$9"],
- e:"Half of 36 is 18, so 18 is left to spend. 18 ÷ 3 = $6 per day. ($12 comes from dividing all 36 by 3.)"},
-{q:"Which is the best estimate for 412 ÷ 6?",
- o:["70","700","60","80"],
- e:"412 is close to 420, and 420 ÷ 6 = 70. 6 × 60 = 360 is too low, and 6 × 80 = 480 is too high."},
-{q:"A school ordered 24 boxes of pencils with 36 pencils in each box. The pencils were shared equally among 9 classrooms. How many pencils did each classroom get?",
- o:["96","86","106","864"],
- e:"24 × 36 = 864 pencils in all. Then 864 ÷ 9 = 96 pencils per classroom."}
+  <div id="start" class="card center">
+    <div class="emoji-big">🧮🌟</div>
+    <h1>Math Quiz · Set 2</h1>
+    <p class="sub"><b>Part 1: Operations & Algebraic Thinking</b><br>50 brand-new questions · Pick the best answer · No timer, take your time!</p>
+    <ul class="topics" style="justify-content:center">
+      <li>➕ Word problems within 100</li>
+      <li>⚡ Facts within 20</li>
+      <li>🔟 Sums of two digits</li>
+      <li>⚖️ Odd &amp; even</li>
+      <li>🔲 Equal groups &amp; arrays</li>
+    </ul>
+    <button class="btn" id="startBtn">Let's Start! 🚀</button>
+  </div>
+
+  <div id="quiz" class="card hidden">
+    <div class="top"><span id="qnum">Question 1 of 50</span><span id="scoreNow">⭐ 0</span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <span class="tag" id="tag"></span>
+    <h2 id="qtext"></h2>
+    <div class="art hidden" id="art"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div class="next" id="nextWrap"><button class="btn green" id="nextBtn">Next ➜</button></div>
+  </div>
+
+  <div id="result" class="card center hidden">
+    <div class="stars" id="stars"></div>
+    <h1 id="rtitle"></h1>
+    <div class="score-big" id="rscore"></div>
+    <p class="sub" id="rmsg"></p>
+    <div id="topicScores" class="topics" style="justify-content:center"></div>
+    <button class="btn orange" id="againBtn">Try Again 🔁</button>
+    <div class="review" id="review"></div>
+  </div>
+
+</div>
+
+<script>
+// Each question: [topic, question, correctAnswer, [three wrong answers], explanation, optional picture]
+const Q = [
+// ---------- Word problems within 100 ----------
+["Word Problems","Nora has 52 beads. She buys 29 more beads. How many beads does she have now?","81",["71","83","23"],"52 + 29 = 81. Add the tens (50 + 20 = 70), then the ones (2 + 9 = 11), then 70 + 11 = 81."],
+["Word Problems","A farmer had 91 eggs. He sold 56 eggs. How many eggs are left?","35",["45","147","25"],"91 − 56 = 35. Count up from 56: 4 to reach 60, 30 more to reach 90, and 1 more to reach 91. That is 4 + 30 + 1 = 35."],
+["Word Problems","Kai scored 37 points in game one and 48 points in game two. How many points did he score in all?","85",["75","95","11"],"37 + 48 = 85. Tens: 30 + 40 = 70. Ones: 7 + 8 = 15. Then 70 + 15 = 85."],
+["Word Problems","There are 63 children at the park. 27 children go home. How many children are still at the park?","36",["46","90","34"],"63 − 27 = 36. Take away 20 to get 43, then take away 7 more to get 36."],
+["Word Problems","A library had some books. Then 34 new books arrived. Now the library has 90 books. How many books were there at first?","56",["124","66","46"],"Start + 34 = 90, so 90 − 34 = 56."],
+["Word Problems","Ella had some stickers. She gave 26 stickers away. Now she has 38 stickers. How many stickers did Ella start with?","64",["12","54","74"],"Start − 26 = 38, so 38 + 26 = 64. She gave some away, so she had more at the start."],
+["Word Problems","Omar has 47 cards. Ravi has 15 more cards than Omar. How many cards does Ravi have?","62",["32","52","61"],"\"15 more than\" means add: 47 + 15 = 62."],
+["Word Problems","Team Red has 74 players. Team Blue has 19 fewer players than Team Red. How many players does Team Blue have?","55",["93","65","45"],"\"19 fewer than\" means subtract: 74 − 19 = 55. Take away 20, then add 1 back."],
+["Word Problems","A store sold 18 hats on Monday, 25 hats on Tuesday, and 30 hats on Wednesday. How many hats did it sell in all?","73",["63","83","43"],"18 + 25 = 43, then 43 + 30 = 73."],
+["Word Problems","Mom had $72. She spent $38 on food. How much money does Mom have left?","$34",["$44","$110","$36"],"72 − 38 = 34. Take away 40 to get 32, then add 2 back."],
+["Word Problems","Max had 40 marbles. He won 17 more marbles. Then he gave 9 marbles to his sister. How many marbles does Max have now?","48",["57","66","49"],"First: 40 + 17 = 57. Then: 57 − 9 = 48. This problem has two steps."],
+["Word Problems","Tia had 45 pencils. She bought 30 more pencils. Which number sentence shows how many pencils Tia has now?","45 + 30 = 75",["45 − 30 = 15","45 + 20 = 65","45 + 35 = 80"],"Bought more means add. 45 + 30 = 75 (4 tens + 3 tens = 7 tens, and the 5 ones stay)."],
+["Word Problems","What number makes this true? 29 + ___ = 72","43",["101","53","57"],"Think 72 − 29 = 43. Check: 29 + 43 = 72."],
+["Word Problems","A hall has 86 seats. 49 seats are filled. How many seats are empty?","37",["47","135","43"],"86 − 49 = 37. Take away 50 to get 36, then add 1 back."],
+
+// ---------- Facts within 20 ----------
+["Facts within 20","8 + 6 = ?","14",["13","15","12"],"Make a ten: 8 + 2 = 10, then add the other 4 to get 14."],
+["Facts within 20","14 − 6 = ?","8",["7","9","20"],"Think 6 + 8 = 14, so 14 − 6 = 8."],
+["Facts within 20","17 − 8 = ?","9",["8","10","25"],"Think 8 + 9 = 17, so 17 − 8 = 9."],
+["Facts within 20","9 + 8 = ?","17",["16","18","15"],"Make a ten: 9 + 1 = 10, then add the other 7 to get 17."],
+["Facts within 20","11 − 4 = ?","7",["6","8","15"],"Subtract to 10 first: 11 − 1 = 10, then 10 − 3 = 7."],
+["Facts within 20","Use doubles plus one. 7 + 8 = ?","15",["14","16","13"],"7 + 7 = 14, and one more makes 15."],
+["Facts within 20","Making a ten helps us add. Which number sentence has the same total as 8 + 5?","10 + 3",["10 + 5","8 + 3","10 + 2"],"Move 2 from the 5 to the 8: 8 + 5 = 10 + 3 = 13."],
+["Facts within 20","12 − 8 = ?","4",["3","5","20"],"Think 8 + 4 = 12, so 12 − 8 = 4."],
+["Facts within 20","Which fact belongs to the same fact family as 9 + 5 = 14?","14 − 5 = 9",["14 − 6 = 8","9 + 6 = 15","14 + 5 = 19"],"A fact family uses the same three numbers: 9, 5 and 14."],
+["Facts within 20","Which number sentence is a doubles fact with a total of 16?","8 + 8 = 16",["9 + 7 = 16","10 + 6 = 16","8 + 9 = 17"],"A doubles fact adds the same number twice. 8 + 8 = 16."],
+
+// ---------- Sums of two one-digit numbers ----------
+["Addition Facts","7 + 6 = ?","13",["12","14","11"],"7 + 3 = 10, then add 3 more to make 13."],
+["Addition Facts","9 + 5 = ?","14",["13","15","4"],"Take 1 from the 5 to make 9 into 10. Then 10 + 4 = 14."],
+["Addition Facts","9 + 7 = ?","16",["15","17","14"],"9 + 1 = 10, then add the other 6 to make 16."],
+["Addition Facts","6 + 6 = ?","12",["11","13","14"],"Doubles: 6 + 6 = 12."],
+["Addition Facts","4 + 7 = ?","11",["10","12","13"],"7 + 3 = 10, then add the other 1 to make 11."],
+["Addition Facts","3 + 9 = ?","12",["11","13","6"],"Take 1 from the 3 to make 9 into 10. Then 10 + 2 = 12."],
+["Addition Facts","7 + ___ = 16. What number is missing?","9",["8","10","23"],"16 − 7 = 9. Check: 7 + 9 = 16."],
+["Addition Facts","___ + 8 = 14. What number is missing?","6",["5","7","22"],"14 − 8 = 6. Check: 6 + 8 = 14."],
+
+// ---------- Odd and even ----------
+["Odd & Even","Which of these numbers is odd?","57",["52","60","78"],"57 ends in 7, so when you make pairs there is 1 left over."],
+["Odd & Even","Which of these numbers is even?","36",["29","51","73"],"36 can be split into two equal groups (18 and 18), and it ends in 6."],
+["Odd & Even","Ruby has 16 balloons. She shares them equally between 2 friends. What does this show?","16 is even, because each friend gets 8 with none left over",["16 is odd, because each friend gets 8","16 is even, because 1 balloon is left over","16 is odd, because 1 balloon is left over"],"Each friend gets 8 and no balloons are left. When nothing is left over, the number is even."],
+["Odd & Even","Which number sentence shows that 14 is an even number?","7 + 7 = 14",["7 + 8 = 15","6 + 7 = 13","4 + 4 = 8"],"An even number is a double. 7 + 7 = 14."],
+["Odd & Even","Which number sentence shows that 9 is odd, with 1 left over after making groups of 2?","2 + 2 + 2 + 2 + 1 = 9",["2 + 2 + 2 + 2 = 8","2 + 2 + 2 + 2 + 2 = 10","3 + 3 + 3 = 9"],"Four groups of 2 make 8, and there is 1 left over. So 9 is odd."],
+["Odd & Even","Which list has only odd numbers?","31, 45, 59, 63",["31, 45, 58, 63","32, 45, 59, 63","31, 44, 59, 62"],"Every number in 31, 45, 59, 63 ends in 1, 5, 9 or 3."],
+["Odd & Even","Which list has only even numbers?","22, 46, 70, 88",["22, 46, 71, 88","24, 36, 50, 99","20, 42, 65, 80"],"Every number in 22, 46, 70, 88 ends in 2, 6, 0 or 8."],
+["Odd & Even","What is the next odd number after 49?","51",["50","52","53"],"After 49 comes 50 (even), then 51 (odd)."],
+["Odd & Even","I am an even number. I am more than 30 and less than 35. My ones digit is greater than 3. Which number am I?","34",["32","33","31"],"The numbers between 30 and 35 are 31, 32, 33 and 34. Only 34 is even with a ones digit greater than 3."],
+
+// ---------- Equal groups and arrays ----------
+["Equal Groups & Arrays","An array has 3 rows with 5 in each row. How many are there in all?","15",["8","12","18"],"5 + 5 + 5 = 15. Add the rows, do not add 3 + 5.","arr:3x5"],
+["Equal Groups & Arrays","What is 10 + 10 + 10?","30",["20","40","3"],"Count by 10s: 10, 20, 30."],
+["Equal Groups & Arrays","An array has 4 rows with 4 in each row. How many are there in all?","16",["8","12","20"],"4 + 4 + 4 + 4 = 16.","arr:4x4"],
+["Equal Groups & Arrays","There are 5 baskets. Each basket has 4 apples. How many apples are there altogether?","20",["9","16","25"],"4 + 4 + 4 + 4 + 4 = 20.","grp:5x4"],
+["Equal Groups & Arrays","Which addition sentence matches 2 equal groups of 9?","9 + 9 = 18",["2 + 9 = 11","9 + 9 + 9 = 27","2 + 2 = 4"],"2 groups of 9 means we add 9 two times: 9 + 9 = 18."],
+["Equal Groups & Arrays","An array has 4 rows with 2 in each row. How many are there in all?","8",["6","10","12"],"2 + 2 + 2 + 2 = 8.","arr:4x2"],
+["Equal Groups & Arrays","Which addition sentence does NOT show equal groups?","6 + 6 + 6 + 3",["4 + 4 + 4","7 + 7","9 + 9 + 9 + 9"],"The numbers 6, 6, 6 and 3 are not all the same size, so they are not equal groups."],
+["Equal Groups & Arrays","An array has 3 rows. Each row has 6 dots. Which sentence adds up the rows?","6 + 6 + 6 = 18",["3 + 6 = 9","6 + 6 = 12","6 + 6 + 6 + 6 = 24"],"There are 3 rows, and each row has 6, so add 6 three times.","arr:3x6"],
+["Equal Groups & Arrays","There are 6 bags. Each bag has 2 apples. How many apples are there in all?","12",["8","10","14"],"2 + 2 + 2 + 2 + 2 + 2 = 12.","grp:6x2"]
 ];
 
-var root=document.getElementById('root'),i=0,score=0,log=[];
-function shuf(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t;}return a;}
+const TOTAL = Q.length;
+const $ = id => document.getElementById(id);
+let order, idx, score, missed, byTopic;
 
-function start(){i=0;score=0;log=[];
- root.innerHTML='<h1>Grade 4 Math Challenge</h1><p class="sub">20 questions. Take your time and show your thinking on paper first.</p>'+
- '<div class="topics"><span>Strip diagrams</span><span>Division</span><span>Place value</span><span>Expanded form</span><span>Money</span><span>Remainders</span><span>Decimals</span></div>'+
- '<button class="btn" onclick="show()">Start quiz</button>';}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function artHTML(spec){
+  if(!spec) return "";
+  const [kind,dims]=spec.split(":"); const [r,c]=dims.split("x").map(Number);
+  if(kind==="arr"){
+    return Array.from({length:r},()=>"🔵".repeat(c)).join("<br>");
+  }
+  return Array.from({length:r},()=>"("+"🍎".repeat(c)+")").join(" ");
+}
+
+function start(){
+  order = shuffle(Q.map((_,i)=>i));
+  idx=0; score=0; missed=[]; byTopic={};
+  $("start").classList.add("hidden"); $("result").classList.add("hidden"); $("quiz").classList.remove("hidden");
+  show();
+}
 
 function show(){
- var q=Q[i],opts=shuf(q.o),L=['A','B','C','D'];
- var h='<div class="bar"><div style="width:'+(i/Q.length*100)+'%"></div></div><div class="meta"><span>Question '+(i+1)+' of '+Q.length+'</span><span>Score: '+score+'</span></div>';
- h+='<div class="q">'+q.q+'</div>'+(q.vis?'<div class="vis">'+q.vis+'</div>':'');
- opts.forEach(function(o,k){h+='<button class="opt" data-v="'+k+'"><span class="l">'+L[k]+'</span>'+o+'</button>';});
- h+='<div id="fb"></div>';
- root.innerHTML=h;
- var bs=root.querySelectorAll('.opt');
- bs.forEach(function(b,k){b.onclick=function(){pick(b,opts[k],bs,q)};});
+  const q = Q[order[idx]];
+  $("qnum").textContent = "Question "+(idx+1)+" of "+TOTAL;
+  $("scoreNow").textContent = "⭐ "+score;
+  $("prog").style.width = (idx/TOTAL*100)+"%";
+  $("tag").textContent = q[0];
+  $("qtext").textContent = q[1];
+  const art = $("art");
+  if(q[5]){ art.innerHTML = artHTML(q[5]); art.classList.remove("hidden"); } else { art.classList.add("hidden"); }
+  const fb=$("fb"); fb.className="fb"; fb.textContent="";
+  $("nextWrap").style.display="none";
+  const box=$("opts"); box.innerHTML="";
+  shuffle([q[2],...q[3]]).forEach(text=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.textContent=text;
+    b.onclick=()=>answer(b,text,q);
+    box.appendChild(b);
+  });
 }
 
-function pick(b,val,bs,q){
- var ok=val===q.o[0];
- bs.forEach(function(x){x.disabled=true;if(x.textContent.slice(1)===q.o[0])x.classList.add('right');});
- if(!ok)b.classList.add('wrong');
- if(ok)score++;
- log.push({n:i+1,ok:ok,mine:val,right:q.o[0]});
- var last=i===Q.length-1;
- document.getElementById('fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><b class="h">'+(ok?'Correct!':'Not quite.')+'</b>'+q.e+'</div><p><button class="btn" id="nx">'+(last?'See my score':'Next question')+'</button></p>';
- document.getElementById('nx').onclick=function(){i++;last?end():show();};
+function answer(btn,text,q){
+  const ok = text===q[2];
+  const t=q[0]; byTopic[t]=byTopic[t]||{right:0,total:0}; byTopic[t].total++;
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===q[2]) b.classList.add("correct");
+  });
+  const fb=$("fb");
+  if(ok){ score++; byTopic[t].right++; btn.classList.add("correct"); fb.className="fb good"; fb.textContent="🎉 Correct! "+q[4]; }
+  else { btn.classList.add("wrong"); fb.className="fb bad"; fb.textContent="Not quite. The answer is "+q[2]+". "+q[4]; missed.push({q:q[1],a:q[2],e:q[4],mine:text}); }
+  $("scoreNow").textContent="⭐ "+score;
+  $("nextBtn").textContent = idx===TOTAL-1 ? "See my score 🏆" : "Next ➜";
+  $("nextWrap").style.display="block";
 }
 
-function end(){
- var pct=Math.round(score/Q.length*100);
- var msg=pct>=90?'Excellent work!':pct>=70?'Great job!':pct>=50?'Good effort. Review the explanations and try again.':'Keep practising. Try the quiz again after reviewing.';
- var h='<div class="center"><h1>Quiz complete</h1><div class="score">'+score+' / '+Q.length+'</div><p class="sub">'+pct+'%. '+msg+'</p><button class="btn" onclick="start()">Try again</button></div><div class="rev"><b>Review</b>';
- log.forEach(function(r){h+='<div>'+(r.ok?'<span class="v">✓</span>':'<span class="x">✗</span>')+' Q'+r.n+': '+(r.ok?r.right:'you chose '+r.mine+'. Correct: '+r.right)+'</div>';});
- root.innerHTML=h+'</div>';
+function next(){
+  idx++;
+  if(idx>=TOTAL) finish(); else show();
 }
-start();
+
+function finish(){
+  $("quiz").classList.add("hidden"); $("result").classList.remove("hidden");
+  $("prog").style.width="100%";
+  const pct=Math.round(score/TOTAL*100);
+  $("rscore").textContent=score+" / "+TOTAL+"  ("+pct+"%)";
+  let stars, title, msg;
+  if(pct>=90){stars="⭐⭐⭐⭐⭐";title="Math Superstar! 🏆";msg="Amazing work. You really know your facts!";}
+  else if(pct>=75){stars="⭐⭐⭐⭐";title="Great Job! 🎉";msg="You are doing really well. Check the ones you missed below.";}
+  else if(pct>=60){stars="⭐⭐⭐";title="Good Effort! 👍";msg="You are getting there. Practise the topics marked below and try again.";}
+  else {stars="⭐⭐";title="Keep Practising! 💪";msg="Every try makes you stronger. Read the explanations below and try again.";}
+  $("stars").textContent=stars; $("rtitle").textContent=title; $("rmsg").textContent=msg;
+  $("topicScores").innerHTML = Object.entries(byTopic).map(([k,v])=>"<li>"+k+": "+v.right+"/"+v.total+"</li>").join("");
+  const rv=$("review"); rv.innerHTML="";
+  if(missed.length){
+    rv.innerHTML="<h2>Questions to look at again 🔍</h2>"+missed.map(m=>
+      "<div class='item'><b>"+m.q+"</b>You chose: "+m.mine+" · Right answer: <b style='display:inline'>"+m.a+"</b><br>"+m.e+"</div>").join("");
+  } else { rv.innerHTML="<h2>Perfect score! Nothing to review. 🌈</h2>"; }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("startBtn").onclick=start;
+$("nextBtn").onclick=next;
+$("againBtn").onclick=start;
 </script>
 </body>
 </html>
