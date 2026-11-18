@@ -3,123 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Find x! Grade 6 Equations Quiz</title>
+<title>Zion's Number Adventure</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:linear-gradient(135deg,#e8f0ff,#f3e8ff);min-height:100vh;display:flex;justify-content:center;padding:20px;color:#1f2a44}
-.card{background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(60,60,120,.15);max-width:640px;width:100%;padding:28px;align-self:flex-start}
-h1{margin:0 0 6px;font-size:1.7rem;color:#4338ca}
-.sub{color:#5b6585;margin-bottom:18px}
-.bar{height:10px;background:#e5e7f5;border-radius:6px;overflow:hidden;margin:10px 0 4px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,#6366f1,#a855f7);width:0;transition:width .3s}
-.meta{display:flex;justify-content:space-between;font-size:.9rem;color:#5b6585}
-.eq{font-size:2rem;font-weight:700;text-align:center;margin:24px 0 8px;color:#111a3a;letter-spacing:.5px}
-.eq.word{font-size:1.25rem;line-height:1.5}
-.ask{text-align:center;color:#5b6585;margin-bottom:18px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-button.opt{font-size:1.25rem;padding:16px;border:2px solid #d6d9f0;background:#f8f9ff;border-radius:14px;cursor:pointer;font-weight:600;color:#1f2a44}
-button.opt:hover:not(:disabled){border-color:#6366f1;background:#eef0ff}
-button.opt.right{background:#dcfce7;border-color:#22c55e}
-button.opt.wrong{background:#fee2e2;border-color:#ef4444}
-.fb{margin-top:18px;padding:14px;border-radius:12px;background:#f1f3ff;display:none;line-height:1.6}
-.fb b{color:#4338ca}
-.go{margin-top:16px;width:100%;padding:14px;font-size:1.05rem;font-weight:700;color:#fff;background:#4f46e5;border:0;border-radius:12px;cursor:pointer;display:none}
-.go.start{display:block}
-.score{font-size:3rem;text-align:center;font-weight:800;color:#4338ca;margin:12px 0}
-.msg{text-align:center;font-size:1.1rem;margin-bottom:16px}
-@media(max-width:480px){.opts{grid-template-columns:1fr}.eq{font-size:1.6rem}}
+  :root{
+    --sky:#dff3ff; --ink:#23305a; --blue:#3b82f6; --green:#22c55e; --red:#ef4444;
+    --yellow:#ffd23f; --orange:#ff9f43; --purple:#8b5cf6; --pink:#ff6fa5; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; color:var(--ink);
+    font-family:"Trebuchet MS","Comic Sans MS","Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(180deg,#bfe9ff 0%,#e9f8ff 55%,#fff7d6 100%);
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:16px 14px 40px}
+  header{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px}
+  .logo{font-size:1.25rem; font-weight:800}
+  .score-pill{background:var(--yellow); border-radius:999px; padding:6px 14px; font-weight:800; box-shadow:0 3px 0 #e0b100}
+  .card{background:var(--card); border-radius:26px; padding:22px 18px; box-shadow:0 8px 0 rgba(35,48,90,.12)}
+  .hidden{display:none !important}
+
+  /* start screen */
+  .hero{text-align:center}
+  .hero .big{font-size:4.2rem; line-height:1}
+  .hero h1{margin:8px 0 6px; font-size:2rem}
+  .hero p{margin:6px 0 14px; font-size:1.1rem}
+  .chapters{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0 20px; text-align:left}
+  .chap{border-radius:16px; padding:10px 12px; font-weight:700; font-size:.95rem; color:#fff}
+  .chap small{display:block; font-weight:600; opacity:.95}
+  .c1{background:var(--blue)} .c2{background:var(--purple)} .c3{background:var(--orange)} .c4{background:var(--pink)}
+  button{font-family:inherit; cursor:pointer; border:none}
+  .go{background:var(--green); color:#fff; font-size:1.5rem; font-weight:800; padding:14px 38px; border-radius:999px; box-shadow:0 6px 0 #15803d}
+  .go:active{transform:translateY(4px); box-shadow:0 2px 0 #15803d}
+  .alt{background:var(--blue); box-shadow:0 6px 0 #1d4ed8}
+
+  /* quiz */
+  .bar{height:16px; background:#e6edf7; border-radius:999px; overflow:hidden; margin:6px 0 12px}
+  .bar > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--green),var(--yellow)); transition:width .35s}
+  .meta{display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:.95rem}
+  .tag{color:#fff; border-radius:999px; padding:4px 12px}
+  .qtext{font-size:1.65rem; font-weight:800; margin:16px 0 8px; line-height:1.3}
+  .say{background:#eef4ff; color:var(--ink); border-radius:999px; padding:6px 14px; font-weight:700; margin-bottom:6px}
+  .visual{background:#f6fbff; border:3px dashed #bcd9f3; border-radius:18px; padding:10px; margin:10px 0; text-align:center; font-size:2.1rem; line-height:1.35; letter-spacing:2px}
+  .visual .plus{font-weight:800; margin:0 10px; color:var(--orange)}
+  .visual .x{opacity:.28; text-decoration:line-through}
+  .bondbox{display:flex; justify-content:center; margin:8px 0}
+  .opts{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px}
+  .opt{background:#fff; border:4px solid #cfe0f5; border-radius:20px; font-size:1.7rem; font-weight:800; color:var(--ink); padding:16px 8px; min-height:74px; box-shadow:0 5px 0 #cfe0f5; transition:transform .08s}
+  .opt:hover{border-color:var(--blue)}
+  .opt:active{transform:translateY(3px)}
+  .opt.long{font-size:1.25rem}
+  .opt.right{background:#d9f9e3; border-color:var(--green); box-shadow:0 5px 0 #15a34a}
+  .opt.wrong{background:#ffe0e0; border-color:var(--red); box-shadow:0 5px 0 #c53030}
+  .opt:disabled{cursor:default}
+  .feedback{margin-top:16px; border-radius:18px; padding:12px 14px; font-size:1.2rem; font-weight:700}
+  .feedback.good{background:#d9f9e3} .feedback.bad{background:#ffe9d6}
+  .next{margin-top:14px; width:100%; background:var(--blue); color:#fff; font-size:1.4rem; font-weight:800; padding:14px; border-radius:18px; box-shadow:0 5px 0 #1d4ed8}
+
+  /* results */
+  .results{text-align:center}
+  .results .big{font-size:4rem}
+  .score-big{font-size:3rem; font-weight:900; color:var(--purple)}
+  .stars{font-size:2.2rem; margin:4px 0 10px}
+  .breakdown{text-align:left; margin:16px 0}
+  .row{display:flex; align-items:center; gap:10px; margin:8px 0; font-weight:700; font-size:.95rem}
+  .row .lbl{flex:0 0 150px}
+  .row .meter{flex:1; height:16px; background:#e6edf7; border-radius:999px; overflow:hidden}
+  .row .meter i{display:block; height:100%}
+  .missed{text-align:left; margin-top:12px}
+  .missed li{margin:8px 0; font-size:1rem; background:#fff7f0; border-radius:12px; padding:8px 10px}
+  .btns{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:16px}
+  @media (max-width:480px){
+    .qtext{font-size:1.4rem} .opt{font-size:1.5rem; min-height:66px} .row .lbl{flex-basis:110px}
+    .hero h1{font-size:1.65rem}
+  }
 </style>
 </head>
 <body>
-<div class="card" id="app"></div>
-<script>
-const n=v=>parseFloat(Number(v).toFixed(2));
-const Q=[];
-function add(q,ans,wrongs,why,word){
-  let w=[...new Set(wrongs.map(n))].filter(v=>v!==n(ans)&&v>=0);
-  let k=1;
-  while(w.length<3){const c=n(ans+(k%2?k:-k)*(Number.isInteger(ans)?1:0.5));k++;if(c!==n(ans)&&c>=0&&!w.includes(c))w.push(c);}
-  Q.push({q,ans:n(ans),opts:w.slice(0,3),why,word});
-}
-// x + a = b
-[[7,15],[12,30],[9,41],[18,50],[25,63],[36,90],[8,23]].forEach(([a,b])=>
- add(`x + ${a} = ${b}`,b-a,[b+a,b-a+a>b?a:a,b-a+1,b-a-2,a+b-1],`Subtract ${a} from both sides: x = ${b} − ${a} = ${b-a}.`));
-// x - a = b
-[[6,9],[14,20],[8,35],[17,33]].forEach(([a,b])=>
- add(`x − ${a} = ${b}`,b+a,[b-a,b,b+a+1,b+a-2],`Add ${a} to both sides: x = ${b} + ${a} = ${b+a}.`));
-// ax = b
-[[4,28],[7,56],[9,72],[12,60],[5,85]].forEach(([a,b])=>
- add(`${a}x = ${b}`,b/a,[b-a,b*a,b/a+1,b/a-1,b/a+2],`${a}x means ${a} × x. Divide both sides by ${a}: x = ${b} ÷ ${a} = ${b/a}.`));
-// x/a = b
-[[3,8],[5,6],[7,9],[4,12],[6,11]].forEach(([a,b])=>
- add(`x ÷ ${a} = ${b}`,a*b,[b/a,a+b,a*b-a,a*b+b,a*b-1],`Multiply both sides by ${a}: x = ${b} × ${a} = ${a*b}.`));
-// ax + b = c
-[[3,5,26],[4,7,35],[2,9,21],[5,3,48],[6,4,52],[3,11,38],[7,2,58],[4,10,46]].forEach(([a,b,c])=>{
- const x=(c-b)/a;
- add(`${a}x + ${b} = ${c}`,x,[(c+b)/a,c-b,c/a-b,x+1,x-1],`Subtract ${b} from both sides: ${a}x = ${c-b}. Then divide by ${a}: x = ${x}.`);});
-// ax - b = c
-[[3,4,20],[5,6,39],[4,9,31],[6,5,43],[2,7,19]].forEach(([a,b,c])=>{
- const x=(c+b)/a;
- add(`${a}x − ${b} = ${c}`,x,[(c-b)/a,c+b,x+1,x-2,c/a+b],`Add ${b} to both sides: ${a}x = ${c+b}. Then divide by ${a}: x = ${x}.`);});
-// x/a + b = c
-[[2,5,11],[3,4,10],[5,2,9],[4,6,13]].forEach(([a,b,c])=>{
- const x=(c-b)*a;
- add(`x ÷ ${a} + ${b} = ${c}`,x,[(c-b)/a,(c+b)*a,c*a-b,x+a,x-a],`Subtract ${b}: x ÷ ${a} = ${c-b}. Multiply by ${a}: x = ${x}.`);});
-// a(x+b)=c
-[[3,4,27],[2,6,24],[5,3,50],[4,2,36]].forEach(([a,b,c])=>{
- const x=c/a-b;
- add(`${a}(x + ${b}) = ${c}`,x,[c/a+b,(c-b)/a,c-b,x+1,x+b],`Divide both sides by ${a}: x + ${b} = ${c/a}. Subtract ${b}: x = ${x}.`);});
-// word problems
-add("Three times a number, plus 5, equals 20. What is the number?",5,[25/3|0||8,15,7,6,4],"Write it as 3x + 5 = 20. Subtract 5: 3x = 15. Divide by 3: x = 5.",true);
-add("A number divided by 4, then decreased by 3, gives 6. What is the number?",36,[9/4,12,27,13,24],"Write it as x ÷ 4 − 3 = 6. Add 3: x ÷ 4 = 9. Multiply by 4: x = 36.",true);
-add("Twice the sum of a number and 7 is 30. What is the number?",8,[23,15,11,4,7],"Write it as 2(x + 7) = 30. Divide by 2: x + 7 = 15. Subtract 7: x = 8.",true);
-add("A number decreased by 12 is 25. What is the number?",37,[13,12,25,35,38],"Write it as x − 12 = 25. Add 12 to both sides: x = 37.",true);
-// decimals
-add("x + 2.5 = 7.3",4.8,[9.8,5.8,4.2,4.9,5.2],"Subtract 2.5 from both sides: x = 7.3 − 2.5 = 4.8.");
-add("x − 1.6 = 3.4",5,[1.8,2,4.8,5.6,5.2],"Add 1.6 to both sides: x = 3.4 + 1.6 = 5.");
-add("4x = 2.8",0.7,[11.2,7,1.2,0.6,0.8],"Divide both sides by 4: x = 2.8 ÷ 4 = 0.7.");
-add("2x + 1.5 = 6.5",2.5,[4,5,3.5,2,3],"Subtract 1.5: 2x = 5. Divide by 2: x = 2.5.");
+<div class="wrap">
+  <header>
+    <div class="logo">🚀 Zion's Number Adventure</div>
+    <div class="score-pill" id="scorePill">⭐ 0</div>
+  </header>
 
-const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-let order,i,score,locked;
-const app=document.getElementById('app');
-function start(){
-  app.innerHTML=`<h1>Find x! 🔍</h1><div class="sub">Grade 6 Maths · Solving equations · ${Q.length} questions</div>
-  <p>Work out the value of <b>x</b> in each equation. Take your time — use scrap paper and check your answer by putting it back into the equation.</p>
-  <button class="go start" onclick="begin()">Start Quiz</button>`;
+  <!-- START -->
+  <section class="card hero" id="start">
+    <div class="big">🦁🔢🌈</div>
+    <h1>Hi Zion! Ready to play?</h1>
+    <p>70 super-challenge number questions. Think carefully, then tap the best answer!</p>
+    <div class="chapters">
+      <div class="chap c1">Part 1<small>Numbers to 10</small></div>
+      <div class="chap c2">Part 2<small>Number Bonds</small></div>
+      <div class="chap c3">Part 3<small>Addition</small></div>
+      <div class="chap c4">Part 4<small>Subtraction</small></div>
+    </div>
+    <button class="go" id="startBtn">Let's go! ▶</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="card hidden" id="quiz">
+    <div class="meta"><span id="qcount">Question 1 of 70</span><span class="tag" id="chTag">Part 1</span></div>
+    <div class="bar"><i id="barFill"></i></div>
+    <button class="say" id="sayBtn" aria-label="Read the question out loud">🔊 Read to me</button>
+    <div class="qtext" id="qtext"></div>
+    <div id="visualBox"></div>
+    <div class="opts" id="opts"></div>
+    <div id="feedback" class="feedback hidden"></div>
+    <button class="next hidden" id="nextBtn">Next ▶</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="card results hidden" id="results"></section>
+</div>
+
+<script>
+// QUESTIONS-START
+const CH = [
+  {name:"Numbers to 10", color:"#3b82f6"},
+  {name:"Number Bonds",  color:"#8b5cf6"},
+  {name:"Addition",      color:"#ff9f43"},
+  {name:"Subtraction",   color:"#ff6fa5"}
+];
+const Q = [];
+function push(ch, o){ o.ch = ch; Q.push(o); }
+function add(ch,a,b,d){ push(ch,{q:`${a} + ${b} = ?`, a:String(a+b), d:d.map(String), e:`${a} + ${b} = ${a+b}`, math:`${a}+${b}`}); }
+function sub(ch,a,b,d){ push(ch,{q:`${a} − ${b} = ?`, a:String(a-b), d:d.map(String), e:`${a} − ${b} = ${a-b}`, math:`${a}-${b}`}); }
+function bond(ch,whole,p1,p2,d){
+  const ans = whole===null ? p1+p2 : (p1===null ? whole-p2 : whole-p1);
+  const txt = whole===null ? "The two parts are in the small circles. What is the whole?" : "Find the missing part.";
+  push(ch,{q:txt, bond:[whole,p1,p2], a:String(ans), d:d.map(String), e: whole===null ? `${p1} and ${p2} make ${ans}.` : `${whole} is ${ (p1===null?p2:p1) } and ${ans}.`});
 }
-function begin(){order=shuffle(Q.map((_,k)=>k));i=0;score=0;show();}
-function show(){
-  const q=Q[order[i]];locked=false;
-  const opts=shuffle([q.ans,...q.opts]);
-  app.innerHTML=`<div class="meta"><span>Question ${i+1} of ${Q.length}</span><span>Score: ${score}</span></div>
-  <div class="bar"><i style="width:${i/Q.length*100}%"></i></div>
-  <div class="eq ${q.word?'word':''}">${q.q}</div>
-  <div class="ask">${q.word?'Choose the correct number.':'What is x?'}</div>
-  <div class="opts">${opts.map(o=>`<button class="opt" data-v="${o}">${q.word?'':'x = '}${o}</button>`).join('')}</div>
-  <div class="fb" id="fb"></div>
-  <button class="go" id="next" onclick="next()">${i===Q.length-1?'See Results':'Next Question →'}</button>`;
-  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,q));
+
+// ---------- Part 1: Numbers to 10 (18) ----------
+push(0,{q:"Count only the apples 🍎. How many apples are there?", v:{mix:[["🍎",5],["🍌",4]]}, a:"5", d:["4","9","6"], e:"There are 5 apples and 4 bananas. Only count the apples: 5."});
+push(0,{q:"Count only the turtles 🐢. How many turtles are there?", v:{mix:[["🐢",6],["🐸",3]]}, a:"6", d:["3","9","5"], e:"There are 6 turtles and 3 frogs. Only count the turtles: 6."});
+push(0,{q:"How many stars are there?", v:{e:"⭐",n:10}, a:"10", d:["9","8","11"], e:"Count carefully: 10 stars."});
+push(0,{q:"What number is 2 more than 5?", a:"7", d:["6","8","3"], e:"Count on 2 from 5: 6, 7. So 7."});
+push(0,{q:"What number is 1 less than 6?", a:"5", d:["7","4","1"], e:"Count back 1 from 6: 5."});
+push(0,{q:"Which number is between 4 and 6?", a:"5", d:["3","7","4"], e:"4, 5, 6 — 5 is in the middle."});
+push(0,{q:"Find the missing number:  8, __ , 6, 5, 4", a:"7", d:["5","9","6"], e:"Counting back: 8, 7, 6, 5, 4."});
+push(0,{q:"Find the missing number:  __ , 4, 5, 6, 7", a:"3", d:["2","8","4"], e:"3, 4, 5, 6, 7."});
+push(0,{q:"Which number is greater than 7 but less than 9?", a:"8", d:["7","9","10"], e:"7, 8, 9 — 8 is bigger than 7 and smaller than 9."});
+push(0,{q:"Which is the second biggest number?  4,  9,  6,  2", a:"6", d:["9","4","2"], e:"Biggest is 9. Next biggest is 6."});
+push(0,{q:"Put the numbers in order from biggest to smallest:  5,  9,  2,  7", a:"9, 7, 5, 2", d:["2, 5, 7, 9","9, 5, 7, 2","7, 9, 5, 2"], e:"Biggest first: 9, 7, 5, 2.", long:true});
+push(0,{q:"Which group has more?", v2:[{e:"🐶",n:6},{e:"🐱",n:7}], sep:"vs", a:"Cats", d:["Dogs","Both have 7","Both have 6"], e:"6 dogs and 7 cats. 7 is more than 6, so cats.", long:true});
+push(0,{q:"What number is 1 more than 9?", a:"10", d:["8","11","9"], e:"Count on 1 from 9: 10."});
+push(0,{q:"Which one is true?", a:"9 is greater than 6", d:["6 is greater than 9","4 is the same as 5","7 is less than 3"], e:"9 is greater than 6.", long:true});
+push(0,{q:"Which number is the word “seven”?", a:"7", d:["6","8","5"], e:"Seven is written 7."});
+push(0,{q:"Which number is NOT between 2 and 7?", a:"8", d:["4","5","6"], e:"4, 5 and 6 are between 2 and 7. 8 is bigger than 7.", long:false});
+push(0,{q:"Which number is smaller than 1?", a:"0", d:["1","2","10"], e:"0 is smaller than 1."});
+push(0,{q:"Which is the greatest number?  3,  8,  10,  7", a:"10", d:["8","7","3"], e:"10 is more than 8, 7 and 3."});
+
+// ---------- Part 2: Number Bonds (17) ----------
+bond(1,8,null,5,[2,4,5]);
+bond(1,9,6,null,[2,4,5]);
+bond(1,10,null,4,[5,7,4]);
+bond(1,10,3,null,[6,8,3]);
+bond(1,7,null,2,[4,6,9]);
+bond(1,9,null,1,[7,9,10]);
+bond(1,8,8,null,[1,8,2]);
+bond(1,6,4,null,[1,3,10]);
+bond(1,10,null,10,[1,10,9]);
+bond(1,null,7,3,[9,4,8]);
+bond(1,null,5,4,[8,1,10]);
+bond(1,null,6,2,[7,4,9]);
+push(1,{q:"Which pair does NOT make 9?", a:"7 and 3", d:["5 and 4","6 and 3","8 and 1"], e:"7 and 3 make 10, not 9.", long:true});
+push(1,{q:"Which pair of numbers makes 6?", a:"4 and 2", d:["4 and 3","5 and 2","3 and 2"], e:"4 + 2 = 6.", long:true});
+push(1,{q:"Which pair of numbers makes 10?", a:"8 and 2", d:["8 and 3","7 and 2","6 and 3"], e:"8 + 2 = 10.", long:true});
+push(1,{q:"Zion has 10 marbles. 4 are in a bag. The rest are in his pocket. How many are in his pocket?", a:"6", d:["5","4","7"], e:"10 is 4 and 6, so 6 are in his pocket."});
+push(1,{q:"The whole is 7. One part is 7. What is the other part?", a:"0", d:["1","7","2"], e:"7 is 7 and 0."});
+
+// ---------- Part 3: Addition (18) ----------
+add(2,7,3,[9,4,8]);
+add(2,4,5,[8,10,1]);
+add(2,6,2,[4,7,9]);
+add(2,1,6,[5,6,8]);
+add(2,2,4,[5,8,2]);
+push(2,{q:"3 + 3 + 2 = ?", a:"8", d:["6","9","7"], e:"3 + 3 = 6, then 6 + 2 = 8.", math:"3+3+2"});
+push(2,{q:"2 + 4 + 3 = ?", a:"9", d:["8","10","6"], e:"2 + 4 = 6, then 6 + 3 = 9.", math:"2+4+3"});
+push(2,{q:"Which one is the greatest?", a:"5 + 4", d:["4 + 4","6 + 2","3 + 5"], e:"5 + 4 = 9. The others all make 8.", long:true});
+push(2,{q:"Which one makes 9?", a:"6 + 3", d:["6 + 2","5 + 5","4 + 6"], e:"6 + 3 = 9.", long:true});
+push(2,{q:"Zion has 5 stickers. His friend gives him 4 more. How many stickers does he have now?", a:"9", d:["1","8","10"], e:"5 + 4 = 9 stickers."});
+push(2,{q:"There are 6 ducks in a pond. 4 more ducks swim in. How many ducks are in the pond now?", a:"10", d:["9","2","8"], e:"6 + 4 = 10 ducks."});
+push(2,{q:"Zion has 2 red balls and 2 blue balls. His dad gives him 3 green balls. How many balls does he have?", a:"7", d:["4","6","8"], e:"2 + 2 + 3 = 7 balls."});
+push(2,{q:"__ + 4 = 10", a:"6", d:["5","7","4"], e:"6 + 4 = 10."});
+push(2,{q:"5 + __ = 9", a:"4", d:["3","5","6"], e:"5 + 4 = 9."});
+push(2,{q:"7 + __ = 10", a:"3", d:["2","4","7"], e:"7 + 3 = 10."});
+push(2,{q:"3 + __ = 3", a:"0", d:["1","3","6"], e:"3 + 0 = 3. Adding nothing keeps it the same."});
+push(2,{q:"Which number sentence is true?", a:"4 + 4 = 8", d:["4 + 4 = 7","5 + 3 = 9","6 + 1 = 8"], e:"4 + 4 = 8.", long:true});
+push(2,{q:"Which one equals 3 + 5?", a:"4 + 4", d:["4 + 3","6 + 3","2 + 5"], e:"3 + 5 = 8 and 4 + 4 = 8.", long:true});
+
+// ---------- Part 4: Subtraction (17) ----------
+sub(3,9,3,[5,7,2]);
+sub(3,10,3,[6,8,2]);
+sub(3,8,6,[1,3,4]);
+sub(3,9,5,[3,5,6]);
+sub(3,7,4,[2,4,5]);
+sub(3,10,8,[1,3,9]);
+sub(3,10,10,[1,10,2]);
+push(3,{q:"There are 9 cookies. Zion eats 4. How many cookies are left?", v:{e:"🍪",n:9,x:4}, a:"5", d:["4","6","3"], e:"9 − 4 = 5 cookies left."});
+push(3,{q:"Zion had 10 stickers. He gave 6 to his friend. How many stickers does he have left?", a:"4", d:["6","5","3"], e:"10 − 6 = 4 stickers."});
+push(3,{q:"A box has 8 crayons. 3 are broken. How many are not broken?", a:"5", d:["3","4","6"], e:"8 − 3 = 5 crayons."});
+push(3,{q:"Zion has 8 cars. Ben has 5 cars. How many more cars does Zion have than Ben?", a:"3", d:["2","4","5"], e:"8 − 5 = 3 more cars."});
+push(3,{q:"Ben has 4 marbles. Zion has 9 marbles. How many fewer marbles does Ben have?", a:"5", d:["4","6","3"], e:"9 − 4 = 5 fewer marbles."});
+push(3,{q:"10 − __ = 4", a:"6", d:["5","7","4"], e:"10 − 6 = 4."});
+push(3,{q:"__ − 3 = 5", a:"8", d:["2","7","9"], e:"8 − 3 = 5."});
+push(3,{q:"__ − 2 = 7", a:"9", d:["5","8","10"], e:"9 − 2 = 7."});
+push(3,{q:"5 + 4 = 9, so 9 − 4 = ?", a:"5", d:["4","9","6"], e:"If 5 + 4 = 9, then 9 − 4 = 5."});
+push(3,{q:"Which one equals 4?", a:"10 − 6", d:["10 − 5","9 − 6","8 − 3"], e:"10 − 6 = 4.", long:true});
+// QUESTIONS-END
+
+// ---------- App ----------
+const $ = id => document.getElementById(id);
+let order, idx, score, wrongList, answered, chScore, chTotal, current;
+
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
 }
-function pick(b,q){
-  if(locked)return;locked=true;
-  const ok=Number(b.dataset.v)===q.ans;
-  if(ok)score++;
-  app.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(Number(x.dataset.v)===q.ans)x.classList.add('right');});
-  if(!ok)b.classList.add('wrong');
-  const fb=document.getElementById('fb');
-  fb.style.display='block';
-  fb.innerHTML=`<b>${ok?'Correct! 🎉':'Not quite.'}</b> The answer is x = ${q.ans}.<br>${q.why}`;
-  document.getElementById('next').style.display='block';
+function repeat(e,n,x){
+  let s=""; for(let i=0;i<n;i++){ s += (x && i>=n-x) ? `<span class="x">${e}</span>` : e; if(i===4 && n>6) s+="<br>"; } return s;
 }
-function next(){i++;i<Q.length?show():finish();}
+function bondSVG(b){
+  const [w,p1,p2]=b;
+  const c=v=> v===null ? "?" : v;
+  const fill=v=> v===null ? "#fff3c4" : "#e3f1ff";
+  return `<svg width="230" height="170" viewBox="0 0 230 170" role="img" aria-label="number bond">
+    <line x1="115" y1="48" x2="60" y2="112" stroke="#23305a" stroke-width="4"/>
+    <line x1="115" y1="48" x2="170" y2="112" stroke="#23305a" stroke-width="4"/>
+    <circle cx="115" cy="38" r="34" fill="${fill(w)}" stroke="#3b82f6" stroke-width="5"/>
+    <circle cx="55" cy="122" r="34" fill="${fill(p1)}" stroke="#8b5cf6" stroke-width="5"/>
+    <circle cx="175" cy="122" r="34" fill="${fill(p2)}" stroke="#8b5cf6" stroke-width="5"/>
+    <g font-family="Trebuchet MS, sans-serif" font-weight="800" font-size="34" text-anchor="middle" fill="#23305a">
+      <text x="115" y="50">${c(w)}</text><text x="55" y="134">${c(p1)}</text><text x="175" y="134">${c(p2)}</text>
+    </g></svg>`;
+}
+function speakText(q){
+  let t = q.q.replace(/−/g," minus ").replace(/\+/g," plus ").replace(/=/g," equals ").replace(/__/g," what number ").replace(/\?/g," what number? ");
+  if(q.bond) t = q.q + " The whole is " + (q.bond[0]===null?"missing":q.bond[0]) + ". The parts are " + (q.bond[1]===null?"missing":q.bond[1]) + " and " + (q.bond[2]===null?"missing":q.bond[2]) + ".";
+  return t;
+}
+
+function start(subset){
+  const base = subset || Q.map((_,i)=>i);
+  order = base.slice();
+  idx = 0; score = 0; wrongList = []; chScore=[0,0,0,0]; chTotal=[0,0,0,0];
+  $("start").classList.add("hidden"); $("results").classList.add("hidden"); $("quiz").classList.remove("hidden");
+  $("scorePill").textContent = "⭐ 0";
+  showQ();
+}
+function showQ(){
+  answered = false;
+  current = Q[order[idx]];
+  const q = current;
+  $("qcount").textContent = `Question ${idx+1} of ${order.length}`;
+  const tag = $("chTag"); tag.textContent = `Part ${q.ch+1}: ${CH[q.ch].name}`; tag.style.background = CH[q.ch].color;
+  $("barFill").style.width = (idx/order.length*100)+"%";
+  $("qtext").textContent = q.q;
+  let vis = "";
+  if(q.v && q.v.mix) vis = `<div class="visual">${q.v.mix.map(m=>repeat(m[0],m[1])).join("<br>")}</div>`;
+  else if(q.v) vis = `<div class="visual">${repeat(q.v.e,q.v.n,q.v.x)}</div>`;
+  if(q.v2) vis = `<div class="visual">${repeat(q.v2[0].e,q.v2[0].n)}<span class="plus">${q.sep||"+"}</span>${repeat(q.v2[1].e,q.v2[1].n)}</div>`;
+  if(q.bond) vis = `<div class="bondbox">${bondSVG(q.bond)}</div>`;
+  $("visualBox").innerHTML = vis;
+  const opts = $("opts"); opts.innerHTML = "";
+  shuffle([q.a, ...q.d]).forEach(text=>{
+    const b = document.createElement("button");
+    b.className = "opt" + (q.long ? " long" : "");
+    b.textContent = text;
+    b.onclick = () => choose(b, text);
+    opts.appendChild(b);
+  });
+  $("feedback").classList.add("hidden"); $("nextBtn").classList.add("hidden");
+  $("nextBtn").textContent = idx===order.length-1 ? "See my score 🎉" : "Next ▶";
+  if(window.speechSynthesis) speechSynthesis.cancel();
+}
+function choose(btn, text){
+  if(answered) return;
+  answered = true;
+  const q = current, ok = text === q.a;
+  chTotal[q.ch]++;
+  [...$("opts").children].forEach(b=>{
+    b.disabled = true;
+    if(b.textContent === q.a) b.classList.add("right");
+  });
+  const fb = $("feedback");
+  if(ok){
+    score++; chScore[q.ch]++;
+    $("scorePill").textContent = "⭐ " + score;
+    const cheers = ["Great job, Zion! 🎉","Super! ⭐","You got it! 🌟","Awesome! 👏","Brilliant! 🦁","Yes! Well done! 🚀"];
+    fb.className = "feedback good"; fb.textContent = cheers[Math.floor(Math.random()*cheers.length)];
+  }else{
+    btn.classList.add("wrong");
+    wrongList.push(order[idx]);
+    fb.className = "feedback bad"; fb.textContent = "Nice try! " + q.e;
+  }
+  fb.classList.remove("hidden"); $("nextBtn").classList.remove("hidden");
+}
+function next(){
+  idx++;
+  if(idx >= order.length) return finish();
+  showQ(); window.scrollTo({top:0,behavior:"smooth"});
+}
 function finish(){
-  const p=Math.round(score/Q.length*100);
-  const m=p>=90?'Equation expert! 🏆':p>=70?'Great work! Keep practising the tricky ones.':p>=50?'Good effort — review the steps and try again.':'Keep going! Re-read the worked steps and retry.';
-  app.innerHTML=`<h1>Quiz complete!</h1><div class="score">${score} / ${Q.length}</div><div class="msg">${p}% — ${m}</div>
-  <button class="go start" onclick="begin()">Try Again</button>`;
+  $("quiz").classList.add("hidden");
+  const res = $("results"); res.classList.remove("hidden");
+  const total = order.length, pct = Math.round(score/total*100);
+  const stars = pct>=90 ? "⭐⭐⭐" : pct>=70 ? "⭐⭐" : pct>=40 ? "⭐" : "🌱";
+  const msg = pct>=90 ? "Amazing work, Zion! You are a number superstar!" : pct>=70 ? "Great job! You know lots of number facts!" : pct>=40 ? "Good try! Let's practise a little more." : "Keep practising. You will get better and better!";
+  let rows = "";
+  CH.forEach((c,i)=>{
+    if(!chTotal[i]) return;
+    const p = Math.round(chScore[i]/chTotal[i]*100);
+    rows += `<div class="row"><span class="lbl">${c.name}</span><span class="meter"><i style="width:${p}%;background:${c.color}"></i></span><span>${chScore[i]}/${chTotal[i]}</span></div>`;
+  });
+  let missed = "";
+  if(wrongList.length){
+    missed = `<div class="missed"><h3>Let's look again 👀</h3><ul>` +
+      wrongList.map(i=>`<li><b>${Q[i].q.replace(/</g,"&lt;")}</b><br>Answer: <b>${Q[i].a}</b></li>`).join("") + `</ul></div>`;
+  }
+  res.innerHTML = `<div class="big">🏆</div>
+    <div class="score-big">${score} / ${total}</div>
+    <div class="stars">${stars}</div>
+    <p style="font-size:1.2rem;font-weight:700">${msg}</p>
+    <div class="breakdown">${rows}</div>
+    <div class="btns">
+      <button class="go" id="again">Play again 🔁</button>
+      ${wrongList.length ? '<button class="go alt" id="retry">Practise missed ones 💪</button>' : ''}
+    </div>${missed}`;
+  $("again").onclick = () => start();
+  if($("retry")) $("retry").onclick = () => start(shuffle(wrongList));
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-start();
+
+$("startBtn").onclick = () => start();
+$("nextBtn").onclick = next;
+$("sayBtn").onclick = () => {
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(speakText(current)); u.rate = 0.85; speechSynthesis.speak(u);
+};
 </script>
 </body>
 </html>
