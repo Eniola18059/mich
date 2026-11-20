@@ -3,253 +3,348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zion's Number Adventure</title>
+<title>Energy Transfer & Transformation Quiz – Grade 6</title>
 <style>
-  :root{
-    --sky:#dff3ff; --ink:#23305a; --blue:#3b82f6; --green:#22c55e; --red:#ef4444;
-    --yellow:#ffd23f; --orange:#ff9f43; --purple:#8b5cf6; --pink:#ff6fa5; --card:#ffffff;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; color:var(--ink);
-    font-family:"Trebuchet MS","Comic Sans MS","Segoe UI",system-ui,sans-serif;
-    background:linear-gradient(180deg,#bfe9ff 0%,#e9f8ff 55%,#fff7d6 100%);
-  }
-  .wrap{max-width:760px; margin:0 auto; padding:16px 14px 40px}
-  header{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px}
-  .logo{font-size:1.25rem; font-weight:800}
-  .score-pill{background:var(--yellow); border-radius:999px; padding:6px 14px; font-weight:800; box-shadow:0 3px 0 #e0b100}
-  .card{background:var(--card); border-radius:26px; padding:22px 18px; box-shadow:0 8px 0 rgba(35,48,90,.12)}
-  .hidden{display:none !important}
-
-  /* start screen */
-  .hero{text-align:center}
-  .hero .big{font-size:4.2rem; line-height:1}
-  .hero h1{margin:8px 0 6px; font-size:2rem}
-  .hero p{margin:6px 0 14px; font-size:1.1rem}
-  .chapters{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0 20px; text-align:left}
-  .chap{border-radius:16px; padding:10px 12px; font-weight:700; font-size:.95rem; color:#fff}
-  .chap small{display:block; font-weight:600; opacity:.95}
-  .c1{background:var(--blue)} .c2{background:var(--purple)} .c3{background:var(--orange)} .c4{background:var(--pink)}
-  button{font-family:inherit; cursor:pointer; border:none}
-  .go{background:var(--green); color:#fff; font-size:1.5rem; font-weight:800; padding:14px 38px; border-radius:999px; box-shadow:0 6px 0 #15803d}
-  .go:active{transform:translateY(4px); box-shadow:0 2px 0 #15803d}
-  .alt{background:var(--blue); box-shadow:0 6px 0 #1d4ed8}
-
-  /* quiz */
-  .bar{height:16px; background:#e6edf7; border-radius:999px; overflow:hidden; margin:6px 0 12px}
-  .bar > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--green),var(--yellow)); transition:width .35s}
-  .meta{display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:.95rem}
-  .tag{color:#fff; border-radius:999px; padding:4px 12px}
-  .qtext{font-size:1.65rem; font-weight:800; margin:16px 0 8px; line-height:1.3}
-  .say{background:#eef4ff; color:var(--ink); border-radius:999px; padding:6px 14px; font-weight:700; margin-bottom:6px}
-  .visual{background:#f6fbff; border:3px dashed #bcd9f3; border-radius:18px; padding:10px; margin:10px 0; text-align:center; font-size:2.1rem; line-height:1.35; letter-spacing:2px}
-  .visual .plus{font-weight:800; margin:0 10px; color:var(--orange)}
-  .visual .x{opacity:.28; text-decoration:line-through}
-  .bondbox{display:flex; justify-content:center; margin:8px 0}
-  .opts{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px}
-  .opt{background:#fff; border:4px solid #cfe0f5; border-radius:20px; font-size:1.7rem; font-weight:800; color:var(--ink); padding:16px 8px; min-height:74px; box-shadow:0 5px 0 #cfe0f5; transition:transform .08s}
-  .opt:hover{border-color:var(--blue)}
-  .opt:active{transform:translateY(3px)}
-  .opt.long{font-size:1.25rem}
-  .opt.right{background:#d9f9e3; border-color:var(--green); box-shadow:0 5px 0 #15a34a}
-  .opt.wrong{background:#ffe0e0; border-color:var(--red); box-shadow:0 5px 0 #c53030}
-  .opt:disabled{cursor:default}
-  .feedback{margin-top:16px; border-radius:18px; padding:12px 14px; font-size:1.2rem; font-weight:700}
-  .feedback.good{background:#d9f9e3} .feedback.bad{background:#ffe9d6}
-  .next{margin-top:14px; width:100%; background:var(--blue); color:#fff; font-size:1.4rem; font-weight:800; padding:14px; border-radius:18px; box-shadow:0 5px 0 #1d4ed8}
-
-  /* results */
-  .results{text-align:center}
-  .results .big{font-size:4rem}
-  .score-big{font-size:3rem; font-weight:900; color:var(--purple)}
-  .stars{font-size:2.2rem; margin:4px 0 10px}
-  .breakdown{text-align:left; margin:16px 0}
-  .row{display:flex; align-items:center; gap:10px; margin:8px 0; font-weight:700; font-size:.95rem}
-  .row .lbl{flex:0 0 150px}
-  .row .meter{flex:1; height:16px; background:#e6edf7; border-radius:999px; overflow:hidden}
-  .row .meter i{display:block; height:100%}
-  .missed{text-align:left; margin-top:12px}
-  .missed li{margin:8px 0; font-size:1rem; background:#fff7f0; border-radius:12px; padding:8px 10px}
-  .btns{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:16px}
-  @media (max-width:480px){
-    .qtext{font-size:1.4rem} .opt{font-size:1.5rem; min-height:66px} .row .lbl{flex-basis:110px}
-    .hero h1{font-size:1.65rem}
-  }
+:root{--bg:#f3f6fb;--card:#fff;--ink:#1f2a44;--muted:#5b6785;--brand:#3b6cf6;--brand-d:#2a52c9;--ok:#1a9d5c;--okbg:#e4f6ec;--bad:#d64545;--badbg:#fdeaea;--line:#dfe5f1}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+.card{background:var(--card);border-radius:18px;padding:28px 24px;box-shadow:0 4px 18px rgba(31,42,68,.08)}
+h1{font-size:1.7rem;margin:0 0 8px}
+h2{font-size:1.25rem;margin:0 0 16px;line-height:1.4}
+p{margin:0 0 14px;color:var(--muted)}
+.badge{display:inline-block;background:#e8eefe;color:var(--brand-d);font-weight:600;font-size:.8rem;padding:4px 10px;border-radius:99px;margin-bottom:12px}
+button{font:inherit;cursor:pointer}
+.primary{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:12px 24px;font-weight:600}
+.primary:hover{background:var(--brand-d)}
+.primary:disabled{opacity:.4;cursor:default}
+.top{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.bar>div{height:100%;background:var(--brand);width:0;transition:width .3s}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:10px;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--brand);background:#f6f8ff}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+.fb{margin:6px 0 18px;padding:14px 16px;border-radius:12px;font-size:.95rem}
+.fb.ok{background:var(--okbg);color:#0f6b3d}
+.fb.bad{background:var(--badbg);color:#8f2b2b}
+.score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
+.rev{border-top:1px solid var(--line);padding:14px 0}
+.rev b{display:block;margin-bottom:4px}
+.rev span{font-size:.92rem;color:var(--muted);display:block}
+.hide{display:none}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div class="logo">🚀 Zion's Number Adventure</div>
-    <div class="score-pill" id="scorePill">⭐ 0</div>
-  </header>
 
-  <!-- START -->
-  <section class="card hero" id="start">
-    <div class="big">🦁🔢🌈</div>
-    <h1>Hi Zion! Ready to play?</h1>
-    <p>100 super-challenge number questions. Think carefully, then tap the best answer!</p>
-    <div class="chapters">
-      <div class="chap c3">Chapter 6<small>Addition to 20</small></div>
-      <div class="chap c4">Chapter 7<small>Subtraction within 20</small></div>
-    </div>
-    <button class="go" id="startBtn">Let's go! ▶</button>
-  </section>
+<div id="start" class="card">
+  <span class="badge">Grade 6 Science</span>
+  <h1>Energy Transfer & Transformation</h1>
+  <p>50 questions on how energy moves between objects, changes form, and where it goes. Questions and answer choices are mixed up every time you play.</p>
+  <p>Pick an answer to see right away whether you got it right, and why.</p>
+  <button class="primary" onclick="startQuiz()">Start Quiz</button>
+</div>
 
-  <!-- QUIZ -->
-  <section class="card hidden" id="quiz">
-    <div class="meta"><span id="qcount">Question 1 of 70</span><span class="tag" id="chTag">Part 1</span></div>
-    <div class="bar"><i id="barFill"></i></div>
-    <button class="say" id="sayBtn" aria-label="Read the question out loud">🔊 Read to me</button>
-    <div class="qtext" id="qtext"></div>
-    <div id="visualBox"></div>
-    <div class="opts" id="opts"></div>
-    <div id="feedback" class="feedback hidden"></div>
-    <button class="next hidden" id="nextBtn">Next ▶</button>
-  </section>
+<div id="quiz" class="card hide">
+  <div class="top"><span id="count"></span><span id="scoreLive"></span></div>
+  <div class="bar"><div id="prog"></div></div>
+  <h2 id="qtext"></h2>
+  <div id="opts"></div>
+  <div id="fb" class="fb hide"></div>
+  <button id="next" class="primary hide" onclick="nextQ()">Next</button>
+</div>
 
-  <!-- RESULTS -->
-  <section class="card results hidden" id="results"></section>
+<div id="end" class="card hide">
+  <span class="badge">Quiz complete</span>
+  <div class="score" id="final"></div>
+  <p id="msg"></p>
+  <div id="review"></div>
+  <button class="primary" onclick="startQuiz()">Try Again</button>
+</div>
+
 </div>
 
 <script>
-// QUESTIONS-START
-const CH = [{"name":"Chapter 6: Addition to 20","color":"#ff9f43"},{"name":"Chapter 7: Subtraction within 20","color":"#ff6fa5"}];
-const Q = [{"q":"8 + 4 = ?","a":"12","d":["13","16","14"],"e":"8 + 4 = 12","math":"8+4","ch":0},{"q":"9 + 7 = ?","a":"16","d":["15","17","18"],"e":"9 + 7 = 16","math":"9+7","ch":0},{"q":"7 + 6 = ?","a":"13","d":["12","1","11"],"e":"7 + 6 = 13","math":"7+6","ch":0},{"q":"6 + 9 = ?","a":"15","d":["16","17","18"],"e":"6 + 9 = 15","math":"6+9","ch":0},{"q":"5 + 8 = ?","a":"13","d":["12","3","14"],"e":"5 + 8 = 13","math":"5+8","ch":0},{"q":"9 + 3 = ?","a":"12","d":["11","6","13"],"e":"9 + 3 = 12","math":"9+3","ch":0},{"q":"8 + 9 = ?","a":"17","d":["16","18","19"],"e":"8 + 9 = 17","math":"8+9","ch":0},{"q":"7 + 8 = ?","a":"15","d":["14","1","16"],"e":"7 + 8 = 15","math":"7+8","ch":0},{"q":"6 + 7 = ?","a":"13","d":["14","15","16"],"e":"6 + 7 = 13","math":"6+7","ch":0},{"q":"9 + 2 = ?","a":"11","d":["10","12","13"],"e":"9 + 2 = 11","math":"9+2","ch":0},{"q":"5 + 9 = ?","a":"14","d":["13","4","12"],"e":"5 + 9 = 14","math":"5+9","ch":0},{"q":"7 + 4 = ?","a":"11","d":["10","3","12"],"e":"7 + 4 = 11","math":"7+4","ch":0},{"q":"Double 6 is the same as 6 + 6. What is double 6?","a":"12","d":["13","14","15"],"e":"6 + 6 = 12.","math":"6+6","ch":0},{"q":"Double 9 is the same as 9 + 9. What is double 9?","a":"18","d":["17","16","15"],"e":"9 + 9 = 18.","math":"9+9","ch":0},{"q":"6 + 7 is double 6 and 1 more. What is 6 + 7?","a":"13","d":["12","11","14"],"e":"6 + 6 = 12, and 1 more is 13.","math":"6+7","ch":0},{"q":"8 + 9 is double 8 and 1 more. What is 8 + 9?","a":"17","d":["16","18","19"],"e":"8 + 8 = 16, and 1 more is 17.","math":"8+9","ch":0},{"q":"4 + 6 + 5 = ?","a":"15","d":["14","10","16"],"e":"4 + 6 = 10, then 10 + 5 = 15.","math":"4+6+5","ch":0},{"q":"7 + 3 + 8 = ?","a":"18","d":["17","19","20"],"e":"7 + 3 = 10, then 10 + 8 = 18.","math":"7+3+8","ch":0},{"q":"5 + 5 + 9 = ?","a":"19","d":["18","14","20"],"e":"5 + 5 = 10, then 10 + 9 = 19.","math":"5+5+9","ch":0},{"q":"2 + 8 + 6 = ?","a":"16","d":["15","10","14"],"e":"2 + 8 = 10, then 10 + 6 = 16.","math":"2+8+6","ch":0},{"q":"9 + 1 + 7 = ?","a":"17","d":["16","10","15"],"e":"9 + 1 = 10, then 10 + 7 = 17.","math":"9+1+7","ch":0},{"q":"7 + __ = 13","a":"6","d":["7","20","8"],"e":"7 + 6 = 13.","math":"13-7","ch":0},{"q":"__ + 8 = 15","a":"7","d":["6","5","4"],"e":"7 + 8 = 15.","math":"15-8","ch":0},{"q":"9 + __ = 17","a":"8","d":["9","10","11"],"e":"9 + 8 = 17.","math":"17-9","ch":0},{"q":"__ + 5 = 14","a":"9","d":["8","10","19"],"e":"9 + 5 = 14.","math":"14-5","ch":0},{"q":"6 + __ = 15","a":"9","d":["8","7","10"],"e":"6 + 9 = 15.","math":"15-6","ch":0},{"q":"__ + 9 = 16","a":"7","d":["8","9","10"],"e":"7 + 9 = 16.","math":"16-9","ch":0},{"q":"12 + __ = 19","a":"7","d":["6","8","9"],"e":"12 + 7 = 19.","math":"19-12","ch":0},{"q":"To add 8 + 5, take 2 from the 5 to make 10 with the 8. Then add the 3 that is left. What is 8 + 5?","a":"13","d":["12","10","11"],"e":"8 + 2 = 10, then 10 + 3 = 13.","math":"8+5","ch":0},{"q":"To add 9 + 6, take 1 from the 6 to make 10 with the 9. Then add the 5 that is left. What is 9 + 6?","a":"15","d":["14","10","16"],"e":"9 + 1 = 10, then 10 + 5 = 15.","math":"9+6","ch":0},{"q":"To add 7 + 9, take 3 from the 9 to make 10 with the 7. Then add the 6 that is left. What is 7 + 9?","a":"16","d":["15","17","18"],"e":"7 + 3 = 10, then 10 + 6 = 16.","math":"7+9","ch":0},{"q":"12 + 5 = ?","a":"17","d":["18","19","20"],"e":"12 + 5 = 17","math":"12+5","ch":0},{"q":"13 + 4 = ?","a":"17","d":["16","18","19"],"e":"13 + 4 = 17","math":"13+4","ch":0},{"q":"11 + 8 = ?","a":"19","d":["18","3","17"],"e":"11 + 8 = 19","math":"11+8","ch":0},{"q":"14 + 3 = ?","a":"17","d":["16","11","18"],"e":"14 + 3 = 17","math":"14+3","ch":0},{"q":"15 + 5 = ?","a":"20","d":["19","10","18"],"e":"15 + 5 = 20","math":"15+5","ch":0},{"q":"12 + 7 = ?","a":"19","d":["18","5","20"],"e":"12 + 7 = 19","math":"12+7","ch":0},{"q":"16 + 3 = ?","a":"19","d":["18","13","17"],"e":"16 + 3 = 19","math":"16+3","ch":0},{"q":"Which one equals 9 + 4?","a":"7 + 6","d":["7 + 7","8 + 6","9 + 5"],"e":"9 + 4 = 13 and 7 + 6 = 13.","long":true,"ch":0},{"q":"Which one equals 8 + 7?","a":"9 + 6","d":["9 + 7","8 + 8","7 + 7"],"e":"8 + 7 = 15 and 9 + 6 = 15.","long":true,"ch":0},{"q":"Which one equals 6 + 9?","a":"8 + 7","d":["8 + 8","7 + 7","6 + 8"],"e":"6 + 9 = 15 and 8 + 7 = 15.","long":true,"ch":0},{"q":"Which one is the greatest?","a":"9 + 9","d":["8 + 9","7 + 10","6 + 11"],"e":"9 + 9 = 18. The others all make 17.","long":true,"ch":0},{"q":"Which number sentence is true?","a":"8 + 6 = 14","d":["8 + 6 = 13","7 + 7 = 15","9 + 5 = 13"],"e":"8 + 6 = 14.","long":true,"ch":0},{"q":"Which number sentence is NOT true?","a":"6 + 8 = 13","d":["7 + 7 = 14","9 + 6 = 15","5 + 8 = 13"],"e":"6 + 8 = 14, not 13.","long":true,"ch":0},{"q":"Zion has 8 stickers. His friend gives him 6 more. How many stickers does he have now?","a":"14","d":["15","16","17"],"e":"8 + 6 = 14 stickers.","math":"8+6","ch":0},{"q":"A shelf has 9 red books and 7 blue books. How many books are on the shelf?","a":"16","d":["15","17","18"],"e":"9 + 7 = 16 books.","math":"9+7","ch":0},{"q":"There are 12 ducks in a pond. 5 more ducks swim in. How many ducks are in the pond now?","a":"17","d":["18","19","20"],"e":"12 + 5 = 17 ducks.","math":"12+5","ch":0},{"q":"Zion ate 5 grapes in the morning, 6 grapes in the afternoon and 7 grapes at night. How many grapes did he eat?","a":"18","d":["17","19","20"],"e":"5 + 6 + 7 = 18 grapes.","math":"5+6+7","ch":0},{"q":"Zion has 13 marbles. He wins 6 more. How many marbles does he have now?","a":"19","d":["18","7","17"],"e":"13 + 6 = 19 marbles.","math":"13+6","ch":0},{"q":"There are 9 girls and 8 boys in the park. How many children are in the park?","a":"17","d":["16","1","15"],"e":"9 + 8 = 17 children.","math":"9+8","ch":0},{"q":"13 − 5 = ?","a":"8","d":["7","6","5"],"e":"13 − 5 = 8","math":"13-5","ch":1},{"q":"16 − 7 = ?","a":"9","d":["8","7","10"],"e":"16 − 7 = 9","math":"16-7","ch":1},{"q":"12 − 9 = ?","a":"3","d":["2","4","5"],"e":"12 − 9 = 3","math":"12-9","ch":1},{"q":"14 − 8 = ?","a":"6","d":["7","8","9"],"e":"14 − 8 = 6","math":"14-8","ch":1},{"q":"11 − 6 = ?","a":"5","d":["4","3","6"],"e":"11 − 6 = 5","math":"11-6","ch":1},{"q":"17 − 9 = ?","a":"8","d":["7","6","5"],"e":"17 − 9 = 8","math":"17-9","ch":1},{"q":"15 − 9 = ?","a":"6","d":["5","4","3"],"e":"15 − 9 = 6","math":"15-9","ch":1},{"q":"12 − 6 = ?","a":"6","d":["7","18","8"],"e":"12 − 6 = 6","math":"12-6","ch":1},{"q":"18 − 8 = ?","a":"10","d":["9","11","12"],"e":"18 − 8 = 10","math":"18-8","ch":1},{"q":"15 − 3 = ?","a":"12","d":["11","10","9"],"e":"15 − 3 = 12","math":"15-3","ch":1},{"q":"17 − 5 = ?","a":"12","d":["11","10","9"],"e":"17 − 5 = 12","math":"17-5","ch":1},{"q":"18 − 4 = ?","a":"14","d":["15","16","17"],"e":"18 − 4 = 14","math":"18-4","ch":1},{"q":"19 − 6 = ?","a":"13","d":["12","11","14"],"e":"19 − 6 = 13","math":"19-6","ch":1},{"q":"16 − 2 = ?","a":"14","d":["15","18","16"],"e":"16 − 2 = 14","math":"16-2","ch":1},{"q":"19 − 8 = ?","a":"11","d":["12","13","14"],"e":"19 − 8 = 11","math":"19-8","ch":1},{"q":"17 − 10 = ?","a":"7","d":["6","5","4"],"e":"17 − 10 = 7","math":"17-10","ch":1},{"q":"19 − 10 = ?","a":"9","d":["8","7","6"],"e":"19 − 10 = 9","math":"19-10","ch":1},{"q":"20 − 7 = ?","a":"13","d":["12","11","10"],"e":"20 − 7 = 13","math":"20-7","ch":1},{"q":"20 − 12 = ?","a":"8","d":["7","6","9"],"e":"20 − 12 = 8","math":"20-12","ch":1},{"q":"8 + 6 = 14, so 14 − 6 = ?","a":"8","d":["7","6","5"],"e":"If 8 + 6 = 14, then 14 − 6 = 8.","math":"14-6","ch":1},{"q":"9 + 7 = 16, so 16 − 7 = ?","a":"9","d":["8","7","10"],"e":"If 9 + 7 = 16, then 16 − 7 = 9.","math":"16-7","ch":1},{"q":"7 + 5 = 12, so 12 − 5 = ?","a":"7","d":["17","8","9"],"e":"If 7 + 5 = 12, then 12 − 5 = 7.","math":"12-5","ch":1},{"q":"Which number sentence is in the same fact family as 8 + 5 = 13?","a":"13 − 5 = 8","d":["13 − 3 = 10","15 − 8 = 7","13 + 5 = 18"],"e":"8 + 5 = 13 goes with 13 − 5 = 8 and 13 − 8 = 5.","long":true,"ch":1},{"q":"15 − __ = 9","a":"6","d":["5","4","7"],"e":"15 − 6 = 9.","math":"15-9","ch":1},{"q":"__ − 7 = 8","a":"15","d":["14","16","17"],"e":"15 − 7 = 8.","math":"8+7","ch":1},{"q":"14 − __ = 5","a":"9","d":["10","19","11"],"e":"14 − 9 = 5.","math":"14-5","ch":1},{"q":"__ − 6 = 9","a":"15","d":["14","3","16"],"e":"15 − 6 = 9.","math":"9+6","ch":1},{"q":"18 − __ = 10","a":"8","d":["9","10","11"],"e":"18 − 8 = 10.","math":"18-10","ch":1},{"q":"__ − 9 = 7","a":"16","d":["15","17","18"],"e":"16 − 9 = 7.","math":"7+9","ch":1},{"q":"13 − __ = 4","a":"9","d":["10","17","11"],"e":"13 − 9 = 4.","math":"13-4","ch":1},{"q":"16 − __ = 8","a":"8","d":["7","6","9"],"e":"16 − 8 = 8.","math":"16-8","ch":1},{"q":"To find 14 − 6, first take away 4 to get to 10. Then take away 2 more. What is 14 − 6?","a":"8","d":["10","9","11"],"e":"14 − 4 = 10, then 10 − 2 = 8.","math":"14-6","ch":1},{"q":"To find 13 − 4, first take away 3 to get to 10. Then take away 1 more. What is 13 − 4?","a":"9","d":["8","10","11"],"e":"13 − 3 = 10, then 10 − 1 = 9.","math":"13-4","ch":1},{"q":"To find 12 − 8, first take away 2 to get to 10. Then take away 6 more. What is 12 − 8?","a":"4","d":["3","2","5"],"e":"12 − 2 = 10, then 10 − 6 = 4.","math":"12-8","ch":1},{"q":"Which one equals 12 − 5?","a":"14 − 7","d":["14 − 6","13 − 5","12 − 6"],"e":"12 − 5 = 7 and 14 − 7 = 7.","long":true,"ch":1},{"q":"Which one equals 15 − 8?","a":"13 − 6","d":["13 − 5","14 − 8","15 − 9"],"e":"15 − 8 = 7 and 13 − 6 = 7.","long":true,"ch":1},{"q":"Which one equals 16 − 9?","a":"12 − 5","d":["12 − 4","13 − 5","11 − 3"],"e":"16 − 9 = 7 and 12 − 5 = 7.","long":true,"ch":1},{"q":"Which number sentence is true?","a":"15 − 6 = 9","d":["15 − 6 = 8","14 − 9 = 6","13 − 4 = 8"],"e":"15 − 6 = 9.","long":true,"ch":1},{"q":"There are 14 cookies on a plate. Zion eats 6. How many cookies are left?","a":"8","d":["7","6","9"],"e":"14 − 6 = 8 cookies.","math":"14-6","ch":1},{"q":"16 birds sit on a wire. 9 fly away. How many birds are left?","a":"7","d":["6","5","4"],"e":"16 − 9 = 7 birds.","math":"16-9","ch":1},{"q":"Zion has 20 stickers. He gives 12 to his friend. How many stickers does he have left?","a":"8","d":["7","6","9"],"e":"20 − 12 = 8 stickers.","math":"20-12","ch":1},{"q":"Zion blows up 13 balloons. 4 balloons pop. How many balloons are left?","a":"9","d":["10","17","11"],"e":"13 − 4 = 9 balloons.","math":"13-4","ch":1},{"q":"There are 17 children at a party. 10 go home. How many children stay?","a":"7","d":["8","9","10"],"e":"17 − 10 = 7 children.","math":"17-10","ch":1},{"q":"Zion has 15 pencils. He loses 8. How many pencils does he have now?","a":"7","d":["6","8","9"],"e":"15 − 8 = 7 pencils.","math":"15-8","ch":1},{"q":"Zion has 15 stickers. Ben has 9 stickers. How many more stickers does Zion have than Ben?","a":"6","d":["5","7","8"],"e":"15 − 9 = 6 more stickers.","math":"15-9","ch":1},{"q":"Mia has 18 beads. Sam has 11 beads. How many fewer beads does Sam have than Mia?","a":"7","d":["6","8","9"],"e":"18 − 11 = 7 fewer beads.","math":"18-11","ch":1},{"q":"Zion has 17 toy cars. Ben has 8 toy cars. How many more cars does Zion have than Ben?","a":"9","d":["8","7","10"],"e":"17 − 8 = 9 more cars.","math":"17-8","ch":1},{"q":"12 − 4 + 3 = ?","a":"11","d":["10","8","9"],"e":"12 − 4 = 8, then 8 + 3 = 11.","math":"12-4+3","ch":1},{"q":"7 + 6 − 5 = ?","a":"8","d":["9","18","10"],"e":"7 + 6 = 13, then 13 − 5 = 8.","math":"7+6-5","ch":1},{"q":"15 − 5 − 3 = ?","a":"7","d":["6","8","13"],"e":"15 − 5 = 10, then 10 − 3 = 7.","math":"15-5-3","ch":1}];
-// QUESTIONS-END
+// Each item: [question, correct answer, [3 wrong answers], explanation]
+const BANK = [
+["Which statement best describes energy TRANSFER?",
+ "Energy moves from one object or place to another",
+ ["Energy changes into a completely new form inside one object","Energy is made new whenever an object starts moving","Energy disappears once it has done its work"],
+ "In a transfer, energy moves from one place or object to another. A transformation is when it changes form."],
+["Which statement best describes energy TRANSFORMATION?",
+ "Energy changes from one form into another form",
+ ["Energy moves between objects without any change","Energy is destroyed and replaced by new energy","Energy is stored and never used again"],
+ "Transformation means the form of energy changes, for example electrical energy becoming light energy."],
+["What does the Law of Conservation of Energy say?",
+ "Energy cannot be created or destroyed, only transferred or transformed",
+ ["Energy can be created by machines but never destroyed","Energy is lost each time it changes from one form to another","Energy can be destroyed by friction but never created"],
+ "The total amount of energy stays the same. Friction does not destroy energy, it changes some into thermal energy."],
+["What is the main energy transformation in an electric toaster?",
+ "Electrical energy → thermal energy",
+ ["Thermal energy → electrical energy","Electrical energy → sound energy","Chemical energy → electrical energy"],
+ "The toaster's heating wires turn electrical energy into thermal (heat) energy, plus some light."],
+["What energy change happens in a solar panel?",
+ "Light energy → electrical energy",
+ ["Thermal energy → chemical energy","Electrical energy → light energy","Light energy → sound energy"],
+ "Solar panels capture light energy from the Sun and transform it into electrical energy."],
+["Which sequence shows the energy changes in a battery-powered flashlight?",
+ "Chemical → electrical → light",
+ ["Electrical → chemical → light","Chemical → light → electrical","Light → chemical → electrical"],
+ "The battery stores chemical energy, which becomes electrical energy in the wires, which the bulb turns into light."],
+["During photosynthesis, a plant transforms light energy into which form?",
+ "Chemical energy stored in sugars",
+ ["Kinetic energy used to move its leaves","Electrical energy stored in its roots","Sound energy released from its stem"],
+ "Plants capture light energy and store it as chemical energy in glucose (sugar)."],
+["You rub your hands together quickly and they feel warm. What energy change is this?",
+ "Kinetic energy → thermal energy",
+ ["Thermal energy → kinetic energy","Chemical energy → light energy","Sound energy → kinetic energy"],
+ "The motion of your hands (kinetic) is transformed into thermal energy by friction."],
+["A roller coaster car is stopped at the top of the first hill. Which energy is greatest at that moment?",
+ "Gravitational potential energy",
+ ["Kinetic energy","Thermal energy","Sound energy"],
+ "At the highest point the car has the most stored energy because of its height. Kinetic energy is smallest there."],
+["As the roller coaster car rolls down the hill, what is the main energy change?",
+ "Gravitational potential energy → kinetic energy",
+ ["Kinetic energy → gravitational potential energy","Chemical energy → gravitational potential energy","Thermal energy → kinetic energy"],
+ "Going down, the stored height energy turns into energy of motion."],
+["A stretched rubber band stores which type of energy?",
+ "Elastic potential energy",
+ ["Gravitational potential energy","Chemical energy","Kinetic energy"],
+ "Stretching or compressing an elastic object stores elastic potential energy."],
+["Which type of energy is stored in food and fuels such as gasoline?",
+ "Chemical energy",
+ ["Nuclear energy","Elastic energy","Thermal energy"],
+ "Food and fuels store energy in the bonds between their atoms, which is chemical energy."],
+["What is the main energy change in a loudspeaker?",
+ "Electrical energy → sound energy",
+ ["Sound energy → electrical energy","Electrical energy → light energy","Kinetic energy → chemical energy"],
+ "Electrical signals make the speaker cone vibrate, producing sound."],
+["What is the main energy change in a microphone?",
+ "Sound energy → electrical energy",
+ ["Electrical energy → sound energy","Light energy → electrical energy","Sound energy → chemical energy"],
+ "A microphone is the opposite of a speaker: sound vibrations become an electrical signal."],
+["What energy change happens in a wind turbine?",
+ "Kinetic energy of wind → electrical energy",
+ ["Thermal energy of wind → chemical energy","Electrical energy → kinetic energy of blades","Light energy → electrical energy"],
+ "Moving air spins the blades, and the generator turns that kinetic energy into electrical energy."],
+["In a hydroelectric dam, what is the correct order of energy changes?",
+ "Gravitational potential → kinetic → electrical",
+ ["Kinetic → gravitational potential → electrical","Electrical → kinetic → gravitational potential","Chemical → thermal → electrical"],
+ "Water stored high up falls (kinetic), spins turbines, and the generators make electrical energy."],
+["Thermal energy moving through direct contact between objects is called…",
+ "Conduction",
+ ["Convection","Radiation","Insulation"],
+ "Conduction happens when particles in a warmer object pass energy to a cooler object they are touching."],
+["Thermal energy moving through the circulation of a heated liquid or gas is called…",
+ "Convection",
+ ["Conduction","Radiation","Reflection"],
+ "In convection, warmer fluid rises and cooler fluid sinks, carrying thermal energy around."],
+["Thermal energy traveling as electromagnetic waves, even through empty space, is called…",
+ "Radiation",
+ ["Convection","Conduction","Vibration"],
+ "Radiation needs no material to travel through, which is how the Sun's energy reaches Earth."],
+["A metal spoon left in a pot of hot soup becomes hot at the handle. Which transfer is this?",
+ "Conduction",
+ ["Convection","Radiation","Transformation only"],
+ "Thermal energy passes along the metal spoon particle by particle."],
+["How does energy from the Sun reach Earth across space?",
+ "By radiation, because space has no particles to carry heat",
+ ["By conduction through the particles in space","By convection currents in space","By sound waves traveling through space"],
+ "Space is almost a vacuum, so only radiation (electromagnetic waves) can cross it."],
+["When water is heated in a pot, the warm water at the bottom rises and cooler water sinks. This is…",
+ "Convection",
+ ["Conduction","Radiation","Condensation"],
+ "Circulating warm and cool fluid is a convection current."],
+["Why are pot handles often made of plastic or wood?",
+ "They are insulators, so thermal energy moves through them slowly",
+ ["They are conductors, so heat spreads away quickly","They radiate more heat than metal does","They store thermal energy for later use"],
+ "Insulators slow down the transfer of thermal energy, which keeps your hand safe."],
+["In an incandescent light bulb, most of the electrical energy becomes…",
+ "Thermal energy (heat)",
+ ["Light energy","Sound energy","Chemical energy"],
+ "Only a small amount becomes light. Most is released as heat, which is why these bulbs get hot."],
+["What does the efficiency of a device tell you?",
+ "How much of the input energy becomes useful output energy",
+ ["How much total energy the device can create","How quickly the device uses up all its energy","How much energy the device stores forever"],
+ "Efficiency = useful output energy ÷ total input energy."],
+["A device takes in 200 J of electrical energy and gives out 50 J as light. If energy is conserved, how much energy became other forms (like heat)?",
+ "150 J",
+ ["250 J","50 J","200 J"],
+ "200 J − 50 J = 150 J. The energy is not lost, it is just transformed into other forms such as thermal energy."],
+["Using the same device (200 J in, 50 J useful light out), what is its efficiency?",
+ "25%",
+ ["75%","50%","4%"],
+ "50 ÷ 200 = 0.25, which is 25%."],
+["Why is an LED bulb more efficient than an incandescent bulb?",
+ "It turns more of the electrical energy into light and less into heat",
+ ["It creates extra energy from the electricity supply","It stores electrical energy in its glass for later","It turns heat into light after the bulb switches off"],
+ "LEDs waste far less energy as heat, so more of the input becomes useful light."],
+["A pendulum swings lower and lower until it stops. Where did its energy go?",
+ "Into thermal energy (and a little sound) from friction and air resistance",
+ ["It was destroyed when the pendulum stopped","It was stored inside the string as chemical energy","It was transferred back to the Sun"],
+ "Friction and air resistance transform the pendulum's mechanical energy into thermal energy in the surroundings."],
+["At the lowest point of a pendulum's swing, which energy is greatest?",
+ "Kinetic energy",
+ ["Gravitational potential energy","Chemical energy","Elastic energy"],
+ "At the bottom the bob is moving fastest, so kinetic energy is at its maximum."],
+["A basketball bounces lower each time it hits the floor. Which explains this best?",
+ "Some energy is transformed into sound and thermal energy at each bounce",
+ ["The ball creates less energy every time it bounces","Gravity destroys a little of the ball's energy each time","The floor absorbs energy and keeps it forever as motion"],
+ "Energy is conserved, but with each bounce some becomes sound and heat instead of motion."],
+["How does sound energy travel?",
+ "As vibrations passing through particles of a material",
+ ["As electromagnetic waves through empty space","As a flow of electrons through wires only","By heating the air in a straight line"],
+ "Sound needs a medium (solid, liquid or gas). It cannot travel through a vacuum."],
+["Which type of energy can travel through the vacuum of space?",
+ "Light energy",
+ ["Sound energy","Thermal energy by conduction","Thermal energy by convection"],
+ "Light is an electromagnetic wave and needs no material to travel through."],
+["In a simple electric circuit, how does energy get from the battery to the bulb?",
+ "It is carried by the electric current through the wires",
+ ["It jumps through the air from the battery to the bulb","It is carried by sound waves in the wires","It stays inside the battery and the bulb makes its own"],
+ "The current carries electrical energy around the circuit, and the bulb transforms it to light and heat."],
+["What is the original source of energy for most food chains on Earth?",
+ "The Sun",
+ ["The soil","The water in oceans","Animals at the top of the chain"],
+ "Plants capture the Sun's energy, and every other organism gets energy from plants directly or indirectly."],
+["When a rabbit eats grass, what kind of energy is passed to the rabbit?",
+ "Chemical energy stored in the grass",
+ ["Light energy stored in the grass","Electrical energy stored in the grass","Sound energy stored in the grass"],
+ "The grass stored the Sun's energy as chemical energy, and the rabbit gets it by eating."],
+["Roughly how much energy passes from one level of a food chain to the next?",
+ "About 10%",
+ ["About 90%","About 50%","About 100%"],
+ "Most energy is used for life processes or released as heat, so only about 10% is passed up."],
+["Which sequence best describes what happens in a car engine?",
+ "Chemical (fuel) → thermal → kinetic",
+ ["Kinetic → thermal → chemical (fuel)","Electrical → chemical → kinetic","Thermal → light → kinetic"],
+ "Burning fuel releases thermal energy, which is used to make the car move."],
+["Which energy transformations happen in a hair dryer?",
+ "Electrical → thermal, kinetic (fan) and sound",
+ ["Chemical → electrical and light","Thermal → electrical and kinetic","Sound → thermal and chemical"],
+ "The heater makes heat, the motor spins the fan, and some energy is lost as sound."],
+["When a cyclist brakes, the bike slows down. What happens to the kinetic energy?",
+ "It is transformed into thermal energy in the brakes",
+ ["It is destroyed by the brake pads","It is turned into chemical energy in the tyres","It is turned into light energy in the wheels"],
+ "Friction in the brakes changes the kinetic energy to thermal energy, which is why brakes get hot."],
+["Which energy changes happen when a match is struck and burns?",
+ "Chemical → thermal and light",
+ ["Thermal → chemical and sound","Light → chemical and thermal","Kinetic → electrical and light"],
+ "Chemicals on the match head react, releasing heat and light."],
+["Which of these is an example of energy being mainly TRANSFERRED, with its form staying the same?",
+ "A moving ball hits a still ball and the second ball starts rolling",
+ ["A solar panel powers a calculator","A battery lights a bulb","A campfire gives off light and heat"],
+ "Kinetic energy moves from one ball to the other. In the other examples the form of energy changes."],
+["A hot drink cools down on a table. In which direction does thermal energy move?",
+ "From the warm drink to the cooler surroundings",
+ ["From the cooler surroundings to the warm drink","Back and forth equally until the drink is empty","It stays in the drink and disappears"],
+ "Thermal energy always flows from warmer objects to cooler ones."],
+["An ice cube melts in your hand. What is happening?",
+ "Thermal energy is transferred from your hand to the ice",
+ ["Cold energy is transferred from the ice to your hand","The ice creates thermal energy as it melts","Thermal energy is transferred from the ice to your hand"],
+ "Your hand is warmer, so thermal energy flows from your hand into the ice, melting it."],
+["Kinetic energy depends on which two things?",
+ "The mass and the speed of the object",
+ ["The mass and the height of the object","The height and the temperature of the object","The speed and the colour of the object"],
+ "More mass or more speed means more kinetic energy."],
+["Which of these has the MOST kinetic energy?",
+ "A truck moving at 20 m/s",
+ ["A bicycle moving at 20 m/s","A truck moving at 5 m/s","A truck parked on the road"],
+ "The truck has far more mass than the bike, and 20 m/s is faster than 5 m/s. A parked truck has no kinetic energy."],
+["Which of these has the MOST gravitational potential energy?",
+ "A 5 kg box on a 2 m high shelf",
+ ["A 5 kg box on the floor","A 1 kg box on a 2 m high shelf","A 2 kg box on a 1 m high shelf"],
+ "Gravitational potential energy increases with both mass and height. 5 kg at 2 m is greatest."],
+["A wind-up toy car is wound tightly and then released. What is the main energy change?",
+ "Elastic potential energy → kinetic energy",
+ ["Kinetic energy → elastic potential energy","Chemical energy → light energy","Gravitational potential energy → sound energy"],
+ "The wound spring stores elastic energy, which becomes motion when released."],
+["Which pair contains only renewable energy sources?",
+ "Wind and geothermal",
+ ["Coal and wind","Solar and natural gas","Oil and geothermal"],
+ "Wind, solar and geothermal are renewable. Coal, oil and natural gas are fossil fuels and will run out."],
+["In a power station, what does the steam do?",
+ "It spins a turbine connected to a generator",
+ ["It is changed directly into electricity inside the pipes","It cools the generator by taking in electrical energy","It carries the electricity to homes through the air"],
+ "Steam's kinetic energy turns the turbine, and the generator transforms that motion into electrical energy."],
+["What is the main energy change in an electric fan?",
+ "Electrical energy → kinetic energy",
+ ["Kinetic energy → electrical energy","Electrical energy → chemical energy","Thermal energy → kinetic energy"],
+ "The motor turns electrical energy into the motion of the blades (with a little heat and sound as waste)."],
+["When you charge a phone, which energy change is stored in the battery?",
+ "Electrical energy → chemical energy",
+ ["Chemical energy → electrical energy","Electrical energy → kinetic energy","Light energy → chemical energy"],
+ "Charging stores energy as chemical energy, which the battery later releases as electrical energy."]
+];
 
-// ---------- App ----------
-const $ = id => document.getElementById(id);
-let order, idx, score, wrongList, answered, chScore, chTotal, current;
+let order, idx, score, missed, locked;
 
-function shuffle(a){
-  a = a.slice();
-  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-  return a;
-}
-function repeat(e,n,x){
-  let s=""; for(let i=0;i<n;i++){ s += (x && i>=n-x) ? `<span class="x">${e}</span>` : e; if((n>10 && i===9) || (n<=10 && n>6 && i===4)) s+="<br>"; } return s;
-}
-function bondSVG(b){
-  const [w,p1,p2]=b;
-  const c=v=> v===null ? "?" : v;
-  const fill=v=> v===null ? "#fff3c4" : "#e3f1ff";
-  return `<svg width="230" height="170" viewBox="0 0 230 170" role="img" aria-label="number bond">
-    <line x1="115" y1="48" x2="60" y2="112" stroke="#23305a" stroke-width="4"/>
-    <line x1="115" y1="48" x2="170" y2="112" stroke="#23305a" stroke-width="4"/>
-    <circle cx="115" cy="38" r="34" fill="${fill(w)}" stroke="#3b82f6" stroke-width="5"/>
-    <circle cx="55" cy="122" r="34" fill="${fill(p1)}" stroke="#8b5cf6" stroke-width="5"/>
-    <circle cx="175" cy="122" r="34" fill="${fill(p2)}" stroke="#8b5cf6" stroke-width="5"/>
-    <g font-family="Trebuchet MS, sans-serif" font-weight="800" font-size="34" text-anchor="middle" fill="#23305a">
-      <text x="115" y="50">${c(w)}</text><text x="55" y="134">${c(p1)}</text><text x="175" y="134">${c(p2)}</text>
-    </g></svg>`;
-}
-function speakText(q){
-  let t = q.q.replace(/−/g," minus ").replace(/\+/g," plus ").replace(/=/g," equals ").replace(/__/g," what number ").replace(/\?/g," what number? ");
-  if(q.bond) t = q.q + " The whole is " + (q.bond[0]===null?"missing":q.bond[0]) + ". The parts are " + (q.bond[1]===null?"missing":q.bond[1]) + " and " + (q.bond[2]===null?"missing":q.bond[2]) + ".";
-  return t;
-}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const $=id=>document.getElementById(id);
 
-function start(subset){
-  const base = subset || Q.map((_,i)=>i);
-  order = base.slice();
-  idx = 0; score = 0; wrongList = []; chScore=CH.map(()=>0); chTotal=CH.map(()=>0);
-  $("start").classList.add("hidden"); $("results").classList.add("hidden"); $("quiz").classList.remove("hidden");
-  $("scorePill").textContent = "⭐ 0";
+function startQuiz(){
+  order=shuffle(BANK.map((_,i)=>i));
+  idx=0;score=0;missed=[];
+  $('start').classList.add('hide');$('end').classList.add('hide');$('quiz').classList.remove('hide');
   showQ();
 }
+
 function showQ(){
-  answered = false;
-  current = Q[order[idx]];
-  const q = current;
-  $("qcount").textContent = `Question ${idx+1} of ${order.length}`;
-  const tag = $("chTag"); tag.textContent = CH[q.ch].name; tag.style.background = CH[q.ch].color;
-  $("barFill").style.width = (idx/order.length*100)+"%";
-  $("qtext").textContent = q.q;
-  let vis = "";
-  if(q.v && q.v.mix) vis = `<div class="visual">${q.v.mix.map(m=>repeat(m[0],m[1])).join("<br>")}</div>`;
-  else if(q.v) vis = `<div class="visual">${repeat(q.v.e,q.v.n,q.v.x)}</div>`;
-  if(q.v2) vis = `<div class="visual">${repeat(q.v2[0].e,q.v2[0].n)}<span class="plus">${q.sep||"+"}</span>${repeat(q.v2[1].e,q.v2[1].n)}</div>`;
-  if(q.bond) vis = `<div class="bondbox">${bondSVG(q.bond)}</div>`;
-  $("visualBox").innerHTML = vis;
-  const opts = $("opts"); opts.innerHTML = "";
-  shuffle([q.a, ...q.d]).forEach(text=>{
-    const b = document.createElement("button");
-    b.className = "opt" + (q.long ? " long" : "");
-    b.textContent = text;
-    b.onclick = () => choose(b, text);
-    opts.appendChild(b);
+  locked=false;
+  const q=BANK[order[idx]];
+  $('count').textContent='Question '+(idx+1)+' of '+BANK.length;
+  $('scoreLive').textContent='Score: '+score;
+  $('prog').style.width=(idx/BANK.length*100)+'%';
+  $('qtext').textContent=q[0];
+  $('fb').className='fb hide';$('next').classList.add('hide');
+  const box=$('opts');box.innerHTML='';
+  shuffle([q[1]].concat(q[2])).forEach(t=>{
+    const b=document.createElement('button');
+    b.className='opt';b.textContent=t;
+    b.onclick=()=>pick(b,t,q);
+    box.appendChild(b);
   });
-  $("feedback").classList.add("hidden"); $("nextBtn").classList.add("hidden");
-  $("nextBtn").textContent = idx===order.length-1 ? "See my score 🎉" : "Next ▶";
-  if(window.speechSynthesis) speechSynthesis.cancel();
-}
-function choose(btn, text){
-  if(answered) return;
-  answered = true;
-  const q = current, ok = text === q.a;
-  chTotal[q.ch]++;
-  [...$("opts").children].forEach(b=>{
-    b.disabled = true;
-    if(b.textContent === q.a) b.classList.add("right");
-  });
-  const fb = $("feedback");
-  if(ok){
-    score++; chScore[q.ch]++;
-    $("scorePill").textContent = "⭐ " + score;
-    const cheers = ["Great job, Zion! 🎉","Super! ⭐","You got it! 🌟","Awesome! 👏","Brilliant! 🦁","Yes! Well done! 🚀"];
-    fb.className = "feedback good"; fb.textContent = cheers[Math.floor(Math.random()*cheers.length)];
-  }else{
-    btn.classList.add("wrong");
-    wrongList.push(order[idx]);
-    fb.className = "feedback bad"; fb.textContent = "Nice try! " + q.e;
-  }
-  fb.classList.remove("hidden"); $("nextBtn").classList.remove("hidden");
-}
-function next(){
-  idx++;
-  if(idx >= order.length) return finish();
-  showQ(); window.scrollTo({top:0,behavior:"smooth"});
-}
-function finish(){
-  $("quiz").classList.add("hidden");
-  const res = $("results"); res.classList.remove("hidden");
-  const total = order.length, pct = Math.round(score/total*100);
-  const stars = pct>=90 ? "⭐⭐⭐" : pct>=70 ? "⭐⭐" : pct>=40 ? "⭐" : "🌱";
-  const msg = pct>=90 ? "Amazing work, Zion! You are a number superstar!" : pct>=70 ? "Great job! You know lots of number facts!" : pct>=40 ? "Good try! Let's practise a little more." : "Keep practising. You will get better and better!";
-  let rows = "";
-  CH.forEach((c,i)=>{
-    if(!chTotal[i]) return;
-    const p = Math.round(chScore[i]/chTotal[i]*100);
-    rows += `<div class="row"><span class="lbl">${c.name}</span><span class="meter"><i style="width:${p}%;background:${c.color}"></i></span><span>${chScore[i]}/${chTotal[i]}</span></div>`;
-  });
-  let missed = "";
-  if(wrongList.length){
-    missed = `<div class="missed"><h3>Let's look again 👀</h3><ul>` +
-      wrongList.map(i=>`<li><b>${Q[i].q.replace(/</g,"&lt;")}</b><br>Answer: <b>${Q[i].a}</b></li>`).join("") + `</ul></div>`;
-  }
-  res.innerHTML = `<div class="big">🏆</div>
-    <div class="score-big">${score} / ${total}</div>
-    <div class="stars">${stars}</div>
-    <p style="font-size:1.2rem;font-weight:700">${msg}</p>
-    <div class="breakdown">${rows}</div>
-    <div class="btns">
-      <button class="go" id="again">Play again 🔁</button>
-      ${wrongList.length ? '<button class="go alt" id="retry">Practise missed ones 💪</button>' : ''}
-    </div>${missed}`;
-  $("again").onclick = () => start();
-  if($("retry")) $("retry").onclick = () => start(shuffle(wrongList));
-  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-$("startBtn").onclick = () => start();
-$("nextBtn").onclick = next;
-$("sayBtn").onclick = () => {
-  if(!window.speechSynthesis) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(speakText(current)); u.rate = 0.85; speechSynthesis.speak(u);
-};
+function pick(btn,t,q){
+  if(locked)return;locked=true;
+  const right=t===q[1];
+  if(right){score++;btn.classList.add('ok')}
+  else{btn.classList.add('bad');missed.push({q:q[0],yours:t,ans:q[1],why:q[3]})}
+  document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.textContent===q[1])o.classList.add('ok')});
+  const fb=$('fb');
+  fb.className='fb '+(right?'ok':'bad');
+  fb.textContent=(right?'Correct! ':'Not quite. The answer is "'+q[1]+'". ')+q[3];
+  $('scoreLive').textContent='Score: '+score;
+  const n=$('next');n.textContent=idx===BANK.length-1?'See Results':'Next';n.classList.remove('hide');
+}
+
+function nextQ(){
+  idx++;
+  if(idx>=BANK.length)return finish();
+  showQ();
+}
+
+function finish(){
+  $('quiz').classList.add('hide');$('end').classList.remove('hide');
+  $('final').textContent=score+' / '+BANK.length;
+  const pct=score/BANK.length;
+  $('msg').textContent=pct>=.9?'Outstanding! You really understand how energy moves and changes.':pct>=.7?'Well done! Review the questions below to lock in the rest.':pct>=.5?'Good effort. Go through the ones you missed and try again.':'Keep practising. Read each explanation below, then try again.';
+  const r=$('review');r.innerHTML='';
+  if(missed.length){
+    const h=document.createElement('h2');h.textContent='Questions to review';r.appendChild(h);
+    missed.forEach(m=>{
+      const d=document.createElement('div');d.className='rev';
+      const b=document.createElement('b');b.textContent=m.q;
+      const a=document.createElement('span');a.textContent='Correct answer: '+m.ans;
+      const w=document.createElement('span');w.textContent=m.why;
+      d.append(b,a,w);r.appendChild(d);
+    });
+    const sp=document.createElement('div');sp.style.height='16px';r.appendChild(sp);
+  }
+}
 </script>
 </body>
 </html>
