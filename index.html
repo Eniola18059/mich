@@ -39,6 +39,8 @@
   .rev{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
   .hide{display:none}
   sup{font-size:.7em}
+  ol.steps{margin:6px 0 0;padding-left:22px}
+  ol.steps li{margin:5px 0}
 </style>
 </head>
 <body>
@@ -139,6 +141,66 @@ const Q = [
  ["vol",0,"Calculate the volume of a cuboid with length 5 m, width 4 m and height 2.5 m.","50 m³",["11.5 m³","500 m³","100 m³"],"5 × 4 = 20, then 20 × 2.5 = 50 m³."]
 ];
 
+// Detailed step-by-step solutions, same order as Q above
+const STEPS = [
+ ["Goal: get x on its own.","The +5 is in the way. Do the opposite: subtract 5 from both sides.","x + 5 − 5 = 9 − 5","x = 4","Check: 4 + 5 = 9 ✓"],
+ ["Goal: get x on its own.","The −4 is in the way. Do the opposite: add 4 to both sides.","x − 4 + 4 = 12 + 4","x = 16","Check: 16 − 4 = 12 ✓"],
+ ["4x means 4 × x. The opposite of multiplying by 4 is dividing by 4.","Divide both sides by 4: 4x ÷ 4 = 28 ÷ 4","x = 7","Check: 4 × 7 = 28 ✓"],
+ ["x/5 means x ÷ 5. The opposite of dividing by 5 is multiplying by 5.","Multiply both sides by 5: x = 10 × 5","x = 50","Check: 50 ÷ 5 = 10 ✓"],
+ ["The small 3 means multiply 4 by itself 3 times.","4 × 4 = 16","16 × 4 = 64","Careful: 4³ is NOT 4 × 3 = 12."],
+ ["A square root asks: which number multiplied by itself gives 144?","10 × 10 = 100 (too small), so try 12.","12 × 12 = 12 × 10 + 12 × 2 = 120 + 24 = 144","So √144 = 12 ✓"],
+ ["Both terms contain b, so they are like terms and can be added.","Think of it as 4 b's plus 7 b's.","4 + 7 = 11, so the answer is 11b.","The letter stays b. It only becomes b² when you multiply letters together."],
+ ["Both terms contain a, so they are like terms.","Think of it as 12 a's take away 5 a's.","12 − 5 = 7, so the answer is 7a."],
+ ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","Put the decimal point after the first digit: 35,000 becomes 3.5","Count how many places the decimal point moved: 4 places (35000. → 3.5000).","It is a large number, so the power is positive: n = 4.","Answer: 3.5 × 10<sup>4</sup>","Check: 3.5 × 10,000 = 35,000 ✓"],
+ ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","The first non-zero digit is 6, so A = 6.8","Count how many places the decimal point moved to the right: 0.068 → 6.8 is 2 places.","It is a small number (less than 1), so the power is negative: n = −2.","Answer: 6.8 × 10<sup>−2</sup>","Check: 6.8 ÷ 100 = 0.068 ✓"],
+ ["Split 43 into 40 + 3.","27 × 3 = 81","27 × 40 = 1080","Add: 1080 + 81 = 1161","Estimate check: 30 × 40 = 1200, close to 1161 ✓"],
+ ["Use short division (bus stop method).","3 into 3 = 1","3 into 9 = 3","3 into 2 = 0 with remainder 2. Write 0 and carry the 2 to make 21.","3 into 21 = 7","Answer: 1307 (the 0 is important).","Check: 1307 × 3 = 3921 ✓"],
+ ["Write the numbers in columns with the decimal points lined up: 29.60 − 3.19","Hundredths: 0 − 9 can't be done, so borrow: 10 − 9 = 1","Tenths: 5 − 1 = 4 (the 6 became 5 after borrowing)","Units: 9 − 3 = 6, Tens: 2","Answer: 26.41","Check: 26.41 + 3.19 = 29.60 ✓"],
+ ["Ignore the decimal points for now: 232 × 84","232 × 80 = 18,560","232 × 4 = 928","Add: 18,560 + 928 = 19,488","Now count decimal places in the question: 1 + 1 = 2, so put the point 2 places from the right: 194.88","Estimate check: 23 × 8 = 184, close to 194.88 ✓"],
+ ["Step 1: find the cost of 14 candles. 14 × £5.45","10 × £5.45 = £54.50","4 × £5.45 = £21.80","Total cost = £54.50 + £21.80 = £76.30","Step 2: eight £10 notes = £80","Step 3: change = £80 − £76.30 = £3.70","Check: £76.30 + £3.70 = £80 ✓"],
+ ["Adding a negative is the same as subtracting: 2 + −6 = 2 − 6","Number line: start at 2 and go down 6.","2 → 1 → 0 → −1 → −2 → −3 → −4","Answer: −4"],
+ ["Start at −7 and go further down by 9.","Both numbers are heading in the negative direction, so add them: 7 + 9 = 16","Keep the negative sign.","Answer: −16"],
+ ["Two minus signs next to each other turn into a plus: −3 − −6 = −3 + 6","Number line: start at −3 and go up 6.","−3 → −2 → −1 → 0 → 1 → 2 → 3","Answer: 3"],
+ ["A drop means subtract: 4 − 13","Going from 4 down to 0 uses 4 of the 13 degrees.","There are 13 − 4 = 9 degrees left to drop below zero.","Answer: −9 °C"],
+ ["52² means 52 × 52.","Split 52 into 50 + 2.","52 × 50 = 2600","52 × 2 = 104","Add: 2600 + 104 = 2704","Check: 50² = 2500, so a bit more than that ✓"],
+ ["Step 1: expand the bracket. 2(x + 2) = 2x + 4","So the equation is 2x + 4 = 3x − 11","Step 2: subtract 2x from both sides (so x stays positive): 4 = x − 11","Step 3: add 11 to both sides: 15 = x","Answer: x = 15","Check: left side 2(15 + 2) = 34, right side 3 × 15 − 11 = 34 ✓"],
+ ["Use BIDMAS: Brackets, Indices, Division/Multiplication, Addition/Subtraction.","Indices first: 10² = 100","Multiplication next: 3 × 4 = 12","Subtraction last: 100 − 12 = 88","Common mistake: doing 100 − 3 first. Multiplication must come before subtraction."],
+ ["Multiplying by 100 moves every digit 2 places to the left, filling the gap with zeros.","75 → 750 (×10) → 7500 (×10 again)","Answer: 7500"],
+ ["Dividing by 1000 moves every digit 3 places to the right.","360 ÷ 10 = 36","36 ÷ 10 = 3.6","3.6 ÷ 10 = 0.36","Answer: 0.36"],
+ ["Multiplying by 10 moves every digit 1 place to the left.","0.02 → 0.2","Answer: 0.2","Check: 0.02 is 2 hundredths. 10 hundredths = 1 tenth, so 20 hundredths = 0.2 ✓"],
+ ["Expanding means multiply everything inside the bracket by the number outside.","5 × 6x = 30x","5 × −2 = −10","Answer: 30x − 10","Check with x = 1: 5(6 − 2) = 20 and 30 − 10 = 20 ✓"],
+ ["Volume of a cuboid = length × width × height.","3 × 8.6 = 25.8","25.8 × 3.8: 25.8 × 3 = 77.4 and 25.8 × 0.8 = 20.64","77.4 + 20.64 = 98.04","Volume is in cubic units, so the answer is 98.04 m³","Estimate check: 3 × 9 × 4 = 108, close to 98.04 ✓"],
+ ["Step 1: expand the first bracket: 5(x + 6) = 5x + 30","Step 2: expand the second bracket: −2(x − 3) = −2x + 6 (because −2 × −3 = +6)","Step 3: write it out: 5x + 30 − 2x + 6","Step 4: collect the x terms: 5x − 2x = 3x","Step 5: collect the numbers: 30 + 6 = 36","Answer: 3x + 36","Check with x = 1: 5(7) − 2(−2) = 35 + 4 = 39 and 3 + 36 = 39 ✓"],
+ ["Undo the +11 first: subtract 11 from both sides.","3x = 17 − 11 = 6","Now undo the ×3: divide both sides by 3.","x = 6 ÷ 3 = 2","Check: 3 × 2 + 11 = 17 ✓"],
+ ["Undo the +4 first: subtract 4 from both sides.","x/3 = 9 − 4 = 5","Now undo the ÷3: multiply both sides by 3.","x = 5 × 3 = 15","Check: 15 ÷ 3 + 4 = 5 + 4 = 9 ✓"],
+ ["The power is positive (5), so the number gets bigger: move the decimal point 5 places to the right.","4.2 → 42 (1) → 420 (2) → 4200 (3) → 42000 (4) → 420000 (5)","Answer: 420,000"],
+ ["The power is negative (−4), so the number is small: move the decimal point 4 places to the left.","6.12 → 0.612 (1) → 0.0612 (2) → 0.00612 (3) → 0.000612 (4)","Answer: 0.000612"],
+
+ // Extra practice
+ ["Undo the −3 first: add 3 to both sides.","5x = 22 + 3 = 25","Divide both sides by 5.","x = 25 ÷ 5 = 5","Check: 5 × 5 − 3 = 22 ✓"],
+ ["Undo the −2 first: add 2 to both sides.","x/4 = 6 + 2 = 8","Undo the ÷4: multiply both sides by 4.","x = 8 × 4 = 32","Check: 32 ÷ 4 − 2 = 6 ✓"],
+ ["There are x terms on both sides. Subtract the smaller one (4x) from both sides.","6x − 4x + 5 = 17, so 2x + 5 = 17","Subtract 5 from both sides: 2x = 12","Divide both sides by 2: x = 6","Check: left 6 × 6 + 5 = 41, right 4 × 6 + 17 = 41 ✓"],
+ ["The small 3 means multiply 5 by itself 3 times.","5 × 5 = 25","25 × 5 = 125"],
+ ["Which number multiplied by itself gives 81?","8 × 8 = 64 (too small), 9 × 9 = 81 ✓","Answer: 9"],
+ ["15² means 15 × 15.","15 × 10 = 150","15 × 5 = 75","150 + 75 = 225"],
+ ["Group the a terms: 5a + 2a = 7a","Group the b terms: 3b − b = 2b (remember b means 1b)","Put them together: 7a + 2b","a and b are different letters, so they cannot be combined any further."],
+ ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","Put the decimal point after the first digit: 52,000 → 5.2","The decimal point moved 4 places and the number is large, so n = 4.","Answer: 5.2 × 10<sup>4</sup>","Check: 5.2 × 10,000 = 52,000 ✓"],
+ ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","The first non-zero digit is 3, so A = 3.1","The decimal point moved 3 places to the right and the number is small, so n = −3.","Answer: 3.1 × 10<sup>−3</sup>","Check: 3.1 ÷ 1000 = 0.0031 ✓"],
+ ["The power is positive (3), so move the decimal point 3 places to the right.","7.5 → 75 (1) → 750 (2) → 7500 (3)","Answer: 7,500"],
+ ["Ignore the decimal points: 45 × 32","45 × 30 = 1350","45 × 2 = 90","1350 + 90 = 1440","Count decimal places in the question: 1 + 1 = 2, so 14.40 = 14.4","Estimate check: 4.5 × 3 = 13.5, close to 14.4 ✓"],
+ ["Line up the decimal points: 6.80 + 12.45","Hundredths: 0 + 5 = 5","Tenths: 8 + 4 = 12, write 2 and carry 1","Units: 6 + 2 + 1 = 9","Tens: 1","Answer: 19.25"],
+ ["Step 1: cost of 6 notebooks = 6 × £2.35","6 × £2 = £12 and 6 × £0.35 = £2.10","Total = £12 + £2.10 = £14.10","Step 2: change from £20 = £20 − £14.10 = £5.90","Check: £14.10 + £5.90 = £20 ✓"],
+ ["Two minus signs next to each other turn into a plus: −4 − −9 = −4 + 9","Number line: start at −4 and go up 9.","Answer: 5"],
+ ["A rise means add: −3 + 7","Number line: from −3 go up 3 to reach 0.","There are 4 more to go (7 − 3 = 4).","Answer: 4 °C"],
+ ["Use BIDMAS.","Indices first: 7² = 49","Multiplication next: 2 × 5 = 10","Subtraction last: 49 − 10 = 39","Common mistake: doing 49 − 2 first. Multiplication comes before subtraction."],
+ ["Step 1: expand the first bracket: 4(x + 3) = 4x + 12","Step 2: expand the second bracket: −2(x − 1) = −2x + 2 (because −2 × −1 = +2)","Step 3: write it out: 4x + 12 − 2x + 2","Step 4: collect the x terms: 4x − 2x = 2x","Step 5: collect the numbers: 12 + 2 = 14","Answer: 2x + 14","Check with x = 1: 4(4) − 2(0) = 16 and 2 + 14 = 16 ✓"],
+ ["Volume of a cuboid = length × width × height.","5 × 4 = 20","20 × 2.5 = 20 × 2 + 20 × 0.5 = 40 + 10 = 50","Volume is in cubic units: 50 m³"]
+];
+
+function stepsHTML(i){
+  return '<ol class="steps">'+STEPS[i].map(s=>'<li>'+s+'</li>').join("")+'</ol>';
+}
+
 let order=[], idx=0, score=0, answers=[], locked=false;
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -179,7 +241,9 @@ function pick(btn,right,q){
   if(right){score++;}else{btn.classList.add("bad");}
   answers.push({i:order[idx],right:right,chosen:btn.dataset.v});
   document.getElementById("liveScore").textContent="Score: "+score;
-  document.getElementById("fb").innerHTML='<div class="fb '+(right?"ok":"bad")+'"><strong>'+(right?"Correct.":"Not quite.")+'</strong> '+q[5]+'</div>';
+  document.getElementById("fb").innerHTML='<div class="fb '+(right?"ok":"bad")+'"><strong>'+(right?"Correct!":"Not quite.")+'</strong>'+
+    '<div style="margin-top:8px"><strong>Answer:</strong> '+q[3]+'</div>'+
+    '<div style="margin-top:10px"><strong>Step-by-step solution:</strong></div>'+stepsHTML(order[idx])+'</div>';
   const n=document.getElementById("next");n.textContent=idx===order.length-1?"See results":"Next";n.classList.remove("hide");
 }
 
@@ -198,7 +262,7 @@ function finish(){
     return '<tr><td>'+REF[t].n+'<div class="muted" style="font-size:.8rem">'+REF[t].r+'</div></td><td class="pill" style="color:'+col+'">'+x.r+'/'+x.n+'</td></tr>';
   }).join("");
   const wrong=answers.filter(a=>!a.right);
-  let rev=wrong.map(a=>{const q=Q[a.i];return '<div class="rev"><div>'+q[2]+'</div><div style="color:var(--bad)">Your answer: '+a.chosen+'</div><div style="color:var(--ok)">Correct answer: '+q[3]+'</div><div class="muted">'+q[5]+'</div></div>';}).join("");
+  let rev=wrong.map(a=>{const q=Q[a.i];return '<div class="rev"><div>'+q[2]+'</div><div style="color:var(--bad)">Your answer: '+a.chosen+'</div><div style="color:var(--ok)">Correct answer: '+q[3]+'</div><div style="margin-top:6px"><strong>Solution:</strong></div>'+stepsHTML(a.i)+'</div>';}).join("");
   let msg=pct>=90?"Excellent work. You are ready for the test.":pct>=70?"Good effort. Look at the topics marked in amber or red below.":"Keep practising. Go through the explanations and try again.";
   document.getElementById("result").innerHTML=
     '<h2>Quiz complete</h2><div class="score">'+score+' / '+total+' ('+pct+'%)</div><p>'+msg+'</p>'+
