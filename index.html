@@ -1,285 +1,246 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Year 8 Maths Quiz – DC1 Test B</title>
+<title>Word Problem Adventure</title>
 <style>
-  :root{--bg:#f4f6fb;--card:#fff;--ink:#1f2a44;--muted:#6b7590;--brand:#3b5bdb;--brand-d:#2f49b0;--ok:#2b9348;--okbg:#e6f6ea;--bad:#d00000;--badbg:#fdeaea;--line:#dfe4f0}
+  :root{--bg1:#ffe9a8;--bg2:#ffc2d9;--ink:#2b2d42;--green:#2fbf71;--red:#ef476f;--blue:#118ab2;--yellow:#ffd166;--card:#fff}
   *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-  .wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
-  .card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 2px 14px rgba(31,42,68,.08)}
-  h1{margin:0 0 6px;font-size:1.7rem}
-  h2{margin:0 0 12px;font-size:1.3rem}
-  p{margin:8px 0}
-  .muted{color:var(--muted)}
-  .btn{display:inline-block;border:0;border-radius:10px;padding:12px 22px;font-size:1rem;font-weight:600;cursor:pointer;background:var(--brand);color:#fff}
-  .btn:hover{background:var(--brand-d)}
-  .btn.alt{background:#e8ecf8;color:var(--ink)}
-  .btn.alt:hover{background:#d9e0f3}
-  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-  .topbar{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted);margin-bottom:8px}
-  .bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:18px}
-  .bar>div{height:100%;background:var(--brand);width:0;transition:width .3s}
-  .tag{display:inline-block;font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:99px;background:#eef1fb;color:var(--brand);margin-right:6px}
-  .tag.extra{background:#fff4dc;color:#9a6700}
-  .q{font-size:1.3rem;font-weight:600;margin:14px 0 18px}
-  .opt{display:block;width:100%;text-align:left;font-size:1.1rem;padding:14px 16px;margin:10px 0;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
-  .opt:hover:not(:disabled){border-color:var(--brand)}
+  body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;color:var(--ink);
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;display:flex;justify-content:center;padding:16px}
+  .app{width:100%;max-width:640px}
+  .card{background:var(--card);border-radius:28px;padding:24px;box-shadow:0 10px 0 rgba(0,0,0,.08);margin-bottom:16px}
+  h1{margin:0 0 8px;font-size:2.1rem;text-align:center;color:var(--blue)}
+  h2{margin:0 0 12px;text-align:center}
+  p.lead{text-align:center;font-size:1.15rem;margin:8px 0 18px}
+  .big{font-size:4rem;text-align:center;margin:4px 0}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:20px;font-weight:bold}
+  .go{display:block;margin:0 auto;background:var(--green);color:#fff;font-size:1.5rem;padding:14px 36px;box-shadow:0 6px 0 #1f8f53}
+  .go:active{transform:translateY(4px);box-shadow:0 2px 0 #1f8f53}
+  .top{display:flex;justify-content:space-between;align-items:center;font-weight:bold;margin-bottom:8px}
+  .bar{height:16px;background:#eee;border-radius:10px;overflow:hidden;margin-bottom:16px}
+  .bar>div{height:100%;background:linear-gradient(90deg,var(--yellow),var(--green));width:0;transition:width .4s}
+  .emoji{font-size:3rem;text-align:center;letter-spacing:4px;min-height:3.4rem;word-break:break-all}
+  .q{font-size:1.45rem;line-height:1.5;text-align:center;margin:10px 0 18px}
+  .listen{display:block;margin:0 auto 14px;background:var(--yellow);font-size:1rem;padding:8px 18px;box-shadow:0 4px 0 #d9a93b}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opt{background:#e8f4fa;border:4px solid var(--blue);color:var(--ink);font-size:2rem;padding:16px 8px;box-shadow:0 5px 0 rgba(0,0,0,.12)}
   .opt:disabled{cursor:default}
-  .opt.ok{border-color:var(--ok);background:var(--okbg)}
-  .opt.bad{border-color:var(--bad);background:var(--badbg)}
-  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:1rem}
-  .fb.ok{background:var(--okbg)} .fb.bad{background:var(--badbg)}
-  .score{font-size:3rem;font-weight:800;color:var(--brand);margin:6px 0}
-  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.95rem}
-  td,th{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-  .pill{font-weight:700}
-  .rev{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
-  .hide{display:none}
-  sup{font-size:.7em}
-  ol.steps{margin:6px 0 0;padding-left:22px}
-  ol.steps li{margin:5px 0}
+  .opt.right{background:var(--green);border-color:#1f8f53;color:#fff}
+  .opt.wrong{background:var(--red);border-color:#b32e50;color:#fff}
+  .fb{min-height:3.2rem;text-align:center;font-size:1.25rem;font-weight:bold;margin-top:16px}
+  .fb.ok{color:#1f8f53}.fb.no{color:#b32e50}
+  .next{display:none;margin:12px auto 0;background:var(--blue);color:#fff;font-size:1.3rem;padding:12px 30px;box-shadow:0 5px 0 #0b6280}
+  .stars{font-size:2.6rem;text-align:center}
+  .score{font-size:2.6rem;text-align:center;font-weight:bold;color:var(--green)}
+  .review{margin-top:14px;font-size:1.05rem}
+  .review div{background:#fff4f6;border-left:6px solid var(--red);padding:10px 12px;border-radius:10px;margin-bottom:10px}
+  .hidden{display:none}
+  @media(max-width:420px){.opt{font-size:1.7rem}.q{font-size:1.25rem}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
 
-<div id="start" class="card">
-  <h1>Year 8 Maths Quiz</h1>
-  <p class="muted">DC1 Test B revision &middot; 50 questions</p>
-  <p>32 questions are taken directly from the revision sheet (marked <span class="tag">Sheet</span>) and 18 are extra practice on the same topics (marked <span class="tag extra">Extra</span>).</p>
-  <p>Topics: solving equations, squares and roots, collecting like terms, standard form, powers of 10, four operations with decimals and negatives, problem solving, expanding and volume of cuboids.</p>
-  <p><strong>No calculator.</strong> Work each one out on paper first, then choose your answer.</p>
-  <div class="row">
-    <button class="btn" onclick="startQuiz(false)">Start in order</button>
-    <button class="btn alt" onclick="startQuiz(true)">Start shuffled</button>
+  <div id="start" class="card">
+    <div class="big">🦁🐘🐒</div>
+    <h1>Word Problem Adventure</h1>
+    <p class="lead">Read each story. Add or take away to find the answer!<br>There are <b>50</b> stories. Ready?</p>
+    <button class="go" id="startBtn">Let's Go! 🚀</button>
   </div>
-</div>
 
-<div id="quiz" class="card hide">
-  <div class="topbar"><span id="count"></span><span id="liveScore"></span></div>
-  <div class="bar"><div id="prog"></div></div>
-  <div id="tags"></div>
-  <div class="q" id="qtext"></div>
-  <div id="opts"></div>
-  <div id="fb"></div>
-  <div class="row"><button class="btn hide" id="next" onclick="next()">Next</button></div>
-</div>
+  <div id="quiz" class="card hidden">
+    <div class="top"><span id="qnum">Story 1 of 50</span><span id="sc">⭐ 0</span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <div class="emoji" id="pic"></div>
+    <div class="q" id="qtext"></div>
+    <button class="listen" id="listenBtn">🔊 Read it to me</button>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <button class="next" id="nextBtn">Next ➜</button>
+  </div>
 
-<div id="result" class="card hide"></div>
+  <div id="end" class="card hidden">
+    <div class="stars" id="endStars"></div>
+    <h2 id="endMsg"></h2>
+    <div class="score" id="endScore"></div>
+    <div class="review" id="review"></div>
+    <button class="go" id="againBtn" style="margin-top:16px">Play Again 🔁</button>
+  </div>
 
 </div>
 
 <script>
-const REF = {
-  ops:   {n:"Four operations, decimals and negatives", r:"MathsWatch N13b, N14b, N15b, N29b, N19a, N19b"},
-  sq:    {n:"Squares, cubes and roots", r:"MathsWatch N25"},
-  prob:  {n:"Problem solving with number", r:"MathsWatch N22a, N22b"},
-  std:   {n:"Standard form", r:"MathsWatch N45a, N45b"},
-  pow10: {n:"Multiplying and dividing by powers of 10", r:"MathsWatch N17a, N17b"},
-  like:  {n:"Collecting like terms", r:"MathsWatch A6"},
-  solve: {n:"Solving equations", r:"MathsWatch A12, A19b"},
-  exp:   {n:"Expand and simplify", r:"MathsWatch A8, A6"},
-  vol:   {n:"Volume of cuboids", r:"MathsWatch G21a"}
-};
-
-// [topic, fromSheet, question, correct, [3 wrong], explanation]
-const Q = [
- ["solve",1,"Solve: x + 5 = 9","x = 4",["x = 14","x = 5","x = −4"],"Subtract 5 from both sides: 9 − 5 = 4."],
- ["solve",1,"Solve: x − 4 = 12","x = 16",["x = 8","x = 48","x = 3"],"Add 4 to both sides: 12 + 4 = 16."],
- ["solve",1,"Solve: 4x = 28","x = 7",["x = 24","x = 32","x = 112"],"Divide both sides by 4: 28 ÷ 4 = 7."],
- ["solve",1,"Solve: x/5 = 10","x = 50",["x = 2","x = 5","x = 15"],"Multiply both sides by 5: 10 × 5 = 50."],
- ["sq",1,"Calculate 4<sup>3</sup>","64",["12","81","16"],"4³ = 4 × 4 × 4 = 16 × 4 = 64. It is not 4 × 3."],
- ["sq",1,"Calculate √144","12",["72","14","13"],"12 × 12 = 144, so the square root is 12."],
- ["like",1,"Simplify: 4b + 7b","11b",["11b²","28b","11"],"Add the like terms: 4 + 7 = 11, and the letter stays b."],
- ["like",1,"Simplify: 12a − 5a","7a",["17a","7","60a"],"12 − 5 = 7, so the answer is 7a."],
- ["std",1,"Write 35,000 in standard form.","3.5 × 10<sup>4</sup>",["3.5 × 10<sup>3</sup>","35 × 10<sup>3</sup>","3.5 × 10<sup>5</sup>"],"Move the decimal point 4 places to get 3.5, so the power is 4."],
- ["std",1,"Write 0.068 in standard form.","6.8 × 10<sup>−2</sup>",["6.8 × 10<sup>2</sup>","6.8 × 10<sup>−3</sup>","0.68 × 10<sup>−1</sup>"],"Move the decimal point 2 places to the right to get 6.8. Small numbers have a negative power."],
- ["ops",1,"Calculate 27 × 43","1161",["1051","1171","1261"],"27 × 40 = 1080 and 27 × 3 = 81. Add them: 1080 + 81 = 1161."],
- ["ops",1,"Calculate 3921 ÷ 3","1307",["137","1317","1370"],"3 into 3 = 1, 3 into 9 = 3, 3 into 2 = 0 remainder 2, 3 into 21 = 7. The zero matters: 1307."],
- ["ops",1,"Calculate 29.6 − 3.19","26.41",["26.59","26.51","25.41"],"Write 29.60 − 3.19 with the decimal points lined up: 26.41."],
- ["ops",1,"Calculate 23.2 × 8.4","194.88",["173.98","194.08","19.488"],"232 × 84 = 19,488. There are 2 decimal places in total, so 194.88."],
- ["prob",1,"Antoni buys 14 candles for £5.45 each. He pays with eight £10 notes. How much change will he receive?","£3.70",["£3.30","£76.30","£4.70"],"14 × £5.45 = £76.30. He pays £80, so change = £80 − £76.30 = £3.70."],
- ["ops",1,"Calculate 2 + −6","−4",["4","−8","8"],"Adding a negative is the same as subtracting: 2 − 6 = −4."],
- ["ops",1,"Calculate −7 − 9","−16",["−2","16","2"],"Start at −7 and go down 9 more: −16."],
- ["ops",1,"Calculate −3 − −6","3",["−9","9","−3"],"Subtracting a negative is the same as adding: −3 + 6 = 3."],
- ["prob",1,"The temperature in Southampton is 4 °C and drops by 13 degrees overnight. What is the new temperature?","−9 °C",["9 °C","−17 °C","17 °C"],"4 − 13 = −9."],
- ["sq",1,"Calculate 52<sup>2</sup>","2704",["104","2504","2714"],"52 × 52 = 52 × 50 + 52 × 2 = 2600 + 104 = 2704. Squaring is not doubling."],
- ["solve",1,"Solve: 2(x + 2) = 3x − 11","x = 15",["x = 13","x = −7","x = 11"],"Expand: 2x + 4 = 3x − 11. Subtract 2x: 4 = x − 11. Add 11: x = 15."],
- ["ops",1,"Calculate 10<sup>2</sup> − 3 × 4","88",["388","101","112"],"BIDMAS: powers first (100), then multiply (12), then subtract: 100 − 12 = 88."],
- ["pow10",1,"Calculate 75 × 100","7500",["750","75,000","705"],"Multiplying by 100 moves every digit 2 places to the left, so 75 becomes 7500."],
- ["pow10",1,"Calculate 360 ÷ 1000","0.36",["0.036","3.6","36"],"Dividing by 1000 moves the digits 3 places to the right: 360 becomes 0.36."],
- ["pow10",1,"Calculate 0.02 × 10","0.2",["0.002","2","20"],"Multiplying by 10 moves the digits 1 place to the left: 0.02 becomes 0.2."],
- ["exp",1,"Expand: 5(6x − 2)","30x − 10",["30x − 2","11x − 2","30x + 10"],"Multiply both terms by 5: 5 × 6x = 30x and 5 × −2 = −10."],
- ["vol",1,"Calculate the volume of a cuboid with length 3 m, width 8.6 m and height 3.8 m.","98.04 m³",["15.4 m³","9.804 m³","89.04 m³"],"Volume = l × w × h = 3 × 8.6 × 3.8 = 25.8 × 3.8 = 98.04 m³."],
- ["exp",1,"Expand and simplify: 5(x + 6) − 2(x − 3)","3x + 36",["3x + 24","7x + 36","3x − 24"],"5x + 30 − 2x + 6. The −2 × −3 gives +6. Then 5x − 2x = 3x and 30 + 6 = 36."],
- ["solve",1,"Solve: 3x + 11 = 17","x = 2",["x = 6","x = 9⅓","x = 3"],"Subtract 11: 3x = 6. Divide by 3: x = 2."],
- ["solve",1,"Solve: x/3 + 4 = 9","x = 15",["x = 5","x = 39","x = 27"],"Subtract 4: x/3 = 5. Multiply by 3: x = 15."],
- ["std",1,"Write 4.2 × 10<sup>5</sup> in ordinary form.","420,000",["42,000","4,200,000","0.000042"],"Move the decimal point 5 places to the right: 420,000."],
- ["std",1,"Write 6.12 × 10<sup>−4</sup> in ordinary form.","0.000612",["0.00612","0.0000612","612,000"],"A negative power makes the number small. Move the decimal point 4 places to the left: 0.000612."],
-
- // ---------- Extra practice ----------
- ["solve",0,"Solve: 5x − 3 = 22","x = 5",["x = 3.8","x = 4","x = 17"],"Add 3: 5x = 25. Divide by 5: x = 5."],
- ["solve",0,"Solve: x/4 − 2 = 6","x = 32",["x = 2","x = 16","x = 24"],"Add 2: x/4 = 8. Multiply by 4: x = 32."],
- ["solve",0,"Solve: 6x + 5 = 4x + 17","x = 6",["x = 11","x = 2","x = 3"],"Subtract 4x: 2x + 5 = 17. Subtract 5: 2x = 12. Divide by 2: x = 6."],
- ["sq",0,"Calculate 5<sup>3</sup>","125",["15","25","625"],"5 × 5 × 5 = 25 × 5 = 125."],
- ["sq",0,"Calculate √81","9",["40.5","18","8"],"9 × 9 = 81, so the square root is 9."],
- ["sq",0,"Calculate 15<sup>2</sup>","225",["30","125","215"],"15 × 15 = 150 + 75 = 225."],
- ["like",0,"Simplify: 5a + 3b + 2a − b","7a + 2b",["7a + 4b","9ab","8a + 2b"],"Collect the a terms: 5a + 2a = 7a. Collect the b terms: 3b − b = 2b."],
- ["std",0,"Write 52,000 in standard form.","5.2 × 10<sup>4</sup>",["5.2 × 10<sup>3</sup>","52 × 10<sup>3</sup>","5.2 × 10<sup>5</sup>"],"Move the decimal point 4 places so the first number is between 1 and 10: 5.2 × 10⁴."],
- ["std",0,"Write 0.0031 in standard form.","3.1 × 10<sup>−3</sup>",["3.1 × 10<sup>3</sup>","3.1 × 10<sup>−4</sup>","0.31 × 10<sup>−2</sup>"],"Move the decimal point 3 places to the right to get 3.1, so the power is −3."],
- ["std",0,"Write 7.5 × 10<sup>3</sup> in ordinary form.","7,500",["750","75,000","7,503"],"Move the decimal point 3 places to the right: 7,500."],
- ["ops",0,"Calculate 4.5 × 3.2","14.4",["1.44","144","14.04"],"45 × 32 = 1440. There are 2 decimal places in total, so 14.40 = 14.4."],
- ["ops",0,"Calculate 6.8 + 12.45","19.25",["19.13","18.25","13.13"],"Line up the decimal points: 6.80 + 12.45 = 19.25."],
- ["prob",0,"Sam buys 6 notebooks at £2.35 each. He pays with a £20 note. How much change does he get?","£5.90",["£14.10","£6.90","£5.10"],"6 × £2.35 = £14.10. Change = £20 − £14.10 = £5.90."],
- ["ops",0,"Calculate −4 − −9","5",["−13","13","−5"],"Subtracting a negative is the same as adding: −4 + 9 = 5."],
- ["prob",0,"The temperature is −3 °C and rises by 7 degrees. What is the new temperature?","4 °C",["−10 °C","10 °C","−4 °C"],"−3 + 7 = 4."],
- ["ops",0,"Calculate 7<sup>2</sup> − 2 × 5","39",["235","59","29"],"Powers first: 49. Then multiply: 2 × 5 = 10. Then subtract: 49 − 10 = 39."],
- ["exp",0,"Expand and simplify: 4(x + 3) − 2(x − 1)","2x + 14",["2x + 10","6x + 14","2x + 12"],"4x + 12 − 2x + 2. The −2 × −1 gives +2. So 2x + 14."],
- ["vol",0,"Calculate the volume of a cuboid with length 5 m, width 4 m and height 2.5 m.","50 m³",["11.5 m³","500 m³","100 m³"],"5 × 4 = 20, then 20 × 2.5 = 50 m³."]
+// [story text, first number, second number, operation, picture]
+const ADD = [
+ ["Mia has 3 red apples and 4 green apples. How many apples does she have in all?",3,4,"+","🍎🍎🍎🍏🍏🍏🍏"],
+ ["5 birds sit on a fence. 2 more birds fly over to join them. How many birds are on the fence now?",5,2,"+","🐦🐦🐦🐦🐦🐦🐦"],
+ ["Tom has 6 toy cars. His dad gives him 3 more toy cars. How many toy cars does Tom have now?",6,3,"+","🚗🚗🚗🚗🚗🚗🚙🚙🚙"],
+ ["There are 4 ducks in a pond. 5 more ducks swim in. How many ducks are in the pond now?",4,5,"+","🦆🦆🦆🦆🦆🦆🦆🦆🦆"],
+ ["Sara picks 7 flowers in the morning and 2 flowers in the afternoon. How many flowers did she pick?",7,2,"+","🌸🌸🌸🌸🌸🌸🌸🌼🌼"],
+ ["8 children are on the bus. 3 more children get on. How many children are on the bus now?",8,3,"+","🚌"],
+ ["Ben ate 5 cookies on Monday and 5 cookies on Tuesday. How many cookies did he eat?",5,5,"+","🍪🍪🍪🍪🍪🍪🍪🍪🍪🍪"],
+ ["A shelf has 9 books. Mom puts 4 more books on the shelf. How many books are on the shelf now?",9,4,"+","📚"],
+ ["6 frogs sit on a log. 6 frogs sit on the grass. How many frogs are there in all?",6,6,"+","🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸"],
+ ["Lily has 10 stickers. Her friend gives her 5 more stickers. How many stickers does Lily have now?",10,5,"+","⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐"],
+ ["There are 7 red balloons and 8 blue balloons at the party. How many balloons are there altogether?",7,8,"+","🎈🎈🎈🎈🎈🎈🎈"],
+ ["A farmer has 9 cows and 7 sheep. How many animals does the farmer have in all?",9,7,"+","🐄🐑"],
+ ["There are 12 fish in a tank. The shop puts in 4 more fish. How many fish are in the tank now?",12,4,"+","🐟🐠🐟🐠🐟🐠"],
+ ["Omar has 8 pencils. His teacher gives him 6 more pencils. How many pencils does Omar have now?",8,6,"+","✏️✏️✏️✏️✏️✏️✏️✏️"],
+ ["11 kids are playing in the park. 5 more kids come to play. How many kids are playing now?",11,5,"+","🛝🧒👧"],
+ ["3 cats are sleeping and 9 cats are awake. How many cats are there in all?",3,9,"+","🐱😺🐈"],
+ ["Anna drew 4 stars on Monday and 8 stars on Tuesday. How many stars did she draw?",4,8,"+","✨🌟⭐"],
+ ["A basket has 13 oranges. Dad puts in 3 more oranges. How many oranges are in the basket now?",13,3,"+","🍊🍊🍊🍊🍊"],
+ ["There are 9 boys and 9 girls in Grade 1. How many children are in the class?",9,9,"+","👦👧"],
+ ["Jack scored 7 points in the first game and 6 points in the second game. How many points did he score in all?",7,6,"+","⚽🥅"],
+ ["A garden has 14 tulips and 5 roses. How many flowers are in the garden?",14,5,"+","🌷🌹"],
+ ["There are 10 candies in a bag and 10 candies in a jar. How many candies are there in all?",10,10,"+","🍬🍭🍬🍭"],
+ ["6 ants are carrying crumbs. 7 more ants come to help. How many ants are there now?",6,7,"+","🐜🐜🐜🐜🐜🐜🐜"],
+ ["There are 15 books on the table and 4 books on the floor. How many books are there in all?",15,4,"+","📖📘📗"],
+ ["Zoe has 8 marbles. She finds 9 more marbles in the toy box. How many marbles does she have now?",8,9,"+","🔵🔴🟢🟡"]
+];
+const SUB = [
+ ["Dad had 9 balloons. 4 balloons popped. How many balloons are left?",9,4,"-","🎈🎈🎈🎈🎈💥"],
+ ["There are 8 cookies on a plate. Amy eats 3 cookies. How many cookies are left?",8,3,"-","🍪🍪🍪🍪🍪"],
+ ["10 birds are in a tree. 6 birds fly away. How many birds are still in the tree?",10,6,"-","🌳🐦🐦🐦🐦"],
+ ["Leo has 7 pencils. He gives 2 pencils to his friend. How many pencils does Leo have now?",7,2,"-","✏️✏️✏️✏️✏️"],
+ ["There are 12 apples in a basket. Mum takes out 5 apples. How many apples are left?",12,5,"-","🍎🍎🍎🍎🍎🍎🍎"],
+ ["15 children are at the park. 8 children go home. How many children are still at the park?",15,8,"-","🌳🧒👧"],
+ ["A bakery has 14 muffins. It sells 6 muffins. How many muffins are left?",14,6,"-","🧁🧁🧁🧁🧁🧁🧁🧁"],
+ ["Nina has 9 stickers. She gives 3 stickers to her sister. How many stickers does Nina have left?",9,3,"-","⭐⭐⭐⭐⭐⭐"],
+ ["11 frogs are on a log. 4 frogs jump into the pond. How many frogs are still on the log?",11,4,"-","🐸🐸🐸🐸🐸🐸🐸"],
+ ["Sam has 13 crayons. 7 of them are broken. How many crayons are not broken?",13,7,"-","🖍️🖍️🖍️🖍️🖍️🖍️"],
+ ["There are 16 flowers in a vase. 9 flowers are old and thrown away. How many flowers are left?",16,9,"-","💐🌷🌷🌷🌷🌷🌷🌷"],
+ ["18 cars are in a parking lot. 10 cars drive away. How many cars are left?",18,10,"-","🚗🚙🚕🚗"],
+ ["Kim has 20 stickers. She uses 5 stickers on her notebook. How many stickers does she have left?",20,5,"-","📒⭐⭐⭐⭐⭐"],
+ ["A shelf had 17 books. Children borrowed 8 books. How many books are left on the shelf?",17,8,"-","📚📚📚📚📚📚📚📚📚"],
+ ["There are 5 candles on a cake. 2 candles are blown out. How many candles are still lit?",5,2,"-","🎂🕯️🕯️🕯️"],
+ ["There are 19 children in the class. 9 of them are boys. How many are girls?",19,9,"-","👧👧👧👧👧👧👧👧👧👧"],
+ ["A box has 14 pencils. Ravi loses 5 pencils. How many pencils are left in the box?",14,5,"-","📦✏️✏️✏️✏️"],
+ ["12 birds are on a wire. 3 birds fly away. How many birds are left on the wire?",12,3,"-","🐦🐦🐦🐦🐦🐦🐦🐦🐦"],
+ ["Raj had 15 grapes. He ate 6 grapes. How many grapes does Raj have left?",15,6,"-","🍇🍇🍇🍇🍇🍇🍇🍇🍇"],
+ ["There are 8 pizza slices. The family eats 4 slices. How many slices are left?",8,4,"-","🍕🍕🍕🍕"],
+ ["Dad blows up 13 balloons. 4 balloons pop. How many balloons are left?",13,4,"-","🎈🎈🎈🎈🎈🎈🎈🎈🎈"],
+ ["The class has 18 chairs. 12 chairs have children on them. How many chairs are empty?",18,12,"-","🪑🪑🪑🪑🪑🪑"],
+ ["Ella has 16 beads. She loses 7 beads. How many beads does she have now?",16,7,"-","📿🔴🔵🟡🟢"],
+ ["There are 10 ice creams in the freezer. 3 ice creams melt. How many ice creams are not melted?",10,3,"-","🍦🍦🍦🍦🍦🍦🍦"],
+ ["Frank has 20 coins. He spends 11 coins at the shop. How many coins does he have left?",20,11,"-","🪙🪙🪙🪙🪙🪙🪙🪙🪙"]
 ];
 
-// Detailed step-by-step solutions, same order as Q above
-const STEPS = [
- ["Goal: get x on its own.","The +5 is in the way. Do the opposite: subtract 5 from both sides.","x + 5 − 5 = 9 − 5","x = 4","Check: 4 + 5 = 9 ✓"],
- ["Goal: get x on its own.","The −4 is in the way. Do the opposite: add 4 to both sides.","x − 4 + 4 = 12 + 4","x = 16","Check: 16 − 4 = 12 ✓"],
- ["4x means 4 × x. The opposite of multiplying by 4 is dividing by 4.","Divide both sides by 4: 4x ÷ 4 = 28 ÷ 4","x = 7","Check: 4 × 7 = 28 ✓"],
- ["x/5 means x ÷ 5. The opposite of dividing by 5 is multiplying by 5.","Multiply both sides by 5: x = 10 × 5","x = 50","Check: 50 ÷ 5 = 10 ✓"],
- ["The small 3 means multiply 4 by itself 3 times.","4 × 4 = 16","16 × 4 = 64","Careful: 4³ is NOT 4 × 3 = 12."],
- ["A square root asks: which number multiplied by itself gives 144?","10 × 10 = 100 (too small), so try 12.","12 × 12 = 12 × 10 + 12 × 2 = 120 + 24 = 144","So √144 = 12 ✓"],
- ["Both terms contain b, so they are like terms and can be added.","Think of it as 4 b's plus 7 b's.","4 + 7 = 11, so the answer is 11b.","The letter stays b. It only becomes b² when you multiply letters together."],
- ["Both terms contain a, so they are like terms.","Think of it as 12 a's take away 5 a's.","12 − 5 = 7, so the answer is 7a."],
- ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","Put the decimal point after the first digit: 35,000 becomes 3.5","Count how many places the decimal point moved: 4 places (35000. → 3.5000).","It is a large number, so the power is positive: n = 4.","Answer: 3.5 × 10<sup>4</sup>","Check: 3.5 × 10,000 = 35,000 ✓"],
- ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","The first non-zero digit is 6, so A = 6.8","Count how many places the decimal point moved to the right: 0.068 → 6.8 is 2 places.","It is a small number (less than 1), so the power is negative: n = −2.","Answer: 6.8 × 10<sup>−2</sup>","Check: 6.8 ÷ 100 = 0.068 ✓"],
- ["Split 43 into 40 + 3.","27 × 3 = 81","27 × 40 = 1080","Add: 1080 + 81 = 1161","Estimate check: 30 × 40 = 1200, close to 1161 ✓"],
- ["Use short division (bus stop method).","3 into 3 = 1","3 into 9 = 3","3 into 2 = 0 with remainder 2. Write 0 and carry the 2 to make 21.","3 into 21 = 7","Answer: 1307 (the 0 is important).","Check: 1307 × 3 = 3921 ✓"],
- ["Write the numbers in columns with the decimal points lined up: 29.60 − 3.19","Hundredths: 0 − 9 can't be done, so borrow: 10 − 9 = 1","Tenths: 5 − 1 = 4 (the 6 became 5 after borrowing)","Units: 9 − 3 = 6, Tens: 2","Answer: 26.41","Check: 26.41 + 3.19 = 29.60 ✓"],
- ["Ignore the decimal points for now: 232 × 84","232 × 80 = 18,560","232 × 4 = 928","Add: 18,560 + 928 = 19,488","Now count decimal places in the question: 1 + 1 = 2, so put the point 2 places from the right: 194.88","Estimate check: 23 × 8 = 184, close to 194.88 ✓"],
- ["Step 1: find the cost of 14 candles. 14 × £5.45","10 × £5.45 = £54.50","4 × £5.45 = £21.80","Total cost = £54.50 + £21.80 = £76.30","Step 2: eight £10 notes = £80","Step 3: change = £80 − £76.30 = £3.70","Check: £76.30 + £3.70 = £80 ✓"],
- ["Adding a negative is the same as subtracting: 2 + −6 = 2 − 6","Number line: start at 2 and go down 6.","2 → 1 → 0 → −1 → −2 → −3 → −4","Answer: −4"],
- ["Start at −7 and go further down by 9.","Both numbers are heading in the negative direction, so add them: 7 + 9 = 16","Keep the negative sign.","Answer: −16"],
- ["Two minus signs next to each other turn into a plus: −3 − −6 = −3 + 6","Number line: start at −3 and go up 6.","−3 → −2 → −1 → 0 → 1 → 2 → 3","Answer: 3"],
- ["A drop means subtract: 4 − 13","Going from 4 down to 0 uses 4 of the 13 degrees.","There are 13 − 4 = 9 degrees left to drop below zero.","Answer: −9 °C"],
- ["52² means 52 × 52.","Split 52 into 50 + 2.","52 × 50 = 2600","52 × 2 = 104","Add: 2600 + 104 = 2704","Check: 50² = 2500, so a bit more than that ✓"],
- ["Step 1: expand the bracket. 2(x + 2) = 2x + 4","So the equation is 2x + 4 = 3x − 11","Step 2: subtract 2x from both sides (so x stays positive): 4 = x − 11","Step 3: add 11 to both sides: 15 = x","Answer: x = 15","Check: left side 2(15 + 2) = 34, right side 3 × 15 − 11 = 34 ✓"],
- ["Use BIDMAS: Brackets, Indices, Division/Multiplication, Addition/Subtraction.","Indices first: 10² = 100","Multiplication next: 3 × 4 = 12","Subtraction last: 100 − 12 = 88","Common mistake: doing 100 − 3 first. Multiplication must come before subtraction."],
- ["Multiplying by 100 moves every digit 2 places to the left, filling the gap with zeros.","75 → 750 (×10) → 7500 (×10 again)","Answer: 7500"],
- ["Dividing by 1000 moves every digit 3 places to the right.","360 ÷ 10 = 36","36 ÷ 10 = 3.6","3.6 ÷ 10 = 0.36","Answer: 0.36"],
- ["Multiplying by 10 moves every digit 1 place to the left.","0.02 → 0.2","Answer: 0.2","Check: 0.02 is 2 hundredths. 10 hundredths = 1 tenth, so 20 hundredths = 0.2 ✓"],
- ["Expanding means multiply everything inside the bracket by the number outside.","5 × 6x = 30x","5 × −2 = −10","Answer: 30x − 10","Check with x = 1: 5(6 − 2) = 20 and 30 − 10 = 20 ✓"],
- ["Volume of a cuboid = length × width × height.","3 × 8.6 = 25.8","25.8 × 3.8: 25.8 × 3 = 77.4 and 25.8 × 0.8 = 20.64","77.4 + 20.64 = 98.04","Volume is in cubic units, so the answer is 98.04 m³","Estimate check: 3 × 9 × 4 = 108, close to 98.04 ✓"],
- ["Step 1: expand the first bracket: 5(x + 6) = 5x + 30","Step 2: expand the second bracket: −2(x − 3) = −2x + 6 (because −2 × −3 = +6)","Step 3: write it out: 5x + 30 − 2x + 6","Step 4: collect the x terms: 5x − 2x = 3x","Step 5: collect the numbers: 30 + 6 = 36","Answer: 3x + 36","Check with x = 1: 5(7) − 2(−2) = 35 + 4 = 39 and 3 + 36 = 39 ✓"],
- ["Undo the +11 first: subtract 11 from both sides.","3x = 17 − 11 = 6","Now undo the ×3: divide both sides by 3.","x = 6 ÷ 3 = 2","Check: 3 × 2 + 11 = 17 ✓"],
- ["Undo the +4 first: subtract 4 from both sides.","x/3 = 9 − 4 = 5","Now undo the ÷3: multiply both sides by 3.","x = 5 × 3 = 15","Check: 15 ÷ 3 + 4 = 5 + 4 = 9 ✓"],
- ["The power is positive (5), so the number gets bigger: move the decimal point 5 places to the right.","4.2 → 42 (1) → 420 (2) → 4200 (3) → 42000 (4) → 420000 (5)","Answer: 420,000"],
- ["The power is negative (−4), so the number is small: move the decimal point 4 places to the left.","6.12 → 0.612 (1) → 0.0612 (2) → 0.00612 (3) → 0.000612 (4)","Answer: 0.000612"],
+// Mix: alternate addition and subtraction
+const QUESTIONS = [];
+for (let i = 0; i < 25; i++) { QUESTIONS.push(ADD[i]); QUESTIONS.push(SUB[i]); }
 
- // Extra practice
- ["Undo the −3 first: add 3 to both sides.","5x = 22 + 3 = 25","Divide both sides by 5.","x = 25 ÷ 5 = 5","Check: 5 × 5 − 3 = 22 ✓"],
- ["Undo the −2 first: add 2 to both sides.","x/4 = 6 + 2 = 8","Undo the ÷4: multiply both sides by 4.","x = 8 × 4 = 32","Check: 32 ÷ 4 − 2 = 6 ✓"],
- ["There are x terms on both sides. Subtract the smaller one (4x) from both sides.","6x − 4x + 5 = 17, so 2x + 5 = 17","Subtract 5 from both sides: 2x = 12","Divide both sides by 2: x = 6","Check: left 6 × 6 + 5 = 41, right 4 × 6 + 17 = 41 ✓"],
- ["The small 3 means multiply 5 by itself 3 times.","5 × 5 = 25","25 × 5 = 125"],
- ["Which number multiplied by itself gives 81?","8 × 8 = 64 (too small), 9 × 9 = 81 ✓","Answer: 9"],
- ["15² means 15 × 15.","15 × 10 = 150","15 × 5 = 75","150 + 75 = 225"],
- ["Group the a terms: 5a + 2a = 7a","Group the b terms: 3b − b = 2b (remember b means 1b)","Put them together: 7a + 2b","a and b are different letters, so they cannot be combined any further."],
- ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","Put the decimal point after the first digit: 52,000 → 5.2","The decimal point moved 4 places and the number is large, so n = 4.","Answer: 5.2 × 10<sup>4</sup>","Check: 5.2 × 10,000 = 52,000 ✓"],
- ["Standard form is A × 10<sup>n</sup> where A is between 1 and 10.","The first non-zero digit is 3, so A = 3.1","The decimal point moved 3 places to the right and the number is small, so n = −3.","Answer: 3.1 × 10<sup>−3</sup>","Check: 3.1 ÷ 1000 = 0.0031 ✓"],
- ["The power is positive (3), so move the decimal point 3 places to the right.","7.5 → 75 (1) → 750 (2) → 7500 (3)","Answer: 7,500"],
- ["Ignore the decimal points: 45 × 32","45 × 30 = 1350","45 × 2 = 90","1350 + 90 = 1440","Count decimal places in the question: 1 + 1 = 2, so 14.40 = 14.4","Estimate check: 4.5 × 3 = 13.5, close to 14.4 ✓"],
- ["Line up the decimal points: 6.80 + 12.45","Hundredths: 0 + 5 = 5","Tenths: 8 + 4 = 12, write 2 and carry 1","Units: 6 + 2 + 1 = 9","Tens: 1","Answer: 19.25"],
- ["Step 1: cost of 6 notebooks = 6 × £2.35","6 × £2 = £12 and 6 × £0.35 = £2.10","Total = £12 + £2.10 = £14.10","Step 2: change from £20 = £20 − £14.10 = £5.90","Check: £14.10 + £5.90 = £20 ✓"],
- ["Two minus signs next to each other turn into a plus: −4 − −9 = −4 + 9","Number line: start at −4 and go up 9.","Answer: 5"],
- ["A rise means add: −3 + 7","Number line: from −3 go up 3 to reach 0.","There are 4 more to go (7 − 3 = 4).","Answer: 4 °C"],
- ["Use BIDMAS.","Indices first: 7² = 49","Multiplication next: 2 × 5 = 10","Subtraction last: 49 − 10 = 39","Common mistake: doing 49 − 2 first. Multiplication comes before subtraction."],
- ["Step 1: expand the first bracket: 4(x + 3) = 4x + 12","Step 2: expand the second bracket: −2(x − 1) = −2x + 2 (because −2 × −1 = +2)","Step 3: write it out: 4x + 12 − 2x + 2","Step 4: collect the x terms: 4x − 2x = 2x","Step 5: collect the numbers: 12 + 2 = 14","Answer: 2x + 14","Check with x = 1: 4(4) − 2(0) = 16 and 2 + 14 = 16 ✓"],
- ["Volume of a cuboid = length × width × height.","5 × 4 = 20","20 × 2.5 = 20 × 2 + 20 × 0.5 = 40 + 10 = 50","Volume is in cubic units: 50 m³"]
-];
+const $ = id => document.getElementById(id);
+let idx = 0, score = 0, answered = false, missed = [];
 
-function stepsHTML(i){
-  return '<ol class="steps">'+STEPS[i].map(s=>'<li>'+s+'</li>').join("")+'</ol>';
+function shuffle(arr){
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
-let order=[], idx=0, score=0, answers=[], locked=false;
-
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function show(id){["start","quiz","result"].forEach(x=>document.getElementById(x).classList.toggle("hide",x!==id));window.scrollTo(0,0);}
-
-function startQuiz(shuf,subset){
-  order = subset ? subset.slice() : Q.map((_,i)=>i);
-  if(shuf) order = shuffle(order);
-  idx=0;score=0;answers=[];
-  show("quiz");render();
+// Wrong choices are plausible mistakes: using the wrong sign, being one or two off, or repeating a number from the story.
+function makeOptions(q){
+  const [, a, b, op] = q;
+  const ans = op === "+" ? a + b : a - b;
+  const pool = [];
+  pool.push(op === "+" ? Math.abs(a - b) : a + b);   // used the wrong operation
+  pool.push(ans + 1, ans - 1, ans + 2, ans - 2, a, b);
+  const unique = [...new Set(pool)].filter(n => n >= 0 && n <= 25 && n !== ans);
+  const wrongOp = pool[0];
+  let chosen = [];
+  if (unique.includes(wrongOp)) chosen.push(wrongOp);
+  const rest = shuffle(unique.filter(n => !chosen.includes(n)));
+  while (chosen.length < 3 && rest.length) chosen.push(rest.pop());
+  return { ans, options: shuffle([ans, ...chosen]) };
 }
 
-function render(){
-  locked=false;
-  const q=Q[order[idx]];
-  document.getElementById("count").textContent="Question "+(idx+1)+" of "+order.length;
-  document.getElementById("liveScore").textContent="Score: "+score;
-  document.getElementById("prog").style.width=(idx/order.length*100)+"%";
-  document.getElementById("tags").innerHTML='<span class="tag">'+REF[q[0]].n+'</span>'+(q[1]?'<span class="tag">Sheet</span>':'<span class="tag extra">Extra</span>');
-  document.getElementById("qtext").innerHTML=q[2];
-  document.getElementById("fb").innerHTML="";
-  document.getElementById("next").classList.add("hide");
-  const box=document.getElementById("opts");box.innerHTML="";
-  shuffle([q[3]].concat(q[4])).forEach(o=>{
-    const b=document.createElement("button");
-    b.className="opt";b.innerHTML=o;b.dataset.v=o;
-    b.onclick=()=>pick(b,o===q[3],q);
-    box.appendChild(b);
+function show(el){ el.classList.remove("hidden"); }
+function hide(el){ el.classList.add("hidden"); }
+
+function speak(text){
+  try{
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.85; u.pitch = 1.1;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+function loadQuestion(){
+  answered = false;
+  const q = QUESTIONS[idx];
+  const { ans, options } = makeOptions(q);
+  $("qnum").textContent = "Story " + (idx + 1) + " of " + QUESTIONS.length;
+  $("sc").textContent = "⭐ " + score;
+  $("prog").style.width = (idx / QUESTIONS.length * 100) + "%";
+  $("pic").textContent = q[4];
+  $("qtext").textContent = q[0];
+  $("fb").textContent = ""; $("fb").className = "fb";
+  $("nextBtn").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  options.forEach(n => {
+    const btn = document.createElement("button");
+    btn.className = "opt"; btn.textContent = n;
+    btn.onclick = () => choose(btn, n, ans, q);
+    box.appendChild(btn);
   });
 }
 
-function pick(btn,right,q){
-  if(locked)return;locked=true;
-  document.querySelectorAll(".opt").forEach(b=>{
-    b.disabled=true;
-    if(b.dataset.v===q[3])b.classList.add("ok");
+function choose(btn, n, ans, q){
+  if (answered) return;
+  answered = true;
+  const eq = q[1] + " " + (q[3] === "+" ? "+" : "−") + " " + q[2] + " = " + ans;
+  [...$("opts").children].forEach(b => {
+    b.disabled = true;
+    if (Number(b.textContent) === ans) b.classList.add("right");
   });
-  if(right){score++;}else{btn.classList.add("bad");}
-  answers.push({i:order[idx],right:right,chosen:btn.dataset.v});
-  document.getElementById("liveScore").textContent="Score: "+score;
-  document.getElementById("fb").innerHTML='<div class="fb '+(right?"ok":"bad")+'"><strong>'+(right?"Correct!":"Not quite.")+'</strong>'+
-    '<div style="margin-top:8px"><strong>Answer:</strong> '+q[3]+'</div>'+
-    '<div style="margin-top:10px"><strong>Step-by-step solution:</strong></div>'+stepsHTML(order[idx])+'</div>';
-  const n=document.getElementById("next");n.textContent=idx===order.length-1?"See results":"Next";n.classList.remove("hide");
-}
-
-function next(){
-  idx++;
-  if(idx>=order.length){finish();}else{render();}
+  if (n === ans) {
+    score++;
+    $("sc").textContent = "⭐ " + score;
+    $("fb").textContent = "🎉 Great job! " + eq;
+    $("fb").className = "fb ok";
+  } else {
+    btn.classList.add("wrong");
+    missed.push({ text: q[0], eq, picked: n });
+    $("fb").textContent = "Good try! The answer is " + ans + ". " + eq;
+    $("fb").className = "fb no";
+  }
+  $("nextBtn").textContent = idx === QUESTIONS.length - 1 ? "See my score 🏆" : "Next ➜";
+  $("nextBtn").style.display = "block";
 }
 
 function finish(){
-  const total=order.length,pct=Math.round(score/total*100);
-  const topics={};
-  answers.forEach(a=>{const t=Q[a.i][0];topics[t]=topics[t]||{r:0,n:0};topics[t].n++;if(a.right)topics[t].r++;});
-  let rows=Object.keys(topics).map(t=>{
-    const x=topics[t],p=x.r/x.n;
-    const col=p>=0.8?"var(--ok)":(p>=0.5?"#9a6700":"var(--bad)");
-    return '<tr><td>'+REF[t].n+'<div class="muted" style="font-size:.8rem">'+REF[t].r+'</div></td><td class="pill" style="color:'+col+'">'+x.r+'/'+x.n+'</td></tr>';
-  }).join("");
-  const wrong=answers.filter(a=>!a.right);
-  let rev=wrong.map(a=>{const q=Q[a.i];return '<div class="rev"><div>'+q[2]+'</div><div style="color:var(--bad)">Your answer: '+a.chosen+'</div><div style="color:var(--ok)">Correct answer: '+q[3]+'</div><div style="margin-top:6px"><strong>Solution:</strong></div>'+stepsHTML(a.i)+'</div>';}).join("");
-  let msg=pct>=90?"Excellent work. You are ready for the test.":pct>=70?"Good effort. Look at the topics marked in amber or red below.":"Keep practising. Go through the explanations and try again.";
-  document.getElementById("result").innerHTML=
-    '<h2>Quiz complete</h2><div class="score">'+score+' / '+total+' ('+pct+'%)</div><p>'+msg+'</p>'+
-    '<h2 style="margin-top:20px">Results by topic</h2><table>'+rows+'</table>'+
-    (wrong.length?'<h2 style="margin-top:24px">Questions to review ('+wrong.length+')</h2>'+rev:'<p><strong>No mistakes. Full marks.</strong></p>')+
-    '<div class="row">'+
-    (wrong.length?'<button class="btn" onclick="retryWrong()">Retry the ones I got wrong</button>':'')+
-    '<button class="btn alt" onclick="startQuiz(true)">New shuffled attempt</button>'+
-    '<button class="btn alt" onclick="show(\'start\')">Home</button></div>';
-  document.getElementById("prog").style.width="100%";
-  show("result");
+  hide($("quiz")); show($("end"));
+  const total = QUESTIONS.length;
+  const pct = score / total;
+  const stars = pct >= .9 ? 5 : pct >= .75 ? 4 : pct >= .6 ? 3 : pct >= .4 ? 2 : 1;
+  $("endStars").textContent = "⭐".repeat(stars) + "☆".repeat(5 - stars);
+  $("endScore").textContent = score + " / " + total;
+  $("endMsg").textContent = pct >= .9 ? "Super star! 🏆" : pct >= .75 ? "Awesome work! 🎉" : pct >= .5 ? "Nice try! Keep practising 💪" : "Good effort! Let's try again 🌈";
+  const r = $("review"); r.innerHTML = "";
+  if (missed.length) {
+    const h = document.createElement("h2"); h.textContent = "Let's look at these again 🔍"; r.appendChild(h);
+    missed.forEach(m => {
+      const d = document.createElement("div");
+      d.innerHTML = "<b></b><br>You picked " + m.picked + ". Right answer: <b>" + m.eq + "</b>";
+      d.querySelector("b").textContent = m.text;
+      r.appendChild(d);
+    });
+  } else {
+    r.innerHTML = "<p class='lead'>You got every single one right! 🌟</p>";
+  }
 }
 
-function retryWrong(){
-  const ids=answers.filter(a=>!a.right).map(a=>a.i);
-  startQuiz(true,ids);
-}
+$("startBtn").onclick = () => { hide($("start")); show($("quiz")); idx = 0; score = 0; missed = []; loadQuestion(); };
+$("nextBtn").onclick = () => { idx++; if (idx >= QUESTIONS.length) finish(); else loadQuestion(); };
+$("listenBtn").onclick = () => speak($("qtext").textContent);
+$("againBtn").onclick = () => { hide($("end")); show($("quiz")); idx = 0; score = 0; missed = []; loadQuestion(); window.scrollTo(0,0); };
 </script>
 </body>
 </html>
