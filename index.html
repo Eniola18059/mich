@@ -3,251 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Word Problem Challenge</title>
+<title>Find x! Equation Quiz</title>
 <style>
-  :root{--bg1:#c9f0ff;--bg2:#e3d4ff;--ink:#2b2d42;--green:#2fbf71;--red:#ef476f;--blue:#118ab2;--yellow:#ffd166;--card:#fff}
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#1f2540; --muted:#6a7094; --accent:#4f46e5; --accent-soft:#eceafd;
+    --good:#16a34a; --good-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2; --line:#e3e6f0;
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;color:var(--ink);
-    background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;display:flex;justify-content:center;padding:16px}
-  .app{width:100%;max-width:640px}
-  .card{background:var(--card);border-radius:28px;padding:24px;box-shadow:0 10px 0 rgba(0,0,0,.08);margin-bottom:16px}
-  h1{margin:0 0 8px;font-size:2.1rem;text-align:center;color:var(--blue)}
-  h2{margin:0 0 12px;text-align:center}
-  p.lead{text-align:center;font-size:1.15rem;margin:8px 0 18px}
-  .big{font-size:4rem;text-align:center;margin:4px 0}
-  button{font-family:inherit;cursor:pointer;border:none;border-radius:20px;font-weight:bold}
-  .go{display:block;margin:0 auto;background:var(--green);color:#fff;font-size:1.5rem;padding:14px 36px;box-shadow:0 6px 0 #1f8f53}
-  .go:active{transform:translateY(4px);box-shadow:0 2px 0 #1f8f53}
-  .top{display:flex;justify-content:space-between;align-items:center;font-weight:bold;margin-bottom:8px}
-  .bar{height:16px;background:#eee;border-radius:10px;overflow:hidden;margin-bottom:16px}
-  .bar>div{height:100%;background:linear-gradient(90deg,var(--yellow),var(--green));width:0;transition:width .4s}
-  .emoji{font-size:3rem;text-align:center;letter-spacing:4px;min-height:3.4rem;word-break:break-all}
-  .q{font-size:1.4rem;line-height:1.5;text-align:center;margin:10px 0 18px}
-  .listen{display:block;margin:0 auto 14px;background:var(--yellow);font-size:1rem;padding:8px 18px;box-shadow:0 4px 0 #d9a93b}
-  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .opt{background:#e8f4fa;border:4px solid var(--blue);color:var(--ink);font-size:2rem;padding:16px 8px;box-shadow:0 5px 0 rgba(0,0,0,.12)}
-  .opt:disabled{cursor:default}
-  .opt.right{background:var(--green);border-color:#1f8f53;color:#fff}
-  .opt.wrong{background:var(--red);border-color:#b32e50;color:#fff}
-  .fb{min-height:3.2rem;text-align:center;font-size:1.25rem;font-weight:bold;margin-top:16px}
-  .fb.ok{color:#1f8f53}.fb.no{color:#b32e50}
-  .next{display:none;margin:12px auto 0;background:var(--blue);color:#fff;font-size:1.3rem;padding:12px 30px;box-shadow:0 5px 0 #0b6280}
-  .stars{font-size:2.6rem;text-align:center}
-  .score{font-size:2.6rem;text-align:center;font-weight:bold;color:var(--green)}
-  .review{margin-top:14px;font-size:1.05rem}
-  .review div{background:#fff4f6;border-left:6px solid var(--red);padding:10px 12px;border-radius:10px;margin-bottom:10px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.45;min-height:100vh;display:flex;justify-content:center;padding:24px 14px}
+  .wrap{width:100%;max-width:640px}
+  .card{background:var(--card);border-radius:20px;padding:28px;box-shadow:0 8px 30px rgba(40,50,110,.10)}
+  h1{margin:0 0 6px;font-size:2rem}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin:0 0 20px}
+  .tip{background:var(--accent-soft);border-radius:14px;padding:14px 16px;margin:18px 0 24px}
+  .tip b{color:var(--accent)}
+  button{font:inherit;cursor:pointer}
+  .primary{background:var(--accent);color:#fff;border:0;border-radius:14px;padding:14px 26px;font-weight:700;font-size:1.05rem;transition:transform .1s,opacity .2s}
+  .primary:hover{transform:translateY(-1px)}
+  .primary:disabled{opacity:.4;cursor:default;transform:none}
   .hidden{display:none}
-  @media(max-width:420px){.opt{font-size:1.7rem}.q{font-size:1.2rem}}
+  .top{display:flex;justify-content:space-between;color:var(--muted);font-size:.95rem;margin-bottom:8px;font-weight:600}
+  .bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:24px}
+  .bar>div{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
+  .prompt{color:var(--muted);font-weight:600;margin-bottom:8px}
+  .eq{font-size:2.2rem;font-weight:800;text-align:center;background:var(--accent-soft);border-radius:16px;padding:24px 10px;margin-bottom:22px;letter-spacing:.5px;overflow-wrap:anywhere}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opt{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:1.2rem;font-weight:700;text-align:left;color:var(--ink);transition:border-color .15s,background .15s}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .k{flex:none;width:30px;height:30px;border-radius:9px;background:var(--line);display:grid;place-items:center;font-size:.9rem;color:var(--muted)}
+  .opt.good{border-color:var(--good);background:var(--good-soft)}
+  .opt.good .k{background:var(--good);color:#fff}
+  .opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.bad .k{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:20px;border-radius:14px;padding:14px 16px}
+  .fb.good{background:var(--good-soft)} .fb.bad{background:var(--bad-soft)}
+  .fb strong{display:block;margin-bottom:4px}
+  .next{margin-top:18px;text-align:right}
+  .score-big{font-size:3.2rem;font-weight:800;color:var(--accent);margin:4px 0}
+  .review{margin-top:22px;border-top:1px solid var(--line);padding-top:6px}
+  .ri{padding:12px 0;border-bottom:1px solid var(--line)}
+  .ri .e{font-weight:800;font-size:1.1rem}
+  .ri .x{color:var(--muted);font-size:.95rem}
+  .ri .bad{color:var(--bad);font-weight:700} .ri .good{color:var(--good);font-weight:700}
+  @media(max-width:480px){.opts{grid-template-columns:1fr}.eq{font-size:1.7rem}.card{padding:20px}}
 </style>
 </head>
 <body>
-<div class="app">
+<div class="wrap">
 
   <div id="start" class="card">
-    <div class="big">🦉🧠🏆</div>
-    <h1>Word Problem Challenge</h1>
-    <p class="lead">These stories are trickier! Some have 3 numbers, some ask "how many more?", and some have a missing number.<br>There are <b>50</b> stories. Ready?</p>
-    <button class="go" id="startBtn">Let's Go! 🚀</button>
+    <h1>Find <span>x</span>!</h1>
+    <p class="sub">50 questions &middot; solve each equation to find the value of x</p>
+    <div class="tip"><b>Golden rule:</b> whatever you do to one side of the equation, you must do to the other side. Use the opposite (inverse) operation to get x alone.</div>
+    <button class="primary" id="startBtn">Start quiz</button>
   </div>
 
   <div id="quiz" class="card hidden">
-    <div class="top"><span id="qnum">Story 1 of 50</span><span id="sc">⭐ 0</span></div>
+    <div class="top"><span id="qnum"></span><span id="score"></span></div>
     <div class="bar"><div id="prog"></div></div>
-    <div class="emoji" id="pic"></div>
-    <div class="q" id="qtext"></div>
-    <button class="listen" id="listenBtn">🔊 Read it to me</button>
+    <div class="prompt" id="prompt"></div>
+    <div class="eq" id="eq"></div>
     <div class="opts" id="opts"></div>
-    <div class="fb" id="fb"></div>
-    <button class="next" id="nextBtn">Next ➜</button>
+    <div class="fb hidden" id="fb"></div>
+    <div class="next"><button class="primary hidden" id="nextBtn">Next</button></div>
   </div>
 
-  <div id="end" class="card hidden">
-    <div class="stars" id="endStars"></div>
-    <h2 id="endMsg"></h2>
-    <div class="score" id="endScore"></div>
+  <div id="result" class="card hidden">
+    <h1>Quiz complete!</h1>
+    <div class="score-big" id="finalScore"></div>
+    <p class="sub" id="finalMsg"></p>
+    <button class="primary" id="againBtn">Try again</button>
     <div class="review" id="review"></div>
-    <button class="go" id="againBtn" style="margin-top:16px">Play Again 🔁</button>
   </div>
 
 </div>
 
 <script>
-// [story text, correct answer, common mistakes, picture, number sentence]
-const QUESTIONS = [
- // ---- three numbers added ----
- ["Mia has 4 red crayons, 5 blue crayons and 3 yellow crayons. How many crayons does she have in all?",12,[9,8],"🖍️🖍️🖍️🖍️🖍️🖍️🖍️🖍️🖍️🖍️🖍️🖍️","4 + 5 + 3 = 12"],
- ["A farm has 6 ducks, 2 geese and 7 hens. How many birds are on the farm?",15,[8,13],"🦆🪿🐔","6 + 2 + 7 = 15"],
- ["Kofi has 5 apples, 5 bananas and 8 pears. How many pieces of fruit does he have?",18,[10,13],"🍎🍌🍐","5 + 5 + 8 = 18"],
- ["Ada read 3 books on Saturday, 4 books on Sunday and 6 books on Monday. How many books did she read?",13,[7,9],"📚📖📘","3 + 4 + 6 = 13"],
- ["At the party there are 7 red balloons, 6 green balloons and 5 blue balloons. How many balloons are there?",18,[13,12],"🎈🎈🎈🎈🎈","7 + 6 + 5 = 18"],
- ["Dad has 9 cats, 4 dogs and 2 rabbits at the pet shop. How many animals are in the shop?",15,[13,11],"🐱🐶🐰","9 + 4 + 2 = 15"],
+function r2(v){ return Math.round(v*100)/100; }
+function fmt(v){ return String(r2(v)); }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function co(a,X){ return X==='x' ? a+'x' : a+'('+X+')'; }
 
- // ---- two-step problems ----
- ["Ben has 8 stickers. He gets 7 more. Then he gives 5 stickers to his friend. How many stickers does Ben have now?",10,[15,6],"⭐➕➖","8 + 7 - 5 = 10"],
- ["There are 12 birds in a tree. 5 birds fly away. Then 3 birds come back. How many birds are in the tree now?",10,[4,14],"🌳🐦","12 - 5 + 3 = 10"],
- ["9 children are on a bus. 6 more get on. Then 4 get off. How many children are on the bus now?",11,[19,5],"🚌","9 + 6 - 4 = 11"],
- ["Tara has 15 grapes. She eats 6 grapes. Then her mum gives her 4 more. How many grapes does Tara have now?",13,[5,9],"🍇🍇🍇🍇","15 - 6 + 4 = 13"],
- ["A shop has 14 hats. It sells 8 hats. Then 5 new hats arrive. How many hats are in the shop now?",11,[6,17],"🧢👒🎩","14 - 8 + 5 = 11"],
- ["Sam has 10 marbles. He wins 9 more in a game. Then he loses 6 marbles. How many marbles does Sam have now?",13,[19,7],"🔵🔴🟢","10 + 9 - 6 = 13"],
- ["There are 16 cookies on a plate. The children eat 7. Then Mum puts 6 more cookies on the plate. How many cookies are on the plate now?",15,[9,3],"🍪🍪🍪","16 - 7 + 6 = 15"],
- ["A pond has 8 frogs. 7 more frogs hop in. Then 9 frogs hop out. How many frogs are in the pond now?",6,[15,10],"🐸🐸🐸","8 + 7 - 9 = 6"],
- ["Mrs. Lee has 18 pencils. She gives 5 pencils to Ana and 4 pencils to Raj. How many pencils does she have left?",9,[13,14],"✏️✏️✏️","18 - 5 - 4 = 9"],
- ["Kim has 20 stickers. She uses 8 on a card and 6 on a book. How many stickers does Kim have left?",6,[12,14],"⭐⭐⭐","20 - 8 - 6 = 6"],
+const TYPES = {
+  add:  { text:(p,X)=>`${X} + ${p[0]} = ${p[1]}`, f:(x,p)=>x+p[0], rhs:p=>p[1], ans:p=>p[1]-p[0],
+          M:p=>[p[1]+p[0], p[1], p[0]],
+          steps:(p,a)=>`Subtract ${p[0]} from both sides: x = ${fmt(p[1])} &minus; ${fmt(p[0])} = ${fmt(a)}.` },
+  sub:  { text:(p,X)=>`${X} &minus; ${p[0]} = ${p[1]}`, f:(x,p)=>x-p[0], rhs:p=>p[1], ans:p=>p[1]+p[0],
+          M:p=>[p[1]-p[0], p[1], p[0]],
+          steps:(p,a)=>`Add ${fmt(p[0])} to both sides: x = ${fmt(p[1])} + ${fmt(p[0])} = ${fmt(a)}.` },
+  mul:  { text:(p,X)=>`${co(p[0],X)} = ${p[1]}`, f:(x,p)=>p[0]*x, rhs:p=>p[1], ans:p=>p[1]/p[0],
+          M:p=>[p[0]*p[1], p[1]-p[0], p[1]+p[0]],
+          steps:(p,a)=>`Divide both sides by ${p[0]}: x = ${fmt(p[1])} &divide; ${p[0]} = ${fmt(a)}.` },
+  div:  { text:(p,X)=>`${X} &divide; ${p[0]} = ${p[1]}`, f:(x,p)=>x/p[0], rhs:p=>p[1], ans:p=>p[0]*p[1],
+          M:p=>[p[0]+p[1], p[1], p[0]*p[1]+p[0], p[0]*p[1]-p[0]],
+          steps:(p,a)=>`Multiply both sides by ${p[0]}: x = ${p[1]} &times; ${p[0]} = ${fmt(a)}.` },
+  ma:   { text:(p,X)=>`${co(p[0],X)} + ${p[1]} = ${p[2]}`, f:(x,p)=>p[0]*x+p[1], rhs:p=>p[2], ans:p=>(p[2]-p[1])/p[0],
+          M:p=>[p[2]-p[1], (p[2]+p[1])/p[0], (p[2]-p[1])*p[0], p[2]/p[0]],
+          steps:(p,a)=>`Subtract ${p[1]} from both sides: ${p[0]}x = ${p[2]-p[1]}. Then divide by ${p[0]}: x = ${p[2]-p[1]} &divide; ${p[0]} = ${fmt(a)}.` },
+  ms:   { text:(p,X)=>`${co(p[0],X)} &minus; ${p[1]} = ${p[2]}`, f:(x,p)=>p[0]*x-p[1], rhs:p=>p[2], ans:p=>(p[2]+p[1])/p[0],
+          M:p=>[p[2]+p[1], (p[2]-p[1])/p[0], (p[2]+p[1])*p[0], p[2]/p[0]],
+          steps:(p,a)=>`Add ${p[1]} to both sides: ${p[0]}x = ${p[2]+p[1]}. Then divide by ${p[0]}: x = ${p[2]+p[1]} &divide; ${p[0]} = ${fmt(a)}.` },
+  da:   { text:(p,X)=>`${X} &divide; ${p[0]} + ${p[1]} = ${p[2]}`, f:(x,p)=>x/p[0]+p[1], rhs:p=>p[2], ans:p=>(p[2]-p[1])*p[0],
+          M:p=>[p[2]-p[1], (p[2]+p[1])*p[0], p[2]*p[0]-p[1], p[2]*p[0]],
+          steps:(p,a)=>`Subtract ${p[1]} from both sides: x &divide; ${p[0]} = ${p[2]-p[1]}. Then multiply by ${p[0]}: x = ${p[2]-p[1]} &times; ${p[0]} = ${fmt(a)}.` },
+  dist: { text:(p,X)=>`${p[0]}(${X} + ${p[1]}) = ${p[2]}`, f:(x,p)=>p[0]*(x+p[1]), rhs:p=>p[2], ans:p=>p[2]/p[0]-p[1],
+          M:p=>[p[2]/p[0]+p[1], p[2]-p[1], (p[2]-p[1])/p[0], p[2]/p[0]],
+          steps:(p,a)=>`Divide both sides by ${p[0]}: x + ${p[1]} = ${p[2]/p[0]}. Then subtract ${p[1]}: x = ${p[2]/p[0]} &minus; ${p[1]} = ${fmt(a)}.` }
+};
 
- // ---- how many more / how many fewer ----
- ["Ali has 14 stars. Ben has 9 stars. How many more stars does Ali have than Ben?",5,[23,4],"⭐⭐⭐⭐⭐","14 - 9 = 5"],
- ["There are 8 red balloons and 15 blue balloons. How many more blue balloons than red balloons are there?",7,[23,6],"🎈🎈🎈","15 - 8 = 7"],
- ["Class A has 17 children. Class B has 12 children. How many fewer children are in Class B?",5,[29,6],"🏫👧👦","17 - 12 = 5"],
- ["Lily has 16 beads. Kofi has 7 beads. How many more beads does Lily have than Kofi?",9,[23,8],"📿","16 - 7 = 9"],
- ["There are 11 dogs and 19 cats at the park. How many fewer dogs than cats are there?",8,[30,7],"🐶🐱","19 - 11 = 8"],
- ["On Monday, 9 cars drove past the school. On Tuesday, 13 cars drove past. How many more cars drove past on Tuesday?",4,[22,5],"🚗🚙","13 - 9 = 4"],
- ["Mia has 20 coins. Zoe has 13 coins. How many fewer coins does Zoe have than Mia?",7,[33,8],"🪙🪙🪙","20 - 13 = 7"],
- ["Zion read 6 pages. His sister read 15 pages. How many more pages did his sister read?",9,[21,8],"📖📖","15 - 6 = 9"],
- ["There are 18 apples and 10 oranges in a bowl. How many more apples than oranges are there?",8,[28,9],"🍎🍊","18 - 10 = 8"],
- ["Tim has 13 toy cars. Amy has 5 toy cars. How many more toy cars does Tim have than Amy?",8,[18,7],"🚗🚓🚕","13 - 5 = 8"],
-
- // ---- missing number ----
- ["Kim had some stickers. She got 6 more. Now she has 15 stickers. How many stickers did she start with?",9,[21,10],"⭐❓","? + 6 = 15, so 15 - 6 = 9"],
- ["Leo has 8 marbles. He wants to have 17 marbles. How many more marbles does he need?",9,[25,10],"🔵🔵❓","8 + ? = 17, so 17 - 8 = 9"],
- ["Some birds were on a branch. 7 birds flew away. Now 5 birds are left. How many birds were on the branch at first?",12,[2,13],"🌳🐦❓","? - 7 = 5, so 5 + 7 = 12"],
- ["There were 12 cookies on a plate. Some were eaten. Now 4 cookies are left. How many cookies were eaten?",8,[16,7],"🍪🍪❓","12 - ? = 4, so 12 - 4 = 8"],
- ["Nina has 9 pencils. Her teacher gives her some more. Now she has 16 pencils. How many pencils did the teacher give her?",7,[25,8],"✏️✏️❓","9 + ? = 16, so 16 - 9 = 7"],
- ["Tom had 20 candies. He gave some to his friends. Now he has 11 candies. How many candies did he give away?",9,[31,8],"🍬🍬❓","20 - ? = 11, so 20 - 11 = 9"],
- ["There are 14 seats in a van. 6 seats have people in them. How many seats are empty?",8,[20,7],"🚐💺","14 - 6 = 8"],
- ["A box has some crayons. Dad puts in 8 more. Now there are 19 crayons. How many crayons were in the box at first?",11,[27,12],"📦🖍️❓","? + 8 = 19, so 19 - 8 = 11"],
- ["5 frogs are on a log. Some more frogs jump on. Now there are 13 frogs. How many frogs jumped on?",8,[18,7],"🐸🐸❓","5 + ? = 13, so 13 - 5 = 8"],
- ["Ella had some coins. She spent 9 coins. Now she has 8 coins. How many coins did she have at first?",17,[1,18],"🪙🪙❓","? - 9 = 8, so 8 + 9 = 17"],
-
- // ---- bigger numbers, add and take away ----
- ["A garden has 13 roses and 6 daisies. How many flowers are in the garden?",19,[7,18],"🌹🌼","13 + 6 = 19"],
- ["A bakery has 17 cupcakes. It sells 9 cupcakes. How many cupcakes are left?",8,[26,7],"🧁🧁","17 - 9 = 8"],
- ["Ravi has 11 red cars and 8 blue cars. How many cars does he have in all?",19,[3,18],"🚗🚙","11 + 8 = 19"],
- ["There are 19 apples on a tree. 7 apples fall to the ground. How many apples are still on the tree?",12,[26,11],"🌳🍎","19 - 7 = 12"],
- ["Two shelves each have 7 books. How many books are on both shelves?",14,[13,15],"📚📚","7 + 7 = 14"],
- ["A pet shop has 15 fish. It sells 8 fish. How many fish are left?",7,[23,6],"🐠🐟","15 - 8 = 7"],
- ["There are 20 children in a gym. 13 are girls. How many are boys?",7,[33,6],"🏀👧👦","20 - 13 = 7"],
- ["There are 12 boys and 8 girls in a swimming class. How many children are in the class?",20,[4,19],"🏊👦👧","12 + 8 = 20"],
- ["A farmer has 18 eggs. 9 eggs are brown and the rest are white. How many eggs are white?",9,[27,8],"🥚🥚🥚","18 - 9 = 9"],
- ["Dad had 14 oranges. He gave 9 oranges to the neighbours. How many oranges does he have left?",5,[23,4],"🍊🍊","14 - 9 = 5"],
- ["Sara has 6 fish in one tank and 9 fish in another tank. How many fish does she have?",15,[3,16],"🐟🐠","6 + 9 = 15"],
- ["A toy shop has 17 dolls. It sells 6 dolls. How many dolls are left?",11,[23,12],"🧸🪆","17 - 6 = 11"],
- ["There are 13 birds on a roof. 5 more birds land on the roof. How many birds are on the roof now?",18,[8,17],"🏠🐦","13 + 5 = 18"],
- ["Mia drew 9 stars on Monday and 8 stars on Tuesday. How many stars did she draw in all?",17,[1,16],"✨🌟","9 + 8 = 17"]
+const SPECS = [
+  // one-step: x + a = b
+  ['add',7,15],['add',12,30],['add',25,61],['add',9,34],['add',48,100],['add',16,40],['add',19,52],['add',33,75],
+  // one-step: x - a = b
+  ['sub',6,9],['sub',14,20],['sub',8,17],['sub',25,40],['sub',9,31],['sub',13,22],['sub',30,45],['sub',17,18],
+  // one-step: ax = b
+  ['mul',4,28],['mul',7,63],['mul',9,54],['mul',12,96],['mul',5,85],['mul',8,72],['mul',11,132],['mul',6,108],
+  // one-step: x / a = b
+  ['div',3,8],['div',5,11],['div',4,9],['div',6,7],['div',8,12],['div',10,15],['div',7,6],
+  // two-step: ax + b = c
+  ['ma',3,5,23],['ma',4,9,37],['ma',2,11,31],['ma',5,8,53],['ma',6,4,52],['ma',7,3,59],
+  // two-step: ax - b = c
+  ['ms',2,7,15],['ms',3,4,17],['ms',5,9,36],['ms',4,6,30],['ms',8,10,46],
+  // two-step: x / a + b = c
+  ['da',2,6,14],['da',3,4,9],['da',5,7,12],
+  // parentheses: a(x + b) = c
+  ['dist',2,3,18],['dist',3,4,27],
+  // decimals
+  ['add',3.4,9.1],['sub',2.6,4.1],['mul',4,18.4]
 ];
 
-const $ = id => document.getElementById(id);
-let order = [], idx = 0, score = 0, answered = false, missed = [];
+const PROMPTS = ['Solve for x:','Find the value of x:','What is x?','Solve the equation:'];
 
-function shuffle(arr){
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+function pickDistractors(M, N, ans, isDec){
+  const valid = v => { v=r2(v); return isFinite(v) && v>0 && v!==r2(ans) && (isDec || Number.isInteger(v)); };
+  const out = [];
+  const add = v => { v=r2(v); if(valid(v) && !out.includes(v)) out.push(v); };
+  const m = shuffle(M).filter(valid).map(r2);
+  const n = shuffle(N).filter(valid).map(r2);
+  // two likely "wrong method" answers, one near-miss, then fill
+  m.slice(0,2).forEach(add);
+  n.forEach(v=>{ if(out.length<3) add(v); });
+  m.forEach(v=>{ if(out.length<3) add(v); });
+  return out.slice(0,3);
+}
+
+function buildQuestions(){
+  return shuffle(SPECS).map(spec=>{
+    const t = spec[0], p = spec.slice(1), T = TYPES[t];
+    const ans = r2(T.ans(p));
+    const isDec = p.some(v=>!Number.isInteger(v));
+    const s = isDec ? 0.1 : 1;
+    const N = [ans+s, ans-s, ans+2*s, ans-2*s].concat(isDec ? [ans+1, ans-1] : []);
+    const dis = pickDistractors(T.M(p), N, ans, isDec);
+    return {
+      eq: T.text(p,'x'),
+      check: T.text(p, fmt(ans)),
+      ans: ans,
+      opts: shuffle([ans].concat(dis)),
+      expl: T.steps(p, ans),
+      ok: r2(T.f(ans,p)) === r2(T.rhs(p)) && dis.length===3
+    };
+  }).map((q,i)=>{ q.prompt = PROMPTS[i%PROMPTS.length]; return q; });
+}
+
+if (typeof document !== 'undefined') {
+  const $ = id => document.getElementById(id);
+  let Q=[], i=0, score=0, locked=false, missed=[];
+
+  function start(){
+    Q = buildQuestions(); i=0; score=0; missed=[];
+    $('start').classList.add('hidden'); $('result').classList.add('hidden'); $('quiz').classList.remove('hidden');
+    show();
   }
-  return arr;
-}
-
-// Wrong choices are common mistakes (using the wrong sign, forgetting a number) topped up with answers that are 1 or 2 off.
-function makeOptions(q){
-  const ans = q[1];
-  const wrong = [];
-  q[2].forEach(n => { if (n >= 0 && n <= 30 && n !== ans && !wrong.includes(n)) wrong.push(n); });
-  const fill = shuffle([ans + 1, ans - 1, ans + 2, ans - 2]).filter(n => n >= 0 && n <= 30 && !wrong.includes(n) && n !== ans);
-  while (wrong.length < 3 && fill.length) wrong.push(fill.pop());
-  return shuffle([ans, ...wrong.slice(0, 3)]);
-}
-
-function show(el){ el.classList.remove("hidden"); }
-function hide(el){ el.classList.add("hidden"); }
-
-function speak(text){
-  try{
-    if (!("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.85; u.pitch = 1.1;
-    window.speechSynthesis.speak(u);
-  }catch(e){}
-}
-
-function niceEq(s){ return s.replace(/ - /g, " − "); }
-
-function loadQuestion(){
-  answered = false;
-  const q = order[idx];
-  const options = makeOptions(q);
-  $("qnum").textContent = "Story " + (idx + 1) + " of " + order.length;
-  $("sc").textContent = "⭐ " + score;
-  $("prog").style.width = (idx / order.length * 100) + "%";
-  $("pic").textContent = q[3];
-  $("qtext").textContent = q[0];
-  $("fb").textContent = ""; $("fb").className = "fb";
-  $("nextBtn").style.display = "none";
-  const box = $("opts"); box.innerHTML = "";
-  options.forEach(n => {
-    const btn = document.createElement("button");
-    btn.className = "opt"; btn.textContent = n;
-    btn.onclick = () => choose(btn, n, q);
-    box.appendChild(btn);
-  });
-}
-
-function choose(btn, n, q){
-  if (answered) return;
-  answered = true;
-  const ans = q[1], eq = niceEq(q[4]);
-  [...$("opts").children].forEach(b => {
-    b.disabled = true;
-    if (Number(b.textContent) === ans) b.classList.add("right");
-  });
-  if (n === ans) {
-    score++;
-    $("sc").textContent = "⭐ " + score;
-    $("fb").textContent = "🎉 Great job! " + eq;
-    $("fb").className = "fb ok";
-  } else {
-    btn.classList.add("wrong");
-    missed.push({ text: q[0], eq, picked: n, ans });
-    $("fb").textContent = "Good try! The answer is " + ans + ". " + eq;
-    $("fb").className = "fb no";
-  }
-  $("nextBtn").textContent = idx === order.length - 1 ? "See my score 🏆" : "Next ➜";
-  $("nextBtn").style.display = "block";
-}
-
-function finish(){
-  hide($("quiz")); show($("end"));
-  const total = order.length;
-  const pct = score / total;
-  const stars = pct >= .9 ? 5 : pct >= .75 ? 4 : pct >= .6 ? 3 : pct >= .4 ? 2 : 1;
-  $("endStars").textContent = "⭐".repeat(stars) + "☆".repeat(5 - stars);
-  $("endScore").textContent = score + " / " + total;
-  $("endMsg").textContent = pct >= .9 ? "Super star! 🏆" : pct >= .75 ? "Awesome work! 🎉" : pct >= .5 ? "Nice try! Keep practising 💪" : "Good effort! Let's try again 🌈";
-  const r = $("review"); r.innerHTML = "";
-  if (missed.length) {
-    const h = document.createElement("h2"); h.textContent = "Let's look at these again 🔍"; r.appendChild(h);
-    missed.forEach(m => {
-      const d = document.createElement("div");
-      d.innerHTML = "<b></b><br>You picked " + m.picked + ". Right answer: <b>" + m.ans + "</b> (" + m.eq + ")";
-      d.querySelector("b").textContent = m.text;
-      r.appendChild(d);
+  function show(){
+    const q=Q[i]; locked=false;
+    $('qnum').textContent = `Question ${i+1} of ${Q.length}`;
+    $('score').textContent = `Score: ${score}`;
+    $('prog').style.width = (i/Q.length*100)+'%';
+    $('prompt').textContent = q.prompt;
+    $('eq').innerHTML = q.eq;
+    $('fb').classList.add('hidden'); $('nextBtn').classList.add('hidden');
+    $('opts').innerHTML='';
+    q.opts.forEach((v,k)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span>x = ${fmt(v)}</span>`;
+      b.onclick=()=>choose(k);
+      $('opts').appendChild(b);
     });
-  } else {
-    r.innerHTML = "<p class='lead'>You got every single one right! 🌟</p>";
   }
+  function choose(k){
+    if(locked) return; locked=true;
+    const q=Q[i], picked=q.opts[k], right = picked===q.ans;
+    const btns=$('opts').children;
+    q.opts.forEach((v,idx)=>{ btns[idx].disabled=true; if(v===q.ans) btns[idx].classList.add('good'); });
+    if(right){ score++; } else { btns[k].classList.add('bad'); missed.push({q,picked}); }
+    $('score').textContent = `Score: ${score}`;
+    const fb=$('fb'); fb.className='fb '+(right?'good':'bad');
+    fb.innerHTML = `<strong>${right?'Correct!':'Not quite.'}</strong>${q.expl}<br><span style="color:#6a7094">Check: ${q.check} &#10003;</span>`;
+    $('nextBtn').textContent = (i===Q.length-1) ? 'See results' : 'Next';
+    $('nextBtn').classList.remove('hidden');
+    $('nextBtn').focus();
+  }
+  function next(){
+    if(!locked) return;
+    if(i===Q.length-1) return finish();
+    i++; show();
+  }
+  function finish(){
+    $('quiz').classList.add('hidden'); $('result').classList.remove('hidden');
+    $('finalScore').textContent = `${score} / ${Q.length}`;
+    const pct=score/Q.length;
+    $('finalMsg').textContent = pct>=0.9 ? 'Outstanding! You really know how to isolate x.' :
+      pct>=0.7 ? 'Great work! Review the ones you missed below and you will be there.' :
+      pct>=0.5 ? 'Good effort. Look at the worked steps below and try again.' :
+      'Keep practising. Remember: use the opposite operation on both sides.';
+    const rv=$('review');
+    if(!missed.length){ rv.innerHTML='<p><b>Perfect score &mdash; nothing to review!</b></p>'; }
+    else rv.innerHTML = '<h3>Questions to review</h3>' + missed.map(m=>
+      `<div class="ri"><div class="e">${m.q.eq}</div>
+       <div class="x">Your answer: <span class="bad">x = ${fmt(m.picked)}</span> &middot; Correct: <span class="good">x = ${fmt(m.q.ans)}</span></div>
+       <div class="x">${m.q.expl}</div></div>`).join('');
+    window.scrollTo(0,0);
+  }
+  $('startBtn').onclick=start; $('againBtn').onclick=start; $('nextBtn').onclick=next;
+  document.addEventListener('keydown',e=>{
+    if($('quiz').classList.contains('hidden')) return;
+    if(!locked && e.key>='1' && e.key<='4'){ choose(+e.key-1); }
+    else if(!locked && 'abcd'.includes(e.key.toLowerCase()) && e.key.length===1){ choose('abcd'.indexOf(e.key.toLowerCase())); }
+    else if(locked && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); next(); }
+  });
 }
-
-function begin(){
-  order = shuffle(QUESTIONS.slice());
-  idx = 0; score = 0; missed = [];
-  hide($("start")); hide($("end")); show($("quiz"));
-  loadQuestion();
-  window.scrollTo(0, 0);
-}
-
-$("startBtn").onclick = begin;
-$("againBtn").onclick = begin;
-$("nextBtn").onclick = () => { idx++; if (idx >= order.length) finish(); else loadQuestion(); };
-$("listenBtn").onclick = () => speak($("qtext").textContent);
 </script>
 </body>
 </html>
