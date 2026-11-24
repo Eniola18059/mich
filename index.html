@@ -1,300 +1,362 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Find x! Hard Mode</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Story Quest Reading Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
-  :root{
-    --bg:#f4f6fb; --card:#ffffff; --ink:#1f2540; --muted:#6a7094; --accent:#4f46e5; --accent-soft:#eceafd;
-    --good:#16a34a; --good-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2; --line:#e3e6f0; --hot:#e11d48;
+/* Layout: sticky header with progress; story card beside the question card on wide screens, stacked on phones. */
+:root{
+  --bg:#F3F6FA; --card:#FFFFFF; --ink:#1B2A41; --muted:#5B6B82; --line:#D9E1EC;
+  --accent:#0F7F86; --accent-ink:#FFFFFF; --sun:#F2B134; --sun-soft:#FFF4D6;
+  --good:#1E8E4E; --good-soft:#E1F5E9; --bad:#C23B3B; --bad-soft:#FBE4E4; --story:#FFFDF5;
+  --f-display:'Fredoka','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101826; --card:#192335; --ink:#E8EEF7; --muted:#9BABC2; --line:#2B3A52;
+    --accent:#3CC1C8; --accent-ink:#06262A; --sun:#F2B134; --sun-soft:#3A3014;
+    --good:#4CCB84; --good-soft:#15342A; --bad:#F27C7C; --bad-soft:#3B1D22; --story:#1D2840; color-scheme:dark;
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.45;min-height:100vh;display:flex;justify-content:center;padding:24px 14px}
-  .wrap{width:100%;max-width:660px}
-  .card{background:var(--card);border-radius:20px;padding:28px;box-shadow:0 8px 30px rgba(40,50,110,.10)}
-  h1{margin:0 0 6px;font-size:2rem}
-  h1 span{color:var(--accent)}
-  .badge{display:inline-block;background:var(--hot);color:#fff;font-size:.8rem;font-weight:800;letter-spacing:1px;padding:3px 10px;border-radius:99px;vertical-align:middle;margin-left:8px}
-  .sub{color:var(--muted);margin:0 0 20px}
-  .tip{background:var(--accent-soft);border-radius:14px;padding:14px 16px;margin:18px 0 24px}
-  .tip b{color:var(--accent)}
-  .tip ul{margin:8px 0 0;padding-left:20px}
-  button{font:inherit;cursor:pointer}
-  .primary{background:var(--accent);color:#fff;border:0;border-radius:14px;padding:14px 26px;font-weight:700;font-size:1.05rem;transition:transform .1s,opacity .2s}
-  .primary:hover{transform:translateY(-1px)}
-  .hidden{display:none}
-  .top{display:flex;justify-content:space-between;color:var(--muted);font-size:.95rem;margin-bottom:8px;font-weight:600}
-  .bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:24px}
-  .bar>div{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
-  .prompt{color:var(--muted);font-weight:600;margin-bottom:8px}
-  .eq{font-size:2.1rem;font-weight:800;text-align:center;background:var(--accent-soft);border-radius:16px;padding:24px 10px;margin-bottom:22px;letter-spacing:.5px;overflow-wrap:anywhere}
-  .eq.word{font-size:1.15rem;font-weight:600;text-align:left;padding:20px;line-height:1.55;letter-spacing:0}
-  .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15;font-size:.9em}
-  .frac>span:first-child{border-bottom:2.5px solid currentColor;padding:0 6px 2px}
-  .frac>span:last-child{padding:2px 6px 0}
-  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .opt{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:1.2rem;font-weight:700;text-align:left;color:var(--ink);transition:border-color .15s,background .15s}
-  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
-  .opt .k{flex:none;width:30px;height:30px;border-radius:9px;background:var(--line);display:grid;place-items:center;font-size:.9rem;color:var(--muted)}
-  .opt.good{border-color:var(--good);background:var(--good-soft)}
-  .opt.good .k{background:var(--good);color:#fff}
-  .opt.bad{border-color:var(--bad);background:var(--bad-soft)}
-  .opt.bad .k{background:var(--bad);color:#fff}
-  .opt:disabled{cursor:default}
-  .fb{margin-top:20px;border-radius:14px;padding:14px 16px}
-  .fb.good{background:var(--good-soft)} .fb.bad{background:var(--bad-soft)}
-  .fb strong{display:block;margin-bottom:4px}
-  .fb .frac{font-size:.85em}
-  .next{margin-top:18px;text-align:right}
-  .score-big{font-size:3.2rem;font-weight:800;color:var(--accent);margin:4px 0}
-  .review{margin-top:22px;border-top:1px solid var(--line);padding-top:6px}
-  .ri{padding:12px 0;border-bottom:1px solid var(--line)}
-  .ri .e{font-weight:800;font-size:1.1rem}
-  .ri .x{color:var(--muted);font-size:.95rem}
-  .ri .bad{color:var(--bad);font-weight:700} .ri .good{color:var(--good);font-weight:700}
-  @media(max-width:480px){.opts{grid-template-columns:1fr}.eq{font-size:1.6rem}.card{padding:20px}}
+}
+:root[data-theme="dark"]{
+  --bg:#101826; --card:#192335; --ink:#E8EEF7; --muted:#9BABC2; --line:#2B3A52;
+  --accent:#3CC1C8; --accent-ink:#06262A; --sun:#F2B134; --sun-soft:#3A3014;
+  --good:#4CCB84; --good-soft:#15342A; --bad:#F27C7C; --bad-soft:#3B1D22; --story:#1D2840; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.2;text-wrap:balance;margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 10px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:600;font-size:1.15rem;color:var(--accent)}
+.stats{display:flex;gap:16px;font-weight:700;font-size:.95rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.stats b{color:var(--ink)}
+.bar{height:10px;border-radius:99px;background:var(--line);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+.hero{padding:36px 0 8px;display:grid;gap:20px;max-width:720px}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero p{margin:0;color:var(--muted);font-size:1.1rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--sun-soft);border:1px solid var(--sun);border-radius:99px;padding:4px 14px;font-weight:700;font-size:.9rem}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:12px 26px;font-weight:800;font-size:1.05rem;justify-self:start}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:24px;padding:0;list-style:none}
+.shelf li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:700}
+.shelf span{display:block;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+.quiz{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
+@media (max-width:820px){.quiz{grid-template-columns:minmax(0,1fr)}}
+.story{background:var(--story);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+@media (min-width:821px){.story{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);max-height:calc(100vh - 110px);overflow:auto}}
+.tag{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.story h2{font-size:1.6rem;margin:4px 0 12px}
+.story p{margin:0 0 .9em;font-size:1.06rem;line-height:1.75;max-width:62ch}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;display:grid;gap:16px}
+.qcard h3{font-size:1.3rem;line-height:1.35}
+.opts{display:grid;gap:10px;padding:0;margin:0;list-style:none}
+.opt{width:100%;display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--good-soft);border-color:var(--good)}
+.opt.right .k{background:var(--good);color:var(--card)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt.wrong .k{background:var(--bad);color:var(--card)}
+.fb{border-radius:12px;padding:12px 14px;font-size:.98rem}
+.fb.right{background:var(--good-soft)} .fb.wrong{background:var(--bad-soft)}
+.fb strong{display:block;font-family:var(--f-display);font-size:1.1rem;margin-bottom:2px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:.9rem}
+
+.result{display:grid;gap:22px;margin-top:20px;max-width:820px}
+.big{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:grid;gap:8px}
+.big .n{font-family:var(--f-display);font-size:3.4rem;line-height:1;font-variant-numeric:tabular-nums}
+.break{display:grid;gap:8px;padding:0;margin:0;list-style:none}
+.break li{display:grid;grid-template-columns:minmax(0,1fr) 120px 48px;gap:10px;align-items:center;font-weight:700;font-size:.95rem}
+.break .m{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.break .m i{display:block;height:100%;background:var(--accent)}
+.break .s{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.break li{grid-template-columns:minmax(0,1fr) 72px 44px}}
+.miss{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--bad);border-radius:10px;padding:12px 16px;display:grid;gap:4px;font-size:.96rem}
+.miss em{font-style:normal;color:var(--bad);font-weight:700}.miss u{text-decoration:none;color:var(--good);font-weight:800}
 </style>
-</head>
-<body>
+
 <div class="wrap">
-
-  <div id="start" class="card">
-    <h1>Find <span>x</span>! <span class="badge">HARD</span></h1>
-    <p class="sub">50 challenge questions &middot; no shortcuts</p>
-    <div class="tip"><b>What to expect</b>
-      <ul>
-        <li>Variables on both sides of the equals sign</li>
-        <li>Brackets, like terms, fractions and decimals</li>
-        <li>Negative numbers, in the equation and in the answer</li>
-        <li>Word problems you must turn into an equation</li>
-      </ul>
-      <p style="margin:10px 0 0">Work each one out on paper first. The wrong choices are the classic slip-ups!</p>
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">Story Quest</div>
+      <div class="stats" id="stats"></div>
     </div>
-    <button class="primary" id="startBtn">Start quiz</button>
-  </div>
-
-  <div id="quiz" class="card hidden">
-    <div class="top"><span id="qnum"></span><span id="score"></span></div>
-    <div class="bar"><div id="prog"></div></div>
-    <div class="prompt" id="prompt"></div>
-    <div class="eq" id="eq"></div>
-    <div class="opts" id="opts"></div>
-    <div class="fb hidden" id="fb"></div>
-    <div class="next"><button class="primary hidden" id="nextBtn">Next</button></div>
-  </div>
-
-  <div id="result" class="card hidden">
-    <h1>Quiz complete!</h1>
-    <div class="score-big" id="finalScore"></div>
-    <p class="sub" id="finalMsg"></p>
-    <button class="primary" id="againBtn">Try again</button>
-    <div class="review" id="review"></div>
-  </div>
-
+    <div class="bar" aria-hidden="true"><i id="fill"></i></div>
+  </header>
+  <main id="app"></main>
 </div>
 
 <script>
-const MINUS = '&minus;';
-function r2(v){ return Math.round(v*100)/100; }
-function num(n){ n=r2(n); return n<0 ? MINUS+String(-n) : String(n); }
-function sg(n){ n=r2(n); return n<0 ? ` ${MINUS} ${-n}` : ` + ${n}`; }
-function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-function cx(a,X){ X=X||'x'; a=r2(a);
-  if(X==='x'){ if(a===1) return 'x'; if(a===-1) return MINUS+'x'; return num(a)+'x'; }
-  if(a===1) return X; if(a===-1) return MINUS+'('+X+')'; return num(a)+'('+X+')'; }
-function px(X){ return X==='x' ? 'x' : '('+X+')'; }
-function fr(n,d){ return `<span class="frac"><span>${n}</span><span>${d}</span></span>`; }
-function addTo(b){ return b>0 ? `Subtract ${num(b)} from` : `Add ${num(-b)} to`; }
-
-const T = {
-  // a x + b = c
-  lin: { text:(p,X)=>`${cx(p[0],X)}${sg(p[1])} = ${num(p[2])}`,
-    f:(x,p)=>p[0]*x+p[1], g:(x,p)=>p[2], ans:p=>(p[2]-p[1])/p[0],
-    M:p=>[(p[2]+p[1])/p[0], p[2]-p[1], (p[2]-p[1])*p[0], p[2]/p[0]-p[1], p[2]/p[0]+p[1]],
-    steps:(p,a)=>`${addTo(p[1])} both sides: ${cx(p[0])} = ${num(p[2]-p[1])}. Divide both sides by ${num(p[0])}: x = ${num(p[2]-p[1])} &divide; ${p[0]<0?'('+num(p[0])+')':num(p[0])} = ${num(a)}.` },
-  // a x + b = c x + d   (a > c)
-  both: { text:(p,X)=>`${cx(p[0],X)}${sg(p[1])} = ${cx(p[2],X)}${sg(p[3])}`,
-    f:(x,p)=>p[0]*x+p[1], g:(x,p)=>p[2]*x+p[3], ans:p=>(p[3]-p[1])/(p[0]-p[2]),
-    M:p=>[(p[3]+p[1])/(p[0]-p[2]), (p[3]-p[1])/(p[0]+p[2]), (p[3]-p[1])/p[0], (p[3]-p[1])/(p[0]-p[2])+p[2]],
-    steps:(p,a)=>`Subtract ${cx(p[2])} from both sides to collect the x terms: ${cx(p[0]-p[2])}${sg(p[1])} = ${num(p[3])}. ${addTo(p[1])} both sides: ${cx(p[0]-p[2])} = ${num(p[3]-p[1])}. Divide by ${p[0]-p[2]}: x = ${num(p[3]-p[1])} &divide; ${p[0]-p[2]} = ${num(a)}.` },
-  // a(x + b) + d = c   params [a,b,d,c]
-  dist: { text:(p,X)=>`${p[0]}(${X}${sg(p[1])})${sg(p[2])} = ${num(p[3])}`,
-    f:(x,p)=>p[0]*(x+p[1])+p[2], g:(x,p)=>p[3], ans:p=>(p[3]-p[2])/p[0]-p[1],
-    M:p=>[(p[3]-p[2]-p[1])/p[0], (p[3]-p[2])/p[0]+p[1], (p[3]+p[2])/p[0]-p[1], p[3]-p[2]-p[1], (p[3]-p[2])/p[0]],
-    steps:(p,a)=>`${addTo(p[2])} both sides: ${p[0]}(x${sg(p[1])}) = ${num(p[3]-p[2])}. Divide by ${p[0]}: x${sg(p[1])} = ${num((p[3]-p[2])/p[0])}. ${addTo(p[1])} both sides: x = ${num(a)}.` },
-  // a(x + b) = c x + d   params [a,b,c,d]
-  dist2: { text:(p,X)=>`${p[0]}(${X}${sg(p[1])}) = ${cx(p[2],X)}${sg(p[3])}`,
-    f:(x,p)=>p[0]*(x+p[1]), g:(x,p)=>p[2]*x+p[3], ans:p=>(p[3]-p[0]*p[1])/(p[0]-p[2]),
-    M:p=>[(p[3]-p[1])/(p[0]-p[2]), (p[3]+p[0]*p[1])/(p[0]-p[2]), (p[3]-p[0]*p[1])/(p[0]+p[2]), (p[3]-p[0]*p[1])/p[0]],
-    steps:(p,a)=>`Distribute the ${p[0]}: ${p[0]}x${sg(p[0]*p[1])} = ${cx(p[2])}${sg(p[3])}. Subtract ${cx(p[2])} from both sides: ${cx(p[0]-p[2])}${sg(p[0]*p[1])} = ${num(p[3])}. ${addTo(p[0]*p[1])} both sides: ${cx(p[0]-p[2])} = ${num(p[3]-p[0]*p[1])}. Divide by ${p[0]-p[2]}: x = ${num(a)}.` },
-  // a x + b x + e = d   params [a,b,e,d]
-  like: { text:(p,X)=>X==='x' ? `${p[0]}x ${p[1]>=0?'+':MINUS} ${Math.abs(p[1])}x${sg(p[2])} = ${num(p[3])}` : `${p[0]}(${X}) ${p[1]>=0?'+':MINUS} ${Math.abs(p[1])}(${X})${sg(p[2])} = ${num(p[3])}`,
-    f:(x,p)=>(p[0]+p[1])*x+p[2], g:(x,p)=>p[3], ans:p=>(p[3]-p[2])/(p[0]+p[1]),
-    M:p=>[(p[3]-p[2])/p[0], (p[3]-p[2])/(p[0]-p[1]), (p[3]+p[2])/(p[0]+p[1]), (p[3]-p[2])/p[1], (p[3]-p[2])/(p[0]*p[1])],
-    steps:(p,a)=>`Combine like terms: ${p[0]}x ${p[1]>=0?'+':MINUS} ${Math.abs(p[1])}x = ${cx(p[0]+p[1])}. So ${cx(p[0]+p[1])}${sg(p[2])} = ${num(p[3])}. ${addTo(p[2])} both sides: ${cx(p[0]+p[1])} = ${num(p[3]-p[2])}. Divide by ${p[0]+p[1]}: x = ${num(a)}.` },
-  // (x + b) / a = c   params [a,b,c]
-  fracdiv: { text:(p,X)=>`${fr(X+sg(p[1]),p[0])} = ${num(p[2])}`,
-    f:(x,p)=>(x+p[1])/p[0], g:(x,p)=>p[2], ans:p=>p[0]*p[2]-p[1],
-    M:p=>[p[0]*p[2]+p[1], p[0]*p[2], p[2]-p[1], p[0]*p[2]-p[0]*p[1], p[2]+p[1]],
-    steps:(p,a)=>`Multiply both sides by ${p[0]}: x${sg(p[1])} = ${num(p[0]*p[2])}. ${addTo(p[1])} both sides: x = ${num(a)}.` },
-  // (p/q) x = c   params [p,q,c]
-  fraccoef: { text:(p,X)=>`${fr(p[0],p[1])}${px(X)} = ${num(p[2])}`,
-    f:(x,p)=>p[0]/p[1]*x, g:(x,p)=>p[2], ans:p=>p[2]*p[1]/p[0],
-    M:p=>[p[2]*p[0], p[2]*p[1], p[2]*p[0]*p[1], p[2]*p[0]/p[1], p[2]*p[1]/p[0]+p[1], p[2]+p[1]-p[0]],
-    steps:(p,a)=>`Multiply both sides by the reciprocal, ${fr(p[1],p[0])}: x = ${num(p[2])} &times; ${fr(p[1],p[0])} = ${num(a)}.` },
-  // (p/q) x + b = c   params [p,q,b,c]
-  fraccoef2: { text:(p,X)=>`${fr(p[0],p[1])}${px(X)}${sg(p[2])} = ${num(p[3])}`,
-    f:(x,p)=>p[0]/p[1]*x+p[2], g:(x,p)=>p[3], ans:p=>(p[3]-p[2])*p[1]/p[0],
-    M:p=>[p[3]-p[2], (p[3]-p[2])*p[1], (p[3]-p[2])*p[0], (p[3]+p[2])*p[1]/p[0], (p[3]-p[2])*p[0]/p[1], p[3]*p[1]/p[0]-p[2]],
-    steps:(p,a)=>`${addTo(p[2])} both sides: ${fr(p[0],p[1])}x = ${num(p[3]-p[2])}. Multiply by the reciprocal, ${fr(p[1],p[0])}: x = ${num(p[3]-p[2])} &times; ${fr(p[1],p[0])} = ${num(a)}.` }
-};
-
-const SPECS = [
-  // big coefficients (lin)
-  ['lin',[12,17,149]],['lin',[9,-23,175]],['lin',[15,8,143]],['lin',[14,-6,92]],['lin',[16,12,172]],['lin',[25,-10,115]],
-  // negative coefficients / negative answers (lin)
-  ['lin',[-3,7,-11]],['lin',[-4,2,-34]],['lin',[-5,-3,22]],['lin',[3,20,2]],['lin',[7,50,1]],
-  // decimals (lin)
-  ['lin',[2,0.5,7.3]],['lin',[4,-1.2,5.2]],['lin',[0.5,2.4,5.1]],['lin',[3,1.5,9]],
-  // variables on both sides
-  ['both',[5,3,2,18]],['both',[7,-4,3,20]],['both',[9,2,4,37]],['both',[8,-5,3,25]],
-  ['both',[6,14,2,2]],['both',[10,-9,4,15]],['both',[11,6,5,-12]],['both',[12,-7,7,28]],
-  // brackets
-  ['dist',[3,4,5,32]],['dist',[4,-3,6,34]],['dist',[2,5,-4,12]],['dist',[5,-2,3,48]],['dist',[6,1,-10,32]],
-  // brackets with x on both sides
-  ['dist2',[3,4,1,20]],['dist2',[5,-2,2,11]],['dist2',[4,3,2,4]],
-  // like terms
-  ['like',[3,2,-4,21]],['like',[7,-3,8,32]],['like',[9,-4,6,41]],['like',[5,6,-10,56]],
-  // fractions
-  ['fracdiv',[4,3,5]],['fracdiv',[3,-2,6]],['fracdiv',[2,5,9]],
-  ['fraccoef',[2,3,8]],['fraccoef',[3,4,15]],['fraccoef',[5,6,35]],
-  ['fraccoef2',[3,4,-2,7]],['fraccoef2',[2,5,3,11]],['fraccoef2',[3,2,-4,5]],
-  // word problems
-  ['lin',[6,-14,52],'Maya thinks of a number. She multiplies it by 6, then subtracts 14. The result is 52. What is her number?'],
-  ['lin',[3,4,31],'A taxi charges a flat fee of $4 plus $3 for every kilometre. One trip cost $31 in total. How many kilometres was the trip?'],
-  ['both',[5,-7,3,9],'Five times a number, minus 7, is equal to three times the same number, plus 9. What is the number?'],
-  ['both',[15,10,12,25],'Gym A charges a $10 joining fee plus $15 per month. Gym B charges a $25 joining fee plus $12 per month. After how many months do both gyms cost the same?'],
-  ['fracdiv',[4,-8,13],'Four friends share a bill equally after an $8 discount is taken off. Each friend pays $13. What was the bill before the discount?'],
-  ['dist',[4,3,6,50],'Four friends each buy a ticket that costs x dollars plus a $3 fee. They also add a $6 donation. They pay $50 in total. What is the price x of one ticket?']
+const STORIES = [
+{
+ title:"The Kite in the Mango Tree",
+ text:[
+  "On Saturday morning, Tunde carried his new red kite to the field behind his house. The wind was strong, so the kite shot up into the sky almost at once. Tunde laughed and let out more string.",
+  "Suddenly, a big gust pulled the string right out of his hands. The kite swooped down and caught in the tallest branches of the mango tree. Tunde felt his stomach drop. He tried jumping, but he could not reach it.",
+  "His neighbour, Mrs. Bello, heard him sighing and came outside with a long broom. She held it up high while Tunde stood on a plastic crate. Together they gently wiggled the string until the kite floated free.",
+  "\"Thank you!\" said Tunde. Mrs. Bello smiled. \"Next time, wrap the string around your wrist,\" she said. Tunde did exactly that, and the kite flew until sunset."
+ ],
+ qs:[
+  {q:"Where did the kite get stuck?",o:["In the tallest branches of the mango tree","On the roof of Mrs. Bello's house","On a wire at the back of the field","In a bush at the edge of the field"],e:"The kite caught in the tallest branches of the mango tree."},
+  {q:"What made the kite leave Tunde's hands?",o:["A big gust of wind pulled the string away","Tunde let go of it so he could laugh","The string snapped in the middle","Mrs. Bello grabbed the string from him"],e:"A big gust pulled the string right out of his hands."},
+  {q:"\"Tunde felt his stomach drop.\" What does this mean?",o:["He suddenly felt worried and disappointed","He felt so hungry that he could not wait","He felt ill because of the strong wind","He felt too sleepy to keep standing"],e:"The phrase describes a sudden sinking feeling of worry when the kite got stuck."},
+  {q:"What did Tunde and Mrs. Bello use to get the kite down?",o:["A long broom and a plastic crate","A ladder and a long piece of rope","A tall stool and a fishing net","A garden hose and a wooden chair"],e:"She held up a long broom while Tunde stood on a plastic crate."},
+  {q:"What did Tunde learn from this adventure?",o:["Wrapping the string around his wrist keeps the kite from flying away","Kites should only be flown on days when there is hardly any wind","He should never fly a kite anywhere near a tree","He must ask a neighbour before he flies a kite"],e:"Mrs. Bello advised him to wrap the string around his wrist, and he did."}
+ ]
+},
+{
+ title:"Ada's Volcano",
+ text:[
+  "Ada had worked on her science fair volcano for two weeks. She built it from clay and painted it brown and orange. On the morning of the fair, she carried it carefully into the school hall and set it on table seven.",
+  "When the judge, Mr. Okafor, arrived, Ada poured vinegar into the volcano's mouth and waited. Nothing happened. Her cheeks turned hot. She peeked inside and saw that the bowl of baking soda was still sitting beside her, untouched. She had forgotten to put it in!",
+  "Quickly, she spooned in the baking soda and poured in more vinegar. This time, white foam bubbled up and spilled down the sides. The crowd cheered. Mr. Okafor wrote something on his clipboard.",
+  "\"I liked how you stayed calm and fixed your mistake,\" he said. Ada grinned, even though her hands were still shaking."
+ ],
+ qs:[
+  {q:"How long did Ada work on her volcano?",o:["Two weeks","Two days","Five days","One month"],e:"The story says she had worked on it for two weeks."},
+  {q:"Why did nothing happen when Ada first poured in the vinegar?",o:["She had forgotten to add the baking soda","The vinegar was too old to work","The clay volcano had a crack in it","The judge arrived before it was ready"],e:"The bowl of baking soda was still untouched beside her."},
+  {q:"Which word best describes how Ada felt when nothing happened?",o:["Embarrassed","Sleepy","Jealous","Proud"],e:"Her cheeks turned hot, which shows she felt embarrassed."},
+  {q:"What did the judge like most about Ada?",o:["How calmly she fixed her mistake","How bright her paint colours were","How quickly she had built the volcano","How loudly the crowd cheered for her"],e:"Mr. Okafor said he liked how she stayed calm and fixed her mistake."},
+  {q:"Why were Ada's hands still shaking at the end?",o:["She was still nervous, even though it ended well","She was cold from touching the vinegar","She was tired from carrying the volcano","She was angry at the judge's comment"],e:"Her nerves had not settled yet, even though she was grinning."}
+ ]
+},
+{
+ title:"Kofi and the Storm",
+ text:[
+  "In a tall palm tree lived many weaver birds. Every spring, they built nests from grass and thin palm strips. Most of the birds worked fast. They tied a few knots, tucked in some grass, and flew off to play.",
+  "Kofi was different. He wove each strip tightly, checked every knot twice, and made his nest thick and round. The other birds teased him. \"Why are you so slow, Kofi? Come and play!\" they called. Kofi only smiled and kept working.",
+  "One night, a huge storm rolled in. The wind howled and the rain poured down. The quickly made nests came apart and tumbled to the ground. Kofi's nest swung back and forth, but it did not break.",
+  "In the morning, the other birds were wet and tired. Kofi invited them into his nest to dry off. \"Next year,\" said one bird quietly, \"I will take my time too.\""
+ ],
+ qs:[
+  {q:"What did the weaver birds build their nests from?",o:["Grass and thin palm strips","Mud and small stones","Leaves and thick sticks","Feathers and cotton"],e:"They built nests from grass and thin palm strips."},
+  {q:"How was Kofi different from the other birds?",o:["He worked slowly and carefully","He built his nest higher in the tree","He did not enjoy playing at all","He used stronger materials than they did"],e:"Kofi wove tightly and checked every knot twice, while the others hurried."},
+  {q:"What happened to the quickly made nests in the storm?",o:["They came apart and tumbled down","They floated away on the rain","They stayed dry and safe","They were blown into another tree"],e:"The quickly made nests came apart and tumbled to the ground."},
+  {q:"What does \"teased\" mean in the sentence \"The other birds teased him\"?",o:["Laughed at him and made fun of him","Wanted to learn from him","Felt sorry for him","Copied everything he did"],e:"They called out unkind questions about how slow he was."},
+  {q:"Which lesson does this story teach?",o:["Taking your time to do a job well pays off","Being fast is always better than being careful","You should never listen to your friends","Nests are safest when built together"],e:"Kofi's careful work survived the storm, which shows patience pays off."}
+ ]
+},
+{
+ title:"Chidi at the Market",
+ text:[
+  "Every Saturday, Chidi helped his grandmother sell oranges at the busy market. Grandma stacked them in neat pyramids while Chidi counted the money.",
+  "One afternoon, a man in a blue cap bought six oranges and handed Chidi a crisp note. Chidi gave him change and put the note in the tin. Later, when he counted again, he noticed something odd. The man's note was worth more than he had thought. He had given the man too little change!",
+  "Chidi's heart pounded. Grandma was busy with another customer, and the man had already walked far down the road. Chidi could have kept the extra money, but he did not want to. He ran through the crowd and tapped the man on the arm.",
+  "\"Sir, I made a mistake,\" he panted, handing back the money. The man smiled. \"You are an honest boy,\" he said. \"Your grandmother is lucky to have you.\""
+ ],
+ qs:[
+  {q:"What was Chidi's job at the stall?",o:["Counting the money","Stacking the oranges","Choosing the best fruit","Weighing the oranges"],e:"Grandma stacked the oranges while Chidi counted the money."},
+  {q:"What mistake did Chidi make?",o:["He gave the man too little change","He gave the man too many oranges","He charged the man too much","He lost the man's note"],e:"He noticed that he had given the man too little change."},
+  {q:"Why did Chidi run after the man?",o:["To give back the money he owed him","To sell him some more oranges","To ask him a question for Grandma","To thank him for shopping there"],e:"Chidi handed back the money after saying he had made a mistake."},
+  {q:"Which word best describes Chidi?",o:["Honest","Forgetful","Stubborn","Impatient"],e:"He chose to return the extra money, and the man called him an honest boy."},
+  {q:"Why did Chidi's heart pound when he found his mistake?",o:["He was nervous and worried about what he had done","He was excited about a happy surprise","He was frightened of the man in the blue cap","He was angry at his grandmother"],e:"He realised the man had walked far away and he felt worried."}
+ ]
+},
+{
+ title:"The Fennec Fox",
+ text:[
+  "The sun sets over the Sahara Desert, and the sand slowly cools. This is when a fennec fox wakes up. The fennec is the smallest fox in the world, no bigger than a house cat, but its ears are enormous. They can grow up to fifteen centimetres long.",
+  "These big ears help the fox in two ways. First, they let it hear insects and lizards moving under the sand. Second, they give off body heat so the fox stays cool.",
+  "Fennecs are nocturnal, which means they are active at night when the desert is not so hot. During the day, they rest in burrows they dig in the sand. A thick coat of pale fur keeps them warm on cold desert nights and reflects sunlight during the day."
+ ],
+ qs:[
+  {q:"What is the main idea of this passage?",o:["Fennec foxes have features that help them survive in the desert","Deserts are too hot for any animal to live in","Foxes use their ears mainly to fight enemies","The smallest animals always live in burrows"],e:"Every paragraph explains a feature, such as ears, burrows or fur, that helps the fennec live in the desert."},
+  {q:"What does \"nocturnal\" mean?",o:["Active mostly at night","Active mostly in the day","Living deep underground","Living all alone"],e:"The passage explains that nocturnal animals are active at night."},
+  {q:"How do the fennec's big ears help it stay cool?",o:["They give off body heat","They collect cool rainwater","They block the hot sunlight","They fan the air like wings"],e:"The ears give off body heat so the fox stays cool."},
+  {q:"Why do fennec foxes dig burrows?",o:["To rest during the hot day","To hunt insects at night","To store food for winter","To raise their babies in safety"],e:"During the day, they rest in burrows they dig in the sand."},
+  {q:"Which detail is a fact from the passage?",o:["A fennec's ears can grow up to fifteen centimetres long","Fennecs are the fastest foxes in the world","Fennecs live in every desert on Earth","Fennecs can hear thunder from far away"],e:"The first paragraph says the ears can grow up to fifteen centimetres long."}
+ ]
+},
+{
+ title:"The New Girl",
+ text:[
+  "On Monday, Maya walked into Room 12 holding her lunchbox tightly. It was her first day at Greenfield School, and she did not know anyone. The teacher, Mr. Adeyemi, showed her to a desk near the window. Maya kept her eyes on the floor.",
+  "At break time, she sat alone on a bench and unwrapped her sandwich. A girl with two braids walked over. \"Hi, I'm Sam,\" she said. \"We're playing tag. Want to join?\"",
+  "Maya shrugged. \"I'm not very fast,\" she said quietly. \"That's okay,\" said Sam. \"Neither am I. We're the ones who get caught first.\" Maya laughed for the first time all day. She put her sandwich down and followed Sam to the playground.",
+  "By the end of the week, Maya was no longer nervous about school at all. She even saved a seat for Sam at lunch."
+ ],
+ qs:[
+  {q:"Which room was Maya's class in?",o:["Room 12","Room 21","Room 8","Room 15"],e:"Maya walked into Room 12."},
+  {q:"How did Maya feel on her first morning?",o:["Nervous and shy","Bored and sleepy","Excited and loud","Proud and calm"],e:"She held her lunchbox tightly and kept her eyes on the floor."},
+  {q:"Why did Maya say, \"I'm not very fast\"?",o:["She was worried she would not be good at the game","She wanted to win the game by herself","She had hurt her leg on the playground","She wanted to be left alone to eat"],e:"She was unsure about joining and worried about being slow."},
+  {q:"Why did Maya laugh for the first time all day?",o:["Sam joked that they would both get caught first","Sam fell over while playing tag","Mr. Adeyemi told a funny story","A boy dropped his sandwich"],e:"Sam said they were the ones who get caught first, and Maya laughed."},
+  {q:"What does the last sentence of the story show?",o:["Maya has made a friend and feels comfortable","Maya still dislikes sitting at lunch","Maya wants to move to a new school","Sam is feeling lonely at lunchtime"],e:"Saving a seat for Sam shows that they had become friends."}
+ ]
+},
+{
+ title:"The Puppy in the Drain",
+ text:[
+  "It had been raining all morning, so Kemi and her brother Ibrahim were stuck inside. Around noon, the rain finally stopped, and they ran outside to splash in puddles.",
+  "Near the corner of the road, Ibrahim heard a thin, squeaky whimper. \"Did you hear that?\" he whispered. They followed the sound to a drain by the kerb. Down in the dark, a tiny brown puppy was shivering, its paws slipping on the wet stones.",
+  "Kemi lay on her stomach and reached in, but her fingers could not quite touch it. \"We need help,\" she said. Ibrahim sprinted home and returned with their father and a flat piece of wood. Father slid the wood down, and the puppy scrambled onto it.",
+  "They lifted it out and wrapped it in a dry towel. \"Can we keep him?\" Kemi asked. Father smiled. \"Let's find out if someone is missing him first.\""
+ ],
+ qs:[
+  {q:"What did Ibrahim hear near the corner of the road?",o:["A thin, squeaky whimper","A loud, angry bark","A splash in the water","His father calling them"],e:"He heard a thin, squeaky whimper."},
+  {q:"What happened right after Kemi found she could not reach the puppy?",o:["Ibrahim ran home to get help","Their father slid wood into the drain","They wrapped the puppy in a towel","They followed the whimper to the drain"],e:"Kemi said they needed help, and Ibrahim sprinted home."},
+  {q:"Why could Kemi not rescue the puppy by herself?",o:["Her fingers could not reach it","The drain was covered with a lid","The puppy kept running away","She was afraid of dogs"],e:"Her fingers could not quite touch the puppy."},
+  {q:"Why did Father want to find out if someone was missing the puppy?",o:["The puppy might already belong to someone","He did not like having dogs at home","He wanted to buy a bigger dog instead","He thought the puppy was too sick to keep"],e:"A puppy that was lost might have an owner looking for it."},
+  {q:"In the sentence \"the puppy scrambled onto it,\" what does scrambled mean?",o:["Climbed in a quick, clumsy way","Slid down slowly and softly","Waited there patiently","Jumped across without effort"],e:"The puppy's paws had been slipping, so it climbed up quickly and clumsily."}
+ ]
+},
+{
+ title:"Grandpa's Bean Seeds",
+ text:[
+  "Grandpa gave Leila three bean seeds and a small pot of soil. \"Plant them one finger deep,\" he said. Leila pressed the seeds into the soil, covered them, and watered the pot. Then she waited.",
+  "For days, nothing seemed to happen. Leila peeked every morning, but the soil stayed flat. \"Be patient,\" Grandpa said. \"The important work is happening where you cannot see it.\"",
+  "On the ninth day, a tiny green sprout pushed through the soil. Soon there were two more. Within a few weeks the plants had grown tall, and Leila helped Grandpa tie them to sticks so they could climb.",
+  "By the end of the month, small white flowers appeared. Later the flowers turned into long green pods. Leila picked the first bean, snapped it open, and ate it fresh. \"It tastes like all that waiting,\" she said."
+ ],
+ qs:[
+  {q:"How deep did Grandpa tell Leila to plant the seeds?",o:["One finger deep","One hand deep","Right on top of the soil","As deep as the pot"],e:"Grandpa said to plant them one finger deep."},
+  {q:"On which day did the first sprout appear?",o:["The ninth day","The third day","The fifth day","The twelfth day"],e:"On the ninth day, a tiny green sprout pushed through."},
+  {q:"What happened right after the small white flowers appeared?",o:["The flowers turned into long green pods","Leila tied the plants to sticks","The first sprout pushed through the soil","Leila ate her first bean"],e:"Later the flowers turned into long green pods, and only then did Leila pick a bean."},
+  {q:"What did Grandpa mean by \"The important work is happening where you cannot see it\"?",o:["The seeds are changing under the soil before any sprout shows","Leila should dig up the seeds to check on them","The best gardening is done after dark","Grandpa is busy with a secret project"],e:"The seeds were growing underground even though the soil looked flat."},
+  {q:"What did Leila mean when she said the bean \"tastes like all that waiting\"?",o:["It felt special because she had been patient","It tasted sour because it was fresh","She was bored of waiting and wanted to stop","It tasted like the soil in the pot"],e:"Her patience made the first bean feel like a special reward."}
+ ]
+},
+{
+ title:"The Relay Race",
+ text:[
+  "On sports day, Ben's team stood at the starting line of the relay race. There were five teams in all. Ben would run the third leg, and he was nervous because he had dropped the baton in practice.",
+  "The first runner, Zainab, shot out like an arrow and passed the baton to Femi in the lead. Femi ran hard, but a boy from the red team passed him. When Femi handed the baton to Ben, the team was in second place.",
+  "Ben gripped it tightly and sprinted. Halfway round, his hand slipped, and the baton fell to the track! Ben stopped, picked it up, and kept going. The crowd groaned. By the time he reached Amara, the last runner, the team was far behind.",
+  "Amara ran faster than she ever had and passed two teams. They finished third. Ben felt terrible, but his teammates crowded around him. \"You didn't give up,\" said Zainab. \"That's what matters.\" Ben finally smiled."
+ ],
+ qs:[
+  {q:"Which part of the relay did Ben run?",o:["The third leg","The first leg","The second leg","The last leg"],e:"The story says Ben would run the third leg."},
+  {q:"Why was Ben nervous before the race?",o:["He had dropped the baton in practice","He was feeling ill that morning","He had forgotten the rules of the race","He had never run in a race before"],e:"He remembered dropping the baton in practice."},
+  {q:"What did Ben do after he dropped the baton?",o:["He picked it up and kept going","He quit and walked off the track","He threw it to the next runner","He waited for the teacher to stop the race"],e:"Ben stopped, picked it up, and kept going."},
+  {q:"What place did Ben's team finish in?",o:["Third","Second","First","Fourth"],e:"Amara passed two teams and they finished third."},
+  {q:"What is the main message of this story?",o:["Trying again after a mistake matters more than winning","Only the fastest runner on a team really matters","Practising a lot always means that you will win","Teams should never let a nervous person run"],e:"Zainab told Ben that not giving up is what matters."}
+ ]
+},
+{
+ title:"The Case of the Missing Cookies",
+ text:[
+  "When Nia came home from school, the plate of cookies on the kitchen table was empty. Only a few crumbs were left. \"Who took my cookies?\" she cried.",
+  "She looked closely at the floor. A trail of crumbs led to the back door, and next to it were small, muddy paw prints. Nia also noticed that the back door was open a crack.",
+  "She thought about her suspects. Her brother Tobi had been at football practice all afternoon, so he could not have taken them. Her mother was at work. That left Biscuit, the family's golden dog, who was sleeping suspiciously under the porch.",
+  "Nia knelt down and found Biscuit with a few crumbs stuck to his whiskers. \"Aha!\" she said. Biscuit thumped his tail guiltily. Nia laughed. \"Next time,\" she said, shutting the door properly, \"I'll keep the cookies on a higher shelf.\""
+ ],
+ qs:[
+  {q:"What clue showed Nia that an animal had been in the kitchen?",o:["Muddy paw prints near the back door","A broken plate on the floor","A torn paper bag by the table","Scratch marks on the table legs"],e:"Small, muddy paw prints were next to the back door."},
+  {q:"Why could Tobi not have taken the cookies?",o:["He was at football practice all afternoon","He does not like cookies","He was asleep upstairs","He had gone to the shop"],e:"Tobi had been at football practice all afternoon."},
+  {q:"The story says Biscuit was \"sleeping suspiciously.\" What does this tell you?",o:["He looked like he was hiding something","He was sick and needed a rest","He was very tired from a long walk","He was waiting for Nia to come home"],e:"Suspiciously means in a way that makes you suspect something is wrong."},
+  {q:"What evidence proved that Biscuit took the cookies?",o:["Cookie crumbs were stuck to his whiskers","He ran away when Nia called him","His food bowl was found empty","He barked loudly at the back door"],e:"Nia found crumbs stuck to his whiskers."},
+  {q:"What will Nia probably do next time?",o:["Store the cookies somewhere the dog cannot reach","Ask Tobi to guard the plate","Give all of the cookies to Biscuit","Hide the cookies under the porch"],e:"She said she would keep the cookies on a higher shelf."}
+ ]
+}
 ];
 
-const PROMPTS = ['Solve for x:','Find the value of x:','What is x?','Solve the equation:'];
-const NEAR_INT = [1,2,3,4,5,6,10];
-const NEAR_DEC = [0.1,0.2,0.3,0.5,0.6,1.1,1.2,2.2];
+const $ = s => document.querySelector(s);
+const app = $('#app'), stats = $('#stats'), fill = $('#fill');
+const TOTAL = STORIES.reduce((n, s) => n + s.qs.length, 0);
+const LETTERS = ['A','B','C','D'];
+let S;
 
-function pickDistractors(M, ans, isDec, k){
-  // k = how many wrong options sit BELOW the right answer (0..3), so its rank is controlled
-  const cap = Math.max(4*Math.abs(ans), 40);
-  const valid = v => { v=r2(v); return isFinite(v) && v!==0 && v!==r2(ans) && Math.abs(v)<=cap && (isDec ? !Number.isInteger(v) : Number.isInteger(v)); };
-  const pool = shuffle(M.map(v => ans<0 ? -Math.abs(v) : Math.abs(v)).concat([-ans])).map(r2).filter(valid);
-  const steps = shuffle(isDec ? NEAR_DEC : NEAR_INT);
-  const out = [];
-  const take = (cands, need) => { let got=0; for(const v of cands){ if(got>=need) break; if(valid(v) && !out.includes(r2(v))){ out.push(r2(v)); got++; } } };
-  // below the answer: method mistakes first, then near misses
-  take(pool.filter(v=>v<ans), k);
-  take(steps.map(s=>ans-s), k-out.length);
-  const below = out.length;
-  // above the answer
-  take(pool.filter(v=>v>ans), 3-k);
-  take(steps.map(s=>ans+s), 3-k-(out.length-below));
-  return out.slice(0,3);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fresh(view){
+  STORIES.forEach(st=>st.qs.forEach(q=>{q.opts=shuffle(q.o.map((t,i)=>({t,ok:i===0})));}));
+  S={view,s:0,q:0,picked:null,log:[]};
+}
+function score(){return S.log.filter(x=>x.ok).length;}
+function updateTop(){
+  const n=S.log.length;
+  stats.innerHTML = S.view==='quiz'
+    ? `<span>Question <b>${n + (S.picked===null?1:0)}</b> of ${TOTAL}</span><span>Score <b>${score()}</b></span>` : '';
+  fill.style.width = (S.view==='done' ? 100 : n/TOTAL*100) + '%';
 }
 
-function buildQuestions(){
-  // balanced target positions (smallest..largest) so the right answer is never "the middle one"
-  const targets = shuffle(SPECS.map((_,k)=>k%4));
-  return shuffle(SPECS).map((spec,i)=>{
-    const [t,p,story] = spec, X = T[t];
-    const ans = r2(X.ans(p));
-    const isDec = !Number.isInteger(ans);
-    let dis = [];
-    for(let tries=0; tries<5; tries++){
-      dis = pickDistractors(X.M(p), ans, isDec, targets[i]);
-      if(dis.length===3) break;
-    }
-    const eqText = X.text(p,'x');
-    return {
-      eq: story ? story : eqText,
-      word: !!story,
-      prompt: story ? 'Solve the problem:' : PROMPTS[i%PROMPTS.length],
-      check: X.text(p, num(ans)),
-      ans: ans,
-      opts: shuffle([ans].concat(dis)),
-      expl: (story ? `Let x be the unknown. Equation: ${eqText}.<br>` : '') + X.steps(p, ans),
-      ok: Math.abs(X.f(ans,p)-X.g(ans,p)) < 1e-6 && dis.length===3
-    };
+function start(){
+  app.innerHTML = `<section class="hero">
+    <h1>Read the story. Then answer the questions.</h1>
+    <p>There are ${STORIES.length} short stories and ${TOTAL} questions. Each story has 5 questions. You can look back at the story any time while you answer.</p>
+    <div class="chips"><span class="chip">${STORIES.length} stories</span><span class="chip">${TOTAL} questions</span><span class="chip">Grade 4</span></div>
+    <button class="btn" id="go">Start reading</button>
+  </section>
+  <ul class="shelf">${STORIES.map((s,i)=>`<li><span>Story ${i+1}</span>${s.title}</li>`).join('')}</ul>`;
+  $('#go').onclick=()=>{S.view='quiz';render();window.scrollTo(0,0);};
+}
+
+function quiz(){
+  const st=STORIES[S.s], q=st.qs[S.q], answered=S.picked!==null;
+  const last=S.s===STORIES.length-1 && S.q===st.qs.length-1;
+  const nextLabel = last ? 'See my results' : (S.q===st.qs.length-1 ? 'Next story' : 'Next question');
+  let fb='';
+  if(answered){
+    const ok=q.opts[S.picked].ok;
+    fb=`<div class="fb ${ok?'right':'wrong'}" role="status"><strong>${ok?'Correct!':'Not quite.'}</strong>${ok?'':'The right answer is '+LETTERS[q.opts.findIndex(o=>o.ok)]+'. '}${q.e}</div>`;
+  }
+  app.innerHTML = `<div class="quiz">
+    <article class="story">
+      <div class="tag">Story ${S.s+1} of ${STORIES.length}</div>
+      <h2>${st.title}</h2>
+      ${st.text.map(p=>`<p>${p}</p>`).join('')}
+    </article>
+    <section class="qcard">
+      <div class="tag">Question ${S.q+1} of ${st.qs.length}</div>
+      <h3>${q.q}</h3>
+      <ul class="opts">${q.opts.map((o,i)=>{
+        let c='opt';
+        if(answered){ if(o.ok) c+=' right'; else if(i===S.picked) c+=' wrong'; }
+        return `<li><button class="${c}" data-i="${i}" ${answered?'disabled':''}><span class="k">${LETTERS[i]}</span><span>${o.t}</span></button></li>`;
+      }).join('')}</ul>
+      ${fb}
+      <div class="nav"><span class="hint">${answered?'':'Pick one answer.'}</span>${answered?`<button class="btn" id="next">${nextLabel}</button>`:''}</div>
+    </section>
+  </div>`;
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;S.picked=i;S.log.push({s:S.s,q:S.q,pick:i,ok:q.opts[i].ok});render();
   });
+  const nx=$('#next');
+  if(nx) nx.onclick=()=>{
+    S.picked=null;
+    if(S.q<st.qs.length-1) S.q++;
+    else if(S.s<STORIES.length-1){S.s++;S.q=0;window.scrollTo(0,0);}
+    else S.view='done';
+    render();
+  };
 }
 
-if (typeof document !== 'undefined') {
-  const $ = id => document.getElementById(id);
-  let Q=[], i=0, score=0, locked=false, missed=[];
-
-  function start(){
-    Q = buildQuestions(); i=0; score=0; missed=[];
-    $('start').classList.add('hidden'); $('result').classList.add('hidden'); $('quiz').classList.remove('hidden');
-    show();
-  }
-  function show(){
-    const q=Q[i]; locked=false;
-    $('qnum').textContent = `Question ${i+1} of ${Q.length}`;
-    $('score').textContent = `Score: ${score}`;
-    $('prog').style.width = (i/Q.length*100)+'%';
-    $('prompt').textContent = q.prompt;
-    $('eq').className = 'eq' + (q.word ? ' word' : '');
-    $('eq').innerHTML = q.eq;
-    $('fb').classList.add('hidden'); $('nextBtn').classList.add('hidden');
-    $('opts').innerHTML='';
-    q.opts.forEach((v,k)=>{
-      const b=document.createElement('button');
-      b.className='opt'; b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span>x = ${num(v)}</span>`;
-      b.onclick=()=>choose(k);
-      $('opts').appendChild(b);
-    });
-  }
-  function choose(k){
-    if(locked) return; locked=true;
-    const q=Q[i], picked=q.opts[k], right = picked===q.ans;
-    const btns=$('opts').children;
-    q.opts.forEach((v,idx)=>{ btns[idx].disabled=true; if(v===q.ans) btns[idx].classList.add('good'); });
-    if(right){ score++; } else { btns[k].classList.add('bad'); missed.push({q,picked}); }
-    $('score').textContent = `Score: ${score}`;
-    const fb=$('fb'); fb.className='fb '+(right?'good':'bad');
-    fb.innerHTML = `<strong>${right?'Correct!':'Not quite.'}</strong>${q.expl}<br><span style="color:#6a7094">Check: ${q.check} &#10003;</span>`;
-    $('nextBtn').textContent = (i===Q.length-1) ? 'See results' : 'Next';
-    $('nextBtn').classList.remove('hidden');
-    $('nextBtn').focus();
-  }
-  function next(){
-    if(!locked) return;
-    if(i===Q.length-1) return finish();
-    i++; show();
-  }
-  function finish(){
-    $('quiz').classList.add('hidden'); $('result').classList.remove('hidden');
-    $('finalScore').textContent = `${score} / ${Q.length}`;
-    const pct=score/Q.length;
-    $('finalMsg').textContent = pct>=0.9 ? 'Algebra champion! Hard mode conquered.' :
-      pct>=0.7 ? 'Strong work. Check the ones you missed and go again.' :
-      pct>=0.5 ? 'Solid effort on a tough quiz. Study the worked steps below, then retry.' :
-      'This one is tough. Go through the worked steps below and try again.';
-    const rv=$('review');
-    if(!missed.length){ rv.innerHTML='<p><b>Perfect score &mdash; nothing to review!</b></p>'; }
-    else rv.innerHTML = '<h3>Questions to review</h3>' + missed.map(m=>
-      `<div class="ri"><div class="e">${m.q.eq}</div>
-       <div class="x">Your answer: <span class="bad">x = ${num(m.picked)}</span> &middot; Correct: <span class="good">x = ${num(m.q.ans)}</span></div>
-       <div class="x">${m.q.expl}</div></div>`).join('');
-    window.scrollTo(0,0);
-  }
-  $('startBtn').onclick=start; $('againBtn').onclick=start; $('nextBtn').onclick=next;
-  document.addEventListener('keydown',e=>{
-    if($('quiz').classList.contains('hidden')) return;
-    if(!locked && e.key>='1' && e.key<='4'){ choose(+e.key-1); }
-    else if(!locked && e.key.length===1 && 'abcd'.includes(e.key.toLowerCase())){ choose('abcd'.indexOf(e.key.toLowerCase())); }
-    else if(locked && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); next(); }
-  });
+function results(){
+  const sc=score(), pct=Math.round(sc/TOTAL*100);
+  const msg = pct>=90?'Outstanding reading! You noticed the details.':pct>=75?'Great job! You are a strong reader.':pct>=50?'Good effort. Re-read the stories you missed and try again.':'Keep going. Read each story slowly and look back for clues.';
+  const per=STORIES.map((s,i)=>{const n=S.log.filter(x=>x.s===i&&x.ok).length;return `<li><span>${s.title}</span><span class="m"><i style="width:${n/5*100}%"></i></span><span class="s">${n} / 5</span></li>`;}).join('');
+  const missed=S.log.filter(x=>!x.ok).map(x=>{
+    const st=STORIES[x.s],q=st.qs[x.q];
+    return `<div class="miss"><span class="tag">${st.title}</span><strong>${q.q}</strong><span><em>Your answer:</em> ${q.opts[x.pick].t}</span><span><u>Correct answer:</u> ${q.opts.find(o=>o.ok).t}</span><span class="hint">${q.e}</span></div>`;
+  }).join('');
+  app.innerHTML=`<section class="result">
+    <div class="big"><span class="tag">Your score</span><div class="n">${sc} / ${TOTAL}</div><div><b>${pct}%</b>. ${msg}</div></div>
+    <h2>Score for each story</h2>
+    <ul class="break">${per}</ul>
+    ${missed?`<h2>Questions to review</h2>${missed}`:'<h2>No mistakes. Perfect score!</h2>'}
+    <button class="btn" id="again">Try again with new answer order</button>
+  </section>`;
+  $('#again').onclick=()=>{fresh('quiz');render();window.scrollTo(0,0);};
 }
+
+function render(){
+  updateTop();
+  if(S.view==='start') start(); else if(S.view==='quiz') quiz(); else results();
+}
+fresh('start');render();
 </script>
-</body>
-</html>
