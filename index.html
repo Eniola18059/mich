@@ -3,31 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Find x! Equation Quiz</title>
+<title>Find x! Hard Mode</title>
 <style>
   :root{
     --bg:#f4f6fb; --card:#ffffff; --ink:#1f2540; --muted:#6a7094; --accent:#4f46e5; --accent-soft:#eceafd;
-    --good:#16a34a; --good-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2; --line:#e3e6f0;
+    --good:#16a34a; --good-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2; --line:#e3e6f0; --hot:#e11d48;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.45;min-height:100vh;display:flex;justify-content:center;padding:24px 14px}
-  .wrap{width:100%;max-width:640px}
+  .wrap{width:100%;max-width:660px}
   .card{background:var(--card);border-radius:20px;padding:28px;box-shadow:0 8px 30px rgba(40,50,110,.10)}
   h1{margin:0 0 6px;font-size:2rem}
   h1 span{color:var(--accent)}
+  .badge{display:inline-block;background:var(--hot);color:#fff;font-size:.8rem;font-weight:800;letter-spacing:1px;padding:3px 10px;border-radius:99px;vertical-align:middle;margin-left:8px}
   .sub{color:var(--muted);margin:0 0 20px}
   .tip{background:var(--accent-soft);border-radius:14px;padding:14px 16px;margin:18px 0 24px}
   .tip b{color:var(--accent)}
+  .tip ul{margin:8px 0 0;padding-left:20px}
   button{font:inherit;cursor:pointer}
   .primary{background:var(--accent);color:#fff;border:0;border-radius:14px;padding:14px 26px;font-weight:700;font-size:1.05rem;transition:transform .1s,opacity .2s}
   .primary:hover{transform:translateY(-1px)}
-  .primary:disabled{opacity:.4;cursor:default;transform:none}
   .hidden{display:none}
   .top{display:flex;justify-content:space-between;color:var(--muted);font-size:.95rem;margin-bottom:8px;font-weight:600}
   .bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:24px}
   .bar>div{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
   .prompt{color:var(--muted);font-weight:600;margin-bottom:8px}
-  .eq{font-size:2.2rem;font-weight:800;text-align:center;background:var(--accent-soft);border-radius:16px;padding:24px 10px;margin-bottom:22px;letter-spacing:.5px;overflow-wrap:anywhere}
+  .eq{font-size:2.1rem;font-weight:800;text-align:center;background:var(--accent-soft);border-radius:16px;padding:24px 10px;margin-bottom:22px;letter-spacing:.5px;overflow-wrap:anywhere}
+  .eq.word{font-size:1.15rem;font-weight:600;text-align:left;padding:20px;line-height:1.55;letter-spacing:0}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15;font-size:.9em}
+  .frac>span:first-child{border-bottom:2.5px solid currentColor;padding:0 6px 2px}
+  .frac>span:last-child{padding:2px 6px 0}
   .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .opt{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:1.2rem;font-weight:700;text-align:left;color:var(--ink);transition:border-color .15s,background .15s}
   .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
@@ -40,6 +45,7 @@
   .fb{margin-top:20px;border-radius:14px;padding:14px 16px}
   .fb.good{background:var(--good-soft)} .fb.bad{background:var(--bad-soft)}
   .fb strong{display:block;margin-bottom:4px}
+  .fb .frac{font-size:.85em}
   .next{margin-top:18px;text-align:right}
   .score-big{font-size:3.2rem;font-weight:800;color:var(--accent);margin:4px 0}
   .review{margin-top:22px;border-top:1px solid var(--line);padding-top:6px}
@@ -47,16 +53,24 @@
   .ri .e{font-weight:800;font-size:1.1rem}
   .ri .x{color:var(--muted);font-size:.95rem}
   .ri .bad{color:var(--bad);font-weight:700} .ri .good{color:var(--good);font-weight:700}
-  @media(max-width:480px){.opts{grid-template-columns:1fr}.eq{font-size:1.7rem}.card{padding:20px}}
+  @media(max-width:480px){.opts{grid-template-columns:1fr}.eq{font-size:1.6rem}.card{padding:20px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <div id="start" class="card">
-    <h1>Find <span>x</span>!</h1>
-    <p class="sub">50 questions &middot; solve each equation to find the value of x</p>
-    <div class="tip"><b>Golden rule:</b> whatever you do to one side of the equation, you must do to the other side. Use the opposite (inverse) operation to get x alone.</div>
+    <h1>Find <span>x</span>! <span class="badge">HARD</span></h1>
+    <p class="sub">50 challenge questions &middot; no shortcuts</p>
+    <div class="tip"><b>What to expect</b>
+      <ul>
+        <li>Variables on both sides of the equals sign</li>
+        <li>Brackets, like terms, fractions and decimals</li>
+        <li>Negative numbers, in the equation and in the answer</li>
+        <li>Word problems you must turn into an equation</li>
+      </ul>
+      <p style="margin:10px 0 0">Work each one out on paper first. The wrong choices are the classic slip-ups!</p>
+    </div>
     <button class="primary" id="startBtn">Start quiz</button>
   </div>
 
@@ -81,91 +95,136 @@
 </div>
 
 <script>
+const MINUS = '&minus;';
 function r2(v){ return Math.round(v*100)/100; }
-function fmt(v){ return String(r2(v)); }
+function num(n){ n=r2(n); return n<0 ? MINUS+String(-n) : String(n); }
+function sg(n){ n=r2(n); return n<0 ? ` ${MINUS} ${-n}` : ` + ${n}`; }
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-function co(a,X){ return X==='x' ? a+'x' : a+'('+X+')'; }
+function cx(a,X){ X=X||'x'; a=r2(a);
+  if(X==='x'){ if(a===1) return 'x'; if(a===-1) return MINUS+'x'; return num(a)+'x'; }
+  if(a===1) return X; if(a===-1) return MINUS+'('+X+')'; return num(a)+'('+X+')'; }
+function px(X){ return X==='x' ? 'x' : '('+X+')'; }
+function fr(n,d){ return `<span class="frac"><span>${n}</span><span>${d}</span></span>`; }
+function addTo(b){ return b>0 ? `Subtract ${num(b)} from` : `Add ${num(-b)} to`; }
 
-const TYPES = {
-  add:  { text:(p,X)=>`${X} + ${p[0]} = ${p[1]}`, f:(x,p)=>x+p[0], rhs:p=>p[1], ans:p=>p[1]-p[0],
-          M:p=>[p[1]+p[0], p[1], p[0]],
-          steps:(p,a)=>`Subtract ${p[0]} from both sides: x = ${fmt(p[1])} &minus; ${fmt(p[0])} = ${fmt(a)}.` },
-  sub:  { text:(p,X)=>`${X} &minus; ${p[0]} = ${p[1]}`, f:(x,p)=>x-p[0], rhs:p=>p[1], ans:p=>p[1]+p[0],
-          M:p=>[p[1]-p[0], p[1], p[0]],
-          steps:(p,a)=>`Add ${fmt(p[0])} to both sides: x = ${fmt(p[1])} + ${fmt(p[0])} = ${fmt(a)}.` },
-  mul:  { text:(p,X)=>`${co(p[0],X)} = ${p[1]}`, f:(x,p)=>p[0]*x, rhs:p=>p[1], ans:p=>p[1]/p[0],
-          M:p=>[p[0]*p[1], p[1]-p[0], p[1]+p[0]],
-          steps:(p,a)=>`Divide both sides by ${p[0]}: x = ${fmt(p[1])} &divide; ${p[0]} = ${fmt(a)}.` },
-  div:  { text:(p,X)=>`${X} &divide; ${p[0]} = ${p[1]}`, f:(x,p)=>x/p[0], rhs:p=>p[1], ans:p=>p[0]*p[1],
-          M:p=>[p[0]+p[1], p[1], p[0]*p[1]+p[0], p[0]*p[1]-p[0]],
-          steps:(p,a)=>`Multiply both sides by ${p[0]}: x = ${p[1]} &times; ${p[0]} = ${fmt(a)}.` },
-  ma:   { text:(p,X)=>`${co(p[0],X)} + ${p[1]} = ${p[2]}`, f:(x,p)=>p[0]*x+p[1], rhs:p=>p[2], ans:p=>(p[2]-p[1])/p[0],
-          M:p=>[p[2]-p[1], (p[2]+p[1])/p[0], (p[2]-p[1])*p[0], p[2]/p[0]],
-          steps:(p,a)=>`Subtract ${p[1]} from both sides: ${p[0]}x = ${p[2]-p[1]}. Then divide by ${p[0]}: x = ${p[2]-p[1]} &divide; ${p[0]} = ${fmt(a)}.` },
-  ms:   { text:(p,X)=>`${co(p[0],X)} &minus; ${p[1]} = ${p[2]}`, f:(x,p)=>p[0]*x-p[1], rhs:p=>p[2], ans:p=>(p[2]+p[1])/p[0],
-          M:p=>[p[2]+p[1], (p[2]-p[1])/p[0], (p[2]+p[1])*p[0], p[2]/p[0]],
-          steps:(p,a)=>`Add ${p[1]} to both sides: ${p[0]}x = ${p[2]+p[1]}. Then divide by ${p[0]}: x = ${p[2]+p[1]} &divide; ${p[0]} = ${fmt(a)}.` },
-  da:   { text:(p,X)=>`${X} &divide; ${p[0]} + ${p[1]} = ${p[2]}`, f:(x,p)=>x/p[0]+p[1], rhs:p=>p[2], ans:p=>(p[2]-p[1])*p[0],
-          M:p=>[p[2]-p[1], (p[2]+p[1])*p[0], p[2]*p[0]-p[1], p[2]*p[0]],
-          steps:(p,a)=>`Subtract ${p[1]} from both sides: x &divide; ${p[0]} = ${p[2]-p[1]}. Then multiply by ${p[0]}: x = ${p[2]-p[1]} &times; ${p[0]} = ${fmt(a)}.` },
-  dist: { text:(p,X)=>`${p[0]}(${X} + ${p[1]}) = ${p[2]}`, f:(x,p)=>p[0]*(x+p[1]), rhs:p=>p[2], ans:p=>p[2]/p[0]-p[1],
-          M:p=>[p[2]/p[0]+p[1], p[2]-p[1], (p[2]-p[1])/p[0], p[2]/p[0]],
-          steps:(p,a)=>`Divide both sides by ${p[0]}: x + ${p[1]} = ${p[2]/p[0]}. Then subtract ${p[1]}: x = ${p[2]/p[0]} &minus; ${p[1]} = ${fmt(a)}.` }
+const T = {
+  // a x + b = c
+  lin: { text:(p,X)=>`${cx(p[0],X)}${sg(p[1])} = ${num(p[2])}`,
+    f:(x,p)=>p[0]*x+p[1], g:(x,p)=>p[2], ans:p=>(p[2]-p[1])/p[0],
+    M:p=>[(p[2]+p[1])/p[0], p[2]-p[1], (p[2]-p[1])*p[0], p[2]/p[0]-p[1], p[2]/p[0]+p[1]],
+    steps:(p,a)=>`${addTo(p[1])} both sides: ${cx(p[0])} = ${num(p[2]-p[1])}. Divide both sides by ${num(p[0])}: x = ${num(p[2]-p[1])} &divide; ${p[0]<0?'('+num(p[0])+')':num(p[0])} = ${num(a)}.` },
+  // a x + b = c x + d   (a > c)
+  both: { text:(p,X)=>`${cx(p[0],X)}${sg(p[1])} = ${cx(p[2],X)}${sg(p[3])}`,
+    f:(x,p)=>p[0]*x+p[1], g:(x,p)=>p[2]*x+p[3], ans:p=>(p[3]-p[1])/(p[0]-p[2]),
+    M:p=>[(p[3]+p[1])/(p[0]-p[2]), (p[3]-p[1])/(p[0]+p[2]), (p[3]-p[1])/p[0], (p[3]-p[1])/(p[0]-p[2])+p[2]],
+    steps:(p,a)=>`Subtract ${cx(p[2])} from both sides to collect the x terms: ${cx(p[0]-p[2])}${sg(p[1])} = ${num(p[3])}. ${addTo(p[1])} both sides: ${cx(p[0]-p[2])} = ${num(p[3]-p[1])}. Divide by ${p[0]-p[2]}: x = ${num(p[3]-p[1])} &divide; ${p[0]-p[2]} = ${num(a)}.` },
+  // a(x + b) + d = c   params [a,b,d,c]
+  dist: { text:(p,X)=>`${p[0]}(${X}${sg(p[1])})${sg(p[2])} = ${num(p[3])}`,
+    f:(x,p)=>p[0]*(x+p[1])+p[2], g:(x,p)=>p[3], ans:p=>(p[3]-p[2])/p[0]-p[1],
+    M:p=>[(p[3]-p[2]-p[1])/p[0], (p[3]-p[2])/p[0]+p[1], (p[3]+p[2])/p[0]-p[1], p[3]-p[2]-p[1], (p[3]-p[2])/p[0]],
+    steps:(p,a)=>`${addTo(p[2])} both sides: ${p[0]}(x${sg(p[1])}) = ${num(p[3]-p[2])}. Divide by ${p[0]}: x${sg(p[1])} = ${num((p[3]-p[2])/p[0])}. ${addTo(p[1])} both sides: x = ${num(a)}.` },
+  // a(x + b) = c x + d   params [a,b,c,d]
+  dist2: { text:(p,X)=>`${p[0]}(${X}${sg(p[1])}) = ${cx(p[2],X)}${sg(p[3])}`,
+    f:(x,p)=>p[0]*(x+p[1]), g:(x,p)=>p[2]*x+p[3], ans:p=>(p[3]-p[0]*p[1])/(p[0]-p[2]),
+    M:p=>[(p[3]-p[1])/(p[0]-p[2]), (p[3]+p[0]*p[1])/(p[0]-p[2]), (p[3]-p[0]*p[1])/(p[0]+p[2]), (p[3]-p[0]*p[1])/p[0]],
+    steps:(p,a)=>`Distribute the ${p[0]}: ${p[0]}x${sg(p[0]*p[1])} = ${cx(p[2])}${sg(p[3])}. Subtract ${cx(p[2])} from both sides: ${cx(p[0]-p[2])}${sg(p[0]*p[1])} = ${num(p[3])}. ${addTo(p[0]*p[1])} both sides: ${cx(p[0]-p[2])} = ${num(p[3]-p[0]*p[1])}. Divide by ${p[0]-p[2]}: x = ${num(a)}.` },
+  // a x + b x + e = d   params [a,b,e,d]
+  like: { text:(p,X)=>X==='x' ? `${p[0]}x ${p[1]>=0?'+':MINUS} ${Math.abs(p[1])}x${sg(p[2])} = ${num(p[3])}` : `${p[0]}(${X}) ${p[1]>=0?'+':MINUS} ${Math.abs(p[1])}(${X})${sg(p[2])} = ${num(p[3])}`,
+    f:(x,p)=>(p[0]+p[1])*x+p[2], g:(x,p)=>p[3], ans:p=>(p[3]-p[2])/(p[0]+p[1]),
+    M:p=>[(p[3]-p[2])/p[0], (p[3]-p[2])/(p[0]-p[1]), (p[3]+p[2])/(p[0]+p[1]), (p[3]-p[2])/p[1], (p[3]-p[2])/(p[0]*p[1])],
+    steps:(p,a)=>`Combine like terms: ${p[0]}x ${p[1]>=0?'+':MINUS} ${Math.abs(p[1])}x = ${cx(p[0]+p[1])}. So ${cx(p[0]+p[1])}${sg(p[2])} = ${num(p[3])}. ${addTo(p[2])} both sides: ${cx(p[0]+p[1])} = ${num(p[3]-p[2])}. Divide by ${p[0]+p[1]}: x = ${num(a)}.` },
+  // (x + b) / a = c   params [a,b,c]
+  fracdiv: { text:(p,X)=>`${fr(X+sg(p[1]),p[0])} = ${num(p[2])}`,
+    f:(x,p)=>(x+p[1])/p[0], g:(x,p)=>p[2], ans:p=>p[0]*p[2]-p[1],
+    M:p=>[p[0]*p[2]+p[1], p[0]*p[2], p[2]-p[1], p[0]*p[2]-p[0]*p[1], p[2]+p[1]],
+    steps:(p,a)=>`Multiply both sides by ${p[0]}: x${sg(p[1])} = ${num(p[0]*p[2])}. ${addTo(p[1])} both sides: x = ${num(a)}.` },
+  // (p/q) x = c   params [p,q,c]
+  fraccoef: { text:(p,X)=>`${fr(p[0],p[1])}${px(X)} = ${num(p[2])}`,
+    f:(x,p)=>p[0]/p[1]*x, g:(x,p)=>p[2], ans:p=>p[2]*p[1]/p[0],
+    M:p=>[p[2]*p[0], p[2]*p[1], p[2]*p[0]*p[1], p[2]*p[0]/p[1], p[2]*p[1]/p[0]+p[1], p[2]+p[1]-p[0]],
+    steps:(p,a)=>`Multiply both sides by the reciprocal, ${fr(p[1],p[0])}: x = ${num(p[2])} &times; ${fr(p[1],p[0])} = ${num(a)}.` },
+  // (p/q) x + b = c   params [p,q,b,c]
+  fraccoef2: { text:(p,X)=>`${fr(p[0],p[1])}${px(X)}${sg(p[2])} = ${num(p[3])}`,
+    f:(x,p)=>p[0]/p[1]*x+p[2], g:(x,p)=>p[3], ans:p=>(p[3]-p[2])*p[1]/p[0],
+    M:p=>[p[3]-p[2], (p[3]-p[2])*p[1], (p[3]-p[2])*p[0], (p[3]+p[2])*p[1]/p[0], (p[3]-p[2])*p[0]/p[1], p[3]*p[1]/p[0]-p[2]],
+    steps:(p,a)=>`${addTo(p[2])} both sides: ${fr(p[0],p[1])}x = ${num(p[3]-p[2])}. Multiply by the reciprocal, ${fr(p[1],p[0])}: x = ${num(p[3]-p[2])} &times; ${fr(p[1],p[0])} = ${num(a)}.` }
 };
 
 const SPECS = [
-  // one-step: x + a = b
-  ['add',7,15],['add',12,30],['add',25,61],['add',9,34],['add',48,100],['add',16,40],['add',19,52],['add',33,75],
-  // one-step: x - a = b
-  ['sub',6,9],['sub',14,20],['sub',8,17],['sub',25,40],['sub',9,31],['sub',13,22],['sub',30,45],['sub',17,18],
-  // one-step: ax = b
-  ['mul',4,28],['mul',7,63],['mul',9,54],['mul',12,96],['mul',5,85],['mul',8,72],['mul',11,132],['mul',6,108],
-  // one-step: x / a = b
-  ['div',3,8],['div',5,11],['div',4,9],['div',6,7],['div',8,12],['div',10,15],['div',7,6],
-  // two-step: ax + b = c
-  ['ma',3,5,23],['ma',4,9,37],['ma',2,11,31],['ma',5,8,53],['ma',6,4,52],['ma',7,3,59],
-  // two-step: ax - b = c
-  ['ms',2,7,15],['ms',3,4,17],['ms',5,9,36],['ms',4,6,30],['ms',8,10,46],
-  // two-step: x / a + b = c
-  ['da',2,6,14],['da',3,4,9],['da',5,7,12],
-  // parentheses: a(x + b) = c
-  ['dist',2,3,18],['dist',3,4,27],
-  // decimals
-  ['add',3.4,9.1],['sub',2.6,4.1],['mul',4,18.4]
+  // big coefficients (lin)
+  ['lin',[12,17,149]],['lin',[9,-23,175]],['lin',[15,8,143]],['lin',[14,-6,92]],['lin',[16,12,172]],['lin',[25,-10,115]],
+  // negative coefficients / negative answers (lin)
+  ['lin',[-3,7,-11]],['lin',[-4,2,-34]],['lin',[-5,-3,22]],['lin',[3,20,2]],['lin',[7,50,1]],
+  // decimals (lin)
+  ['lin',[2,0.5,7.3]],['lin',[4,-1.2,5.2]],['lin',[0.5,2.4,5.1]],['lin',[3,1.5,9]],
+  // variables on both sides
+  ['both',[5,3,2,18]],['both',[7,-4,3,20]],['both',[9,2,4,37]],['both',[8,-5,3,25]],
+  ['both',[6,14,2,2]],['both',[10,-9,4,15]],['both',[11,6,5,-12]],['both',[12,-7,7,28]],
+  // brackets
+  ['dist',[3,4,5,32]],['dist',[4,-3,6,34]],['dist',[2,5,-4,12]],['dist',[5,-2,3,48]],['dist',[6,1,-10,32]],
+  // brackets with x on both sides
+  ['dist2',[3,4,1,20]],['dist2',[5,-2,2,11]],['dist2',[4,3,2,4]],
+  // like terms
+  ['like',[3,2,-4,21]],['like',[7,-3,8,32]],['like',[9,-4,6,41]],['like',[5,6,-10,56]],
+  // fractions
+  ['fracdiv',[4,3,5]],['fracdiv',[3,-2,6]],['fracdiv',[2,5,9]],
+  ['fraccoef',[2,3,8]],['fraccoef',[3,4,15]],['fraccoef',[5,6,35]],
+  ['fraccoef2',[3,4,-2,7]],['fraccoef2',[2,5,3,11]],['fraccoef2',[3,2,-4,5]],
+  // word problems
+  ['lin',[6,-14,52],'Maya thinks of a number. She multiplies it by 6, then subtracts 14. The result is 52. What is her number?'],
+  ['lin',[3,4,31],'A taxi charges a flat fee of $4 plus $3 for every kilometre. One trip cost $31 in total. How many kilometres was the trip?'],
+  ['both',[5,-7,3,9],'Five times a number, minus 7, is equal to three times the same number, plus 9. What is the number?'],
+  ['both',[15,10,12,25],'Gym A charges a $10 joining fee plus $15 per month. Gym B charges a $25 joining fee plus $12 per month. After how many months do both gyms cost the same?'],
+  ['fracdiv',[4,-8,13],'Four friends share a bill equally after an $8 discount is taken off. Each friend pays $13. What was the bill before the discount?'],
+  ['dist',[4,3,6,50],'Four friends each buy a ticket that costs x dollars plus a $3 fee. They also add a $6 donation. They pay $50 in total. What is the price x of one ticket?']
 ];
 
 const PROMPTS = ['Solve for x:','Find the value of x:','What is x?','Solve the equation:'];
+const NEAR_INT = [1,2,3,4,5,6,10];
+const NEAR_DEC = [0.1,0.2,0.3,0.5,0.6,1.1,1.2,2.2];
 
-function pickDistractors(M, N, ans, isDec){
-  const valid = v => { v=r2(v); return isFinite(v) && v>0 && v!==r2(ans) && (isDec || Number.isInteger(v)); };
+function pickDistractors(M, ans, isDec, k){
+  // k = how many wrong options sit BELOW the right answer (0..3), so its rank is controlled
+  const cap = Math.max(4*Math.abs(ans), 40);
+  const valid = v => { v=r2(v); return isFinite(v) && v!==0 && v!==r2(ans) && Math.abs(v)<=cap && (isDec ? !Number.isInteger(v) : Number.isInteger(v)); };
+  const pool = shuffle(M.map(v => ans<0 ? -Math.abs(v) : Math.abs(v)).concat([-ans])).map(r2).filter(valid);
+  const steps = shuffle(isDec ? NEAR_DEC : NEAR_INT);
   const out = [];
-  const add = v => { v=r2(v); if(valid(v) && !out.includes(v)) out.push(v); };
-  const m = shuffle(M).filter(valid).map(r2);
-  const n = shuffle(N).filter(valid).map(r2);
-  // two likely "wrong method" answers, one near-miss, then fill
-  m.slice(0,2).forEach(add);
-  n.forEach(v=>{ if(out.length<3) add(v); });
-  m.forEach(v=>{ if(out.length<3) add(v); });
+  const take = (cands, need) => { let got=0; for(const v of cands){ if(got>=need) break; if(valid(v) && !out.includes(r2(v))){ out.push(r2(v)); got++; } } };
+  // below the answer: method mistakes first, then near misses
+  take(pool.filter(v=>v<ans), k);
+  take(steps.map(s=>ans-s), k-out.length);
+  const below = out.length;
+  // above the answer
+  take(pool.filter(v=>v>ans), 3-k);
+  take(steps.map(s=>ans+s), 3-k-(out.length-below));
   return out.slice(0,3);
 }
 
 function buildQuestions(){
-  return shuffle(SPECS).map(spec=>{
-    const t = spec[0], p = spec.slice(1), T = TYPES[t];
-    const ans = r2(T.ans(p));
-    const isDec = p.some(v=>!Number.isInteger(v));
-    const s = isDec ? 0.1 : 1;
-    const N = [ans+s, ans-s, ans+2*s, ans-2*s].concat(isDec ? [ans+1, ans-1] : []);
-    const dis = pickDistractors(T.M(p), N, ans, isDec);
+  // balanced target positions (smallest..largest) so the right answer is never "the middle one"
+  const targets = shuffle(SPECS.map((_,k)=>k%4));
+  return shuffle(SPECS).map((spec,i)=>{
+    const [t,p,story] = spec, X = T[t];
+    const ans = r2(X.ans(p));
+    const isDec = !Number.isInteger(ans);
+    let dis = [];
+    for(let tries=0; tries<5; tries++){
+      dis = pickDistractors(X.M(p), ans, isDec, targets[i]);
+      if(dis.length===3) break;
+    }
+    const eqText = X.text(p,'x');
     return {
-      eq: T.text(p,'x'),
-      check: T.text(p, fmt(ans)),
+      eq: story ? story : eqText,
+      word: !!story,
+      prompt: story ? 'Solve the problem:' : PROMPTS[i%PROMPTS.length],
+      check: X.text(p, num(ans)),
       ans: ans,
       opts: shuffle([ans].concat(dis)),
-      expl: T.steps(p, ans),
-      ok: r2(T.f(ans,p)) === r2(T.rhs(p)) && dis.length===3
+      expl: (story ? `Let x be the unknown. Equation: ${eqText}.<br>` : '') + X.steps(p, ans),
+      ok: Math.abs(X.f(ans,p)-X.g(ans,p)) < 1e-6 && dis.length===3
     };
-  }).map((q,i)=>{ q.prompt = PROMPTS[i%PROMPTS.length]; return q; });
+  });
 }
 
 if (typeof document !== 'undefined') {
@@ -183,12 +242,13 @@ if (typeof document !== 'undefined') {
     $('score').textContent = `Score: ${score}`;
     $('prog').style.width = (i/Q.length*100)+'%';
     $('prompt').textContent = q.prompt;
+    $('eq').className = 'eq' + (q.word ? ' word' : '');
     $('eq').innerHTML = q.eq;
     $('fb').classList.add('hidden'); $('nextBtn').classList.add('hidden');
     $('opts').innerHTML='';
     q.opts.forEach((v,k)=>{
       const b=document.createElement('button');
-      b.className='opt'; b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span>x = ${fmt(v)}</span>`;
+      b.className='opt'; b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span>x = ${num(v)}</span>`;
       b.onclick=()=>choose(k);
       $('opts').appendChild(b);
     });
@@ -215,15 +275,15 @@ if (typeof document !== 'undefined') {
     $('quiz').classList.add('hidden'); $('result').classList.remove('hidden');
     $('finalScore').textContent = `${score} / ${Q.length}`;
     const pct=score/Q.length;
-    $('finalMsg').textContent = pct>=0.9 ? 'Outstanding! You really know how to isolate x.' :
-      pct>=0.7 ? 'Great work! Review the ones you missed below and you will be there.' :
-      pct>=0.5 ? 'Good effort. Look at the worked steps below and try again.' :
-      'Keep practising. Remember: use the opposite operation on both sides.';
+    $('finalMsg').textContent = pct>=0.9 ? 'Algebra champion! Hard mode conquered.' :
+      pct>=0.7 ? 'Strong work. Check the ones you missed and go again.' :
+      pct>=0.5 ? 'Solid effort on a tough quiz. Study the worked steps below, then retry.' :
+      'This one is tough. Go through the worked steps below and try again.';
     const rv=$('review');
     if(!missed.length){ rv.innerHTML='<p><b>Perfect score &mdash; nothing to review!</b></p>'; }
     else rv.innerHTML = '<h3>Questions to review</h3>' + missed.map(m=>
       `<div class="ri"><div class="e">${m.q.eq}</div>
-       <div class="x">Your answer: <span class="bad">x = ${fmt(m.picked)}</span> &middot; Correct: <span class="good">x = ${fmt(m.q.ans)}</span></div>
+       <div class="x">Your answer: <span class="bad">x = ${num(m.picked)}</span> &middot; Correct: <span class="good">x = ${num(m.q.ans)}</span></div>
        <div class="x">${m.q.expl}</div></div>`).join('');
     window.scrollTo(0,0);
   }
@@ -231,7 +291,7 @@ if (typeof document !== 'undefined') {
   document.addEventListener('keydown',e=>{
     if($('quiz').classList.contains('hidden')) return;
     if(!locked && e.key>='1' && e.key<='4'){ choose(+e.key-1); }
-    else if(!locked && 'abcd'.includes(e.key.toLowerCase()) && e.key.length===1){ choose('abcd'.indexOf(e.key.toLowerCase())); }
+    else if(!locked && e.key.length===1 && 'abcd'.includes(e.key.toLowerCase())){ choose('abcd'.indexOf(e.key.toLowerCase())); }
     else if(locked && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); next(); }
   });
 }
