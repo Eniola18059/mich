@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
-<title>Little Readers Story Quiz</title>
+<title>Story Quest Set Two</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
@@ -26,7 +26,7 @@
   --good:#4CCB84; --good-soft:#15342A; --bad:#F27C7C; --bad-soft:#3B1D22; --story:#1D2840; color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:20px;line-height:1.6;
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
 h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.2;text-wrap:balance;margin:0}
 button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
@@ -61,9 +61,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (min-width:821px){.story{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);max-height:calc(100vh - 110px);overflow:auto}}
 .tag{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .story h2{font-size:1.6rem;margin:4px 0 12px}
-.story p{margin:0 0 .9em;font-size:1.25rem;line-height:1.85;max-width:62ch}
+.story p{margin:0 0 .9em;font-size:1.06rem;line-height:1.75;max-width:62ch}
 .qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;display:grid;gap:16px}
-.qcard h3{font-size:1.5rem;line-height:1.35}
+.qcard h3{font-size:1.3rem;line-height:1.35}
 .opts{display:grid;gap:10px;padding:0;margin:0;list-style:none}
 .opt{width:100%;display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600}
 .opt:hover:not(:disabled){border-color:var(--accent)}
@@ -95,7 +95,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <div class="wrap">
   <header class="top">
     <div class="top-row">
-      <div class="brand">Little Readers</div>
+      <div class="brand">Story Quest</div>
       <div class="stats" id="stats"></div>
     </div>
     <div class="bar" aria-hidden="true"><i id="fill"></i></div>
@@ -106,113 +106,113 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <script>
 const STORIES = [
 {
- title:"Sam and Max",
- text:["Sam has a big brown dog. The dog is called Max. Max has soft ears and a long tail. Max likes to run and jump.", "Every morning, Sam puts on his shoes and takes Max to the park. They play there until the sun is high in the sky.", "Sam throws the ball far away, and Max runs very fast to get it. Max brings the ball back and wags his tail. Sam gives Max a big hug. Then they walk home, and Max has a long drink of water."],
+ title:"The Lighthouse on Cobb Rock",
+ text:["Nadia lived with her father on a tiny island called Cobb Rock. Her father was the lighthouse keeper. Every evening at sunset, he climbed the 112 steps to the top of the tower and lit the great lamp, so that ships could see the rocks and stay safe.", "One stormy night, Nadia's father slipped on the wet stairs and twisted his ankle badly. \"I cannot climb any more tonight,\" he groaned. Nadia looked out of the window. Far away, she could see the lights of a fishing boat tossing on the waves. Without the lamp, the crew would crash onto the rocks.", "\"I will do it,\" said Nadia. Her heart pounded as she raced up the stairs. Her legs ached, but she did not stop. At the top, she struck a match with shaking fingers and lit the lamp. Its golden beam swept across the dark sea.", "The fishing boat turned away from the rocks and sailed safely into the harbour. In the morning, the captain thanked Nadia and called her the bravest girl on the coast."],
  qs:[
-  {q:"What is the dog called?",o:["Max","Sam","Ben"],e:"The dog is called Max."},
-  {q:"What colour is the dog?",o:["Brown","Black","White"],e:"Sam has a big brown dog."},
-  {q:"Where do Sam and Max play?",o:["In the park","In the garden","At school"],e:"They play in the park."},
-  {q:"What does Max bring back?",o:["The ball","A stick","A shoe"],e:"Sam throws the ball, and Max brings it back."},
-  {q:"What does Max like to do?",o:["Run and jump","Sleep all day","Swim in the sea"],e:"Max likes to run and jump."}
+  {q:"What was Nadia's father's job?",o:["Lighthouse keeper", "Fisherman", "Ship's captain", "Harbour guard"],e:"He was the lighthouse keeper who lit the great lamp."},
+  {q:"Why could her father not climb the stairs that night?",o:["He twisted his ankle on the wet stairs", "He was too tired after a long day", "He had lost the key to the tower", "The storm had blown out the lamp"],e:"He slipped on the wet stairs and twisted his ankle badly."},
+  {q:"Which word best describes Nadia?",o:["Courageous", "Cautious", "Stubborn", "Playful"],e:"She climbed the tower in a storm to save the boat, which shows courage."},
+  {q:"What would probably have happened if Nadia had not lit the lamp?",o:["The fishing boat might have hit the rocks", "Her father would have healed more quickly", "The storm would have ended sooner", "The captain would have come ashore to help"],e:"The story says that without the lamp the crew would crash onto the rocks."},
+  {q:"\"Her heart pounded\" tells us that Nadia felt...",o:["Nervous and determined", "Sleepy and relaxed", "Angry with her father", "Sick from the climb"],e:"A pounding heart shows she was nervous, but she kept going anyway."}
  ]
 },
 {
- title:"Mia in the Rain",
- text:["It is a rainy day. Grey clouds are in the sky, and the rain goes pitter-patter on the roof. Mia cannot wait to go out!", "She puts on her yellow boots. She runs outside and jumps in a big puddle. Splash! Water flies up in the air, and Mia laughs. She jumps in three more puddles.", "Then Mum calls from the door. It is time to come in. Mia takes off her wet boots. Mum gives her hot soup, and Mia feels warm and happy."],
+ title:"The Spelling Bee",
+ text:["Joel had studied for the school spelling bee for three weeks. He wrote each word ten times and asked his sister to test him every night. Still, when he walked onto the stage and saw the crowd, his knees felt like jelly.", "One by one, the other children made mistakes and sat down. Soon only two were left: Joel and a girl named Priya. \"Your word is necessary,\" said the teacher.", "Joel froze. Was it one 'c' or two? Was it one 's' or two? Then he remembered the trick his sister had taught him: \"A shirt has one collar and two sleeves.\" That meant one c and two s's.", "\"N-E-C-E-S-S-A-R-Y,\" he said slowly. \"Necessary.\" The teacher smiled. \"Correct!\" Priya's next word was a hard one, and she missed it. Joel had won! He held up the little silver cup. \"I could not have done it without my sister,\" he said, and everyone clapped."],
  qs:[
-  {q:"What is the weather like?",o:["Rainy","Sunny","Windy"],e:"It is a rainy day."},
-  {q:"What does Mia put on?",o:["Yellow boots","A red hat","A blue coat"],e:"Mia puts on her yellow boots."},
-  {q:"What does Mia jump in?",o:["A big puddle","A pile of leaves","A little pool"],e:"She jumps in a big puddle."},
-  {q:"Who calls Mia in?",o:["Mum","Dad","Her teacher"],e:"Mum calls her in."},
-  {q:"What will Mia have to eat?",o:["Hot soup","A sandwich","Some cake"],e:"Mum calls her in for hot soup."}
+  {q:"How long did Joel study for the spelling bee?",o:["Three weeks", "Two weeks", "One month", "Ten days"],e:"He had studied for three weeks."},
+  {q:"How many children were left before the last word?",o:["Two", "Three", "One", "Four"],e:"Only Joel and Priya were left."},
+  {q:"What trick helped Joel spell necessary?",o:["A shirt has one collar and two sleeves", "Saying the letters in a little rhyme", "Writing the word in the air first", "Splitting the word into small parts"],e:"His sister's trick told him one c and two s's."},
+  {q:"\"His knees felt like jelly\" means that Joel felt...",o:["Shaky and nervous", "Hungry and tired", "Hurt and sore", "Calm and proud"],e:"Knees that feel like jelly are shaky, which shows nerves."},
+  {q:"Why did Joel thank his sister at the end?",o:["She had tested him and taught him the trick", "She had secretly chosen the word for him to spell", "She had bought him the silver cup as a prize", "She had waited for him backstage with a snack"],e:"She tested him every night and taught him the collar and sleeves trick."}
  ]
 },
 {
- title:"The Little Seed",
- text:["Ben has a small seed. He puts some soil in a pot. He plants the seed in the soil and pats it down.", "Every day, Ben gives the seed some water. He puts the pot by the window, so it can get the sun. Then Ben waits and waits.", "After one week, a green shoot comes up! Ben is so happy. He gives it more water. Soon a yellow flower grows. It is the best flower Ben has ever seen."],
+ title:"Inside a Beehive",
+ text:["A honey bee colony is like a busy town. Up to fifty thousand bees can live in one hive, and every bee has a job.", "The queen is the only bee that lays eggs. In summer, she can lay about two thousand eggs in a single day. Worker bees, which are all female, do almost everything else. Young workers clean the hive and feed the baby bees. Older workers fly out to find nectar from flowers.", "When a worker finds a good patch of flowers, she returns to the hive and does a waggle dance. The direction of her dance shows the other bees which way to fly, and how long she waggles tells them how far away the flowers are.", "Bees turn nectar into honey and store it in wax cells. It takes about twelve bees working all their lives to make just one teaspoon of honey."],
  qs:[
-  {q:"What does Ben plant?",o:["A seed","A small tree","A carrot"],e:"Ben plants a seed in a pot."},
-  {q:"What does Ben give the seed every day?",o:["Water","Milk","Juice"],e:"He gives it water every day."},
-  {q:"When does the green shoot come up?",o:["After one week","After one day","After one year"],e:"After one week, a green shoot comes up."},
-  {q:"What colour is the flower?",o:["Yellow","Red","Pink"],e:"A yellow flower grows."},
-  {q:"How does Ben feel when the shoot comes up?",o:["Happy","Sad","Cross"],e:"Ben is so happy."}
+  {q:"What is the main idea of this passage?",o:["Honey bees live and work together in an organised hive", "Honey is the healthiest food that any animal makes", "Queen bees are the largest insects in the world", "Flowers cannot grow without help from bees"],e:"The passage explains the jobs bees do inside a hive."},
+  {q:"What is the job of the queen bee?",o:["Laying eggs", "Finding nectar", "Guarding the hive", "Cleaning the cells"],e:"The queen is the only bee that lays eggs."},
+  {q:"What does a waggle dance tell the other bees?",o:["Which way to fly and how far to go", "Where the queen bee is hiding in the hive", "When it is the right time to make honey", "How many bees live in the hive"],e:"The direction shows the way, and the length of the waggle shows the distance."},
+  {q:"Which fact about worker bees is true?",o:["They are all female", "They lay all the eggs", "They stay inside the hive all their lives", "They only live through the winter"],e:"The passage says worker bees are all female."},
+  {q:"Why does the writer say a colony is \"like a busy town\"?",o:["Many bees live together and each has a job", "The hive has streets and little shops", "The bees are noisy all through the night", "The hive is built close to a town"],e:"A town has many people with different jobs, just like a hive."}
  ]
 },
 {
- title:"Where Is Kiki?",
- text:["Tom's cat, Kiki, is lost. Tom feels sad. He looks under the bed, but Kiki is not there. He looks in the garden, but Kiki is not there. \"Kiki! Kiki!\" Tom calls.", "Mum helps Tom look in the kitchen. There is no cat. Then Tom stops and listens very carefully.", "At last, Tom hears a soft meow. He follows the sound to a box in the corner. Kiki is in the box, fast asleep! Tom is so glad. He gives Kiki a big hug."],
+ title:"The Dry Well",
+ text:["For as long as anyone could remember, the well in Ilesha village had given sweet, cool water. But one dry season, the water sank lower and lower, until the bucket came up with only mud.", "The villagers argued. \"The well is finished,\" said Mr. Bode. \"We must move to another village.\" Many agreed. But old Mama Efe shook her head. \"The well has not gone,\" she said. \"The water has only gone deeper. We must dig.\"", "Nobody believed her, except three boys: Dayo, Kunle and Tobi. Every morning before school, they lowered ropes and dug at the bottom of the well with small shovels. Their hands blistered. Other children laughed at them.", "After eleven days, Tobi's shovel struck something wet. Cool water bubbled up around his feet. \"Water!\" he shouted. The whole village came running. That evening, everyone drank, and Mr. Bode quietly thanked the boys."],
  qs:[
-  {q:"Who is lost?",o:["Tom's cat","Tom's dog","Tom's sister"],e:"Tom's cat, Kiki, is lost."},
-  {q:"Where does Tom look first?",o:["Under the bed","In the garden","In the kitchen"],e:"Tom looks under the bed, and then in the garden."},
-  {q:"How does Tom find Kiki?",o:["He hears a soft meow","He sees little paw prints","Mum tells him where"],e:"Tom hears a soft meow."},
-  {q:"Where is Kiki?",o:["In a box","Under the bed","In the garden"],e:"Kiki is in a box."},
-  {q:"What is Kiki doing?",o:["Sleeping","Eating","Playing"],e:"Kiki is asleep."}
+  {q:"What did the bucket bring up when the water was low?",o:["Only mud", "A few small stones", "Warm water", "Nothing at all"],e:"The bucket came up with only mud."},
+  {q:"Who believed Mama Efe?",o:["Three boys", "Mr. Bode", "The whole village", "Their teacher"],e:"Only Dayo, Kunle and Tobi believed her."},
+  {q:"How many days did the boys dig before they found water?",o:["Eleven", "Seven", "Fourteen", "Three"],e:"After eleven days, Tobi's shovel struck something wet."},
+  {q:"Which word best describes the three boys?",o:["Determined", "Selfish", "Forgetful", "Greedy"],e:"They kept digging every morning, even when others laughed."},
+  {q:"Why did Mr. Bode thank the boys quietly?",o:["He felt sorry that he had wanted to leave", "He was angry that the boys were right", "He was too tired to speak loudly", "He wanted the boys to keep a secret"],e:"He had said the well was finished, and the boys proved him wrong."}
  ]
 },
 {
- title:"A Day at the Zoo",
- text:["Ana goes to the zoo with Dad. The sun is hot, and Ana wears her blue hat. First, they see a tall giraffe. The giraffe is eating leaves from a tree.", "Next, they see a funny monkey. The monkey swings on a rope. It makes a silly face at Ana. Ana laughs and laughs.", "After that, they see a big lion who is fast asleep. At the end of the day, Ana and Dad have ice cream."],
+ title:"The Amazing Octopus",
+ text:["An octopus has no bones at all. This means it can squeeze through any gap that is bigger than its beak, which is the only hard part of its body. Aquarium keepers have found octopuses escaping from their tanks through holes the size of a coin.", "An octopus has eight arms, and each arm is covered with hundreds of suckers that can taste and feel. It also has three hearts. Two pump blood past the gills, and the third sends blood around the rest of the body. Its blood is blue, not red.", "To hide from enemies, an octopus can change its colour, and even the bumps on its skin, to look like rocks, sand or seaweed. If this does not work, it squirts a cloud of dark ink into the water and darts away while the enemy is confused.", "Most octopuses live alone, and they only live for one to five years."],
  qs:[
-  {q:"Who goes to the zoo with Ana?",o:["Dad","Mum","Her teacher"],e:"Ana goes to the zoo with Dad."},
-  {q:"What is the giraffe doing?",o:["Eating leaves","Drinking water","Sleeping"],e:"The giraffe is eating leaves."},
-  {q:"What is the monkey doing?",o:["Swinging on a rope","Climbing a tree","Eating a banana"],e:"The monkey swings on a rope."},
-  {q:"What makes Ana laugh?",o:["The monkey","The giraffe","Dad"],e:"The funny monkey makes Ana laugh."},
-  {q:"What do Ana and Dad have at the end?",o:["Ice cream","Some cake","Some popcorn"],e:"At the end, they have ice cream."}
+  {q:"Why can an octopus squeeze through tiny gaps?",o:["It has no bones", "It has a soft shell", "Its arms are very thin", "It can shrink its body"],e:"The passage says it has no bones, so only its beak limits the size of a gap."},
+  {q:"How many hearts does an octopus have?",o:["Three", "Two", "Eight", "One"],e:"An octopus has three hearts."},
+  {q:"What colour is an octopus's blood?",o:["Blue", "Red", "Green", "Clear"],e:"The passage says its blood is blue, not red."},
+  {q:"What does an octopus do if hiding does not work?",o:["Squirts ink and swims away", "Pulls itself into a shell", "Fights with its arms", "Sinks down into the sand"],e:"It squirts a cloud of dark ink and darts away."},
+  {q:"What is the only hard part of an octopus's body?",o:["Its beak", "Its suckers", "Its arms", "Its skin"],e:"The beak is the only hard part."}
  ]
 },
 {
- title:"Bedtime for Bo",
- text:["Bo the bear is sleepy. The moon is up, and it is time for bed. First, Bo brushes his teeth. Next, he puts on his blue pyjamas.", "Then he gets into bed. Mum comes in and reads him a story about a little star. Bo yawns and yawns.", "Last, Bo shuts his eyes and goes to sleep. Good night, Bo!"],
+ title:"Ife and the Jollof Rice",
+ text:["Ife loved cooking with Grandma on Sunday afternoons. Today, Grandma was busy with a phone call, so she asked Ife to start the jollof rice by herself. \"Blend the tomatoes and peppers, and add just one small scotch bonnet,\" she said.", "Ife wanted the rice to be extra spicy, so she added three. \"More pepper means more flavour,\" she told herself. She stirred the pot and tasted the sauce, and her eyes watered. It was far too hot!", "Ife's face went red. What would Grandma say? She did not want to hide her mistake, so when Grandma came back, she explained everything.", "Grandma laughed gently. \"Do not worry, my dear. We can fix it.\" She added a can of tomatoes and a spoonful of sugar to cool the sauce, and she cooked extra rice to share out the pepper. By dinner time, the jollof was perfect. \"Next time,\" said Grandma, \"follow the recipe. Then add more pepper only after you taste it.\""],
  qs:[
-  {q:"How does Bo feel at the start?",o:["Sleepy","Hungry","Cross"],e:"Bo the bear is sleepy."},
-  {q:"What does Bo do first?",o:["Brushes his teeth","Puts on his pyjamas","Listens to a story"],e:"First, he brushes his teeth."},
-  {q:"What colour are Bo's pyjamas?",o:["Blue","Green","Red"],e:"He puts on his blue pyjamas."},
-  {q:"Who reads Bo a story?",o:["Mum","Dad","Gran"],e:"Mum reads him a story."},
-  {q:"What does Bo do last?",o:["Goes to sleep","Brushes his teeth","Puts on his pyjamas"],e:"Last, Bo shuts his eyes and goes to sleep."}
+  {q:"How much scotch bonnet did Grandma tell Ife to add?",o:["One small one", "Two small ones", "Three small ones", "Half a spoonful"],e:"Grandma said to add just one small scotch bonnet."},
+  {q:"Why did Ife add extra pepper?",o:["She thought more pepper means more flavour", "She forgot what Grandma had told her to add", "She wanted to play a joke on Grandma", "She had run out of tomatoes and needed more"],e:"She told herself that more pepper means more flavour."},
+  {q:"How did Grandma fix the sauce?",o:["She added tomatoes and sugar and cooked extra rice", "She added a cup of water and a little salt to it", "She threw the whole pot out and began again", "She added more pepper to balance out the taste"],e:"The tomatoes and sugar cooled it, and the extra rice shared out the pepper."},
+  {q:"Which word best describes what Ife did when Grandma came back?",o:["Honest", "Sneaky", "Careless", "Bossy"],e:"Ife explained everything instead of hiding her mistake."},
+  {q:"What was Grandma's advice for next time?",o:["Follow the recipe and taste before adding more pepper", "Never cook jollof rice without an adult in the kitchen", "Always use three scotch bonnets for flavour", "Use sugar in every sauce you make"],e:"She said to follow the recipe and only add more after tasting."}
  ]
 },
 {
- title:"Lily's Birthday",
- text:["Today is Lily's birthday. She is six years old. Lily wakes up early and puts on her best dress.", "Gran comes to the house. She has baked a pink cake with six candles. Lily's friends come to the party too, and everyone sits at the table.", "Lily blows out the candles and makes a wish. Then everyone sings a song for her. Lily smiles. It is the best day."],
+ title:"Why Do We Have Seasons?",
+ text:["Have you ever wondered why the weather changes through the year? The answer is that Earth is tilted. Our planet leans a little to one side, like a spinning top that is not quite upright, and this tilt always points the same way in space as Earth travels around the Sun. One trip around the Sun takes one year.", "When the northern half of Earth leans toward the Sun, it gets more direct sunlight and longer days, so it is summer there. At the same time, the southern half leans away, so it has winter. Six months later, the two halves swap places.", "Not every place has four seasons. Places near the equator, such as Lagos, get sunlight at nearly the same angle all year. They stay warm all year round and have a wet season and a dry season instead."],
  qs:[
-  {q:"How old is Lily?",o:["Six","Five","Seven"],e:"Lily is six years old."},
-  {q:"Who bakes the cake?",o:["Gran","Mum","Dad"],e:"Gran bakes the cake."},
-  {q:"What colour is the cake?",o:["Pink","White","Brown"],e:"Gran bakes a pink cake."},
-  {q:"What does Lily do with the candles?",o:["Blows them out","Counts them","Gives them to Gran"],e:"Lily blows out the candles."},
-  {q:"What does everyone do for Lily?",o:["Sing a song","Dance round","Clap loudly"],e:"Everyone sings a song for her."}
+  {q:"What causes the seasons?",o:["Earth's tilt as it travels around the Sun", "Earth moving closer to and farther from the Sun", "The Sun getting hotter and cooler", "Clouds blocking the Sun's light"],e:"The passage says the tilt of Earth causes the seasons."},
+  {q:"How long does one trip around the Sun take?",o:["One year", "One month", "Six months", "One day"],e:"One trip around the Sun takes one year."},
+  {q:"When the northern half leans toward the Sun, what season is it in the southern half?",o:["Winter", "Summer", "Spring", "The same as the north"],e:"The southern half leans away, so it has winter."},
+  {q:"Why do places near the equator not have four seasons?",o:["The Sun's light hits them at nearly the same angle all year", "The Sun does not shine on them at all in winter", "Earth stops tilting whenever it reaches that part of space", "They are much too far away from the Sun to feel it"],e:"Sunlight arrives at nearly the same angle all year, so they stay warm."},
+  {q:"Which is the best title for this passage?",o:["Why Earth Has Seasons", "How Far Away Is the Sun?", "Wet Weather in Lagos", "The Life of a Spinning Top"],e:"The whole passage explains the reason for the seasons."}
  ]
 },
 {
- title:"The Fish and the Frog",
- text:["A little fish lives in a pond. The water is cool and clear. The fish swims round and round, but he has no one to play with.", "One day, a frog hops onto a big green leaf. \"Hello!\" says the frog. \"Hello!\" says the fish. \"Do you want to play?\" asks the frog. \"Yes!\" says the fish.", "They become friends. The fish splashes, and the frog jumps from leaf to leaf. They play together all summer."],
+ title:"The Goalkeeper",
+ text:["Sola had never wanted to be a goalkeeper. He wanted to score goals like his hero, but the coach said the team needed someone tall with quick hands, so Sola put on the gloves.", "On Saturday, the final of the school cup ended 1–1, so it would be decided by penalty kicks. Sola's stomach twisted. The first kicker from the other team smashed the ball into the net. Then Femi scored for Sola's side.", "Next, the other team's best striker stepped up. Sola watched the boy's eyes. They flicked to the left. Sola dived left, and his fingertips pushed the ball away!", "His team cheered. In the end, they won the cup on penalties. His teammates lifted Sola onto their shoulders. \"Maybe goalkeeping is not so bad,\" he grinned."],
  qs:[
-  {q:"Where does the little fish live?",o:["In a pond","In the sea","In a river"],e:"A little fish lives in a pond."},
-  {q:"Where does the frog hop?",o:["Onto a big leaf","Into a little boat","Onto a flat rock"],e:"The frog hops onto a big green leaf."},
-  {q:"What colour is the leaf?",o:["Green","Brown","Yellow"],e:"It is a big green leaf."},
-  {q:"What do the fish and the frog become?",o:["Friends","Cousins","Neighbours"],e:"They become friends."},
-  {q:"When do they play together?",o:["All summer","All winter","Only at night"],e:"They play together all summer."}
+  {q:"Why did the coach choose Sola as goalkeeper?",o:["He was tall with quick hands", "He was the fastest runner", "He asked for the job himself", "He had played in goal before"],e:"The coach wanted someone tall with quick hands."},
+  {q:"What was the score at the end of normal time?",o:["1–1", "0–0", "2–1", "2–2"],e:"The final ended 1–1, so it went to penalties."},
+  {q:"How did Sola know which way to dive?",o:["He watched the kicker's eyes", "He listened to his coach", "He guessed the same way each time", "He saw the kicker's feet move"],e:"The boy's eyes flicked to the left, so Sola dived left."},
+  {q:"How did Sola feel when the penalties started?",o:["Nervous", "Bored", "Proud", "Angry"],e:"His stomach twisted, which shows nerves."},
+  {q:"What does \"Maybe goalkeeping is not so bad\" show about Sola?",o:["He has changed his mind about the job", "He wants to leave the team", "He is still upset about the match", "He thinks scoring goals is easy"],e:"At first he did not want to be a goalkeeper, but he now enjoys it."}
  ]
 },
 {
- title:"Zara at the Shop",
- text:["Zara goes to the shop with Mum. It is a short walk. In the shop, they buy three apples, two bananas and one loaf of bread.", "Mum pays the man at the desk. Zara carries the bread in her hands. Mum carries the apples and the bananas in a bag. Then they walk home.", "At home, Zara puts the fruit in a bowl on the table. Then she eats a slice of bread with butter."],
+ title:"The Whispering Library",
+ text:["Every morning, Mrs. Okoye the librarian found something strange. A book she had locked away the night before was lying open on a table, and the lamp beside it was warm. \"Someone is here at night,\" she told her class helpers, Ruth and Emeka.", "The children decided to investigate. Ruth found a muddy footprint by the back window. Emeka found a crumb of bread under the table. The open book was always about space and stars.", "That night, the two friends hid behind the big shelves. At midnight, the back window creaked open. A small figure climbed in, switched on the lamp, and began to read. It was Kayode, a boy from the house next door.", "\"Our house has no electricity,\" he whispered. \"I cannot read at home when it gets dark.\" Mrs. Okoye did not scold him. The next day, she gave him a library card and said he could read in the library every afternoon."],
  qs:[
-  {q:"Who goes to the shop with Zara?",o:["Mum","Gran","Dad"],e:"Zara goes to the shop with Mum."},
-  {q:"How many apples do they buy?",o:["Three","Two","Four"],e:"They buy three apples."},
-  {q:"How many bananas do they buy?",o:["Two","Three","One"],e:"They buy two bananas."},
-  {q:"What does Zara carry?",o:["The bread","The apples","The bananas"],e:"Zara carries the bread."},
-  {q:"Where does Zara put the fruit?",o:["In a bowl","In the fridge","In a basket"],e:"At home, she puts the fruit in a bowl."}
+  {q:"What strange thing did Mrs. Okoye find each morning?",o:["A locked-away book lying open and the lamp still warm", "The back window left wide open and the room cold", "Several books missing from the shelves each day", "Muddy footprints across the whole library floor"],e:"A book she had locked away was open and the lamp was warm."},
+  {q:"Which clue did Emeka find?",o:["A crumb of bread under the table", "A muddy footprint by the window", "A torn page from a book", "A library card on the floor"],e:"Ruth found the footprint, and Emeka found the crumb of bread."},
+  {q:"What were the books that were left open about?",o:["Space and stars", "Animals and plants", "Ships and the sea", "Machines and tools"],e:"The open book was always about space and stars."},
+  {q:"Why did Kayode sneak into the library at night?",o:["His house had no electricity to read by", "He wanted to take the books home", "He was hiding from his family", "He wanted to play a trick on the librarian"],e:"He said he could not read at home when it got dark."},
+  {q:"How did Mrs. Okoye solve the problem?",o:["She let him read in the library every afternoon", "She locked the back window and hid the key", "She sent him home with a lamp and a book", "She told his parents what he had done wrong"],e:"She gave him a library card and let him read in the afternoons."}
  ]
 },
 {
- title:"Kofi's Kite",
- text:["Kofi has a new kite. It is a windy day. The wind blows hard. Kofi runs across the field and lets out the string.", "The kite goes up, up, up! It goes higher than the tree. Kofi smiles and holds on tight.", "Then the wind stops. The kite floats down, down, down. Kofi runs to catch it. He catches it! Now he is ready to fly it again."],
+ title:"The Boy Who Built a Windmill",
+ text:["When William was fourteen, a terrible drought hit his country, Malawi. Crops dried up, and his family could not afford to send him to school. But William did not stop learning. He walked to a small library and borrowed a book about energy.", "In the book, he read about windmills that make electricity. His village had no power, and at night his family lived in the dark. \"I could build one,\" he thought. People laughed. \"A boy cannot build a windmill out of rubbish,\" they said.", "William searched a scrapyard for parts. He found a broken bicycle frame, an old tractor fan and some pipes. He cut blades from plastic pipes and used tall blue gum trees for the tower.", "When the wind turned the blades, a small light bulb glowed. William's idea had worked! Soon he built bigger machines that pumped water and lit houses. The boy they laughed at had made electricity out of wind."],
  qs:[
-  {q:"What does Kofi have?",o:["A new kite","A new ball","A new hat"],e:"Kofi has a new kite."},
-  {q:"What is the weather like?",o:["Windy","Rainy","Snowy"],e:"It is a windy day."},
-  {q:"How high does the kite go?",o:["Higher than the tree","Higher than the house","Only to the fence"],e:"It goes higher than the tree."},
-  {q:"What happens when the wind stops?",o:["The kite floats down","The kite flies away","The kite breaks"],e:"The kite floats down."},
-  {q:"Who catches the kite?",o:["Kofi","His dad","His friend"],e:"Kofi catches it."}
+  {q:"Why did William go to the library?",o:["His family could not afford to send him to school", "He wanted to find a part-time job there to earn money", "His teacher had sent him to collect some books", "He needed a quiet and warm place to sleep at night"],e:"He could not go to school, but he still wanted to learn."},
+  {q:"What did William learn about in his library book?",o:["Windmills that make electricity", "Tractors that dig the ground", "Ways to find water", "How to grow crops in a drought"],e:"He read about windmills that make electricity."},
+  {q:"Which of these did William use to build his windmill?",o:["A broken bicycle frame", "A new electric motor", "A metal ladder", "A wooden water barrel"],e:"He found a bicycle frame, a tractor fan and some pipes in a scrapyard."},
+  {q:"What happened when the wind turned the blades?",o:["A small light bulb glowed", "A pump began to fill a tank", "The tower fell over", "His village heard a loud noise"],e:"The wind turned the blades and a small bulb glowed."},
+  {q:"What does this story show about William?",o:["He solved a problem by learning and not giving up", "He was very good at making other people laugh", "He disliked going to school and wanted to quit", "He was luckier than the other children in Malawi"],e:"He kept learning and building even when people laughed at him."}
  ]
 }
 ];
@@ -239,8 +239,8 @@ function updateTop(){
 function start(){
   app.innerHTML = `<section class="hero">
     <h1>Read the story. Then answer the questions.</h1>
-    <p>There are ${STORIES.length} short stories and ${TOTAL} questions. Each story has 5 questions. The story stays on the page, so you can look back at it any time.</p>
-    <div class="chips"><span class="chip">${STORIES.length} stories</span><span class="chip">${TOTAL} questions</span><span class="chip">Grade 1</span></div>
+    <p>There are ${STORIES.length} short stories and ${TOTAL} questions. Each story has 5 questions. You can look back at the story any time while you answer.</p>
+    <div class="chips"><span class="chip">${STORIES.length} stories</span><span class="chip">${TOTAL} questions</span><span class="chip">Grade 4</span></div>
     <button class="btn" id="go">Start reading</button>
   </section>
   <ul class="shelf">${STORIES.map((s,i)=>`<li><span>Story ${i+1}</span>${s.title}</li>`).join('')}</ul>`;
@@ -289,7 +289,7 @@ function quiz(){
 
 function results(){
   const sc=score(), pct=Math.round(sc/TOTAL*100);
-  const msg = pct>=90?'Outstanding reading! You noticed the details.':pct>=75?'Great job! You are a strong reader.':pct>=50?'Good effort. Re-read the stories you missed and try again.':'Keep going. Read each story slowly and look back at the story.';
+  const msg = pct>=90?'Outstanding reading! You noticed the details.':pct>=75?'Great job! You are a strong reader.':pct>=50?'Good effort. Re-read the stories you missed and try again.':'Keep going. Read each story slowly and look back for clues.';
   const per=STORIES.map((s,i)=>{const n=S.log.filter(x=>x.s===i&&x.ok).length;return `<li><span>${s.title}</span><span class="m"><i style="width:${n/5*100}%"></i></span><span class="s">${n} / 5</span></li>`;}).join('');
   const missed=S.log.filter(x=>!x.ok).map(x=>{
     const st=STORIES[x.s],q=st.qs[x.q];
@@ -300,7 +300,7 @@ function results(){
     <h2>Score for each story</h2>
     <ul class="break">${per}</ul>
     ${missed?`<h2>Questions to review</h2>${missed}`:'<h2>No mistakes. Perfect score!</h2>'}
-    <button class="btn" id="again">Play again</button>
+    <button class="btn" id="again">Try again with new answer order</button>
   </section>`;
   $('#again').onclick=()=>{fresh('quiz');render();window.scrollTo(0,0);};
 }
