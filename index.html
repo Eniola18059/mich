@@ -1,313 +1,240 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="claude:viewport-fit-sides" content="cover">
-<title>Story Quest Set Two</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find x! Equation Quiz</title>
 <style>
-/* Layout: sticky header with progress; story card beside the question card on wide screens, stacked on phones. */
-:root{
-  --bg:#F3F6FA; --card:#FFFFFF; --ink:#1B2A41; --muted:#5B6B82; --line:#D9E1EC;
-  --accent:#0F7F86; --accent-ink:#FFFFFF; --sun:#F2B134; --sun-soft:#FFF4D6;
-  --good:#1E8E4E; --good-soft:#E1F5E9; --bad:#C23B3B; --bad-soft:#FBE4E4; --story:#FFFDF5;
-  --f-display:'Fredoka','Trebuchet MS',system-ui,sans-serif;
-  --f-body:'Nunito','Segoe UI',system-ui,sans-serif;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#101826; --card:#192335; --ink:#E8EEF7; --muted:#9BABC2; --line:#2B3A52;
-    --accent:#3CC1C8; --accent-ink:#06262A; --sun:#F2B134; --sun-soft:#3A3014;
-    --good:#4CCB84; --good-soft:#15342A; --bad:#F27C7C; --bad-soft:#3B1D22; --story:#1D2840; color-scheme:dark;
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#1f2540; --muted:#6a7094; --accent:#4f46e5; --accent-soft:#eceafd;
+    --good:#16a34a; --good-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2; --line:#e3e6f0;
   }
-}
-:root[data-theme="dark"]{
-  --bg:#101826; --card:#192335; --ink:#E8EEF7; --muted:#9BABC2; --line:#2B3A52;
-  --accent:#3CC1C8; --accent-ink:#06262A; --sun:#F2B134; --sun-soft:#3A3014;
-  --good:#4CCB84; --good-soft:#15342A; --bad:#F27C7C; --bad-soft:#3B1D22; --story:#1D2840; color-scheme:dark;
-}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
-h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.2;text-wrap:balance;margin:0}
-button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
-.wrap{max-width:1080px;margin:0 auto}
-
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 10px}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{font-family:var(--f-display);font-weight:600;font-size:1.15rem;color:var(--accent)}
-.stats{display:flex;gap:16px;font-weight:700;font-size:.95rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.stats b{color:var(--ink)}
-.bar{height:10px;border-radius:99px;background:var(--line);margin-top:8px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s}
-@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
-
-.hero{padding:36px 0 8px;display:grid;gap:20px;max-width:720px}
-.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
-.hero p{margin:0;color:var(--muted);font-size:1.1rem}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:var(--sun-soft);border:1px solid var(--sun);border-radius:99px;padding:4px 14px;font-weight:700;font-size:.9rem}
-.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:12px 26px;font-weight:800;font-size:1.05rem;justify-self:start}
-.btn:hover{filter:brightness(1.08)}
-.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:24px;padding:0;list-style:none}
-.shelf li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:700}
-.shelf span{display:block;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-
-.quiz{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
-@media (max-width:820px){.quiz{grid-template-columns:minmax(0,1fr)}}
-.story{background:var(--story);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
-@media (min-width:821px){.story{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);max-height:calc(100vh - 110px);overflow:auto}}
-.tag{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
-.story h2{font-size:1.6rem;margin:4px 0 12px}
-.story p{margin:0 0 .9em;font-size:1.06rem;line-height:1.75;max-width:62ch}
-.qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;display:grid;gap:16px}
-.qcard h3{font-size:1.3rem;line-height:1.35}
-.opts{display:grid;gap:10px;padding:0;margin:0;list-style:none}
-.opt{width:100%;display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600}
-.opt:hover:not(:disabled){border-color:var(--accent)}
-.opt .k{flex:none;width:28px;height:28px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:800;font-size:.9rem}
-.opt:disabled{cursor:default}
-.opt.right{background:var(--good-soft);border-color:var(--good)}
-.opt.right .k{background:var(--good);color:var(--card)}
-.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
-.opt.wrong .k{background:var(--bad);color:var(--card)}
-.fb{border-radius:12px;padding:12px 14px;font-size:.98rem}
-.fb.right{background:var(--good-soft)} .fb.wrong{background:var(--bad-soft)}
-.fb strong{display:block;font-family:var(--f-display);font-size:1.1rem;margin-bottom:2px}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.hint{color:var(--muted);font-size:.9rem}
-
-.result{display:grid;gap:22px;margin-top:20px;max-width:820px}
-.big{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:grid;gap:8px}
-.big .n{font-family:var(--f-display);font-size:3.4rem;line-height:1;font-variant-numeric:tabular-nums}
-.break{display:grid;gap:8px;padding:0;margin:0;list-style:none}
-.break li{display:grid;grid-template-columns:minmax(0,1fr) 120px 48px;gap:10px;align-items:center;font-weight:700;font-size:.95rem}
-.break .m{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
-.break .m i{display:block;height:100%;background:var(--accent)}
-.break .s{text-align:right;font-variant-numeric:tabular-nums}
-@media (max-width:480px){.break li{grid-template-columns:minmax(0,1fr) 72px 44px}}
-.miss{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--bad);border-radius:10px;padding:12px 16px;display:grid;gap:4px;font-size:.96rem}
-.miss em{font-style:normal;color:var(--bad);font-weight:700}.miss u{text-decoration:none;color:var(--good);font-weight:800}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.45;min-height:100vh;display:flex;justify-content:center;padding:24px 14px}
+  .wrap{width:100%;max-width:640px}
+  .card{background:var(--card);border-radius:20px;padding:28px;box-shadow:0 8px 30px rgba(40,50,110,.10)}
+  h1{margin:0 0 6px;font-size:2rem}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin:0 0 20px}
+  .tip{background:var(--accent-soft);border-radius:14px;padding:14px 16px;margin:18px 0 24px}
+  .tip b{color:var(--accent)}
+  button{font:inherit;cursor:pointer}
+  .primary{background:var(--accent);color:#fff;border:0;border-radius:14px;padding:14px 26px;font-weight:700;font-size:1.05rem;transition:transform .1s,opacity .2s}
+  .primary:hover{transform:translateY(-1px)}
+  .primary:disabled{opacity:.4;cursor:default;transform:none}
+  .hidden{display:none}
+  .top{display:flex;justify-content:space-between;color:var(--muted);font-size:.95rem;margin-bottom:8px;font-weight:600}
+  .bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:24px}
+  .bar>div{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
+  .prompt{color:var(--muted);font-weight:600;margin-bottom:8px}
+  .eq{font-size:2.2rem;font-weight:800;text-align:center;background:var(--accent-soft);border-radius:16px;padding:24px 10px;margin-bottom:22px;letter-spacing:.5px;overflow-wrap:anywhere}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opt{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:1.2rem;font-weight:700;text-align:left;color:var(--ink);transition:border-color .15s,background .15s}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .k{flex:none;width:30px;height:30px;border-radius:9px;background:var(--line);display:grid;place-items:center;font-size:.9rem;color:var(--muted)}
+  .opt.good{border-color:var(--good);background:var(--good-soft)}
+  .opt.good .k{background:var(--good);color:#fff}
+  .opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.bad .k{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:20px;border-radius:14px;padding:14px 16px}
+  .fb.good{background:var(--good-soft)} .fb.bad{background:var(--bad-soft)}
+  .fb strong{display:block;margin-bottom:4px}
+  .next{margin-top:18px;text-align:right}
+  .score-big{font-size:3.2rem;font-weight:800;color:var(--accent);margin:4px 0}
+  .review{margin-top:22px;border-top:1px solid var(--line);padding-top:6px}
+  .ri{padding:12px 0;border-bottom:1px solid var(--line)}
+  .ri .e{font-weight:800;font-size:1.1rem}
+  .ri .x{color:var(--muted);font-size:.95rem}
+  .ri .bad{color:var(--bad);font-weight:700} .ri .good{color:var(--good);font-weight:700}
+  @media(max-width:480px){.opts{grid-template-columns:1fr}.eq{font-size:1.7rem}.card{padding:20px}}
 </style>
-
+</head>
+<body>
 <div class="wrap">
-  <header class="top">
-    <div class="top-row">
-      <div class="brand">Story Quest</div>
-      <div class="stats" id="stats"></div>
-    </div>
-    <div class="bar" aria-hidden="true"><i id="fill"></i></div>
-  </header>
-  <main id="app"></main>
+
+  <div id="start" class="card">
+    <h1>Find <span>x</span>!</h1>
+    <p class="sub">50 questions &middot; solve each equation to find the value of x</p>
+    <div class="tip"><b>Golden rule:</b> whatever you do to one side of the equation, you must do to the other side. Use the opposite (inverse) operation to get x alone.</div>
+    <button class="primary" id="startBtn">Start quiz</button>
+  </div>
+
+  <div id="quiz" class="card hidden">
+    <div class="top"><span id="qnum"></span><span id="score"></span></div>
+    <div class="bar"><div id="prog"></div></div>
+    <div class="prompt" id="prompt"></div>
+    <div class="eq" id="eq"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb hidden" id="fb"></div>
+    <div class="next"><button class="primary hidden" id="nextBtn">Next</button></div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <h1>Quiz complete!</h1>
+    <div class="score-big" id="finalScore"></div>
+    <p class="sub" id="finalMsg"></p>
+    <button class="primary" id="againBtn">Try again</button>
+    <div class="review" id="review"></div>
+  </div>
+
 </div>
 
 <script>
-const STORIES = [
-{
- title:"The Lighthouse on Cobb Rock",
- text:["Nadia lived with her father on a tiny island called Cobb Rock. Her father was the lighthouse keeper. Every evening at sunset, he climbed the 112 steps to the top of the tower and lit the great lamp, so that ships could see the rocks and stay safe.", "One stormy night, Nadia's father slipped on the wet stairs and twisted his ankle badly. \"I cannot climb any more tonight,\" he groaned. Nadia looked out of the window. Far away, she could see the lights of a fishing boat tossing on the waves. Without the lamp, the crew would crash onto the rocks.", "\"I will do it,\" said Nadia. Her heart pounded as she raced up the stairs. Her legs ached, but she did not stop. At the top, she struck a match with shaking fingers and lit the lamp. Its golden beam swept across the dark sea.", "The fishing boat turned away from the rocks and sailed safely into the harbour. In the morning, the captain thanked Nadia and called her the bravest girl on the coast."],
- qs:[
-  {q:"What was Nadia's father's job?",o:["Lighthouse keeper", "Fisherman", "Ship's captain", "Harbour guard"],e:"He was the lighthouse keeper who lit the great lamp."},
-  {q:"Why could her father not climb the stairs that night?",o:["He twisted his ankle on the wet stairs", "He was too tired after a long day", "He had lost the key to the tower", "The storm had blown out the lamp"],e:"He slipped on the wet stairs and twisted his ankle badly."},
-  {q:"Which word best describes Nadia?",o:["Courageous", "Cautious", "Stubborn", "Playful"],e:"She climbed the tower in a storm to save the boat, which shows courage."},
-  {q:"What would probably have happened if Nadia had not lit the lamp?",o:["The fishing boat might have hit the rocks", "Her father would have healed more quickly", "The storm would have ended sooner", "The captain would have come ashore to help"],e:"The story says that without the lamp the crew would crash onto the rocks."},
-  {q:"\"Her heart pounded\" tells us that Nadia felt...",o:["Nervous and determined", "Sleepy and relaxed", "Angry with her father", "Sick from the climb"],e:"A pounding heart shows she was nervous, but she kept going anyway."}
- ]
-},
-{
- title:"The Spelling Bee",
- text:["Joel had studied for the school spelling bee for three weeks. He wrote each word ten times and asked his sister to test him every night. Still, when he walked onto the stage and saw the crowd, his knees felt like jelly.", "One by one, the other children made mistakes and sat down. Soon only two were left: Joel and a girl named Priya. \"Your word is necessary,\" said the teacher.", "Joel froze. Was it one 'c' or two? Was it one 's' or two? Then he remembered the trick his sister had taught him: \"A shirt has one collar and two sleeves.\" That meant one c and two s's.", "\"N-E-C-E-S-S-A-R-Y,\" he said slowly. \"Necessary.\" The teacher smiled. \"Correct!\" Priya's next word was a hard one, and she missed it. Joel had won! He held up the little silver cup. \"I could not have done it without my sister,\" he said, and everyone clapped."],
- qs:[
-  {q:"How long did Joel study for the spelling bee?",o:["Three weeks", "Two weeks", "One month", "Ten days"],e:"He had studied for three weeks."},
-  {q:"How many children were left before the last word?",o:["Two", "Three", "One", "Four"],e:"Only Joel and Priya were left."},
-  {q:"What trick helped Joel spell necessary?",o:["A shirt has one collar and two sleeves", "Saying the letters in a little rhyme", "Writing the word in the air first", "Splitting the word into small parts"],e:"His sister's trick told him one c and two s's."},
-  {q:"\"His knees felt like jelly\" means that Joel felt...",o:["Shaky and nervous", "Hungry and tired", "Hurt and sore", "Calm and proud"],e:"Knees that feel like jelly are shaky, which shows nerves."},
-  {q:"Why did Joel thank his sister at the end?",o:["She had tested him and taught him the trick", "She had secretly chosen the word for him to spell", "She had bought him the silver cup as a prize", "She had waited for him backstage with a snack"],e:"She tested him every night and taught him the collar and sleeves trick."}
- ]
-},
-{
- title:"Inside a Beehive",
- text:["A honey bee colony is like a busy town. Up to fifty thousand bees can live in one hive, and every bee has a job.", "The queen is the only bee that lays eggs. In summer, she can lay about two thousand eggs in a single day. Worker bees, which are all female, do almost everything else. Young workers clean the hive and feed the baby bees. Older workers fly out to find nectar from flowers.", "When a worker finds a good patch of flowers, she returns to the hive and does a waggle dance. The direction of her dance shows the other bees which way to fly, and how long she waggles tells them how far away the flowers are.", "Bees turn nectar into honey and store it in wax cells. It takes about twelve bees working all their lives to make just one teaspoon of honey."],
- qs:[
-  {q:"What is the main idea of this passage?",o:["Honey bees live and work together in an organised hive", "Honey is the healthiest food that any animal makes", "Queen bees are the largest insects in the world", "Flowers cannot grow without help from bees"],e:"The passage explains the jobs bees do inside a hive."},
-  {q:"What is the job of the queen bee?",o:["Laying eggs", "Finding nectar", "Guarding the hive", "Cleaning the cells"],e:"The queen is the only bee that lays eggs."},
-  {q:"What does a waggle dance tell the other bees?",o:["Which way to fly and how far to go", "Where the queen bee is hiding in the hive", "When it is the right time to make honey", "How many bees live in the hive"],e:"The direction shows the way, and the length of the waggle shows the distance."},
-  {q:"Which fact about worker bees is true?",o:["They are all female", "They lay all the eggs", "They stay inside the hive all their lives", "They only live through the winter"],e:"The passage says worker bees are all female."},
-  {q:"Why does the writer say a colony is \"like a busy town\"?",o:["Many bees live together and each has a job", "The hive has streets and little shops", "The bees are noisy all through the night", "The hive is built close to a town"],e:"A town has many people with different jobs, just like a hive."}
- ]
-},
-{
- title:"The Dry Well",
- text:["For as long as anyone could remember, the well in Ilesha village had given sweet, cool water. But one dry season, the water sank lower and lower, until the bucket came up with only mud.", "The villagers argued. \"The well is finished,\" said Mr. Bode. \"We must move to another village.\" Many agreed. But old Mama Efe shook her head. \"The well has not gone,\" she said. \"The water has only gone deeper. We must dig.\"", "Nobody believed her, except three boys: Dayo, Kunle and Tobi. Every morning before school, they lowered ropes and dug at the bottom of the well with small shovels. Their hands blistered. Other children laughed at them.", "After eleven days, Tobi's shovel struck something wet. Cool water bubbled up around his feet. \"Water!\" he shouted. The whole village came running. That evening, everyone drank, and Mr. Bode quietly thanked the boys."],
- qs:[
-  {q:"What did the bucket bring up when the water was low?",o:["Only mud", "A few small stones", "Warm water", "Nothing at all"],e:"The bucket came up with only mud."},
-  {q:"Who believed Mama Efe?",o:["Three boys", "Mr. Bode", "The whole village", "Their teacher"],e:"Only Dayo, Kunle and Tobi believed her."},
-  {q:"How many days did the boys dig before they found water?",o:["Eleven", "Seven", "Fourteen", "Three"],e:"After eleven days, Tobi's shovel struck something wet."},
-  {q:"Which word best describes the three boys?",o:["Determined", "Selfish", "Forgetful", "Greedy"],e:"They kept digging every morning, even when others laughed."},
-  {q:"Why did Mr. Bode thank the boys quietly?",o:["He felt sorry that he had wanted to leave", "He was angry that the boys were right", "He was too tired to speak loudly", "He wanted the boys to keep a secret"],e:"He had said the well was finished, and the boys proved him wrong."}
- ]
-},
-{
- title:"The Amazing Octopus",
- text:["An octopus has no bones at all. This means it can squeeze through any gap that is bigger than its beak, which is the only hard part of its body. Aquarium keepers have found octopuses escaping from their tanks through holes the size of a coin.", "An octopus has eight arms, and each arm is covered with hundreds of suckers that can taste and feel. It also has three hearts. Two pump blood past the gills, and the third sends blood around the rest of the body. Its blood is blue, not red.", "To hide from enemies, an octopus can change its colour, and even the bumps on its skin, to look like rocks, sand or seaweed. If this does not work, it squirts a cloud of dark ink into the water and darts away while the enemy is confused.", "Most octopuses live alone, and they only live for one to five years."],
- qs:[
-  {q:"Why can an octopus squeeze through tiny gaps?",o:["It has no bones", "It has a soft shell", "Its arms are very thin", "It can shrink its body"],e:"The passage says it has no bones, so only its beak limits the size of a gap."},
-  {q:"How many hearts does an octopus have?",o:["Three", "Two", "Eight", "One"],e:"An octopus has three hearts."},
-  {q:"What colour is an octopus's blood?",o:["Blue", "Red", "Green", "Clear"],e:"The passage says its blood is blue, not red."},
-  {q:"What does an octopus do if hiding does not work?",o:["Squirts ink and swims away", "Pulls itself into a shell", "Fights with its arms", "Sinks down into the sand"],e:"It squirts a cloud of dark ink and darts away."},
-  {q:"What is the only hard part of an octopus's body?",o:["Its beak", "Its suckers", "Its arms", "Its skin"],e:"The beak is the only hard part."}
- ]
-},
-{
- title:"Ife and the Jollof Rice",
- text:["Ife loved cooking with Grandma on Sunday afternoons. Today, Grandma was busy with a phone call, so she asked Ife to start the jollof rice by herself. \"Blend the tomatoes and peppers, and add just one small scotch bonnet,\" she said.", "Ife wanted the rice to be extra spicy, so she added three. \"More pepper means more flavour,\" she told herself. She stirred the pot and tasted the sauce, and her eyes watered. It was far too hot!", "Ife's face went red. What would Grandma say? She did not want to hide her mistake, so when Grandma came back, she explained everything.", "Grandma laughed gently. \"Do not worry, my dear. We can fix it.\" She added a can of tomatoes and a spoonful of sugar to cool the sauce, and she cooked extra rice to share out the pepper. By dinner time, the jollof was perfect. \"Next time,\" said Grandma, \"follow the recipe. Then add more pepper only after you taste it.\""],
- qs:[
-  {q:"How much scotch bonnet did Grandma tell Ife to add?",o:["One small one", "Two small ones", "Three small ones", "Half a spoonful"],e:"Grandma said to add just one small scotch bonnet."},
-  {q:"Why did Ife add extra pepper?",o:["She thought more pepper means more flavour", "She forgot what Grandma had told her to add", "She wanted to play a joke on Grandma", "She had run out of tomatoes and needed more"],e:"She told herself that more pepper means more flavour."},
-  {q:"How did Grandma fix the sauce?",o:["She added tomatoes and sugar and cooked extra rice", "She added a cup of water and a little salt to it", "She threw the whole pot out and began again", "She added more pepper to balance out the taste"],e:"The tomatoes and sugar cooled it, and the extra rice shared out the pepper."},
-  {q:"Which word best describes what Ife did when Grandma came back?",o:["Honest", "Sneaky", "Careless", "Bossy"],e:"Ife explained everything instead of hiding her mistake."},
-  {q:"What was Grandma's advice for next time?",o:["Follow the recipe and taste before adding more pepper", "Never cook jollof rice without an adult in the kitchen", "Always use three scotch bonnets for flavour", "Use sugar in every sauce you make"],e:"She said to follow the recipe and only add more after tasting."}
- ]
-},
-{
- title:"Why Do We Have Seasons?",
- text:["Have you ever wondered why the weather changes through the year? The answer is that Earth is tilted. Our planet leans a little to one side, like a spinning top that is not quite upright, and this tilt always points the same way in space as Earth travels around the Sun. One trip around the Sun takes one year.", "When the northern half of Earth leans toward the Sun, it gets more direct sunlight and longer days, so it is summer there. At the same time, the southern half leans away, so it has winter. Six months later, the two halves swap places.", "Not every place has four seasons. Places near the equator, such as Lagos, get sunlight at nearly the same angle all year. They stay warm all year round and have a wet season and a dry season instead."],
- qs:[
-  {q:"What causes the seasons?",o:["Earth's tilt as it travels around the Sun", "Earth moving closer to and farther from the Sun", "The Sun getting hotter and cooler", "Clouds blocking the Sun's light"],e:"The passage says the tilt of Earth causes the seasons."},
-  {q:"How long does one trip around the Sun take?",o:["One year", "One month", "Six months", "One day"],e:"One trip around the Sun takes one year."},
-  {q:"When the northern half leans toward the Sun, what season is it in the southern half?",o:["Winter", "Summer", "Spring", "The same as the north"],e:"The southern half leans away, so it has winter."},
-  {q:"Why do places near the equator not have four seasons?",o:["The Sun's light hits them at nearly the same angle all year", "The Sun does not shine on them at all in winter", "Earth stops tilting whenever it reaches that part of space", "They are much too far away from the Sun to feel it"],e:"Sunlight arrives at nearly the same angle all year, so they stay warm."},
-  {q:"Which is the best title for this passage?",o:["Why Earth Has Seasons", "How Far Away Is the Sun?", "Wet Weather in Lagos", "The Life of a Spinning Top"],e:"The whole passage explains the reason for the seasons."}
- ]
-},
-{
- title:"The Goalkeeper",
- text:["Sola had never wanted to be a goalkeeper. He wanted to score goals like his hero, but the coach said the team needed someone tall with quick hands, so Sola put on the gloves.", "On Saturday, the final of the school cup ended 1–1, so it would be decided by penalty kicks. Sola's stomach twisted. The first kicker from the other team smashed the ball into the net. Then Femi scored for Sola's side.", "Next, the other team's best striker stepped up. Sola watched the boy's eyes. They flicked to the left. Sola dived left, and his fingertips pushed the ball away!", "His team cheered. In the end, they won the cup on penalties. His teammates lifted Sola onto their shoulders. \"Maybe goalkeeping is not so bad,\" he grinned."],
- qs:[
-  {q:"Why did the coach choose Sola as goalkeeper?",o:["He was tall with quick hands", "He was the fastest runner", "He asked for the job himself", "He had played in goal before"],e:"The coach wanted someone tall with quick hands."},
-  {q:"What was the score at the end of normal time?",o:["1–1", "0–0", "2–1", "2–2"],e:"The final ended 1–1, so it went to penalties."},
-  {q:"How did Sola know which way to dive?",o:["He watched the kicker's eyes", "He listened to his coach", "He guessed the same way each time", "He saw the kicker's feet move"],e:"The boy's eyes flicked to the left, so Sola dived left."},
-  {q:"How did Sola feel when the penalties started?",o:["Nervous", "Bored", "Proud", "Angry"],e:"His stomach twisted, which shows nerves."},
-  {q:"What does \"Maybe goalkeeping is not so bad\" show about Sola?",o:["He has changed his mind about the job", "He wants to leave the team", "He is still upset about the match", "He thinks scoring goals is easy"],e:"At first he did not want to be a goalkeeper, but he now enjoys it."}
- ]
-},
-{
- title:"The Whispering Library",
- text:["Every morning, Mrs. Okoye the librarian found something strange. A book she had locked away the night before was lying open on a table, and the lamp beside it was warm. \"Someone is here at night,\" she told her class helpers, Ruth and Emeka.", "The children decided to investigate. Ruth found a muddy footprint by the back window. Emeka found a crumb of bread under the table. The open book was always about space and stars.", "That night, the two friends hid behind the big shelves. At midnight, the back window creaked open. A small figure climbed in, switched on the lamp, and began to read. It was Kayode, a boy from the house next door.", "\"Our house has no electricity,\" he whispered. \"I cannot read at home when it gets dark.\" Mrs. Okoye did not scold him. The next day, she gave him a library card and said he could read in the library every afternoon."],
- qs:[
-  {q:"What strange thing did Mrs. Okoye find each morning?",o:["A locked-away book lying open and the lamp still warm", "The back window left wide open and the room cold", "Several books missing from the shelves each day", "Muddy footprints across the whole library floor"],e:"A book she had locked away was open and the lamp was warm."},
-  {q:"Which clue did Emeka find?",o:["A crumb of bread under the table", "A muddy footprint by the window", "A torn page from a book", "A library card on the floor"],e:"Ruth found the footprint, and Emeka found the crumb of bread."},
-  {q:"What were the books that were left open about?",o:["Space and stars", "Animals and plants", "Ships and the sea", "Machines and tools"],e:"The open book was always about space and stars."},
-  {q:"Why did Kayode sneak into the library at night?",o:["His house had no electricity to read by", "He wanted to take the books home", "He was hiding from his family", "He wanted to play a trick on the librarian"],e:"He said he could not read at home when it got dark."},
-  {q:"How did Mrs. Okoye solve the problem?",o:["She let him read in the library every afternoon", "She locked the back window and hid the key", "She sent him home with a lamp and a book", "She told his parents what he had done wrong"],e:"She gave him a library card and let him read in the afternoons."}
- ]
-},
-{
- title:"The Boy Who Built a Windmill",
- text:["When William was fourteen, a terrible drought hit his country, Malawi. Crops dried up, and his family could not afford to send him to school. But William did not stop learning. He walked to a small library and borrowed a book about energy.", "In the book, he read about windmills that make electricity. His village had no power, and at night his family lived in the dark. \"I could build one,\" he thought. People laughed. \"A boy cannot build a windmill out of rubbish,\" they said.", "William searched a scrapyard for parts. He found a broken bicycle frame, an old tractor fan and some pipes. He cut blades from plastic pipes and used tall blue gum trees for the tower.", "When the wind turned the blades, a small light bulb glowed. William's idea had worked! Soon he built bigger machines that pumped water and lit houses. The boy they laughed at had made electricity out of wind."],
- qs:[
-  {q:"Why did William go to the library?",o:["His family could not afford to send him to school", "He wanted to find a part-time job there to earn money", "His teacher had sent him to collect some books", "He needed a quiet and warm place to sleep at night"],e:"He could not go to school, but he still wanted to learn."},
-  {q:"What did William learn about in his library book?",o:["Windmills that make electricity", "Tractors that dig the ground", "Ways to find water", "How to grow crops in a drought"],e:"He read about windmills that make electricity."},
-  {q:"Which of these did William use to build his windmill?",o:["A broken bicycle frame", "A new electric motor", "A metal ladder", "A wooden water barrel"],e:"He found a bicycle frame, a tractor fan and some pipes in a scrapyard."},
-  {q:"What happened when the wind turned the blades?",o:["A small light bulb glowed", "A pump began to fill a tank", "The tower fell over", "His village heard a loud noise"],e:"The wind turned the blades and a small bulb glowed."},
-  {q:"What does this story show about William?",o:["He solved a problem by learning and not giving up", "He was very good at making other people laugh", "He disliked going to school and wanted to quit", "He was luckier than the other children in Malawi"],e:"He kept learning and building even when people laughed at him."}
- ]
-}
+function r2(v){ return Math.round(v*100)/100; }
+function fmt(v){ return String(r2(v)); }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function co(a,X){ return X==='x' ? a+'x' : a+'('+X+')'; }
+
+const TYPES = {
+  add:  { text:(p,X)=>`${X} + ${p[0]} = ${p[1]}`, f:(x,p)=>x+p[0], rhs:p=>p[1], ans:p=>p[1]-p[0],
+          M:p=>[p[1]+p[0], p[1], p[0]],
+          steps:(p,a)=>`Subtract ${p[0]} from both sides: x = ${fmt(p[1])} &minus; ${fmt(p[0])} = ${fmt(a)}.` },
+  sub:  { text:(p,X)=>`${X} &minus; ${p[0]} = ${p[1]}`, f:(x,p)=>x-p[0], rhs:p=>p[1], ans:p=>p[1]+p[0],
+          M:p=>[p[1]-p[0], p[1], p[0]],
+          steps:(p,a)=>`Add ${fmt(p[0])} to both sides: x = ${fmt(p[1])} + ${fmt(p[0])} = ${fmt(a)}.` },
+  mul:  { text:(p,X)=>`${co(p[0],X)} = ${p[1]}`, f:(x,p)=>p[0]*x, rhs:p=>p[1], ans:p=>p[1]/p[0],
+          M:p=>[p[0]*p[1], p[1]-p[0], p[1]+p[0]],
+          steps:(p,a)=>`Divide both sides by ${p[0]}: x = ${fmt(p[1])} &divide; ${p[0]} = ${fmt(a)}.` },
+  div:  { text:(p,X)=>`${X} &divide; ${p[0]} = ${p[1]}`, f:(x,p)=>x/p[0], rhs:p=>p[1], ans:p=>p[0]*p[1],
+          M:p=>[p[0]+p[1], p[1], p[0]*p[1]+p[0], p[0]*p[1]-p[0]],
+          steps:(p,a)=>`Multiply both sides by ${p[0]}: x = ${p[1]} &times; ${p[0]} = ${fmt(a)}.` },
+  ma:   { text:(p,X)=>`${co(p[0],X)} + ${p[1]} = ${p[2]}`, f:(x,p)=>p[0]*x+p[1], rhs:p=>p[2], ans:p=>(p[2]-p[1])/p[0],
+          M:p=>[p[2]-p[1], (p[2]+p[1])/p[0], (p[2]-p[1])*p[0], p[2]/p[0]],
+          steps:(p,a)=>`Subtract ${p[1]} from both sides: ${p[0]}x = ${p[2]-p[1]}. Then divide by ${p[0]}: x = ${p[2]-p[1]} &divide; ${p[0]} = ${fmt(a)}.` },
+  ms:   { text:(p,X)=>`${co(p[0],X)} &minus; ${p[1]} = ${p[2]}`, f:(x,p)=>p[0]*x-p[1], rhs:p=>p[2], ans:p=>(p[2]+p[1])/p[0],
+          M:p=>[p[2]+p[1], (p[2]-p[1])/p[0], (p[2]+p[1])*p[0], p[2]/p[0]],
+          steps:(p,a)=>`Add ${p[1]} to both sides: ${p[0]}x = ${p[2]+p[1]}. Then divide by ${p[0]}: x = ${p[2]+p[1]} &divide; ${p[0]} = ${fmt(a)}.` },
+  da:   { text:(p,X)=>`${X} &divide; ${p[0]} + ${p[1]} = ${p[2]}`, f:(x,p)=>x/p[0]+p[1], rhs:p=>p[2], ans:p=>(p[2]-p[1])*p[0],
+          M:p=>[p[2]-p[1], (p[2]+p[1])*p[0], p[2]*p[0]-p[1], p[2]*p[0]],
+          steps:(p,a)=>`Subtract ${p[1]} from both sides: x &divide; ${p[0]} = ${p[2]-p[1]}. Then multiply by ${p[0]}: x = ${p[2]-p[1]} &times; ${p[0]} = ${fmt(a)}.` },
+  dist: { text:(p,X)=>`${p[0]}(${X} + ${p[1]}) = ${p[2]}`, f:(x,p)=>p[0]*(x+p[1]), rhs:p=>p[2], ans:p=>p[2]/p[0]-p[1],
+          M:p=>[p[2]/p[0]+p[1], p[2]-p[1], (p[2]-p[1])/p[0], p[2]/p[0]],
+          steps:(p,a)=>`Divide both sides by ${p[0]}: x + ${p[1]} = ${p[2]/p[0]}. Then subtract ${p[1]}: x = ${p[2]/p[0]} &minus; ${p[1]} = ${fmt(a)}.` }
+};
+
+const SPECS = [
+  // one-step: x + a = b
+  ['add',7,15],['add',12,30],['add',25,61],['add',9,34],['add',48,100],['add',16,40],['add',19,52],['add',33,75],
+  // one-step: x - a = b
+  ['sub',6,9],['sub',14,20],['sub',8,17],['sub',25,40],['sub',9,31],['sub',13,22],['sub',30,45],['sub',17,18],
+  // one-step: ax = b
+  ['mul',4,28],['mul',7,63],['mul',9,54],['mul',12,96],['mul',5,85],['mul',8,72],['mul',11,132],['mul',6,108],
+  // one-step: x / a = b
+  ['div',3,8],['div',5,11],['div',4,9],['div',6,7],['div',8,12],['div',10,15],['div',7,6],
+  // two-step: ax + b = c
+  ['ma',3,5,23],['ma',4,9,37],['ma',2,11,31],['ma',5,8,53],['ma',6,4,52],['ma',7,3,59],
+  // two-step: ax - b = c
+  ['ms',2,7,15],['ms',3,4,17],['ms',5,9,36],['ms',4,6,30],['ms',8,10,46],
+  // two-step: x / a + b = c
+  ['da',2,6,14],['da',3,4,9],['da',5,7,12],
+  // parentheses: a(x + b) = c
+  ['dist',2,3,18],['dist',3,4,27],
+  // decimals
+  ['add',3.4,9.1],['sub',2.6,4.1],['mul',4,18.4]
 ];
 
-const $ = s => document.querySelector(s);
-const app = $('#app'), stats = $('#stats'), fill = $('#fill');
-const TOTAL = STORIES.reduce((n, s) => n + s.qs.length, 0);
-const LETTERS = ['A','B','C','D'];
-let S;
+const PROMPTS = ['Solve for x:','Find the value of x:','What is x?','Solve the equation:'];
 
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function fresh(view){
-  STORIES.forEach(st=>st.qs.forEach(q=>{q.opts=shuffle(q.o.map((t,i)=>({t,ok:i===0})));}));
-  S={view,s:0,q:0,picked:null,log:[]};
-}
-function score(){return S.log.filter(x=>x.ok).length;}
-function updateTop(){
-  const n=S.log.length;
-  stats.innerHTML = S.view==='quiz'
-    ? `<span>Question <b>${n + (S.picked===null?1:0)}</b> of ${TOTAL}</span><span>Score <b>${score()}</b></span>` : '';
-  fill.style.width = (S.view==='done' ? 100 : n/TOTAL*100) + '%';
+function pickDistractors(M, N, ans, isDec){
+  const valid = v => { v=r2(v); return isFinite(v) && v>0 && v!==r2(ans) && (isDec || Number.isInteger(v)); };
+  const out = [];
+  const add = v => { v=r2(v); if(valid(v) && !out.includes(v)) out.push(v); };
+  const m = shuffle(M).filter(valid).map(r2);
+  const n = shuffle(N).filter(valid).map(r2);
+  // two likely "wrong method" answers, one near-miss, then fill
+  m.slice(0,2).forEach(add);
+  n.forEach(v=>{ if(out.length<3) add(v); });
+  m.forEach(v=>{ if(out.length<3) add(v); });
+  return out.slice(0,3);
 }
 
-function start(){
-  app.innerHTML = `<section class="hero">
-    <h1>Read the story. Then answer the questions.</h1>
-    <p>There are ${STORIES.length} short stories and ${TOTAL} questions. Each story has 5 questions. You can look back at the story any time while you answer.</p>
-    <div class="chips"><span class="chip">${STORIES.length} stories</span><span class="chip">${TOTAL} questions</span><span class="chip">Grade 4</span></div>
-    <button class="btn" id="go">Start reading</button>
-  </section>
-  <ul class="shelf">${STORIES.map((s,i)=>`<li><span>Story ${i+1}</span>${s.title}</li>`).join('')}</ul>`;
-  $('#go').onclick=()=>{S.view='quiz';render();window.scrollTo(0,0);};
+function buildQuestions(){
+  return shuffle(SPECS).map(spec=>{
+    const t = spec[0], p = spec.slice(1), T = TYPES[t];
+    const ans = r2(T.ans(p));
+    const isDec = p.some(v=>!Number.isInteger(v));
+    const s = isDec ? 0.1 : 1;
+    const N = [ans+s, ans-s, ans+2*s, ans-2*s].concat(isDec ? [ans+1, ans-1] : []);
+    const dis = pickDistractors(T.M(p), N, ans, isDec);
+    return {
+      eq: T.text(p,'x'),
+      check: T.text(p, fmt(ans)),
+      ans: ans,
+      opts: shuffle([ans].concat(dis)),
+      expl: T.steps(p, ans),
+      ok: r2(T.f(ans,p)) === r2(T.rhs(p)) && dis.length===3
+    };
+  }).map((q,i)=>{ q.prompt = PROMPTS[i%PROMPTS.length]; return q; });
 }
 
-function quiz(){
-  const st=STORIES[S.s], q=st.qs[S.q], answered=S.picked!==null;
-  const last=S.s===STORIES.length-1 && S.q===st.qs.length-1;
-  const nextLabel = last ? 'See my results' : (S.q===st.qs.length-1 ? 'Next story' : 'Next question');
-  let fb='';
-  if(answered){
-    const ok=q.opts[S.picked].ok;
-    fb=`<div class="fb ${ok?'right':'wrong'}" role="status"><strong>${ok?'Correct!':'Not quite.'}</strong>${ok?'':'The right answer is '+LETTERS[q.opts.findIndex(o=>o.ok)]+'. '}${q.e}</div>`;
+if (typeof document !== 'undefined') {
+  const $ = id => document.getElementById(id);
+  let Q=[], i=0, score=0, locked=false, missed=[];
+
+  function start(){
+    Q = buildQuestions(); i=0; score=0; missed=[];
+    $('start').classList.add('hidden'); $('result').classList.add('hidden'); $('quiz').classList.remove('hidden');
+    show();
   }
-  app.innerHTML = `<div class="quiz">
-    <article class="story">
-      <div class="tag">Story ${S.s+1} of ${STORIES.length}</div>
-      <h2>${st.title}</h2>
-      ${st.text.map(p=>`<p>${p}</p>`).join('')}
-    </article>
-    <section class="qcard">
-      <div class="tag">Question ${S.q+1} of ${st.qs.length}</div>
-      <h3>${q.q}</h3>
-      <ul class="opts">${q.opts.map((o,i)=>{
-        let c='opt';
-        if(answered){ if(o.ok) c+=' right'; else if(i===S.picked) c+=' wrong'; }
-        return `<li><button class="${c}" data-i="${i}" ${answered?'disabled':''}><span class="k">${LETTERS[i]}</span><span>${o.t}</span></button></li>`;
-      }).join('')}</ul>
-      ${fb}
-      <div class="nav"><span class="hint">${answered?'':'Pick one answer.'}</span>${answered?`<button class="btn" id="next">${nextLabel}</button>`:''}</div>
-    </section>
-  </div>`;
-  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.i;S.picked=i;S.log.push({s:S.s,q:S.q,pick:i,ok:q.opts[i].ok});render();
+  function show(){
+    const q=Q[i]; locked=false;
+    $('qnum').textContent = `Question ${i+1} of ${Q.length}`;
+    $('score').textContent = `Score: ${score}`;
+    $('prog').style.width = (i/Q.length*100)+'%';
+    $('prompt').textContent = q.prompt;
+    $('eq').innerHTML = q.eq;
+    $('fb').classList.add('hidden'); $('nextBtn').classList.add('hidden');
+    $('opts').innerHTML='';
+    q.opts.forEach((v,k)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span>x = ${fmt(v)}</span>`;
+      b.onclick=()=>choose(k);
+      $('opts').appendChild(b);
+    });
+  }
+  function choose(k){
+    if(locked) return; locked=true;
+    const q=Q[i], picked=q.opts[k], right = picked===q.ans;
+    const btns=$('opts').children;
+    q.opts.forEach((v,idx)=>{ btns[idx].disabled=true; if(v===q.ans) btns[idx].classList.add('good'); });
+    if(right){ score++; } else { btns[k].classList.add('bad'); missed.push({q,picked}); }
+    $('score').textContent = `Score: ${score}`;
+    const fb=$('fb'); fb.className='fb '+(right?'good':'bad');
+    fb.innerHTML = `<strong>${right?'Correct!':'Not quite.'}</strong>${q.expl}<br><span style="color:#6a7094">Check: ${q.check} &#10003;</span>`;
+    $('nextBtn').textContent = (i===Q.length-1) ? 'See results' : 'Next';
+    $('nextBtn').classList.remove('hidden');
+    $('nextBtn').focus();
+  }
+  function next(){
+    if(!locked) return;
+    if(i===Q.length-1) return finish();
+    i++; show();
+  }
+  function finish(){
+    $('quiz').classList.add('hidden'); $('result').classList.remove('hidden');
+    $('finalScore').textContent = `${score} / ${Q.length}`;
+    const pct=score/Q.length;
+    $('finalMsg').textContent = pct>=0.9 ? 'Outstanding! You really know how to isolate x.' :
+      pct>=0.7 ? 'Great work! Review the ones you missed below and you will be there.' :
+      pct>=0.5 ? 'Good effort. Look at the worked steps below and try again.' :
+      'Keep practising. Remember: use the opposite operation on both sides.';
+    const rv=$('review');
+    if(!missed.length){ rv.innerHTML='<p><b>Perfect score &mdash; nothing to review!</b></p>'; }
+    else rv.innerHTML = '<h3>Questions to review</h3>' + missed.map(m=>
+      `<div class="ri"><div class="e">${m.q.eq}</div>
+       <div class="x">Your answer: <span class="bad">x = ${fmt(m.picked)}</span> &middot; Correct: <span class="good">x = ${fmt(m.q.ans)}</span></div>
+       <div class="x">${m.q.expl}</div></div>`).join('');
+    window.scrollTo(0,0);
+  }
+  $('startBtn').onclick=start; $('againBtn').onclick=start; $('nextBtn').onclick=next;
+  document.addEventListener('keydown',e=>{
+    if($('quiz').classList.contains('hidden')) return;
+    if(!locked && e.key>='1' && e.key<='4'){ choose(+e.key-1); }
+    else if(!locked && 'abcd'.includes(e.key.toLowerCase()) && e.key.length===1){ choose('abcd'.indexOf(e.key.toLowerCase())); }
+    else if(locked && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); next(); }
   });
-  const nx=$('#next');
-  if(nx) nx.onclick=()=>{
-    S.picked=null;
-    if(S.q<st.qs.length-1) S.q++;
-    else if(S.s<STORIES.length-1){S.s++;S.q=0;window.scrollTo(0,0);}
-    else S.view='done';
-    render();
-  };
 }
-
-function results(){
-  const sc=score(), pct=Math.round(sc/TOTAL*100);
-  const msg = pct>=90?'Outstanding reading! You noticed the details.':pct>=75?'Great job! You are a strong reader.':pct>=50?'Good effort. Re-read the stories you missed and try again.':'Keep going. Read each story slowly and look back for clues.';
-  const per=STORIES.map((s,i)=>{const n=S.log.filter(x=>x.s===i&&x.ok).length;return `<li><span>${s.title}</span><span class="m"><i style="width:${n/5*100}%"></i></span><span class="s">${n} / 5</span></li>`;}).join('');
-  const missed=S.log.filter(x=>!x.ok).map(x=>{
-    const st=STORIES[x.s],q=st.qs[x.q];
-    return `<div class="miss"><span class="tag">${st.title}</span><strong>${q.q}</strong><span><em>Your answer:</em> ${q.opts[x.pick].t}</span><span><u>Correct answer:</u> ${q.opts.find(o=>o.ok).t}</span><span class="hint">${q.e}</span></div>`;
-  }).join('');
-  app.innerHTML=`<section class="result">
-    <div class="big"><span class="tag">Your score</span><div class="n">${sc} / ${TOTAL}</div><div><b>${pct}%</b>. ${msg}</div></div>
-    <h2>Score for each story</h2>
-    <ul class="break">${per}</ul>
-    ${missed?`<h2>Questions to review</h2>${missed}`:'<h2>No mistakes. Perfect score!</h2>'}
-    <button class="btn" id="again">Try again with new answer order</button>
-  </section>`;
-  $('#again').onclick=()=>{fresh('quiz');render();window.scrollTo(0,0);};
-}
-
-function render(){
-  updateTop();
-  if(S.view==='start') start(); else if(S.view==='quiz') quiz(); else results();
-}
-fresh('start');render();
 </script>
+</body>
+</html>
